@@ -51,3 +51,7 @@ Route::get('/berita/kategori/{slug_kategori}/search', [BeritaKategoriGuestContro
 Route::get('/berita/{nama_berita}', [BeritaGuestController::class, 'show'])
 	->where('uuid_berita', '[0-9a-fA-F\-]{36}')
 	->name('guest.berita.show');
+
+Route::get('/login', function() {
+	return view('admin.pages.login.index');
+});

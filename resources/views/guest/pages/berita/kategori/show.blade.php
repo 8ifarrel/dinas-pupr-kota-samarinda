@@ -5,15 +5,15 @@
     <div class="text-center mb-2 lg:mb-3">
       <span
         class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
+        {{ htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') }}
       </span>
     </div>
 
     <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ $page_subtitle }}
+      {{ htmlspecialchars($page_subtitle, ENT_QUOTES, 'UTF-8') }}
     </h1>
 
-    <div class="mx-auto mb-5" data-slug-kategori="{{ $slug_kategori }}">
+    <div class="mx-auto mb-5" data-slug-kategori="{{ htmlspecialchars($slug_kategori, ENT_QUOTES, 'UTF-8') }}">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Cari</label>
       <div class="relative">
@@ -35,9 +35,10 @@
         <li>
           <a href="#">
             <figure>
-              <img class="w-full h-full object-cover" src="{{ $item->foto_berita }}" alt="image description">
+              <img class="w-full h-full object-cover"
+                src="{{ htmlspecialchars($item->foto_berita, ENT_QUOTES, 'UTF-8') }}" alt="image description">
               <figcaption>
-                <h1 class="font-medium text-lg">{{ $item->judul_berita }}</h1>
+                <h1 class="font-medium text-lg">{{ htmlspecialchars($item->judul_berita, ENT_QUOTES, 'UTF-8') }}</h1>
               </figcaption>
               <time>{{ $item->created_at->format('D, d M Y') }}</time>
             </figure>
@@ -61,8 +62,8 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img src="{{ $item->foto_berita }}" alt="">
-                <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
+                <img src="{{ htmlspecialchars($item->foto_berita, ENT_QUOTES, 'UTF-8') }}" alt="">
+                <h1>{{ Str::limit(htmlspecialchars($item->judul_berita, ENT_QUOTES, 'UTF-8'), 60) }}</h1>
               </li>
             @endforeach
           </ul>
@@ -72,23 +73,39 @@
   </div>
 
   <script>
-    document.getElementById('default-search').addEventListener('input', function(e) {
+    function debounce(func, wait) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    document.getElementById('default-search').addEventListener('input', debounce(function(e) {
       const query = e.target.value;
       const slugKategori = document.querySelector('[data-slug-kategori]').dataset.slugKategori;
       const csrfToken = document.querySelector('input[name="_token"]').value;
 
-      fetch(`/berita/kategori/${slugKategori}/search?query=${query}`, {
+      fetch(`/berita/kategori/${slugKategori}/search?query=${encodeURIComponent(query)}`, {
           headers: {
             'X-CSRF-TOKEN': csrfToken
           }
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           updateBeritaList(data, slugKategori, query, csrfToken);
-          history.pushState(null, '', `/berita/kategori/${slugKategori}?query=${query}`);
+          history.pushState(null, '', `/berita/kategori/${slugKategori}?query=${encodeURIComponent(query)}`);
         })
-        .catch(error => console.error('Error:', error));
-    });
+        .catch(error => {
+          console.error('Fetch error:', error);
+          alert('Terjadi kesalahan saat memuat data. Silakan coba lagi.');
+        });
+    }, 300));
 
     function updateBeritaList(data, slugKategori, query, csrfToken) {
       const beritaList = document.getElementById('berita-list');
@@ -97,15 +114,15 @@
       data.data.forEach(item => {
         const li = document.createElement('li');
         li.innerHTML = `
-            <a href="#">
-                <figure>
-                    <img class="w-full h-full object-cover" src="${item.foto_berita}" alt="image description">
-                    <figcaption>
-                        <h1 class="font-medium text-lg">${item.judul_berita}</h1>
-                    </figcaption>
-                    <time>${new Date(item.created_at).toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</time>
-                </figure>
-            </a>
+          <a href="#">
+            <figure>
+              <img class="w-full h-full object-cover" src="${htmlspecialchars(item.foto_berita)}" alt="image description">
+              <figcaption>
+                <h1 class="font-medium text-lg">${htmlspecialchars(item.judul_berita)}</h1>
+              </figcaption>
+              <time>${new Date(item.created_at).toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</time>
+            </figure>
+          </a>
         `;
         beritaList.appendChild(li);
       });
@@ -113,26 +130,42 @@
       const paginationLinks = document.getElementById('pagination-links');
       paginationLinks.innerHTML = data.viewPagination;
 
-      // Add event listeners to the new pagination links
       const paginationAnchors = paginationLinks.querySelectorAll('a');
       paginationAnchors.forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
           const url = new URL(this.href);
           const page = url.searchParams.get('page');
-          fetch(`/berita/kategori/${slugKategori}/search?query=${query}&page=${page}`, {
+          fetch(`/berita/kategori/${slugKategori}/search?query=${encodeURIComponent(query)}&page=${page}`, {
               headers: {
                 'X-CSRF-TOKEN': csrfToken
               }
             })
-            .then(response => response.json())
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
             .then(data => {
               updateBeritaList(data, slugKategori, query, csrfToken);
-              history.pushState(null, '', `/berita/kategori/${slugKategori}?query=${query}&page=${page}`);
+              history.pushState(null, '',
+                `/berita/kategori/${slugKategori}?query=${encodeURIComponent(query)}&page=${page}`);
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+              console.error('Fetch error:', error);
+              alert('Terjadi kesalahan saat memuat data. Silakan coba lagi.');
+            });
         });
       });
+    }
+
+    function htmlspecialchars(str) {
+      if (typeof str === 'string') {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(
+          /'/g, '&#039;');
+      }
+      return str;
     }
   </script>
 @endsection

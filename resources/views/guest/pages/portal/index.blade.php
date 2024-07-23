@@ -7,20 +7,20 @@
 <main class="flex flex-col gap-3 lg:gap-4 py-4 lg:py-0 px-3 lg:px-16 w-full">
   <figure class="flex flex-col items-center">
     <div class="flex mb-2 lg:mb-3">
-      <img class="h-[60px] lg:h-[75px] me-2" src="{{ asset('image/logo/pemkot-samarinda.png') }}" alt="Pemerintah Kota Samarinda" />
-      <img class="h-[60px] lg:h-[75px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
+      <img class="h-[60px] lg:h-[75px] 3xl:h-[100px] me-2" src="{{ asset('image/logo/pemkot-samarinda.png') }}" alt="Pemerintah Kota Samarinda" />
+      <img class="h-[60px] lg:h-[75px] 3xl:h-[100px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     </div>
 
     <figcaption class="text-center">
-      <h1 class="uppercase font-bold text-xl lg:text-3xl">
+      <h1 class="uppercase font-bold text-xl lg:text-3xl 3xl:text-5xl">
         Portal Resmi <br class="inline lg:hidden"> {{ config('app.nama_singkatan_dinas') }}
       </h1>
-      <p class="font-medium text-sm lg:text-2xl">
+      <p class="font-medium text-sm lg:text-2xl 3xl:text-3xl">
         Bergerak Bersama, Samarinda Makin Maju
       </p>
   </figure>
 
-  <a class="flex justify-center">
+  <a href="{{ route('guest.beranda.index') }}" class="flex justify-center">
     {{-- Tombol di layar gede --}}
     <span class="hidden lg:block">
       <svg width="300" height="90" viewBox="0 0 300 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,12 +45,12 @@
   </a>
 
   {{-- Aplikasi --}}
-  <div class="px-3 py-4 bg-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl mx-auto">
+  <div class="px-3 py-4 bg-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl 3xl:max-w-[1300px] mx-auto">
     <div class="justify-items-center text-white grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
       <button data-modal-target="modal-informasi-publik" data-modal-toggle="modal-informasi-publik" type="button">
         <figure>
-          <lottie-player class="h-[100px] lg:h-[200px]" src="https://lottie.host/dd34a41c-849f-43dc-b0bf-bb9cff0ed814/FrdooYL5sY.json" background="transparent" speed="1" loop autoplay></lottie-player>
-          <figcaption class="text-center font-semibold text-base lg:text-xl text-yellow">
+          <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]" src="https://lottie.host/dd34a41c-849f-43dc-b0bf-bb9cff0ed814/FrdooYL5sY.json" background="transparent" speed="1" loop autoplay></lottie-player>
+          <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
             Informasi Publik
           </figcaption>
         </figure>
@@ -58,8 +58,8 @@
 
       <button data-modal-target="modal-layanan-aplikasi" data-modal-toggle="modal-layanan-aplikasi" type="button">
         <figure>
-          <lottie-player class="h-[100px] lg:h-[200px]" src="https://lottie.host/79009bb3-5d07-4937-b043-bdfec1f41bf1/l1GIKi6RYJ.json" background="transparent" speed="1" loop autoplay></lottie-player>
-          <figcaption class="text-center font-semibold text-base lg:text-xl text-yellow">
+          <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]" src="https://lottie.host/79009bb3-5d07-4937-b043-bdfec1f41bf1/l1GIKi6RYJ.json" background="transparent" speed="1" loop autoplay></lottie-player>
+          <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
             Layanan Aplikasi
           </figcaption>
         </figure>
@@ -67,8 +67,8 @@
 
       <button data-modal-target="modal-layanan-aduan" data-modal-toggle="modal-layanan-aduan" type="button">
         <figure>
-          <lottie-player class="h-[100px] lg:h-[200px]" src="https://lottie.host/05a9c4fd-d359-4d7b-acbf-b9d560cf3739/vwyhQ7Wt8H.json" background="transparent" speed="1" loop autoplay></lottie-player>
-          <figcaption class="text-center font-semibold text-base lg:text-xl text-yellow">
+          <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]" src="https://lottie.host/05a9c4fd-d359-4d7b-acbf-b9d560cf3739/vwyhQ7Wt8H.json" background="transparent" speed="1" loop autoplay></lottie-player>
+          <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
             Layanan Aduan
           </figcaption>
         </figure>
@@ -76,8 +76,8 @@
 
       <button data-modal-target="modal-media-sosial" data-modal-toggle="modal-media-sosial" type="button">
         <figure>
-          <lottie-player class="h-[100px] lg:h-[200px]" src="https://lottie.host/7fc5c4a3-cad9-414a-8bc5-e097ed4ca67c/zGiBmsHxZj.json" background="transparent" speed="1" loop autoplay></lottie-player>
-          <figcaption class="text-center font-semibold text-base lg:text-xl text-yellow">
+          <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]" src="https://lottie.host/7fc5c4a3-cad9-414a-8bc5-e097ed4ca67c/zGiBmsHxZj.json" background="transparent" speed="1" loop autoplay></lottie-player>
+          <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
             Media Sosial
           </figcaption>
         </figure>
