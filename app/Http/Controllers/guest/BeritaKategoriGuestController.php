@@ -40,12 +40,21 @@ class BeritaKategoriGuestController extends Controller
 
     $berita = Berita::with(['kategori', 'kategori.jabatan'])
       ->where('id_berita_kategori', $berita_kategori->id_berita_kategori)
-      ->select('judul_berita', 'slug_berita', 'foto_berita', 'created_at', 'views_count')
-      ->paginate(6);
+      ->select(
+        'judul_berita',
+        'slug_berita',
+        'foto_berita',
+        'created_at',
+        'views_count'
+      )->paginate(6);
 
-    $berita_lainnya = Berita::select('judul_berita', 'slug_berita', 'foto_berita', 'created_at', 'views_count')
-      ->limit(12)
-      ->get();
+    $berita_lainnya = Berita::select(
+      'judul_berita',
+      'slug_berita',
+      'foto_berita',
+      'created_at',
+      'views_count'
+    )->limit(12)->get();
 
     return view('guest.pages.berita.kategori.show', [
       'meta_description' => $meta_description,
@@ -68,8 +77,13 @@ class BeritaKategoriGuestController extends Controller
 
     $berita = Berita::where('id_berita_kategori', $berita_kategori->id_berita_kategori)
       ->where('judul_berita', 'LIKE', "%{$query}%")
-      ->select('judul_berita', 'slug_berita', 'foto_berita', 'created_at', 'views_count')
-      ->paginate(6);
+      ->select(
+        'judul_berita',
+        'slug_berita',
+        'foto_berita',
+        'created_at',
+        'views_count'
+      )->paginate(6);
 
     return response()->json([
       'data' => $berita->items(),

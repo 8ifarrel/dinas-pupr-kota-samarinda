@@ -41,15 +41,12 @@ Route::get('/berita/kategori', [BeritaKategoriGuestController::class, 'index'])
 	->name('guest.berita.kategori.index');
 
 Route::get('/berita/kategori/{slug_kategori}', [BeritaKategoriGuestController::class, 'show'])
-	->where('slug_kategori', '[A-Za-z\-]+')
 	->name('guest.berita.kategori.show');
 
 Route::get('/berita/kategori/{slug_kategori}/search', [BeritaKategoriGuestController::class, 'search'])
-	->where('slug_kategori', '[A-Za-z\-]+')
 	->name('guest.berita.kategori.search');
 
-Route::get('/berita/{nama_berita}', [BeritaGuestController::class, 'show'])
-	->where('uuid_berita', '[0-9a-fA-F\-]{36}')
+Route::get('/berita/{slug_berita}', [BeritaGuestController::class, 'show'])
 	->name('guest.berita.show');
 
 Route::get('/login', function() {

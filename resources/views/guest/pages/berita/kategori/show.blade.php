@@ -5,15 +5,15 @@
     <div class="text-center mb-2 lg:mb-3">
       <span
         class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') }}
+        {{ $page_title }}
       </span>
     </div>
 
     <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ htmlspecialchars($page_subtitle, ENT_QUOTES, 'UTF-8') }}
+      {{ $page_subtitle }}
     </h1>
 
-    <div class="mx-auto mb-5" data-slug-kategori="{{ htmlspecialchars($slug_kategori, ENT_QUOTES, 'UTF-8') }}">
+    <div class="mx-auto mb-5" data-slug-kategori="{{ $slug_kategori }}">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Cari</label>
       <div class="relative">
@@ -33,12 +33,11 @@
     <ul id="berita-list" class="grid grid-cols-2 gap-5">
       @foreach ($berita as $item)
         <li>
-          <a href="#">
+          <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
             <figure>
-              <img class="w-full h-full object-cover"
-                src="{{ htmlspecialchars($item->foto_berita, ENT_QUOTES, 'UTF-8') }}" alt="image description">
+              <img class="w-full h-full object-cover" src="{{ $item->foto_berita }}" alt="image description">
               <figcaption>
-                <h1 class="font-medium text-lg">{{ htmlspecialchars($item->judul_berita, ENT_QUOTES, 'UTF-8') }}</h1>
+                <h1 class="font-medium text-lg">{{ $item->judul_berita }}</h1>
               </figcaption>
               <time>{{ $item->created_at->format('D, d M Y') }}</time>
             </figure>
@@ -62,8 +61,8 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img src="{{ htmlspecialchars($item->foto_berita, ENT_QUOTES, 'UTF-8') }}" alt="">
-                <h1>{{ Str::limit(htmlspecialchars($item->judul_berita, ENT_QUOTES, 'UTF-8'), 60) }}</h1>
+                <img src="{{ $item->foto_berita }}" alt="">
+                <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach
           </ul>

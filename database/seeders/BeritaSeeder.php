@@ -12,7 +12,7 @@ class BeritaSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        
+
         for ($i = 1; $i <= 100; $i++) {
             DB::table('berita')->insert([
                 'uuid_berita' => Str::uuid(),
@@ -21,7 +21,7 @@ class BeritaSeeder extends Seeder
                 'id_berita_kategori' => $faker->numberBetween(1, 5),
                 'foto_berita' => $faker->imageUrl(320, 180, 'news'),
                 'sumber_foto_berita' => $faker->name,
-                'isi_berita' => $faker->paragraph,
+                'isi_berita' => $faker->paragraphs(5, true),
                 'views_count' => $faker->numberBetween(0, 100),
                 'created_at' => now(),
                 'updated_at' => now()

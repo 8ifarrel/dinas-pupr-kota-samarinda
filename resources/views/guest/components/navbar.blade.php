@@ -181,7 +181,7 @@
 
         <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarInformasiPUPR"
-            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Profil' ? ' bg-yellow lg:bg-transparent' : '' }}">
+            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-yellow lg:bg-transparent' : '' }}">
             Informasi PUPR
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
