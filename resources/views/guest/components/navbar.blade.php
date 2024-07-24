@@ -290,7 +290,7 @@
                   </h2>
                   <div class="border-s-2 ms-4 border-black/15">
                     <li>
-                      <a href="{{ route('guest.profil.sejarah-kota-samarinda.index') }}"
+                      <a href="{{ route('guest.pengumuman.index') }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengumuman
                         PUPR</a>
                     </li>
