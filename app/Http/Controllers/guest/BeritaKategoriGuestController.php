@@ -24,7 +24,7 @@ class BeritaKategoriGuestController extends Controller
       'meta_description' => $meta_description,
       'page_title' => $page_title,
       'page_subtitle' => $page_subtitle,
-      'berita_kategori' => $berita_kategori,
+      'berita_kategori'=> $berita_kategori
     ]);
   }
 

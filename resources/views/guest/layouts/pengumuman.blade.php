@@ -25,25 +25,19 @@
   {{-- jQuery (JS) --}}
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  {{-- Axios (JS) --}}
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
   {{-- Flowbite --}}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
   {{-- Flowbite --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
-  {{-- Splide --}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-
   {{-- Fontawesome --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-  {{-- AOS --}}
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  {{-- DataTables --}}
+  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
 
   {{-- Tailwind --}}
   @vite('resources/css/app.css')
@@ -56,15 +50,18 @@
 
   @include('guest.components.footer')
 
-  {{-- AOS --}}
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
-    AOS.init({
-      duration: 800,
-    });
-  </script>
-
   {{-- Lottiefiles --}}
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  {{-- DataTables --}}
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#pengumuman').DataTable({
+        responsive: true
+      });
+    });
+  </script>
 
   {{-- Jam (Special thanks to Bang Ucup Informatika Unmul 2020) --}}
   <script>
@@ -147,37 +144,6 @@
       }
 
       window.addEventListener("scroll", onScroll);
-    });
-  </script>
-
-  {{-- Splide (JS) --}}
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var splide = new Splide('.splide', {
-        type: 'loop',
-        focus  : 'center',
-        drag: 'free',
-        breakpoints: {
-          640: {
-            perPage: 2,
-          },
-          768: {
-            perPage: 3,
-          },
-          1024: {
-            perPage: 3,
-          },
-          1280: {
-            perPage: 4,
-          },
-          1920: {
-            perPage: 4,
-          }
-        },
-        pagination: false,
-      }); 
-      splide.mount();
     });
   </script>
 </body>

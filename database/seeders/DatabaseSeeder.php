@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 			StrukturOrganisasiDiagramSeeder::class,
 			VisiSeeder::class,
 			MisiSeeder::class,
+			PengumumanSeeder::class,
 		]);
 	}
 }

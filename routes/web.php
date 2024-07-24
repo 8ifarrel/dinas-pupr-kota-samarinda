@@ -15,6 +15,7 @@ use App\Http\Controllers\guest\StrukturOrganisasiGuestController;
 use App\Http\Controllers\guest\VisiDanMisiGuestController;
 use App\Http\Controllers\guest\BeritaGuestController;
 use App\Http\Controllers\guest\BeritaKategoriGuestController;
+use App\Http\Controllers\guest\PengumumanGuestController;
 
 Route::get('/', [PortalGuestController::class, 'index'])
 	->name('guest.portal.index');
@@ -49,6 +50,9 @@ Route::get('/berita/kategori/{slug_kategori}/search', [BeritaKategoriGuestContro
 Route::get('/berita/{slug_berita}', [BeritaGuestController::class, 'show'])
 	->name('guest.berita.show');
 
-Route::get('/login', function() {
+Route::get('/pengumuman', [PengumumanGuestController::class, 'index'])
+	->name('guest.pengumuman.index');
+
+Route::get('/login', function () {
 	return view('admin.pages.login.index');
 });
