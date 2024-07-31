@@ -35,7 +35,8 @@
         <li>
           <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
             <figure>
-              <img class="w-full h-full object-cover" src="{{ $item->foto_berita }}" alt="image description">
+              <img class="w-full h-full object-cover aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}"
+                alt="image description">
               <figcaption>
                 <h1 class="font-medium text-lg">{{ $item->judul_berita }}</h1>
               </figcaption>
@@ -61,7 +62,7 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img src="{{ $item->foto_berita }}" alt="">
+                <img src="{{ Storage::url($item->foto_berita) }}" alt="">
                 <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach
@@ -113,16 +114,16 @@
       data.data.forEach(item => {
         const li = document.createElement('li');
         li.innerHTML = `
-          <a href="#">
-            <figure>
-              <img class="w-full h-full object-cover" src="${htmlspecialchars(item.foto_berita)}" alt="image description">
-              <figcaption>
-                <h1 class="font-medium text-lg">${htmlspecialchars(item.judul_berita)}</h1>
-              </figcaption>
-              <time>${new Date(item.created_at).toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</time>
-            </figure>
-          </a>
-        `;
+        <a href="#">
+          <figure>
+            <img class="w-full h-full object-cover aspect-[16/9]" src="${item.foto_berita}" alt="image description">
+            <figcaption>
+              <h1 class="font-medium text-lg">${item.judul_berita}</h1>
+            </figcaption>
+            <time>${new Date(item.created_at).toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</time>
+          </figure>
+        </a>
+      `;
         beritaList.appendChild(li);
       });
 

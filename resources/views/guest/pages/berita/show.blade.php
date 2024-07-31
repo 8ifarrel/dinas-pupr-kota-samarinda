@@ -10,51 +10,51 @@
 
       <ul>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretaris']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sekretariat</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-sumber-daya-air']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Sumber Daya Air</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-cipta-karya']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Cipta Karya</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-bina-marga']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Bina Marga</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-bina-konstruksi']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Bina Konstruksi</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-tata-ruang']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Tata Ruang</a>
         </li>
         <li>
-          <a href="#"
+          <a href=" {{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-pertanahan']) }} "
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
             Pertanahan</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pengelolaan-air-limbah-domestik']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
             Pengelolaan Air Limbah Domestik</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pemeliharaan-jalan-dan-jembatan']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
             Pemeliharaan Jalan dan Jembatan</a>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pemeliharaan-saluran-drainase-dan-irigasi']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
             Pemeliharaan Saluran Drainase dan irigasi</a>
         </li>
@@ -63,7 +63,7 @@
 
     {{-- Isi berita --}}
     <main>
-      <img class="w-full mb-3 3xl:mb-5" src="{{ $berita->foto_berita }}" alt="">
+      <img class="w-full mb-3 3xl:mb-5 aspect-[16/9]" src="{{ Storage::url($berita->foto_berita) }}" alt="">
 
       <div class="md:flex justify-between">
         <div class="flex gap-x-3 mb-3 md:mb-0">
@@ -106,7 +106,7 @@
         @foreach ($berita_lainnya as $item)
           <li class="mb-2">
             <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
-              <img class="3xl:w-full" src="{{ $item->foto_berita }}" alt="">
+              <img class="3xl:w-full aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
               <h1 class="3xl:text-xl">{{ Str::limit($item->judul_berita, 60) }}</h1>
             </a>
           </li>
@@ -125,7 +125,7 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img src="{{ $item->foto_berita }}" alt="">
+                <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
                 <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach

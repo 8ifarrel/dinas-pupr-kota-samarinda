@@ -201,51 +201,51 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sekretariat</a>
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretaris']) }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sekretaris</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-sumber-daya-air']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Sumber Daya Air</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-cipta-karya']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Cipta Karya</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-bina-marga']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Bina Marga</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-bina-konstruksi']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Bina Konstruksi</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-tata-ruang']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Tata Ruang</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href=" {{ route('guest.berita.kategori.show', ['slug_kategori' => 'bidang-pertanahan']) }} "
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Bidang
                       Pertanahan</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pengelolaan-air-limbah-domestik']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
                       Pengelolaan Air Limbah Domestik</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pemeliharaan-jalan-dan-jembatan']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
                       Pemeliharaan Jalan dan Jembatan</a>
                   </li>
                   <li>
-                    <a href="#"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'uptd-pemeliharaan-saluran-drainase-dan-irigasi']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">UPTD
                       Pemeliharaan Saluran Drainase dan irigasi</a>
                   </li>

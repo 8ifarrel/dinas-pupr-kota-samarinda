@@ -116,7 +116,7 @@
             {{ $item->kategori->jabatan->nama_jabatan }}
           </div>
           <a href="#">
-            <img class="" src="{{ $item->foto_berita }}" alt="" />
+            <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="" />
           </a>
           <div class="p-5 flex-grow flex flex-col justify-between">
             <div>
