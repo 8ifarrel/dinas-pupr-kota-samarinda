@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class StrukturOrganisasi extends Model
 {
     protected $table = 'struktur_organisasi';
-    protected $primaryKey = 'id_jabatan';
-    public $incrementing = false;
+    protected $primaryKey = 'id_struktur_organisasi';
+    public $incrementing = true;
 
     protected $fillable = [
         'id_jabatan',
@@ -18,6 +18,11 @@ class StrukturOrganisasi extends Model
 
     public function jabatan()
     {
-        return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
+        return $this->belongsTo(Jabatan::class, 'id_jabatan');
+    }
+
+    public function slider()
+    {
+        return $this->hasMany(StrukturOrganisasiSlider::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
     }
 }

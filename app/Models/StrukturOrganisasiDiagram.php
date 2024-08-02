@@ -14,6 +14,7 @@ class StrukturOrganisasiDiagram extends Model
 	protected $primaryKey = 'id_struktur_organisasi_diagram';
 
 	protected $fillable = [
-		'diagram_struktur_organisasi'
+		'diagram_struktur_organisasi',
+		'id_struktur_organisasi'
 	];
 }

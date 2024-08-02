@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BeritaKategori;
+use App\Models\Pegawai;
 
 class Jabatan extends Model
 {
@@ -36,5 +37,15 @@ class Jabatan extends Model
     public function berita()
     {
     return $this->hasOne(BeritaKategori::class, 'id_jabatan');
+    }
+
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'id_jabatan');
+    }
+
+    public function jabatan()
+    {
+        return $this->hasMany(StrukturOrganisasi::class, 'id_jabatan', 'id_jabatan');
     }
 }

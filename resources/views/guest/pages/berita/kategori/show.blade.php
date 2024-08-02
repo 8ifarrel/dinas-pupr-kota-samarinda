@@ -62,7 +62,7 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img src="{{ Storage::url($item->foto_berita) }}" alt="">
+                <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
                 <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach

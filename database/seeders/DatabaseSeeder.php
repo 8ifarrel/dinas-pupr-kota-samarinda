@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
 			VisiSeeder::class,
 			MisiSeeder::class,
 			PengumumanSeeder::class,
+			StrukturOrganisasiSliderSeeder::class
 		]);
 	}
 }

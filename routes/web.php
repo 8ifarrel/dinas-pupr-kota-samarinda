@@ -38,6 +38,9 @@ Route::get('/profil/visi-dan-misi', [VisiDanMisiGuestController::class, 'index']
 Route::get('/profil/struktur-organisasi', [StrukturOrganisasiGuestController::class, 'index'])
 	->name('guest.profil.struktur-organisasi.index');
 
+Route::get('/profil/struktur-organisasi/{slug_jabatan}', [StrukturOrganisasiGuestController::class, 'show'])
+	->name('guest.profil.struktur-organisasi.show');
+
 Route::get('/berita/kategori', [BeritaKategoriGuestController::class, 'index'])
 	->name('guest.berita.kategori.index');
 

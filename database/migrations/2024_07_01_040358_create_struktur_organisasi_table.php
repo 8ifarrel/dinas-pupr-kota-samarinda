@@ -9,7 +9,8 @@ class CreateStrukturOrganisasiTable extends Migration
     public function up()
     {
         Schema::create('struktur_organisasi', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_jabatan')->primary();
+            $table->increments('id_struktur_organisasi');
+            $table->unsignedBigInteger('id_jabatan');
             $table->string('ikon_jabatan')->nullable();
             $table->integer('nomor_urut_jabatan')->unique();
             $table->timestamps();

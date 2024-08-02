@@ -144,6 +144,8 @@
       window.addEventListener("scroll", onScroll);
     });
   </script>
+
+  @yield('js')
 </body>
 
 </html>
