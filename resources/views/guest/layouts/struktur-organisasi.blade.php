@@ -21,6 +21,9 @@
 
   <link rel="icon" type="image/x-icon" href="" />
 
+  {{-- jQuery (JS) --}}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   {{-- Flowbite --}}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
