@@ -47,8 +47,7 @@
 <body>
   @include('guest.components.navbar')
 
-  <section
-    class="bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
+  <section style="background-image: url('{{ asset('image/hero/profil.png') }}');" class="bg-center bg-cover bg-no-repeat h-full w-full bg-gray-500 bg-blend-multiply">
     <div
       class="flex flex-col justify-center aspect-[16/9] sm:aspect-[21/9] md:aspect-[32/9] ms-8 xs:ms-10 sm:ms-20 md:ms-28">
       <h1

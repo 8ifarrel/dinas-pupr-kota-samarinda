@@ -4,7 +4,7 @@ namespace App\Http\Controllers\guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\StrukturOrganisasi;
-use App\Models\Jabatan;
+use App\Models\Berita;
 use App\Models\StrukturOrganisasiDiagram;
 
 class StrukturOrganisasiGuestController extends Controller
@@ -16,8 +16,8 @@ class StrukturOrganisasiGuestController extends Controller
 		$page_subtitle = "Struktur Organisasi";
 
 		$struktur_organisasi_diagram = StrukturOrganisasiDiagram::select('diagram_struktur_organisasi')
-		->whereNull('id_struktur_organisasi')
-		->first();	
+			->whereNull('id_struktur_organisasi')
+			->first();
 
 		$struktur_organisasi = StrukturOrganisasi::with('jabatan')->select(
 			'id_jabatan',
@@ -44,6 +44,23 @@ class StrukturOrganisasiGuestController extends Controller
 				'id_jabatan'
 			)->firstOrFail();
 
+		$struktur_organisasi_diagram = StrukturOrganisasiDiagram::where(
+			'id_struktur_organisasi',
+			$struktur_organisasi->id_struktur_organisasi
+		)->first();
+
+		$berita = Berita::with('kategori')
+			->where('id_berita_kategori', $struktur_organisasi->id_struktur_organisasi)
+			->select(
+				'judul_berita',
+				'slug_berita',
+				'foto_berita',
+				'id_berita_kategori',
+				'created_at'
+			)
+			->take(3)
+			->orderBy('created_at', 'desc')
+			->get();
 
 		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
 		$page_title = "Profil";
@@ -54,6 +71,8 @@ class StrukturOrganisasiGuestController extends Controller
 			'page_title' => $page_title,
 			'page_subtitle' => $page_subtitle,
 			'struktur_organisasi' => $struktur_organisasi,
+			'struktur_organisasi_diagram' => $struktur_organisasi_diagram,
+			'berita' => $berita,	
 		]);
 	}
 }

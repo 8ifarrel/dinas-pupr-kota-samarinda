@@ -85,8 +85,8 @@
 
     <div class="bg-blue p-1.5 w-full">
         <p class="text-white text-center text-sm">
-            © 2024 Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda. <br>
-            Powered by Tim IT DPUPR Kota Samarinda.
+            © 2024 {{ config('app.nama_dinas') }}. <br>
+            Powered by Tim IT {{ config('app.nama_singkatan_dinas') }}.
         </p>
     </div>
 </footer>

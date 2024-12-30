@@ -7,12 +7,28 @@
     <div class="relative w-full pb-[42.8571%] overflow-hidden">
       @foreach ($slider as $key => $item)
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{{ $item->foto_slider }}"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+          @if ($key === 0)
+          <img 
+            src="{{ Storage::url($item->foto_slider) }}" 
+            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 brightness-50" 
             alt="Slider Image {{ $key + 1 }}">
+            <div class="absolute inset-0 flex flex-col text-center items-center justify-center">
+              <h1 class="font-bold text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl md:pb-2 text-center text-white max-w-64 xs:max-w-72 sm:max-w-lg md:max-w-2xl lg:max-w-4xl">Website Resmi Dinas Pekerjaan Umum dan Penantaan Ruang Kota Samarinda</h1>
+              <p class="hidden sm:block sm:text-sm md:text-base lg:text-lg text-white sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
+                Selamat datang di website Dinas Pekerjaan Umum dan Penantaan Ruang Kota Samarinda, tempat
+                informasi mengenai pembangunan, pemeliharaan, dan pengelolaan infrastruktur, serta tata ruang dan pengawasan
+                bangunan di wilayah Kota Samarinda.
+              </p>
+            </div>
+          @else
+          <img 
+            src="{{ Storage::url($item->foto_slider) }}" 
+            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
+            alt="Slider Image {{ $key + 1 }}">
+          @endif
         </div>
       @endforeach
-    </div>
+    </div>    
 
     <!-- Slider controls -->
     <button type="button"
@@ -49,9 +65,7 @@
           <div class="static flex flex-col-reverse items-center">
             <div
               class="mb-[5rem] sm:mb-[3.8rem] md:mb-[3.7rem] static bg-blue rounded-t-[45%] lg:rounded-tl-[50%] lg:rounded-tr-none">
-              {{-- <img class="lg:h-[450px]" src="{{ $kepala_dinas->foto_pegawai }}" alt=""> --}}
-              <img class="lg:h-[450px]" src="https://pupr.samarindakota.go.id/temp/desy-damayanti-st-mt.png"
-                alt="">
+              <img class="lg:h-[450px]" src="{{ Storage::url($kepala_dinas->foto_pegawai) }}" alt="">
             </div>
 
             <div
@@ -60,8 +74,8 @@
                 {{ $kepala_dinas->nama_pegawai }}
               </p>
 
-              <p class="  text-sm lg:text-base lg:font-medium">
-                Kepala Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+              <p class="text-sm lg:text-base lg:font-medium">
+                {{ $kepala_dinas->jabatan->nama_jabatan }} {{ config('app.nama_dinas') }}
               </p>
             </div>
           </div>
@@ -75,8 +89,8 @@
             </span>
           </div>
 
-          <h1 class="font-bold text-3xl">
-            SAMBUTAN KEPALA DINAS
+          <h1 class="font-bold text-3xl uppercase">
+            SAMBUTAN {{ $kepala_dinas->jabatan->nama_jabatan }}
           </h1>
 
           <p>
@@ -84,10 +98,10 @@
           </p>
 
           <div>
-            <button type="button"
+            <a href="{{ route('guest.profil.profil-kepala-dinas.index') }}"
               class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Lihat Profil Selengkapnya
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -112,23 +126,20 @@
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($berita as $item)
         <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
-          <div class="text-center text-white font-bold bg-blue rounded-t-xl py-1.5">
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $item->kategori->jabatan->slug_jabatan ]) }}" class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
             {{ $item->kategori->jabatan->nama_jabatan }}
-          </div>
-          <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
-            <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="" />
           </a>
+          <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
           <div class="p-5 flex-grow flex flex-col justify-between">
             <div>
-              <a href="#">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {{ $item->judul_berita }}</h5>
-              </a>
+              <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                {{ $item->judul_berita }}
+              </h5>
               <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                 {{ $item->created_at->format('d M Y') }}</p>
             </div>
             <div class="flex justify-start">
-              <a href="#"
+              <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}"
                 class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-blue bg-yellow rounded-xl w-auto">
                 Baca berita
                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -141,6 +152,13 @@
           </div>
         </div>
       @endforeach
+    </div>
+
+    <div class="flex justify-center pt-6 lg:pt-12">
+      <a href="{{ route('guest.berita.kategori.index') }}"
+        class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Lihat Berita Lainnya
+      </a>
     </div>
   </div>
 
@@ -161,11 +179,10 @@
 
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($struktur_organisasi as $item)
-        <div
-          class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto {{ $item->nomor_urut_jabatan == 1 ? 'md:col-span-2 lg:col-span-3' : '' }}">
+        <a href="{{ route('guest.profil.struktur-organisasi.show', ['slug_jabatan' => $item->jabatan->slug_jabatan]) }}" class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto {{ $item->nomor_urut_jabatan == 1 ? 'md:col-span-2 lg:col-span-3' : '' }}">
           <figure>
             <div class="static mb-3 w-14 h-14 bg-yellow/40 rounded-full m-auto flex items-center justify-center">
-              <img class="absolute h-16" src="{{ url($item->ikon_jabatan) }}" alt="">
+              <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}" alt="{{ $item->jabatan->nama_jabatan }}">
             </div>
             <figcaption class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {{ $item->jabatan->nama_jabatan }}
@@ -174,22 +191,29 @@
           <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ $item->jabatan->deskripsi_jabatan }}
           </p>
           <div class="mt-auto">
-            <a href="#" class="inline-flex font-medium items-center text-blue hover:underline">
+            <p class="inline-flex font-medium items-center text-blue hover:underline">
               Pelajari selengkapnya
               <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778" />
               </svg>
-            </a>
+            </p>
           </div>
-        </div>
+        </a>
       @endforeach
+    </div>
+
+    <div class="flex justify-center pt-6 lg:pt-12">
+      <a href="{{ route('guest.profil.struktur-organisasi.index') }}"
+        class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Lihat Struktur Organisasi
+      </a>
     </div>
   </div>
 
   {{-- Agenda Kegiatan --}}
-  <div class="p-10 md:p-12">
+  {{-- <div class="p-10 md:p-12">
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
@@ -202,10 +226,10 @@
         AGENDA KEGIATAN
       </h1>
     </div>
-  </div>
+  </div> --}}
 
   {{-- Statistik Pengunjung --}}
-  <div class="bg-gray-200 p-6 md:p-12">
+  {{-- <div class="bg-gray-200 p-6 md:p-12">
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
@@ -237,7 +261,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   {{-- Partner --}}
   <div class="p-10 md:p-12">
@@ -249,9 +273,9 @@
               <ul class="splide__list">
                 @foreach ($partner as $item)
                   {{-- 16:9x315 --}}
-                  <li class="splide__slide my-auto mx-3">
+                  <li class="splide__slide my-auto mx-4">
                     <a href="{{ $item->url_partner }}">
-                      <img src="{{ $item->foto_partner }}" alt="{{ $item->nama_partner }}">
+                      <img src="{{ Storage::url($item->foto_partner) }}" alt="{{ $item->nama_partner }}">
                     </a>
                   </li>
                 @endforeach

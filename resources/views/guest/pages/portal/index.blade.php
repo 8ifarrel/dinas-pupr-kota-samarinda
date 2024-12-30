@@ -114,9 +114,9 @@
         </div>
         <!-- Modal footer -->
         <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2  lg:flex lg:items-center">
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Berita</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">PPID Pelaksana</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">Pengumuman</a>
+          <a href="{{ route('guest.berita.kategori.index') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Berita</a>
+          <a href="{{ route('guest.ppid-pelaksana.index') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">PPID Pelaksana</a>
+          <a href="{{ route('guest.pengumuman.index') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">Pengumuman</a>
         </div>
       </div>
     </div>
@@ -151,9 +151,9 @@
         </div>
         <!-- Modal footer -->
         <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hantubanyu</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">UPTD Limbah</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">UPTD Jalan dan Jembatan</a>
+          <a href="/hantubanyu" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hantubanyu</a>
+          <a href="/uptd-limbah" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">UPTD Limbah</a>
+          <a href="/uptd-jalan-dan-jembatan" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">UPTD Jalan dan Jembatan</a>
         </div>
       </div>
     </div>
@@ -188,9 +188,9 @@
         </div>
         <!-- Modal footer -->
         <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SKM</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">LAPOR!</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">E-KianPuas</a>
+          <a href="{{ route('guest.skm.index') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SKM</a>
+          <a href="{{ url('https://www.lapor.go.id/') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">LAPOR!</a>
+          <a href="{{ url('https://e-kianpuas.samarindakota.go.id/survei/form/dinas-pekerjaan-umum-dan-penataan-ruang/39ba9d60-d13d-4bce-ae9e-a54316bed169') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">E-KianPuas</a>
         </div>
       </div>
     </div>
@@ -225,9 +225,9 @@
         </div>
         <!-- Modal footer -->
         <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Instagram</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Facebook</a>
-          <a type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">YouTube</a>
+          <a href="{{ url('https://www.instagram.com/dpuprkotasamarinda/') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Instagram</a>
+          <a href="{{ url('https://www.facebook.com/dpuprkotasamarinda/') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Facebook</a>
+          <a href="{{ url('https://www.youtube.com/@dinaspuprkotasamarinda/') }}" type="button" class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">YouTube</a>
         </div>
       </div>
     </div>

@@ -1,201 +1,135 @@
 @extends('guest.layouts.struktur-organisasi')
 
 @section('slot')
-<div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
-  <div class="text-center mb-2 lg:mb-3">
-    <span
-      class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-      {{ $page_title }}
-    </span>
-  </div>
-
-  <h1 class="text-center font-bold text-2xl lg:text-3xl 2xl:text-4xl pb-1.5 lg:pb-3 uppercase">
-    {{ $page_subtitle }}
-  </h1>
-
-  @if ($struktur_organisasi->jabatan)
-  <p class="text-center text-lg md:text-xl 2xl:text-2xl sm:px-12 md:px-24 md:font-medium">
-    {{ $struktur_organisasi->jabatan->deskripsi_jabatan }}
-  </p>
-  @endif
-
-  @if ($struktur_organisasi->slider->count())
-  <div class="mt-5">
-    <hr class="h-0.5 my-4 sm:my-8 w-48 sm:w-72 md:w-96 bg-black mx-auto border-0 dark:bg-gray-700">
-
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active flex justify-evenly">
-          <section class="splide w-full" aria-labelledby="carousel-heading">
-            <div class="splide__track">
-              <ul class="splide__list">
-                @foreach ($struktur_organisasi->slider as $item)
-                {{-- 16:9x315 --}}
-                <li class="splide__slide px-1">
-                  <img class="mx-auto" src="{{ $item->foto }}" alt="{{ $item->keterangan }}">
-                </li>
-                @endforeach
-              </ul>
-            </div>
-          </section>
-        </div>
-      </div>
+  <div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
+    <div class="text-center mb-2 lg:mb-3">
+      <span
+        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        {{ $page_title }}
+      </span>
     </div>
 
-    <hr class="h-0.5 my-4 sm:my-8 w-48 sm:w-72 md:w-96 mx-auto bg-black border-0 dark:bg-gray-700">
-  </div>
-  @endif
+    <h1 class="text-center font-bold text-2xl lg:text-3xl 2xl:text-4xl pb-1.5 lg:pb-3 uppercase">
+      {{ $page_subtitle }}
+    </h1>
 
-    <div>
-      <h2 class="text-center text-3xl font-bold mb-5">
-        Panjang Jaringan Menurut Kondisi Jalan <br> Kota Samarinda
-      </h2>
+    @if ($struktur_organisasi->jabatan)
+      <p class="text-center text-lg md:text-xl 2xl:text-2xl sm:px-12 md:px-24 ">
+        {{ $struktur_organisasi->jabatan->deskripsi_jabatan }}
+      </p>
+    @endif
 
-      <p class="text-center mb-2 font-medium text-gray-600">Dalam satuan kilometer</p>
+    @if ($struktur_organisasi->slider->count())
+      <div class="mt-5">
+        <hr class="h-0.5 my-4 sm:my-8 w-48 sm:w-72 md:w-96 bg-black mx-auto border-0 dark:bg-gray-700">
 
-      <div class="mx-auto flex gap-5">
-        {{-- Line Chart --}}
-        <div class="w-2/3 rounded-2xl py-3 px-5 flex items-center shadow border bg-gray-50">
-          <canvas id="lineChart"></canvas>
-        </div>
-
-        {{-- Pie Chart --}}
-        <div class="w-1/3 py-3 px-5 rounded-2xl flex flex-col items-center shadow border bg-gray-50">
-          <form class="mx-auto flex w-fit">
-            <p class="shrink-0 my-auto me-1 font-medium">Pilih tahun: </p>
-            <select id="yearDropdown"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="2019">2019</option>
-              <option value="2020">2020</option>
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023" selected>2023</option>
-            </select>
-          </form>
-
-          <div class="mx-auto w-full">
-            <canvas id="pieChart" class="mt-3"></canvas>
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active flex justify-evenly">
+              <section class="splide w-full" aria-labelledby="carousel-heading">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    @foreach ($struktur_organisasi->slider as $item)
+                      {{-- 16:9x315 --}}
+                      <li class="splide__slide px-1">
+                        <img class="mx-auto" src="{{ $item->foto }}" alt="{{ $item->keterangan }}">
+                      </li>
+                    @endforeach
+                  </ul>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="relative overflow-x-auto text-sm md:text-base mt-5 rounded-2xl py-2.5 px-5 shadow border bg-gray-50">
-        <table id="roadConditionTable" class="stripe hover row-border table-auto" style="width:100%;">
-          <thead>
-            <tr>
-              <th class="bg-yellow/35">Tahun</th>
-              <th class="bg-yellow/35">Baik</th>
-              <th class="bg-yellow/35">Sedang</th>
-              <th class="bg-yellow/35">Rusak Berat</th>
-              <th class="bg-yellow/35">Rusak Ringan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2019</td>
-              <td>442.631</td>
-              <td>57.20</td>
-              <td>150.60</td>
-              <td>59.21</td>
-            </tr>
-            <tr>
-              <td>2020</td>
-              <td>524.44</td>
-              <td>37.97</td>
-              <td>121.23</td>
-              <td>26.01</td>
-            </tr>
-            <tr>
-              <td>2021</td>
-              <td>570.60</td>
-              <td>26.24</td>
-              <td>80.32</td>
-              <td>32.79</td>
-            </tr>
-            <tr>
-              <td>2022</td>
-              <td>552.125</td>
-              <td>40.266</td>
-              <td>66.454</td>
-              <td>50.703</td>
-            </tr>
-            <tr>
-              <td>2023</td>
-              <td>561.979</td>
-              <td>37.941</td>
-              <td>61.808</td>
-              <td>47.910</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Tahun</th>
-              <th>Baik</th>
-              <th>Sedang</th>
-              <th>Rusak Berat</th>
-              <th>Rusak Ringan</th>
-            </tr>
-          </tfoot>
-        </table>
+        <hr class="h-0.5 my-4 sm:my-8 w-48 sm:w-72 md:w-96 mx-auto bg-black border-0 dark:bg-gray-700">
       </div>
+    @endif
+  </div>
+
+  <div class="bg-[#f0f0f0] px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
+    <div class="text-center mb-2 lg:mb-3">
+      <span
+        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        Struktur Bagian
+      </span>
     </div>
 
-  <div>
-    <h2 class="text-center text-3xl font-bold mb-5">
-      Panjang Jaringan Menurut Kondisi Jalan <br> Kota Samarinda
+    <h2 class="text-center font-bold text-2xl lg:text-3xl 2xl:text-4xl pb-1.5 lg:pb-3 uppercase">
+      {{ $page_subtitle }}
     </h2>
 
-    <p class="text-center mb-2 font-medium ">Dalm satuan kilometer</p>
+    @if ($struktur_organisasi_diagram)
+      <div class="flex justify-center">
+        <img src="{{ Storage::url($struktur_organisasi_diagram->diagram_struktur_organisasi) }}"
+          alt="{{ $struktur_organisasi->jabatan->nama_jabatan }}">
+      </div>
+    @endif
+  </div>
 
-    <div class="mx-auto flex gap-5">
-      {{-- Line Chart --}}
-      <div class="w-2/3 rounded-xl py-2 px-3 flex items-center shadow border bg-gray-50">
-        <canvas id="lineChart"></canvas>
+  {{-- Berita Terkait --}}
+  @if ($berita->isNotEmpty())
+    <div class="p-10 md:p-12">
+      <div class="text-center pb-6 lg:pb-12 grid gap-3">
+        <div>
+          <span
+            class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+            BERITA TERBARU
+          </span>
+        </div>
+
+        <h2 class="font-bold text-3xl uppercase">
+          SEPUTAR {{ $struktur_organisasi->jabatan->nama_jabatan }}
+        </h2>
       </div>
 
-      {{-- Pie Chart --}}
-      <div class="w-1/3 py-2 px-3 rounded-xl flex flex-col items-center shadow border bg-gray-50">
-        <form class="mx-auto flex w-fit">
-          <p class="shrink-0 my-auto me-1 text-lg font-medium">Pilih tahun: </p>
-          <select id="yearDropdown"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023" selected>2023</option>
-          </select>
-        </form>
+      <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
+        @foreach ($berita as $item)
+          <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
+            <div class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
+              {{ $item->kategori->jabatan->nama_jabatan }}
+            </div>
+            <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
+            <div class="p-5 flex-grow flex flex-col justify-between">
+              <div>
+                <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {{ $item->judul_berita }}
+                </h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  {{ $item->created_at->format('d M Y') }}</p>
+              </div>
+              <div class="flex justify-start">
+                <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}"
+                  class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-blue bg-yellow rounded-xl w-auto">
+                  Baca berita
+                  <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
 
-        <div class="mx-auto">
-          <canvas id="pieChart" class="mt-3"></canvas>
-        </div>
+      <div class="flex justify-center pt-6 lg:pt-12">
+        <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $struktur_organisasi->jabatan->slug_jabatan]) }}"
+          class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Lihat Berita Lainnya
+        </a>
       </div>
     </div>
-  </div>
-</div>
+  @endif
 @endsection
 
 @section('js')
-  {{-- ChartJS --}}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  {{-- Splide --}}
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $('#roadConditionTable').DataTable();
-    });
-  </script>
-
-{{-- ChartJS --}}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-{{-- Splide --}}
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
-
-<script>
-  const splide = new Splide('.splide', {
+    const splide = new Splide('.splide', {
       type: 'loop',
       focus: 'center',
       breakpoints: {
@@ -218,192 +152,10 @@
     });
 
     splide.mount(window.splide);
-</script>
-
-  {{-- Data Jalan --}}
-  <script>
-    // Line Chart
-    const lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: ['2019', '2020', '2021', '2022', '2023'],
-        datasets: [{
-            label: 'Baik',
-            data: [442.631, 524.44, 570.60, 552.125, 561.979],
-            borderColor: 'rgba(75, 192, 192, 1)',
-            fill: false
-          },
-          {
-            label: 'Sedang',
-            data: [57.20, 37.97, 26.24, 40.266, 37.941],
-            borderColor: 'rgba(54, 162, 235, 1)',
-            fill: false
-          },
-          {
-            label: 'Rusak Berat',
-            data: [150.60, 121.23, 80.32, 66.454, 61.808],
-            borderColor: 'rgba(255, 99, 132, 1)',
-            fill: false
-          },
-          {
-            label: 'Rusak Ringan',
-            data: [59.21, 26.01, 32.79, 50.703, 47.910],
-            borderColor: 'rgba(255, 206, 86, 1)',
-            fill: false
-          }
-        ]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-    // Pie Chart
-    const pieData = {
-      '2019': [442.631, 57.20, 150.60, 59.21],
-      '2020': [524.44, 37.97, 121.23, 26.01],
-      '2021': [570.60, 26.24, 80.32, 32.79],
-      '2022': [552.125, 40.266, 66.454, 50.703],
-      '2023': [561.979, 37.941, 61.808, 47.910]
-    };
-
-    const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
-      type: 'pie',
-      data: {
-        labels: ['Baik', 'Sedang', 'Rusak Berat', 'Rusak Ringan'],
-        datasets: [{
-          data: pieData['2019'],
-          backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 206, 86, 0.2)'
-          ],
-          borderColor: [
-            'rgba(75, 192, 192, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 206, 86, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-        }
-      }
-    });
-
-    document.getElementById('yearDropdown').addEventListener('change', function() {
-      const year = this.value;
-      pieChart.data.datasets[0].data = pieData[year];
-      pieChart.update();
-    });
   </script>
-
-{{-- Data Jalan --}}
-<script>
-  // Line Chart
-  const lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
-      type: 'line',
-      data: {
-          labels: ['2019', '2020', '2021', '2022', '2023'],
-          datasets: [
-              {
-                  label: 'Baik',
-                  data: [442.631, 524.44, 570.60, 552.125, 561.979],
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  fill: false
-              },
-              {
-                  label: 'Sedang',
-                  data: [57.20, 37.97, 26.24, 40.266, 37.941],
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  fill: false
-              },
-              {
-                  label: 'Rusak Berat',
-                  data: [150.60, 121.23, 80.32, 66.454, 61.808],
-                  borderColor: 'rgba(255, 99, 132, 1)',
-                  fill: false
-              },
-              {
-                  label: 'Rusak Ringan',
-                  data: [59.21, 26.01, 32.79, 50.703, 47.910],
-                  borderColor: 'rgba(255, 206, 86, 1)',
-                  fill: false
-              }
-          ]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
-  });
-
-  // Pie Chart
-  const pieData = {
-      '2019': [442.631, 57.20, 150.60, 59.21],
-      '2020': [524.44, 37.97, 121.23, 26.01],
-      '2021': [570.60, 26.24, 80.32, 32.79],
-      '2022': [552.125, 40.266, 66.454, 50.703],
-      '2023': [561.979, 37.941, 61.808, 47.910]
-  };
-
-  const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
-      type: 'pie',
-      data: {
-          labels: ['Baik', 'Sedang', 'Rusak Berat', 'Rusak Ringan'],
-          datasets: [{
-              data: pieData['2019'],
-              backgroundColor: [
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 206, 86, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(255, 206, 86, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          responsive: true,
-          plugins: {
-              legend: {
-                  position: 'top',
-              },
-          }
-      }
-  });
-
-  document.getElementById('yearDropdown').addEventListener('change', function() {
-      const year = this.value;
-      pieChart.data.datasets[0].data = pieData[year];
-      pieChart.update();
-  });
-</script>
 @endsection
 
 @section('css')
-{{-- Splide --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
+  {{-- Splide --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
 @endsection

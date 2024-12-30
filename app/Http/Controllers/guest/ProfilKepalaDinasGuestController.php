@@ -26,12 +26,12 @@ class ProfilKepalaDinasGuestController extends Controller
 		$riwayat_pendidikan = KepalaDinasRiwayatPendidikan::with('pegawai.jabatan')->select(
 			'tanggal_masuk',
 			'nama_pendidikan'
-		)->get();
+		)->orderBy('tanggal_masuk', 'desc')->get();
 
 		$jenjang_karir = KepalaDinasJenjangKarir::with('pegawai.jabatan')->select(
 			'tanggal_masuk',
 			'nama_karir'
-		)->get();
+		)->orderBy('tanggal_masuk', 'desc')->get();
 
 		return view('guest.pages.profil.profil-kepala-dinas.index', [
 			'meta_description' => $meta_description,

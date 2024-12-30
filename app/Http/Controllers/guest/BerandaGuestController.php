@@ -16,13 +16,18 @@ class BerandaGuestController extends Controller
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
         $page_title = "Beranda";
 
-        $berita = Berita::with('kategori.jabatan')->select(
-            'judul_berita',
-            'slug_berita',
-            'foto_berita',
-            'id_berita_kategori', 
-            'created_at',
-        )->take(6)->get();
+        $berita = Berita::with('kategori.jabatan')
+            ->select(
+                'judul_berita',
+                'slug_berita',
+                'foto_berita',
+                'id_berita_kategori',
+                'created_at'
+            )
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+
 
         $slider = Slider::select(
             'foto_slider',
@@ -38,9 +43,9 @@ class BerandaGuestController extends Controller
             'id_jabatan',
             'nama_pegawai',
             'foto_pegawai'
-        )->whereHas('jabatan', function($query) {
+        )->whereHas('jabatan', function ($query) {
             $query->where('nama_jabatan', 'Kepala Dinas');
-        })->first();        
+        })->first();
 
         $partner = Partner::select(
             'nama_partner',

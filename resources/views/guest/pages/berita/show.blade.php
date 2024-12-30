@@ -10,7 +10,7 @@
 
       <ul>
         <li>
-          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretaris']) }}"
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretariat']) }}"
             class="block pb-3 3xl:pb-4 text-base 3xl:text-xl hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sekretariat</a>
         </li>
         <li>

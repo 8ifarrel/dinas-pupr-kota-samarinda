@@ -1,6 +1,6 @@
 <div class="hidden my-4 mx-16 lg:flex justify-between items-center">
   <figure class="flex gap-2">
-    <img class="h-[55px]" src="{{ asset('image/logo/pemkot-samarinda.png') }}" alt="Pemerintah Kota Samarinda" />
+    <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     <figcaption class="my-auto text-lg text-blue font-bold w-[340px] uppercase">
       {{ config('app.nama_dinas') }}
@@ -25,8 +25,7 @@
     </div>
 
     <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-      <button type="button"
-        class="text-blue bg-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pelayanan</button>
+      <button type="button" class="text-blue bg-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pelayanan</button>
       <button data-collapse-toggle="navbar-cta" type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         aria-controls="navbar-cta" aria-expanded="false">
@@ -90,10 +89,10 @@
                 </div>
               </div>
 
-              {{-- Kementerian PUPR --}}
+              {{-- Kementerian PU --}}
               <div class="py-5 px-3">
                 <h2 class="font-bold px-4 pb-2 text-base">
-                  Kementerian PUPR
+                  Kementerian PU
                 </h2>
 
                 <div class="border-s-2 ms-4 border-black/15">
@@ -196,12 +195,12 @@
               {{-- Berita --}}
               <div class="py-5 px-3">
                 <h2 class="font-bold px-4 pb-2 text-base">
-                  Berita PUPR
+                  Berita Dinas PUPR Kota Samarinda
                 </h2>
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretaris']) }}"
+                    <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => 'sekretariat']) }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sekretaris</a>
                   </li>
                   <li>
@@ -256,27 +255,27 @@
                 {{-- PPID Pelaksana --}}
                 <div class="py-5 px-3">
                   <h2 class="font-bold px-4 pb-2 text-base">
-                    PPID Pelaksana
+                    PPID Pelaksana Dinas PUPR Kota Samarinda
                   </h2>
 
                   <div class="border-s-2 ms-4 border-black/15">
                     <li>
-                      <a href="https://pu.go.id/page/Peristiwa-Heroik-3-Des"
+                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Peraturan
                         Keputusan dan Kebijakan</a>
                     </li>
                     <li>
-                      <a href="https://pu.go.id/page/Dari-Masa-ke-Masa"
+                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
                         yang Wajib Disediakan dan Diumumkan Secara Berkala</a>
                     </li>
                     <li>
-                      <a href="https://pu.go.id/page/Mereka-yang-Gugur"
+                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
                         yang Wajib Diumumkan Secara Serta-merta</a>
                     </li>
                     <li>
-                      <a href="https://pu.go.id/page/Mars-PUPR"
+                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
                         yang Wajib Tersedia Setiap Saat</a>
                     </li>
@@ -291,13 +290,18 @@
                   <div class="border-s-2 ms-4 border-black/15">
                     <li>
                       <a href="{{ route('guest.pengumuman.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengumuman
-                        PUPR</a>
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Pengumuman Dinas PUPR Kota Samarinda</a>
+                    </li>
+                    <li>
+                      <a href="{{ route('guest.pengumuman.index') }}"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Agenda Kegiatan Dinas PUPR Kota Samarinda</a>
                     </li>
                     <li>
                       <a href="https://pu.go.id/berita/kanal"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Berita
-                        dari Kementerian</a>
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Berita dari Kementerian PU</a>
                     </li>
                   </div>
                 </div>
@@ -320,19 +324,23 @@
             class="border-y-4 border-blue z-50 hidden font-normal bg-white divide-y divide-gray-100 shadow w-44">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
               <li>
-                <a href="#"
+                <a href="{{ route('guest.e-library.galeri-foto.index') }}"
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Galeri
                   Foto</a>
               </li>
               <li>
-                <a href="#"
+                <a href="{{ route('guest.e-library.video.index') }}"
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Video</a>
               </li>
           </div>
         </li>
         <li>
-          <a href="#"
+          <a href="{{ route('guest.skm.index') }}"
             class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'SKM' ? ' bg-yellow lg:bg-transparent' : '' }}">SKM</a>
+        </li>
+        <li>
+          <a href="{{ route('guest.buku-tamu.index') }}"
+            class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'Buku Tamu' ? ' bg-yellow lg:bg-transparent' : '' }}">Buku Tamu</a>
         </li>
       </ul>
     </div>

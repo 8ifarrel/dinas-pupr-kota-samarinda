@@ -163,8 +163,8 @@
 										</svg>
 									</span>
 									<h3 class="mb-1 text-base lg:text-lg font-medium text-gray-900 dark:text-white">{{ $item->nama_pendidikan }}</h3>
-									<time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_masuk)->format('d M Y') }}
-									</time>
+									{{-- <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_masuk)->format('d M Y') }}
+									</time> --}}
 								</li>
 							@endforeach
 						</ol>	

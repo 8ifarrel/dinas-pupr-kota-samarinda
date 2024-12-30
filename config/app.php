@@ -7,11 +7,15 @@ return [
     | Additional
     |--------------------------------------------------------------------------
     |
-    | Value ini berisikan apalah ga tau aku
+    | This value berisikan apalah ga tau aku wkwkwk
     */
     'nama_dinas' => 'Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda',
     'nama_singkatan_dinas' => 'Dinas PUPR Kota Samarinda',
     'logo_dinas' => '/image/logo/dinas-pupr-kota-samarinda.png',
+
+    'nama_pemkot' => 'Pemerintah Kota Samarinda',
+    'nama_singkatan_pemkot' => 'Pemkot Samarinda',
+    'logo_pemkot' => '/image/logo/pemkot-samarinda.png',
 
     /*
     |--------------------------------------------------------------------------
