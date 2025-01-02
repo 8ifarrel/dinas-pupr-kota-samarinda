@@ -4,6 +4,30 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
+| Additional Route
+|--------------------------------------------------------------------------
+|
+| Rute-rute berikut	digunakan untuk keperluan tambahan yang digunakan pada 
+| Halaman Admin (E-Panel) dan Halaman Guest
+|
+*/
+
+use App\Http\Controllers\FilePondController;
+
+/**
+ * FilePond
+ */
+
+Route::prefix('filepond')->group(function () {
+	Route::post('/process', [FilePondController::class, 'process'])
+		->name('filepond.process');
+
+	Route::delete('/revert', [FilePondController::class, 'revert'])
+		->name('filepond.revert');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Halaman Guest
 |--------------------------------------------------------------------------
 |
@@ -203,12 +227,6 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::get('/tambah', [SliderAdminController::class, 'create'])
 				->name('admin.slider.create');
-
-			Route::post('/filepond', [SliderAdminController::class, 'filepond'])
-				->name('admin.slider.filepond');
-
-			Route::delete('/filepond-revert', [SliderAdminController::class, 'filepondRevert'])
-				->name('admin.slider.filepond-revert');
 
 			Route::post('/store', [SliderAdminController::class, 'store'])
 				->name('admin.slider.store');

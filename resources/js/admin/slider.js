@@ -1,30 +1,44 @@
 import * as FilePond from "filepond";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
 
 FilePond.registerPlugin(FilePondPluginImagePreview);
 
 document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.querySelector('input[name="foto_slider"]');
     const editButton = document.querySelector("#edit-image-button");
+    const cropperModalElement = document.getElementById("cropperModal");
+    const imageToCrop = document.getElementById("image-to-crop");
+    const cropButton = document.getElementById("crop-button");
 
     let uploadedFileUrl = null;
+    let cropper = null;
+
+    const cropperModal = new Modal(cropperModalElement);
 
     const pond = FilePond.create(fileInput, {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
+        labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>',
         server: {
             process: {
-                url: "/e-panel/slider/filepond",
+                url: "/filepond/process",
                 method: "POST",
                 headers: {
-                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content,
+                    "X-CSRF-TOKEN": document.head.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
                 },
             },
             revert: {
-                url: "/e-panel/slider/filepond-revert",
+                url: "/filepond/revert",
                 method: "DELETE",
                 headers: {
-                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content,
+                    "X-CSRF-TOKEN": document.head.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
+                    "Content-Type": "application/json",
                 },
             },
         },
@@ -35,38 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 editButton.style.display = "inline-block";
             }
         },
-        onremovefile: () => {
-            if (uploadedFileUrl) {
-                fetch("/e-panel/slider/filepond-revert", {
-                    method: "DELETE",
-                    headers: {
-                        "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content,
-                        // "Content-Type": "application/json",
-                    },
-                })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error(
-                                `HTTP error! status: ${response.status}`
-                            );
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        console.log("File removed:", data.message);
-                        uploadedFileUrl = null;
-                    })
-                    .catch((error) =>
-                        console.error("Error removing file:", error)
-                    );
-            }
+        onprocessfilerevert: (file) => {
+            uploadedFileUrl = null;
+            editButton.style.display = "none";
         },
     });
 
     window.addEventListener("beforeunload", () => {
         if (uploadedFileUrl) {
             navigator.sendBeacon(
-                "/e-panel/slider/filepond-revert",
+                "/filepond/revert",
                 JSON.stringify({ fileUrl: uploadedFileUrl })
             );
         }
@@ -75,10 +67,43 @@ document.addEventListener("DOMContentLoaded", function () {
     if (editButton) {
         editButton.addEventListener("click", function () {
             const imageUrl = uploadedFileUrl;
-
-            // berisikan code image cropper
-            // capek masih bikin laporan akhir kampus merdeka
-            // jangan diapa-apain
+            if (imageUrl) {
+                imageToCrop.src = imageUrl;
+                cropperModal.show();
+                if (cropper) {
+                    cropper.destroy();
+                }
+                cropper = new Cropper(imageToCrop, {
+                    aspectRatio: 21 / 9,
+                    viewMode: 1,
+                });
+            }
         });
     }
+
+    cropButton.addEventListener("click", function () {
+        if (cropper) {
+            const canvas = cropper.getCroppedCanvas();
+            canvas.toBlob((blob) => {
+                const file = new File([blob], "cropped_image.jpg", {
+                    type: "image/jpeg",
+                });
+                // Remove the previous file from FilePond using revert
+                fetch("/filepond/revert", {
+                    method: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ fileUrl: uploadedFileUrl }),
+                }).then(() => {
+                    pond.removeFile(pond.getFiles()[0].id);
+                    pond.addFile(file);
+                    cropperModal.hide();
+                    cropper.destroy();
+                    cropper = null;
+                });
+            });
+        }
+    });
 });

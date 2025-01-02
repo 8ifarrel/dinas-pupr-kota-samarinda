@@ -5,12 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-
-
-
 use Illuminate\Support\Facades\Storage;
 
 class SliderAdminController extends Controller
@@ -100,39 +94,5 @@ class SliderAdminController extends Controller
         return view('admin.pages.slider.create', [
             'page_title' => $page_title,
         ]);
-    }
-
-
-    public function filepond(Request $request)
-    {
-        $request->validate([
-            'foto_slider' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $file = $request->file('foto_slider');
-        $fileName = now()->format('YmdHis') . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('slider/temp', $fileName, 'public');
-
-        return response()->json([
-            'fileUrl' => Storage::url($path),
-        ]);
-    }
-
-    public function filepondRevert(Request $request)
-    {
-
-        // $request->validate([
-        //     'fileUrl' => 'required|url',
-        // ]);
-
-        $path = str_replace(url('storage'), 'public', $request->fileUrl);
-        Log::info($path);
-
-        if (Storage::exists($path)) {
-            Storage::delete($path);
-            return response()->json(['message' => 'File deleted successfully.']);
-        }
-
-        return response()->json(['message' => 'File not found.'], 404);
     }
 }
