@@ -21,16 +21,23 @@ document.addEventListener("DOMContentLoaded", () => {
         'meta[name="csrf-token"]'
     ).content;
 
+    window.addEventListener("beforeunload", () => {
+        if (uploadedFileUrl) {
+            fetch("/filepond/revert", {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ fileUrl: uploadedFileUrl }),
+            });
+        }
+    });
 
-    /**
-     * TODO:
-     * 1. Tambahkan code yang dapat menghapus file jika me-refresh halaman
-     */
     const pond = FilePond.create(fileInput, {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
-        labelIdle:
-            'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>',
+        labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>',
         server: {
             process: {
                 url: "/filepond/process",
@@ -72,15 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /**
-     * TODO:
-     * 1. Tambahkan code untuk menyesuaikan extensi file yang diupload
-     */
     cropButton.addEventListener("click", () => {
         if (cropper) {
             cropper.getCroppedCanvas().toBlob((blob) => {
-                const file = new File([blob], "cropped_image.jpg", {
-                    type: "image/jpeg",
+                const file = new File([blob], `cropped_image.${blob.type.split('/')[1]}`, {
+                    type: blob.type,
                 });
                 fetch("/filepond/revert", {
                     method: "DELETE",
@@ -90,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     body: JSON.stringify({ fileUrl: uploadedFileUrl }),
                 }).then(() => {
+                    pond.removeFile(pond.getFiles()[0].id);
                     pond.addFile(file);
                     cropperModal.hide();
                     cropper.destroy();
