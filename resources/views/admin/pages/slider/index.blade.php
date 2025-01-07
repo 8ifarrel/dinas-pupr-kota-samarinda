@@ -69,7 +69,7 @@
               </td>
               <td>
                 <div class="flex gap-2">
-                  <a href=""
+                  <a href="{{ route('admin.slider.edit', $item->id_slider) }}"
                     class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-pencil"></i>
                   </a>

@@ -233,6 +233,12 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::delete('/delete/{id}', [SliderAdminController::class, 'destroy'])
 				->name('admin.slider.destroy');
+
+			Route::get('/edit/{id}', [SliderAdminController::class, 'edit'])
+				->name('admin.slider.edit');
+
+			Route::post('/update/{id}', [SliderAdminController::class, 'update'])
+				->name('admin.slider.update');
 		});
 	});
 

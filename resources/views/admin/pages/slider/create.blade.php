@@ -3,7 +3,6 @@
 @section('css')
     @vite('resources/css/admin/slider.css')
     <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
-    <link href="https://unpkg.com/flowbite/dist/flowbite.css" rel="stylesheet"/>
 @endsection
 
 @section('slot')

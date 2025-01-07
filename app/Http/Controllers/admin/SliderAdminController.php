@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class SliderAdminController extends Controller
 {
@@ -121,5 +120,43 @@ class SliderAdminController extends Controller
         $slider->save();
 
         return redirect()->route('admin.slider.index')->with('success', 'Slider berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $page_title = "Edit Slider";
+        $slider = Slider::findOrFail($id);
+
+        return view('admin.pages.slider.edit', [
+            'page_title' => $page_title,
+            'slider' => $slider,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul_slider' => 'required|string|max:255',
+            'is_visible' => 'required|boolean',
+            'foto_slider' => 'nullable|string',
+        ]);
+
+        $slider = Slider::findOrFail($id);
+        $slider->judul_slider = $request->input('judul_slider');
+        $slider->is_visible = $request->input('is_visible');
+
+        if ($request->has('foto_slider')) {
+            $fotoSliderData = json_decode($request->input('foto_slider'), true);
+            if (isset($fotoSliderData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
+                $newFileName = 'Slider/' . $slider->nomor_urut_slider . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                Storage::disk('public')->move($tempFilePath, $newFileName);
+                $slider->foto_slider = $newFileName;
+            }
+        }
+
+        $slider->save();
+
+        return redirect()->route('admin.slider.index')->with('success', 'Slider berhasil diperbarui.');
     }
 }
