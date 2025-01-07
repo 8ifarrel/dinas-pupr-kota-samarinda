@@ -189,6 +189,7 @@ use App\Http\Middleware\RedirectIfNotAuthenticated;
 use App\Http\Controllers\admin\LoginAdminController;
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\SliderAdminController;
+use App\Http\Controllers\admin\PartnerAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -239,6 +240,29 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::post('/update/{id}', [SliderAdminController::class, 'update'])
 				->name('admin.slider.update');
+		});
+
+		/**
+		 * Partner
+		 */
+		Route::prefix('partner')->group(function () {
+			Route::get('/', [PartnerAdminController::class, 'index'])
+				->name('admin.partner.index');
+
+			Route::get('/tambah', [PartnerAdminController::class, 'create'])
+				->name('admin.partner.create');
+
+			Route::post('/store', [PartnerAdminController::class, 'store'])
+				->name('admin.partner.store');
+
+			Route::get('/edit/{id}', [PartnerAdminController::class, 'edit'])
+				->name('admin.partner.edit');
+
+			Route::post('/update/{id}', [PartnerAdminController::class, 'update'])
+				->name('admin.partner.update');
+
+			Route::delete('/delete/{id}', [PartnerAdminController::class, 'destroy'])
+				->name('admin.partner.destroy');
 		});
 	});
 

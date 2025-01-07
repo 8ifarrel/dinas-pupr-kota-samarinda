@@ -11,17 +11,18 @@ class FilePondController extends Controller
 {
     public function process(Request $request)
     {
+        $fileInputName = array_key_first($request->file());
         $request->validate([
-            'foto_slider' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            $fileInputName => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $file = $request->file('foto_slider');
+        $file = $request->file($fileInputName);
         $fileName = now()->format('YmdHis') . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
         $path = $file->storeAs('temp', $fileName, 'public');
 
         return response()->json([
             'fileUrl' => Storage::url($path),
-        ]);
+        ], 200, ['Content-Type' => 'application/json']);
     }
 
     public function revert(Request $request)
@@ -30,7 +31,7 @@ class FilePondController extends Controller
             'fileUrl' => 'required|string',
         ]);
 
-        $path = str_replace('/storage/', '', subject: $request->fileUrl);
+        $path = str_replace('/storage/', '', $request->fileUrl);
 
         Log::info('Revert method called');
         Log::info('File URL: ' . $request->fileUrl);

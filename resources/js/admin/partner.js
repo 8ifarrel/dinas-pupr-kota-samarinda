@@ -8,7 +8,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 FilePond.registerPlugin(FilePondPluginImagePreview);
 
 document.addEventListener("DOMContentLoaded", () => {
-    const fileInput = document.querySelector('input[name="foto_slider"]');
+    const fileInput = document.querySelector('input[name="foto_partner"]');
     const editButton = document.querySelector("#edit-image-button");
     const cropperModalElement = document.getElementById("cropperModal");
     const imageToCrop = document.getElementById("image-to-crop");
@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 cropperModal.show();
                 if (cropper) cropper.destroy();
                 cropper = new Cropper(imageToCrop, {
-                    aspectRatio: 21 / 9,
                     viewMode: 1,
                 });
             }
