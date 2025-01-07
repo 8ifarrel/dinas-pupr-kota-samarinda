@@ -190,6 +190,7 @@ use App\Http\Controllers\admin\LoginAdminController;
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\SliderAdminController;
 use App\Http\Controllers\admin\PartnerAdminController;
+use App\Http\Controllers\admin\BeritaAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -263,6 +264,25 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::delete('/delete/{id}', [PartnerAdminController::class, 'destroy'])
 				->name('admin.partner.destroy');
+		});
+
+		/**
+		 * Berita
+		 */
+
+		/**
+		 * NOTE(S):
+		 * 1. Prefix group untuk kategori
+		 */
+		Route::prefix('berita')->group(function () {
+			Route::get('/kategori', [BeritaAdminController::class, 'indexKategori'])
+				->name('admin.berita.kategori.index');
+
+			Route::get('/kategori/edit/{id}', [BeritaAdminController::class, 'editKategori'])
+				->name('admin.berita.kategori.edit');
+
+			Route::post('/kategori/update/{id}', [BeritaAdminController::class, 'updateKategori'])
+				->name('admin.berita.kategori.update');
 		});
 	});
 

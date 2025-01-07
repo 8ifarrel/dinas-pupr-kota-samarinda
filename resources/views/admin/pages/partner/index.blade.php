@@ -31,7 +31,11 @@
                 <img src="{{ Storage::url($partner->foto_partner) }}" width="192px" alt="{{ $partner->nama_partner }}">
               </td>
               <td>{{ $partner->nama_partner }}</td>
-              <td>{{ $partner->url_partner }}</td>
+              <td>
+                <a href="{{ $partner->url_partner }}" class="text-blue-500 underline">
+                  {{ $partner->url_partner }}
+                </a>
+              </td>
               <td>
                 <div class="flex gap-2">
                   <a href="{{ route('admin.partner.edit', $partner->id_partner) }}"
