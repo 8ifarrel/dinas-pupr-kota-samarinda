@@ -43,7 +43,7 @@
       {{-- Berita --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="">
+          href="{{ route('admin.berita.kategori.index') }}">
           <i class="fa-solid fa-newspaper"></i>
 
           <span class="ms-3">

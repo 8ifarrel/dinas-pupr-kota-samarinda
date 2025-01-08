@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BeritaKategori;
 
-class BeritaAdminController extends Controller
+class BeritaKategoriAdminController extends Controller
 {
     /**
-     * NOTE(S):
-     * 1. Kategori harus punya controller sendiri
+     * TODO:
+     * 1. Buat agar user hanya bisa mengakses kategori berita berdasarkan jabatan yang dimiliki.
      */
 
-    public function indexKategori()
+    public function index()
     {
         $page_title = "Kategori Berita";
         $kategori = BeritaKategori::all();
@@ -24,7 +24,7 @@ class BeritaAdminController extends Controller
         ]);
     }
 
-    public function editKategori($id)
+    public function edit($id)
     {
         $page_title = "Edit Kategori Berita";
         $kategori = BeritaKategori::findOrFail($id);
@@ -35,7 +35,7 @@ class BeritaAdminController extends Controller
         ]);
     }
 
-    public function updateKategori(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:255',

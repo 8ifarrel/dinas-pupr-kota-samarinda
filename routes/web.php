@@ -190,7 +190,7 @@ use App\Http\Controllers\admin\LoginAdminController;
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\SliderAdminController;
 use App\Http\Controllers\admin\PartnerAdminController;
-use App\Http\Controllers\admin\BeritaAdminController;
+use App\Http\Controllers\admin\BeritaKategoriAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -270,19 +270,17 @@ Route::prefix('e-panel')->group(function () {
 		 * Berita
 		 */
 
-		/**
-		 * NOTE(S):
-		 * 1. Prefix group untuk kategori
-		 */
 		Route::prefix('berita')->group(function () {
-			Route::get('/kategori', [BeritaAdminController::class, 'indexKategori'])
-				->name('admin.berita.kategori.index');
+			Route::prefix('kategori')->group(function () {
+				Route::get('/', [BeritaKategoriAdminController::class, 'index'])
+					->name('admin.berita.kategori.index');
 
-			Route::get('/kategori/edit/{id}', [BeritaAdminController::class, 'editKategori'])
-				->name('admin.berita.kategori.edit');
+				Route::get('/edit/{id}', [BeritaKategoriAdminController::class, 'edit'])
+					->name('admin.berita.kategori.edit');
 
-			Route::post('/kategori/update/{id}', [BeritaAdminController::class, 'updateKategori'])
-				->name('admin.berita.kategori.update');
+				Route::post('/update/{id}', [BeritaKategoriAdminController::class, 'update'])
+					->name('admin.berita.kategori.update');
+			});
 		});
 	});
 
