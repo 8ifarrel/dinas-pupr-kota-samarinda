@@ -28,7 +28,7 @@ class Jabatan extends Model
     {
         return $this->belongsTo(Jabatan::class, 'id_jabatan_parent');
     }
-    
+
     public function children()
     {
         return $this->hasMany(Jabatan::class, 'id_jabatan_parent');
@@ -36,7 +36,7 @@ class Jabatan extends Model
 
     public function berita()
     {
-    return $this->hasOne(BeritaKategori::class, 'id_jabatan');
+        return $this->hasOne(BeritaKategori::class, 'id_jabatan');
     }
 
     public function pegawai()

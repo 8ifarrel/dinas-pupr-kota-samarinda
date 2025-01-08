@@ -6,18 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BeritaKategori;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class BeritaKategoriAdminController extends Controller
 {
-    /**
-     * TODO:
-     * 1. Buat agar user hanya bisa mengakses kategori berita berdasarkan jabatan yang dimiliki.
-     */
-
     public function index()
     {
         $page_title = "Kategori Berita";
-        $kategori = BeritaKategori::all();
+
+        /**
+         * Fitur agar user hanya bisa mengakses kategori berita berdasarkan jabatan yang dimiliki.
+         * Fitur ini belum dicoba karena user masih sedikit.
+         */
+        $user = Auth::user();
+        $jabatan = $user->pegawai->jabatan;
+        if ($jabatan->id_jabatan == 0) {
+            $kategori = BeritaKategori::all();
+        } else {
+            $jabatanId = $jabatan->kelompok_jabatan == 'Subbagian' ? $jabatan->id_jabatan_parent : $jabatan->id_jabatan;
+            $kategori = BeritaKategori::whereHas('jabatan', function ($query) use ($jabatanId) {
+                $query->where('id_jabatan', $jabatanId);
+            })->get();
+        }
 
         return view('admin.pages.berita.kategori.index', [
             'page_title' => $page_title,
