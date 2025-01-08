@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BeritaKategori;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaKategoriAdminController extends Controller
 {
@@ -38,13 +39,21 @@ class BeritaKategoriAdminController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'ikon_kategori' => 'nullable|string|max:255',
+            'ikon_berita_kategori' => 'nullable|string',
         ]);
 
         $kategori = BeritaKategori::findOrFail($id);
-        $kategori->nama_kategori = $request->input('nama_kategori');
-        $kategori->ikon_kategori = $request->input('ikon_kategori');
+
+        if ($request->has('ikon_berita_kategori')) {
+            $ikonKategoriData = json_decode($request->input('ikon_berita_kategori'), true);
+            if (isset($ikonKategoriData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $ikonKategoriData['fileUrl']);
+                $newFileName = 'Berita/ikon/' . $kategori->jabatan->slug_jabatan . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                Storage::disk('public')->move($tempFilePath, $newFileName);
+                $kategori->ikon_berita_kategori = $newFileName;
+            }
+        }
+
         $kategori->save();
 
         return redirect()->route('admin.berita.kategori.index')->with('success', 'Kategori Berita berhasil diperbarui.');
