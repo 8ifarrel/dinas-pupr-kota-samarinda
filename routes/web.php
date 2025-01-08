@@ -191,6 +191,7 @@ use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\SliderAdminController;
 use App\Http\Controllers\admin\PartnerAdminController;
 use App\Http\Controllers\admin\BeritaKategoriAdminController;
+use App\Http\Controllers\admin\BeritaAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -280,6 +281,9 @@ Route::prefix('e-panel')->group(function () {
 
 				Route::post('/update/{id}', [BeritaKategoriAdminController::class, 'update'])
 					->name('admin.berita.kategori.update');
+
+				Route::get('/{id}/berita', [BeritaAdminController::class, 'index'])
+					->name('admin.berita.kategori.berita.index');
 			});
 		});
 	});
