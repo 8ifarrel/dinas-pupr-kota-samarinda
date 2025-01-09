@@ -48,6 +48,10 @@ class BeritaAdminController extends Controller
         ]);
     }
 
+    /**
+     * WARN:
+     * 1. UUID berita tidak sesuai dengan nama file foto berita, padahal code sudah disesuaikan
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -59,15 +63,17 @@ class BeritaAdminController extends Controller
         ]);
 
         $slug = Str::slug($request->judul_berita);
+        $uuid = Str::uuid();
 
         $fotoBeritaData = json_decode($request->input('foto_berita'), true);
         if (isset($fotoBeritaData['fileUrl'])) {
             $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-            $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . Str::uuid() . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+            $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
             Storage::disk('public')->move($tempFilePath, $newFileName);
         }
 
         Berita::create([
+            'uuid_berita' => $uuid,
             'judul_berita' => $request->judul_berita,
             'slug_berita' => $slug,
             'id_berita_kategori' => $request->id_berita_kategori,
@@ -114,7 +120,7 @@ class BeritaAdminController extends Controller
             $fotoBeritaData = json_decode($request->input('foto_berita'), true);
             if (isset($fotoBeritaData['fileUrl'])) {
                 $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-                $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . Str::uuid() . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $id . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
                 Storage::disk('public')->move($tempFilePath, $newFileName);
                 $berita->foto_berita = $newFileName;
             }
@@ -132,5 +138,19 @@ class BeritaAdminController extends Controller
 
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $berita = Berita::findOrFail($id);
+
+        if (Storage::disk('public')->exists($berita->foto_berita)) {
+            Storage::disk('public')->delete($berita->foto_berita);
+        }
+
+        $berita->delete();
+
+        return redirect()->route('admin.berita.index', ['id_kategori' => $berita->id_berita_kategori])
+            ->with('success', 'Berita berhasil dihapus.');
     }
 }

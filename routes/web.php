@@ -297,6 +297,9 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::post('/update/{id}', [BeritaAdminController::class, 'update'])
 				->name('admin.berita.update');
+
+			Route::delete('/delete/{id}', [BeritaAdminController::class, 'destroy'])
+				->name('admin.berita.destroy');
 		});
 	});
 
