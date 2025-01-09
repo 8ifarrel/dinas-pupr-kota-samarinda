@@ -28,6 +28,7 @@ TODO:
             <th>Foto</th>
             <th>Isi</th>
             <th>Views</th>
+            <th>Dibuat Pada</th>
             <th>Kelola</th>
           </tr>
         </thead>
@@ -48,6 +49,7 @@ TODO:
                 </button>
               </td>
               <td>{{ $item->views_count }}</td>
+              <td>{{ $item->formatted_created_at }}</td>
               <td>
                 <div class="flex gap-2">
                   <a href=""
@@ -74,6 +76,7 @@ TODO:
             <th>Foto</th>
             <th>Isi</th>
             <th>Views</th>
+            <th>Dibuat Pada</th>
             <th>Kelola</th>
           </tr>
         </tfoot>

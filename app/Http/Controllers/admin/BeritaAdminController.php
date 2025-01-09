@@ -21,7 +21,13 @@ class BeritaAdminController extends Controller
     {
         $id = $request->query('id_kategori');
         $kategori = BeritaKategori::findOrFail($id);
-        $berita = Berita::where('id_berita_kategori', $id)->get();
+        $berita = Berita::where('id_berita_kategori', $id)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($item) {
+                $item->formatted_created_at = $item->created_at->translatedFormat('l, d F Y');
+                return $item;
+            });
         $page_title = "Berita dari " . $kategori->jabatan->nama_jabatan;
 
         return view('admin.pages.berita.index', [
