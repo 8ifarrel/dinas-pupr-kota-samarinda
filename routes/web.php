@@ -291,6 +291,12 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::post('/store', [BeritaAdminController::class, 'store'])
 				->name('admin.berita.store');
+
+			Route::get('/edit/{id}', [BeritaAdminController::class, 'edit'])
+				->name('admin.berita.edit');
+
+			Route::post('/update/{id}', [BeritaAdminController::class, 'update'])
+				->name('admin.berita.update');
 		});
 	});
 

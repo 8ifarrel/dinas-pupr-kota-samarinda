@@ -83,4 +83,54 @@ class BeritaAdminController extends Controller
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil ditambahkan.');
     }
+
+    public function edit($id)
+    {
+        $berita = Berita::findOrFail($id);
+        $kategori = BeritaKategori::findOrFail($berita->id_berita_kategori);
+        $page_title = "Edit Berita";
+
+        return view('admin.pages.berita.edit', [
+            'page_title' => $page_title,
+            'berita' => $berita,
+            'kategori' => $kategori,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul_berita' => 'required|string|max:255|unique:berita,judul_berita,' . $id . ',uuid_berita',
+            'id_berita_kategori' => 'required|exists:berita_kategori,id_berita_kategori',
+            'foto_berita' => 'nullable|string',
+            'isi_berita' => 'required|string',
+            'preview_berita' => 'required|string|max:255',
+        ]);
+
+        $berita = Berita::findOrFail($id);
+        $slug = Str::slug($request->judul_berita);
+
+        if ($request->has('foto_berita')) {
+            $fotoBeritaData = json_decode($request->input('foto_berita'), true);
+            if (isset($fotoBeritaData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
+                $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . Str::uuid() . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                Storage::disk('public')->move($tempFilePath, $newFileName);
+                $berita->foto_berita = $newFileName;
+            }
+        }
+
+        $berita->update([
+            'judul_berita' => $request->judul_berita,
+            'slug_berita' => $slug,
+            'id_berita_kategori' => $request->id_berita_kategori,
+            'sumber_foto_berita' => $request->sumber_foto_berita,
+            'isi_berita' => $request->isi_berita,
+            'preview_berita' => $request->preview_berita,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
+            ->with('success', 'Berita berhasil diperbarui.');
+    }
 }

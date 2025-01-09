@@ -9,7 +9,7 @@
 
 {{-- 
 TODO:
-1. h1 pada isi berita tidak terbaca karena tertimpa Tailwind CSS
+1. h1, ul, ol pada isi berita tidak terbaca karena tertimpa Tailwind CSS
 --}}
 
 @section('slot')
@@ -52,7 +52,7 @@ TODO:
               <td>{{ $item->formatted_created_at }}</td>
               <td>
                 <div class="flex gap-2">
-                  <a href=""
+                  <a href="{{ route('admin.berita.edit', $item->uuid_berita) }}"
                     class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-pencil"></i>
                   </a>
