@@ -52,18 +52,20 @@ class BeritaAdminController extends Controller
             'preview_berita' => 'required|string|max:255',
         ]);
 
-        $uuid = Str::uuid();
         $slug = Str::slug($request->judul_berita);
-        $path = str_replace('/storage/', '', $request->foto_berita);
-        $newPath = 'berita/' . now()->format('Y-m-d') . '/' . $uuid . '.' . pathinfo($path, PATHINFO_EXTENSION);
-        Storage::disk('public')->move($path, $newPath);
+
+        $fotoBeritaData = json_decode($request->input('foto_berita'), true);
+        if (isset($fotoBeritaData['fileUrl'])) {
+            $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
+            $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . Str::uuid() . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+            Storage::disk('public')->move($tempFilePath, $newFileName);
+        }
 
         Berita::create([
-            'uuid_berita' => $uuid,
             'judul_berita' => $request->judul_berita,
             'slug_berita' => $slug,
             'id_berita_kategori' => $request->id_berita_kategori,
-            'foto_berita' => $newPath,
+            'foto_berita' => $newFileName,
             'sumber_foto_berita' => $request->sumber_foto_berita,
             'isi_berita' => $request->isi_berita,
             'preview_berita' => $request->preview_berita,

@@ -7,6 +7,11 @@
   <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet" />
 @endsection
 
+{{-- 
+TODO:
+1. h1 pada isi berita tidak terbaca karena tertimpa Tailwind CSS
+--}}
+
 @section('slot')
   <a href="{{ route('admin.berita.create', ['id_kategori' => request()->query('id_kategori')]) }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">

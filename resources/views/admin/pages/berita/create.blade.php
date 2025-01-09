@@ -1,9 +1,55 @@
 @extends('admin.layouts.partner')
 
-@section('css')
-    @vite('resources/css/admin/berita.css')
-    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+@section('css')    
     <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet"/>
+
+    <style>
+      trix-toolbar .trix-button-group--file-tools {
+        display: none;
+      }
+    
+      trix-toolbar .trix-button--icon-quote {
+        display: none;
+      }
+    
+      trix-toolbar .trix-button--icon-code {
+        display: none;
+      }
+    
+      trix-editor {
+        height: 270px !important; 
+        overflow-y: auto;
+      }
+    
+      /* 
+       * Special thanks to Muhammad Jamil
+       * Resolving problem when using Trix rich editor with Tailwind
+       * https://dev.to/fanreza/resolving-problem-when-using-trix-rich-editor-with-tailwind-13ca
+       *
+       */
+    
+      trix-editor h1 {
+        font-size: 1.25rem !important;
+        line-height: 1.25rem !important;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+    
+      trix-editor a:not(.no-underline) {
+        text-decoration: underline;
+      }
+    
+      trix-editor a:visited {
+        color: blue;
+      }
+    
+      trix-editor ul { 
+        list-style-type: disc !important; margin-left: 1rem !important; 
+      }
+      trix-editor ol { 
+        list-style-type: decimal !important; margin-left: 1rem !important; 
+      }
+    </style>
 @endsection
 
 @section('slot')
@@ -86,5 +132,5 @@
 
 @section('js')
     @vite('resources/js/admin/berita.js')
-    <script src="https://unpkg.com/trix/dist/trix.js"></script>
+    <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script>
 @endsection
