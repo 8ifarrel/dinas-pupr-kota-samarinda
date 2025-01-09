@@ -281,10 +281,16 @@ Route::prefix('e-panel')->group(function () {
 
 				Route::post('/update/{id}', [BeritaKategoriAdminController::class, 'update'])
 					->name('admin.berita.kategori.update');
-
-				Route::get('/{id}/berita', [BeritaAdminController::class, 'index'])
-					->name('admin.berita.kategori.berita.index');
 			});
+
+			Route::get('/', [BeritaAdminController::class, 'index'])
+				->name('admin.berita.index');
+
+			Route::get('/create', [BeritaAdminController::class, 'create'])
+				->name('admin.berita.create');
+
+			Route::post('/store', [BeritaAdminController::class, 'store'])
+				->name('admin.berita.store');
 		});
 	});
 

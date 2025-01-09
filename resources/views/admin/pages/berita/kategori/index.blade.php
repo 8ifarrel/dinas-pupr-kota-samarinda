@@ -36,7 +36,7 @@
                     class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-pencil"></i>
                   </a>
-                  <a href="{{ route('admin.berita.kategori.berita.index', $item->id_berita_kategori) }}"
+                  <a href="{{ route('admin.berita.index', ['id_kategori' => $item->id_berita_kategori]) }}"
                     class="flex justify-center items-center gap-1 h-10 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-eye"></i> <span class="font-medium whitespace-nowrap text-sm sm:text-base">Lihat berita</span>
                   </a>

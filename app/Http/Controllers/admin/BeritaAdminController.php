@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\BeritaKategori;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaAdminController extends Controller
 {
@@ -15,8 +17,9 @@ class BeritaAdminController extends Controller
      * 2. Fitur delete
      * 3. User hanya bisa mengakses berita berdasarkan jabatan yang dimiliki (khusus untuk IT PUPR bisa mengakses semua berita)
      */
-    public function index($id)
+    public function index(Request $request)
     {
+        $id = $request->query('id_kategori');
         $kategori = BeritaKategori::findOrFail($id);
         $berita = Berita::where('id_berita_kategori', $id)->get();
         $page_title = "Berita dari " . $kategori->jabatan->nama_jabatan;
@@ -25,5 +28,51 @@ class BeritaAdminController extends Controller
             'page_title' => $page_title,
             'berita' => $berita,
         ]);
+    }
+
+    public function create(Request $request)
+    {
+        $id = $request->query('id_kategori');
+        $kategori = BeritaKategori::findOrFail($id);
+        $page_title = "Tambah Berita untuk " . $kategori->jabatan->nama_jabatan;
+
+        return view('admin.pages.berita.create', [
+            'page_title' => $page_title,
+            'kategori' => $kategori,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'judul_berita' => 'required|string|max:255|unique:berita',
+            'id_berita_kategori' => 'required|exists:berita_kategori,id_berita_kategori',
+            'foto_berita' => 'required|string',
+            'isi_berita' => 'required|string',
+            'preview_berita' => 'required|string|max:255',
+        ]);
+
+        $uuid = Str::uuid();
+        $slug = Str::slug($request->judul_berita);
+        $path = str_replace('/storage/', '', $request->foto_berita);
+        $newPath = 'berita/' . now()->format('Y-m-d') . '/' . $uuid . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        Storage::disk('public')->move($path, $newPath);
+
+        Berita::create([
+            'uuid_berita' => $uuid,
+            'judul_berita' => $request->judul_berita,
+            'slug_berita' => $slug,
+            'id_berita_kategori' => $request->id_berita_kategori,
+            'foto_berita' => $newPath,
+            'sumber_foto_berita' => $request->sumber_foto_berita,
+            'isi_berita' => $request->isi_berita,
+            'preview_berita' => $request->preview_berita,
+            'views_count' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
+            ->with('success', 'Berita berhasil ditambahkan.');
     }
 }

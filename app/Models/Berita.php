@@ -19,6 +19,7 @@ class Berita extends Model
         'foto_berita',
         'sumber_foto_berita', 
         'isi_berita', 
+        'preview_berita',
         'views_count',
         'created_at',
     ];
