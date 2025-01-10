@@ -306,9 +306,17 @@ Route::prefix('e-panel')->group(function () {
 		/**
 		 * PPID Pelaksana Kategori
 		 */
-		Route::prefix('ppid-pelaksana-kategori')->group(function () {
-			Route::get('/', [PPIDPelaksanaKategoriController::class, 'index'])
-				->name('admin.ppid-pelaksana-kategori.index');
+		Route::prefix('ppid-pelaksana')->group(function () {
+			Route::prefix('kategori')->group(function () {
+				Route::get('/', [PPIDPelaksanaKategoriController::class, 'index'])
+					->name('admin.ppid-pelaksana.kategori.index');
+				Route::get('/create', [PPIDPelaksanaKategoriController::class, 'create'])
+					->name('admin.ppid-pelaksana.kategori.create');
+				Route::post('/store', [PPIDPelaksanaKategoriController::class, 'store'])
+					->name('admin.ppid-pelaksana.kategori.store');
+				Route::delete('/delete/{id}', [PPIDPelaksanaKategoriController::class, 'destroy'])
+					->name('admin.ppid-pelaksana.kategori.destroy');
+			});
 		});
 	});
 
