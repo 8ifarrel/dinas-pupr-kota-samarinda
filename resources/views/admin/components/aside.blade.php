@@ -51,6 +51,18 @@
           </span>
         </a>
       </li>
+
+      {{-- PPID Pelaksana --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.ppid-pelaksana-kategori.index') }}">
+          <i class="fa-solid fa-file-powerpoint"></i>
+
+          <span class="ms-3">
+            PPID Pelaksana
+          </span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>

@@ -192,6 +192,7 @@ use App\Http\Controllers\admin\SliderAdminController;
 use App\Http\Controllers\admin\PartnerAdminController;
 use App\Http\Controllers\admin\BeritaKategoriAdminController;
 use App\Http\Controllers\admin\BeritaAdminController;
+use App\Http\Controllers\admin\PPIDPelaksanaKategoriController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -300,6 +301,14 @@ Route::prefix('e-panel')->group(function () {
 
 			Route::delete('/delete/{id}', [BeritaAdminController::class, 'destroy'])
 				->name('admin.berita.destroy');
+		});
+
+		/**
+		 * PPID Pelaksana Kategori
+		 */
+		Route::prefix('ppid-pelaksana-kategori')->group(function () {
+			Route::get('/', [PPIDPelaksanaKategoriController::class, 'index'])
+				->name('admin.ppid-pelaksana-kategori.index');
 		});
 	});
 
