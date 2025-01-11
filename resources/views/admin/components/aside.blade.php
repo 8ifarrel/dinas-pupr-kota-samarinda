@@ -64,10 +64,10 @@
         </a>
       </li>
 
-      {{-- PPID Pelaksana --}}
+      {{-- Pengumuman --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="">
+          href="{{ route('admin.pengumuman.index') }}">
           <i class="fa-solid fa-bullhorn"></i>
 
           <span class="ms-3">
