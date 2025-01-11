@@ -14,6 +14,7 @@ class CreatePengumumanTable extends Migration
       $table->string('slug_pengumuman');
       $table->text('perihal');
       $table->string('file_lampiran');
+      $table->bigInteger('views_count');
       $table->timestamps();
     });
   }

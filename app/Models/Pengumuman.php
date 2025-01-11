@@ -16,6 +16,7 @@ class Pengumuman extends Model
 		'slug_pengumuman',
 		'perihal',
 		'file_lampiran',
+		'views_count',
 		'created_at',
 	];
 

@@ -63,6 +63,18 @@
           </span>
         </a>
       </li>
+
+      {{-- PPID Pelaksana --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="">
+          <i class="fa-solid fa-bullhorn"></i>
+
+          <span class="ms-3">
+            Pengumuman
+          </span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>
