@@ -192,7 +192,7 @@ use App\Http\Controllers\admin\SliderAdminController;
 use App\Http\Controllers\admin\PartnerAdminController;
 use App\Http\Controllers\admin\BeritaKategoriAdminController;
 use App\Http\Controllers\admin\BeritaAdminController;
-use App\Http\Controllers\admin\PPIDPelaksanaKategoriController;
+use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
 use App\Http\Controllers\admin\PengumumanAdminController;
 
 Route::prefix('e-panel')->group(function () {
@@ -309,14 +309,18 @@ Route::prefix('e-panel')->group(function () {
 		 */
 		Route::prefix('ppid-pelaksana')->group(function () {
 			Route::prefix('kategori')->group(function () {
-				Route::get('/', [PPIDPelaksanaKategoriController::class, 'index'])
+				Route::get('/', [PPIDPelaksanaKategoriAdminController::class, 'index'])
 					->name('admin.ppid-pelaksana.kategori.index');
-				Route::get('/create', [PPIDPelaksanaKategoriController::class, 'create'])
+				Route::get('/create', [PPIDPelaksanaKategoriAdminController::class, 'create'])
 					->name('admin.ppid-pelaksana.kategori.create');
-				Route::post('/store', [PPIDPelaksanaKategoriController::class, 'store'])
+				Route::post('/store', [PPIDPelaksanaKategoriAdminController::class, 'store'])
 					->name('admin.ppid-pelaksana.kategori.store');
-				Route::delete('/delete/{id}', [PPIDPelaksanaKategoriController::class, 'destroy'])
+				Route::delete('/delete/{id}', [PPIDPelaksanaKategoriAdminController::class, 'destroy'])
 					->name('admin.ppid-pelaksana.kategori.destroy');
+				Route::get('/edit/{id}', [PPIDPelaksanaKategoriAdminController::class, 'edit'])
+					->name('admin.ppid-pelaksana.kategori.edit');
+				Route::post('/update/{id}', [PPIDPelaksanaKategoriAdminController::class, 'update'])
+					->name('admin.ppid-pelaksana.kategori.update');
 			});
 		});
 

@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\PPIDPelaksanaKategori;
 use Illuminate\Support\Str;
 
-class PPIDPelaksanaKategoriController extends Controller
+class PPIDPelaksanaKategoriAdminController extends Controller
 {
     public function index()
     {
         $page_title = "Kategori PPID Pelaksana";
-        $kategori = PPIDPelaksanaKategori::all();
+        $kategori = PPIDPelaksanaKategori::latest()->get();
 
         return view('admin.pages.ppid-pelaksana.kategori.index', [
             'page_title' => $page_title,
@@ -43,6 +43,31 @@ class PPIDPelaksanaKategoriController extends Controller
         ]);
 
         return redirect()->route('admin.ppid-pelaksana.kategori.index')->with('success', 'Kategori PPID Pelaksana berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $page_title = "Edit Kategori PPID Pelaksana";
+        $kategori = PPIDPelaksanaKategori::findOrFail($id);
+
+        return view('admin.pages.ppid-pelaksana.kategori.edit', [
+            'page_title' => $page_title,
+            'kategori' => $kategori,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        $kategori = PPIDPelaksanaKategori::findOrFail($id);
+        $kategori->nama = $request->nama;
+        $kategori->slug = Str::slug($request->nama);
+        $kategori->save();
+
+        return redirect()->route('admin.ppid-pelaksana.kategori.index')->with('success', 'Kategori PPID Pelaksana berhasil diperbarui.');
     }
 
     /**
