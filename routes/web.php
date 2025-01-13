@@ -194,6 +194,7 @@ use App\Http\Controllers\admin\BeritaKategoriAdminController;
 use App\Http\Controllers\admin\BeritaAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
 use App\Http\Controllers\admin\PengumumanAdminController;
+use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -321,7 +322,19 @@ Route::prefix('e-panel')->group(function () {
 					->name('admin.ppid-pelaksana.kategori.edit');
 				Route::post('/update/{id}', [PPIDPelaksanaKategoriAdminController::class, 'update'])
 					->name('admin.ppid-pelaksana.kategori.update');
-			});
+				});
+			Route::get('/', [PPIDPelaksanaAdminController::class, 'index'])
+				->name('admin.ppid-pelaksana.index');
+			Route::get('/create', [PPIDPelaksanaAdminController::class, 'create'])
+				->name('admin.ppid-pelaksana.create');
+			Route::post('/store', [PPIDPelaksanaAdminController::class, 'store'])
+				->name('admin.ppid-pelaksana.store');
+			Route::get('/edit/{id}', [PPIDPelaksanaAdminController::class, 'edit'])
+				->name('admin.ppid-pelaksana.edit');
+			Route::post('/update/{id}', [PPIDPelaksanaAdminController::class, 'update'])
+				->name('admin.ppid-pelaksana.update');
+			Route::delete('/delete/{id}', [PPIDPelaksanaAdminController::class, 'destroy'])
+				->name('admin.ppid-pelaksana.destroy');
 		});
 
 		/**
