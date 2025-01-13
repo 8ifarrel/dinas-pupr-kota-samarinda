@@ -20,14 +20,19 @@ class BeritaKategoriAdminController extends Controller
          */
         $user = Auth::user();
         $jabatan = $user->pegawai->jabatan;
-        if ($jabatan->id_jabatan == 0) {
+        
+        if ($jabatan->id_jabatan == 0 || $jabatan->id_jabatan == 1) {
             $kategori = BeritaKategori::all();
         } else {
-            $jabatanId = $jabatan->kelompok_jabatan == 'Subbagian' ? $jabatan->id_jabatan_parent : $jabatan->id_jabatan;
+            $jabatanId = strpos($jabatan->kelompok_jabatan, 'Subbagian') !== false 
+                ? $jabatan->id_jabatan_parent 
+                : $jabatan->id_jabatan;
+        
             $kategori = BeritaKategori::whereHas('jabatan', function ($query) use ($jabatanId) {
                 $query->where('id_jabatan', $jabatanId);
             })->get();
         }
+        
 
         return view('admin.pages.berita.kategori.index', [
             'page_title' => $page_title,
