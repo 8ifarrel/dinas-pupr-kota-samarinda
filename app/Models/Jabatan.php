@@ -17,11 +17,10 @@ class Jabatan extends Model
     protected $fillable = [
         'nama_jabatan',
         'id_jabatan_parent',
-        'slug_nama_jabatan',
+        'slug_jabatan',
         'tupoksi_jabatan',
         'deskripsi_jabatan',
         'kelompok_jabatan',
-        'is_punya_berita',
     ];
 
     public function parent()

@@ -195,6 +195,7 @@ use App\Http\Controllers\admin\BeritaAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
 use App\Http\Controllers\admin\PengumumanAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
+use App\Http\Controllers\JabatanAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -214,7 +215,6 @@ Route::prefix('e-panel')->group(function () {
 		/**
 		 * Dashboard
 		 */
-
 		Route::get('/dashboard', [DashboardAdminController::class, 'index'])
 			->name('admin.dashboard.index');
 
@@ -224,25 +224,18 @@ Route::prefix('e-panel')->group(function () {
 		Route::prefix('slider')->group(function () {
 			Route::get('/', [SliderAdminController::class, 'index'])
 				->name('admin.slider.index');
-
 			Route::post('/{id}/move-up', [SliderAdminController::class, 'moveUp'])
 				->name('admin.slider.moveUp');
-
 			Route::post('/{id}/move-down', [SliderAdminController::class, 'moveDown'])
 				->name('admin.slider.moveDown');
-
 			Route::get('/tambah', [SliderAdminController::class, 'create'])
 				->name('admin.slider.create');
-
 			Route::post('/store', [SliderAdminController::class, 'store'])
 				->name('admin.slider.store');
-
 			Route::delete('/delete/{id}', [SliderAdminController::class, 'destroy'])
 				->name('admin.slider.destroy');
-
 			Route::get('/edit/{id}', [SliderAdminController::class, 'edit'])
 				->name('admin.slider.edit');
-
 			Route::post('/update/{id}', [SliderAdminController::class, 'update'])
 				->name('admin.slider.update');
 		});
@@ -253,19 +246,14 @@ Route::prefix('e-panel')->group(function () {
 		Route::prefix('partner')->group(function () {
 			Route::get('/', [PartnerAdminController::class, 'index'])
 				->name('admin.partner.index');
-
 			Route::get('/tambah', [PartnerAdminController::class, 'create'])
 				->name('admin.partner.create');
-
 			Route::post('/store', [PartnerAdminController::class, 'store'])
 				->name('admin.partner.store');
-
 			Route::get('/edit/{id}', [PartnerAdminController::class, 'edit'])
 				->name('admin.partner.edit');
-
 			Route::post('/update/{id}', [PartnerAdminController::class, 'update'])
 				->name('admin.partner.update');
-
 			Route::delete('/delete/{id}', [PartnerAdminController::class, 'destroy'])
 				->name('admin.partner.destroy');
 		});
@@ -273,7 +261,6 @@ Route::prefix('e-panel')->group(function () {
 		/**
 		 * Berita
 		 */
-
 		Route::prefix('berita')->group(function () {
 			Route::prefix('kategori')->group(function () {
 				Route::get('/', [BeritaKategoriAdminController::class, 'index'])
@@ -285,22 +272,16 @@ Route::prefix('e-panel')->group(function () {
 				Route::post('/update/{id}', [BeritaKategoriAdminController::class, 'update'])
 					->name('admin.berita.kategori.update');
 			});
-
 			Route::get('/', [BeritaAdminController::class, 'index'])
 				->name('admin.berita.index');
-
 			Route::get('/create', [BeritaAdminController::class, 'create'])
 				->name('admin.berita.create');
-
 			Route::post('/store', [BeritaAdminController::class, 'store'])
 				->name('admin.berita.store');
-
 			Route::get('/edit/{id}', [BeritaAdminController::class, 'edit'])
 				->name('admin.berita.edit');
-
 			Route::post('/update/{id}', [BeritaAdminController::class, 'update'])
 				->name('admin.berita.update');
-
 			Route::delete('/delete/{id}', [BeritaAdminController::class, 'destroy'])
 				->name('admin.berita.destroy');
 		});
@@ -322,7 +303,7 @@ Route::prefix('e-panel')->group(function () {
 					->name('admin.ppid-pelaksana.kategori.edit');
 				Route::post('/update/{id}', [PPIDPelaksanaKategoriAdminController::class, 'update'])
 					->name('admin.ppid-pelaksana.kategori.update');
-				});
+			});
 			Route::get('/', [PPIDPelaksanaAdminController::class, 'index'])
 				->name('admin.ppid-pelaksana.index');
 			Route::get('/create', [PPIDPelaksanaAdminController::class, 'create'])
@@ -354,7 +335,29 @@ Route::prefix('e-panel')->group(function () {
 			Route::delete('/delete/{id}', [PengumumanAdminController::class, 'destroy'])
 				->name('admin.pengumuman.destroy');
 		});
+
+		/**
+		 * Jabatan
+		 */
+		Route::prefix('jabatan')->group(function () {
+			Route::get('/', [JabatanAdminController::class, 'index'])
+				->name('admin.jabatan.index');
+			Route::get('/create', [JabatanAdminController::class, 'create'])
+				->name('admin.jabatan.create');
+			Route::post('/store', [JabatanAdminController::class, 'store'])
+				->name('admin.jabatan.store');
+			Route::get('/edit/{id}', [JabatanAdminController::class, 'edit'])
+				->name('admin.jabatan.edit');
+			Route::post('/update/{id}', [JabatanAdminController::class, 'update'])
+				->name('admin.jabatan.update');
+			Route::delete('/delete/{id}', [JabatanAdminController::class, 'destroy'])
+				->name('admin.jabatan.destroy');
+		});
 	});
+
+	/**
+	 * Logout
+	 */
 
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');

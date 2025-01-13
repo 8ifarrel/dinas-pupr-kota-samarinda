@@ -30,10 +30,11 @@ class BukuTamuGuestController extends Controller
 		$page_title = "Buku Tamu";
 		$page_subtitle = "Daftar";
 
+		$id_kepala_dinas = 1;
 		$jabatan = Jabatan::where('id_jabatan_parent', 1)
+			->where('id_jabatan', '!=', $id_kepala_dinas)
 			->select('id_jabatan', 'nama_jabatan')
 			->get();
-
 
 		return view('guest.pages.buku-tamu.create', [
 			'meta_description' => $meta_description,

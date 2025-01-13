@@ -75,6 +75,18 @@
           </span>
         </a>
       </li>
+
+      {{-- Jabatan & Pegawai --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.jabatan.index') }}">
+          <i class="fa-solid fa-people-group"></i>
+
+          <span class="ms-3">
+            Jabatan & Pegawai
+          </span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>

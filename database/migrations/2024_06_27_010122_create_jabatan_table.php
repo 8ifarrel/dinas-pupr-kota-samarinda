@@ -13,9 +13,9 @@ class CreateJabatanTable extends Migration
             $table->string('nama_jabatan')->unique();
             $table->unsignedBigInteger('id_jabatan_parent')->nullable();
             $table->string('slug_jabatan')->unique();
-            $table->text('tupoksi_jabatan');
-            $table->text('deskripsi_jabatan');
-            $table->set('kelompok_jabatan', ['Subbagian', 'UPTD', 'Bidang', 'PLT', 'Kepala Dinas', 'Sekretariat', 'Jabatan Fungsional']);
+            $table->text('tupoksi_jabatan')->nullable();
+            $table->text('deskripsi_jabatan')->nullable();
+            $table->set('kelompok_jabatan', ['Subbagian', 'UPTD', 'Bidang', 'Kepala Dinas', 'Sekretariat', 'Jabatan Fungsional']);
             $table->timestamps();
 
             $table->foreign('id_jabatan_parent')
