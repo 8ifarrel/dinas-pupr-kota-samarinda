@@ -30,4 +30,9 @@ class Pegawai extends Model
     {
         return $this->hasMany(KepalaDinasRiwayatPendidikan::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id_pegawai', 'id_pegawai');
+    }
 }
