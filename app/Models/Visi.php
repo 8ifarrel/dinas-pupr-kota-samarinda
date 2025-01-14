@@ -11,6 +11,8 @@ class Visi extends Model
 
     protected $table = 'visi';
 
+    protected $primaryKey = 'id_visi';
+
     protected $fillable = [
         'deskripsi_visi',
         'periode_mulai',

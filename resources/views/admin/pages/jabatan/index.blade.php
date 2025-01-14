@@ -52,15 +52,17 @@
               </td>
               <td>
                 <div class="flex gap-2">
+                  {{-- Kepala Dinas --}}
                   @if ($item->id_jabatan == 1)
-                    <a href=""
+                    <a href="{{ route('admin.kepala-dinas.edit') }}"
                       class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                       <i class="fa-solid fa-pencil"></i>
                     </a>
-                    <a href="{{ route('guest.profil.profil-kepala-dinas.index') }}"
+                    <a href="{{ route('admin.kepala-dinas.index') }}"
                       class="inline-flex justify-center items-center gap-1 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
                       <i class="fa-solid fa-user"></i> <span class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat Profil</span>
                     </a>
+                  {{-- Lainnya --}}
                   @else
                     <a href="{{ route('admin.jabatan.edit', $item->id_jabatan) }}"
                       class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">

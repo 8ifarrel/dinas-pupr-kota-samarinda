@@ -11,6 +11,8 @@ class Misi extends Model
 
     protected $table = 'misi';
 
+    protected $primaryKey = 'id_misi';
+
     protected $fillable = [
         'nomor_urut',
         'deskripsi_misi',

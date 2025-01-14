@@ -196,6 +196,7 @@ use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
 use App\Http\Controllers\admin\PengumumanAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
 use App\Http\Controllers\JabatanAdminController;
+use App\Http\Controllers\admin\KepalaDinasAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -353,6 +354,16 @@ Route::prefix('e-panel')->group(function () {
 			Route::delete('/delete/{id}', [JabatanAdminController::class, 'destroy'])
 				->name('admin.jabatan.destroy');
 		});
+
+		/**
+		 * Kepala Dinas
+		 */
+		Route::get('/kepala-dinas', [KepalaDinasAdminController::class, 'index'])
+			->name('admin.kepala-dinas.index');
+		Route::get('/kepala-dinas/edit', [KepalaDinasAdminController::class, 'edit'])
+			->name('admin.kepala-dinas.edit');
+		Route::post('/kepala-dinas/update', [KepalaDinasAdminController::class, 'update'])
+			->name('admin.kepala-dinas.update');
 	});
 
 	/**
