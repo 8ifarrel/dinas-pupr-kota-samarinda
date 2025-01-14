@@ -52,24 +52,36 @@
               </td>
               <td>
                 <div class="flex gap-2">
-                  <a href="{{ route('admin.jabatan.edit', $item->id_jabatan) }}"
-                    class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-pencil"></i>
-                  </a>
-                  <a href=""
-                    class="flex justify-center items-center w-10 h-10 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-users"></i>
-                  </a>
-                  <button data-modal-target="deleteModal-{{ $item->id_jabatan }}"
-                    data-modal-toggle="deleteModal-{{ $item->id_jabatan }}"
-                    class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
+                  @if ($item->id_jabatan == 1)
+                    <a href=""
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <a href="{{ route('guest.profil.profil-kepala-dinas.index') }}"
+                      class="inline-flex justify-center items-center gap-1 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-user"></i> <span class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat Profil</span>
+                    </a>
+                  @else
+                    <a href="{{ route('admin.jabatan.edit', $item->id_jabatan) }}"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <a href=""
+                      class="inline-flex justify-center items-center gap-1 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-users"></i> <span class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat Pegawai</span>
+                    </a>
+                    <button data-modal-target="deleteModal-{{ $item->id_jabatan }}"
+                      data-modal-toggle="deleteModal-{{ $item->id_jabatan }}"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  @endif
                 </div>
               </td>
             </tr>
 
             <!-- Modal Konfirmasi Hapus -->
+            @if ($item->id_jabatan != 1)
             <div id="deleteModal-{{ $item->id_jabatan }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
               class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
               <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -110,6 +122,7 @@
                 </div>
               </div>
             </div>
+            @endif
 
             <!-- Modal Deskripsi -->
             <div id="deskripsiModal-{{ $item->id_jabatan }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" data-modal-target="deskripsiModal-{{ $item->id_jabatan }}">
