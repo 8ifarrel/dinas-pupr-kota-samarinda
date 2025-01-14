@@ -24,9 +24,6 @@ export default {
       '3xl': '1920px', // untuk TV
     },
     extend: {
-      height: { // dvh
-        dscreen: '100dvh',
-      },
       fontFamily: {
         'sans': ['Inter', 'sans-serif'],
       },
