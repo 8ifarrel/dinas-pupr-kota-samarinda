@@ -67,14 +67,14 @@
       @csrf
       <div class="mb-4">
         <label for="nama_pegawai" class="block font-medium text-gray-700">Nama Pegawai</label>
-        <input type="text" name="nama_pegawai" id="nama_pegawai" value="{{ $kepalaDinas->nama_pegawai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
+        <input type="text" name="nama_pegawai" id="nama_pegawai" value="{{ $kepalaDinas->nama_pegawai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
       </div>
       <div class="mb-4">
-        <label for="nomor_induk_pegawai" class="block font-medium text-gray-700">NIK</label>
+        <label for="nomor_induk_pegawai" class="block font-medium text-gray-700">Nomor Induk Pegawai</label>
         <input type="text" name="nomor_induk_pegawai" id="nomor_induk_pegawai" value="{{ $kepalaDinas->nomor_induk_pegawai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
       </div>
       <div class="mb-4">
-        <label for="nomor_telepon_pegawai" class="block font-medium text-gray-700">Telepon</label>
+        <label for="nomor_telepon_pegawai" class="block font-medium text-gray-700">Nomor Telepon</label>
         <input type="text" name="nomor_telepon_pegawai" id="nomor_telepon_pegawai" value="{{ $kepalaDinas->nomor_telepon_pegawai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
       </div>
       <div class="mb-4">
@@ -99,6 +99,14 @@
         <trix-editor input="tupoksi_jabatan"></trix-editor>
       </div>
       <div class="mb-4">
+        <label for="periode_jabatan" class="block font-medium text-gray-700">Periode Jabatan</label>
+        <div class="flex gap-2 items-center">
+          <input type="number" name="periode_mulai" id="periode_mulai" value="{{ $visi->first()->periode_mulai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" min="1900" max="2100" required>
+          <span>-</span>
+          <input type="number" name="periode_selesai" id="periode_selesai" value="{{ $visi->first()->periode_selesai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" min="1900" max="2100" required>
+        </div>
+      </div>
+      <div class="mb-4">
         <label for="visi" class="block font-medium text-gray-700">Visi</label>
         <input type="text" name="visi" id="visi" value="{{ $visi->first()->deskripsi_visi }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
       </div>
@@ -107,7 +115,7 @@
         <ol id="misi-list" class="list-decimal pl-5">
           @foreach ($misi as $misiItem)
             <li class="mb-2">
-              <input type="text" name="misi[]" value="{{ $misiItem->deskripsi_misi }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
+              <input type="text" name="misi[]" value="{{ $misiItem->deskripsi_misi }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
               <button type="button" class="mt-1 text-red-500 text-sm" onclick="removeField(this)">Hapus</button>
             </li>
           @endforeach
@@ -121,8 +129,8 @@
         <ul id="riwayat-pendidikan-list" class="list-disc pl-5">
           @foreach ($riwayatPendidikan->sortBy('tanggal_masuk') as $pendidikan)
             <li class="mb-2">
-              <input type="text" name="riwayat_pendidikan[]" value="{{ $pendidikan->nama_pendidikan }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
-              <input type="date" name="tanggal_masuk_pendidikan[]" value="{{ $pendidikan->tanggal_masuk }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
+              <input type="text" name="riwayat_pendidikan[]" value="{{ $pendidikan->nama_pendidikan }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
+              <input type="date" name="tanggal_masuk_pendidikan[]" value="{{ $pendidikan->tanggal_masuk }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
               <button type="button" class="mt-1 text-red-500 text-sm" onclick="removeField(this)">Hapus</button>
             </li>
           @endforeach
@@ -136,8 +144,8 @@
         <ul id="jenjang-karir-list" class="list-disc pl-5">
           @foreach ($jenjangKarir->sortBy('tanggal_masuk') as $karir)
             <li class="mb-2">
-              <input type="text" name="jenjang_karir[]" value="{{ $karir->nama_karir }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
-              <input type="date" name="tanggal_masuk_karir[]" value="{{ $karir->tanggal_masuk }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50">
+              <input type="text" name="jenjang_karir[]" value="{{ $karir->nama_karir }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
+              <input type="date" name="tanggal_masuk_karir[]" value="{{ $karir->tanggal_masuk }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required>
               <button type="button" class="mt-1 text-red-500 text-sm" onclick="removeField(this)">Hapus</button>
             </li>
           @endforeach
@@ -146,14 +154,7 @@
           <i class="fa-solid fa-plus me-1"></i>Tambah Jenjang Karir
         </button>
       </div>
-      <div class="mb-4">
-        <label for="periode_jabatan" class="block font-medium text-gray-700">Periode Jabatan</label>
-        <div class="flex gap-2 items-center">
-          <input type="number" name="periode_mulai" id="periode_mulai" value="{{ $visi->first()->periode_mulai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" min="1900" max="2100">
-          <span>-</span>
-          <input type="number" name="periode_selesai" id="periode_selesai" value="{{ $visi->first()->periode_selesai }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" min="1900" max="2100">
-        </div>
-      </div>
+
       <div class="mb-4">
         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
           Update

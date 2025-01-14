@@ -14,7 +14,7 @@
             @endforeach
           </div>
           <div class="mt-2">
-            <p class="text-gray-600">NIK: {{ $item->nomor_induk_pegawai }}</p>
+            <p class="text-gray-600">NIP: {{ $item->nomor_induk_pegawai }}</p>
             <p class="text-gray-600">Telepon: {{ $item->nomor_telepon_pegawai }}</p>
             <p class="text-gray-600">Golongan: {{ $item->golongan_pegawai }}</p>
           </div>
