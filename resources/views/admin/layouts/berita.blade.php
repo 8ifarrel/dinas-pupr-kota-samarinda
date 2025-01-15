@@ -34,7 +34,7 @@
 
   @include('admin.components.aside')
 
-  <div class="p-8 mt-14 sm:ml-64">
+  <div class="p-8 mt-14 md:ml-64">
     <h1 class="font-semibold text-2xl mb-5 md:text-3xl">
       {{ $page_title }}
     </h1>

@@ -20,8 +20,12 @@ class BeritaKategoriAdminController extends Controller
          */
         $user = Auth::user();
         $jabatan = $user->pegawai->jabatan;
+
+        $id_it_pupr = 0;
+        $id_kepala_dinas = 1;
+        $id_sekretariat = 2;
         
-        if ($jabatan->id_jabatan == 0 || $jabatan->id_jabatan == 1) {
+        if ($jabatan->id_jabatan == $id_it_pupr || $jabatan->id_jabatan == $id_kepala_dinas || $jabatan->id_jabatan == $id_sekretariat) {
             $kategori = BeritaKategori::all();
         } else {
             $jabatanId = strpos($jabatan->kelompok_jabatan, 'Subbagian') !== false 

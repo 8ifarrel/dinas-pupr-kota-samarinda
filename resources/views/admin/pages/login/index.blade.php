@@ -1,7 +1,7 @@
 @extends('admin.layouts.login')
 
 @section('slot')
-  <div class="w-screen h-dscreen flex items-center justify-center bg-gray-50 dark:bg-gray-800 px-4 sm:px-6 lg:px-8">
+  <div class="w-screen h-dvh flex items-center justify-center bg-gray-50 dark:bg-gray-800 px-4 sm:px-6 lg:px-8">
     <div class="relative py-3 sm:max-w-xs sm:mx-auto">
       <div class="min-h-96 px-8 py-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg">
         <div class="flex flex-col justify-center items-center h-full select-none">

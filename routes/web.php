@@ -197,6 +197,7 @@ use App\Http\Controllers\admin\PengumumanAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
 use App\Http\Controllers\JabatanAdminController;
 use App\Http\Controllers\admin\KepalaDinasAdminController;
+use App\Http\Controllers\admin\PegawaiAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -364,6 +365,18 @@ Route::prefix('e-panel')->group(function () {
 			->name('admin.kepala-dinas.edit');
 		Route::post('/kepala-dinas/update', [KepalaDinasAdminController::class, 'update'])
 			->name('admin.kepala-dinas.update');
+
+		/**
+		 * Pegawai
+		 */
+		Route::prefix('pegawai')->group(function () {
+			Route::get('/', [PegawaiAdminController::class, 'index'])
+				->name('admin.pegawai.index');
+			Route::get('/create', [PegawaiAdminController::class, 'create'])
+				->name('admin.pegawai.create');
+			Route::post('/store', [PegawaiAdminController::class, 'store'])
+				->name('admin.pegawai.store');
+		});
 	});
 
 	/**
