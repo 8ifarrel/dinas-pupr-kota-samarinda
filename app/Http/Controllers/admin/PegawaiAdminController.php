@@ -53,7 +53,7 @@ class PegawaiAdminController extends Controller
         $request->validate([
             'id_jabatan' => 'required',
             'nama_pegawai' => 'required|string|max:255',
-            'foto_pegawai' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto_pegawai' => 'nullable|string',
             'nomor_induk_pegawai' => 'nullable|string|max:255|unique:pegawai',
             'nomor_telepon_pegawai' => 'required|string|max:255|unique:pegawai',
             'golongan_pegawai' => 'required|string|max:255',
@@ -64,11 +64,14 @@ class PegawaiAdminController extends Controller
 
         $pegawai = new Pegawai($request->except(['foto_pegawai', 'username', 'email', 'password']));
         
-        if ($request->hasFile('foto_pegawai')) {
-            $file = $request->file('foto_pegawai');
-            $fileName = 'pegawai/' . Str::slug($request->nama_pegawai) . '.' . $file->getClientOriginalExtension();
-            Storage::disk('public')->put($fileName, file_get_contents($file));
-            $pegawai->foto_pegawai = $fileName;
+        if ($request->has('foto_pegawai')) {
+            $fotoPegawaiData = json_decode($request->input('foto_pegawai'), true);
+            if (isset($fotoPegawaiData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoPegawaiData['fileUrl']);
+                $fileName = 'pegawai/' . Str::slug($request->nama_pegawai) . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                Storage::disk('public')->move($tempFilePath, $fileName);
+                $pegawai->foto_pegawai = $fileName;
+            }
         }
 
         $pegawai->save();
@@ -83,6 +86,7 @@ class PegawaiAdminController extends Controller
         $user->id_pegawai = $pegawai->id_pegawai;
         $user->save();
 
-        return redirect()->route('admin.pegawai.index', ['jabatan' => $request->id_jabatan])->with('success', 'Pegawai berhasil ditambahkan.');
+        return redirect()->route('admin.pegawai.index', ['jabatan' => $request->get('jabatan')])->with('success', 'Pegawai berhasil ditambahkan.');
     }
 }
+    

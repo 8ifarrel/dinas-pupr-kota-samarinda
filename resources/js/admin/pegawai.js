@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cropperModal.show();
                 if (cropper) cropper.destroy();
                 cropper = new Cropper(imageToCrop, {
-                    aspectRatio: 1 / 1,
+                    aspectRatio: 16 / 9,
                     viewMode: 1,
                 });
             }

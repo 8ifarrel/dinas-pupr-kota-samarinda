@@ -27,7 +27,7 @@
       </div>
     @endif
 
-    <form action="{{ route('admin.pegawai.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+    <form action="{{ route('admin.pegawai.store', ['jabatan' => request()->get('jabatan')]) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
       @csrf
       
       <h2 class="font-semibold text-2xl mb-5 md:text-3xl">
