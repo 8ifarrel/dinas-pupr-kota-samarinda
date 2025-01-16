@@ -67,7 +67,7 @@ class PegawaiAdminController extends Controller
         if ($request->hasFile('foto_pegawai')) {
             $file = $request->file('foto_pegawai');
             $fileName = 'pegawai/' . Str::slug($request->nama_pegawai) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public', $fileName);
+            Storage::disk('public')->put($fileName, file_get_contents($file));
             $pegawai->foto_pegawai = $fileName;
         }
 
