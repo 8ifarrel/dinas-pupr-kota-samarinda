@@ -11,7 +11,10 @@ class JabatanAdminController extends Controller
     public function index()
     {
         $page_title = "Jabatan";
-        $jabatan = Jabatan::where('id_jabatan_parent', 1)->get();
+        $jabatan = Jabatan::with(['children' => function ($query) {
+            $query->whereRaw("FIND_IN_SET('Subbagian', kelompok_jabatan)")
+                  ->orWhereRaw("FIND_IN_SET('Jabatan Fungsional', kelompok_jabatan)");
+        }])->where('id_jabatan_parent', 1)->get();
         
         return view('admin.pages.jabatan.index', [
             'jabatan'=> $jabatan,

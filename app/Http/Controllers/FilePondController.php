@@ -33,9 +33,9 @@ class FilePondController extends Controller
 
         $path = str_replace('/storage/', '', $request->fileUrl);
 
-        Log::info('Revert method called');
-        Log::info('File URL: ' . $request->fileUrl);
-        Log::info('Path: ' . $path);
+        // Log::info('Revert method called');
+        // Log::info('File URL: ' . $request->fileUrl);
+        // Log::info('Path: ' . $path);
 
         if (Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);

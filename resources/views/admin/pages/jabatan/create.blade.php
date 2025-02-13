@@ -45,7 +45,6 @@
             <label for="nama_jabatan" class="block text-sm font-medium text-gray-700">Nama Jabatan</label>
             <input type="text" name="nama_jabatan" id="nama_jabatan" value="{{ old('nama_jabatan') }}"
                 class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required />
-            <span class="text-red-500">Jika ingin menambahkan <strong>Subbagian</strong> atau <strong>Jabatan Fungsional</strong>, harap menambahkannya di halaman pegawai dan bukan menambahkannya di halaman ini.</span>
         </div>
 
         <div class="mb-4">

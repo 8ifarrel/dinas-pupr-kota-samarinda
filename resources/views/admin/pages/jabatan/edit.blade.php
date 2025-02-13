@@ -1,7 +1,7 @@
 @extends('admin.layouts.jabatan')
 
 @section('css')
-    <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet"/>
+    {{-- <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet"/>
     <style>
         trix-toolbar .trix-button-group--file-tools {
             display: none;
@@ -34,7 +34,7 @@
         trix-editor ol { 
             list-style-type: decimal !important; margin-left: 1rem !important; 
         }
-    </style>
+    </style> --}}
 @endsection
 
 @section('slot')
@@ -63,11 +63,11 @@
             <textarea name="deskripsi_jabatan" id="deskripsi_jabatan" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">{{ $jabatan->deskripsi_jabatan }}</textarea>
         </div>
 
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <label for="tupoksi_jabatan" class="block text-sm font-medium text-gray-700">Tupoksi Jabatan</label>
             <input id="tupoksi_jabatan" type="hidden" name="tupoksi_jabatan" value="{{ $jabatan->tupoksi_jabatan }}">
             <trix-editor input="tupoksi_jabatan"></trix-editor>
-        </div>
+        </div> --}}
 
         <div class="mb-4">
             <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded-md">Perbarui</button>
@@ -76,5 +76,5 @@
 @endsection
 
 @section('js')
-    <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script>
+    {{-- <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script> --}}
 @endsection

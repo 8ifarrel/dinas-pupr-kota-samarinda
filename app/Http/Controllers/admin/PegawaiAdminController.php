@@ -89,4 +89,3 @@ class PegawaiAdminController extends Controller
         return redirect()->route('admin.pegawai.index', ['jabatan' => $request->get('jabatan')])->with('success', 'Pegawai berhasil ditambahkan.');
     }
 }
-    
