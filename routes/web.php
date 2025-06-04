@@ -376,6 +376,13 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.pegawai.create');
 			Route::post('/store', [PegawaiAdminController::class, 'store'])
 				->name('admin.pegawai.store');
+			// Tambahan route edit, update, destroy
+			Route::get('/edit/{id}', [PegawaiAdminController::class, 'edit'])
+				->name('admin.pegawai.edit');
+			Route::put('/update/{id}', [PegawaiAdminController::class, 'update'])
+				->name('admin.pegawai.update');
+			Route::delete('/delete/{id}', [PegawaiAdminController::class, 'destroy'])
+				->name('admin.pegawai.destroy');
 		});
 	});
 

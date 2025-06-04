@@ -21,6 +21,8 @@ class Jabatan extends Model
         'tupoksi_jabatan',
         'deskripsi_jabatan',
         'kelompok_jabatan',
+        'is_subbagian',
+        'is_jabatan_fungsional',
     ];
 
     public function parent()

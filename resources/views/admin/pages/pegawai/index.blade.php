@@ -26,6 +26,7 @@
             <th>NIK</th>
             <th>No. HP</th>
             <th>Golongan</th>
+            <th>Kelola</th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +62,26 @@
               </td>
               <td>{{ $item->nomor_telepon_pegawai }}</td>
               <td>{{ $item->golongan_pegawai }}</td>
+              <td>
+                <div class="flex gap-2">
+                  <a href="{{ route('admin.pegawai.edit', $item->id_pegawai) }}"
+                    class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none"
+                    title="Edit Pegawai">
+                    <i class="fa-solid fa-pencil"></i>
+                  </a>
+                  @if ($item->posisi !== 'Sekretaris' && $item->posisi !== 'Kepala')
+                    <form action="{{ route('admin.pegawai.destroy', $item->id_pegawai) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pegawai ini?');">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit"
+                        class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none"
+                        title="Hapus Pegawai">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    </form>
+                  @endif
+                </div>
+              </td>
             </tr>
           @endforeach
         </tbody>
@@ -72,6 +93,7 @@
             <th>NIK</th>
             <th>No. HP</th>
             <th>Golongan</th>
+            <th>Kelola</th>
           </tr>
         </tfoot>
       </table>
