@@ -15,12 +15,12 @@ return new class extends Migration
 			$table->id('id_karir');
 			$table->string('nama_karir');
 			$table->date('tanggal_masuk');
-			$table->unsignedBigInteger('id_pegawai');
+			$table->unsignedBigInteger('id_susunan_organisasi');
 			$table->timestamps();
 
-			$table->foreign('id_pegawai')
-				->references('id_pegawai')
-				->on('pegawai')
+			$table->foreign('id_susunan_organisasi')
+				->references('id_susunan_organisasi')
+				->on('susunan_organisasi')
 				->onDelete('cascade');
         });
     }

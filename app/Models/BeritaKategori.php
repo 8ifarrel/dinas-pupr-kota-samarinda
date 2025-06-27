@@ -3,19 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Jabatan;
+use App\Models\SusunanOrganisasi;
 
 class BeritaKategori extends Model
 {
     protected $table = 'berita_kategori';
     protected $primaryKey = 'id_berita_kategori';
     protected $fillable = [
-        'id_jabatan',
+        'id_susunan_organisasi',
         'ikon_berita_kategori',
     ];
 
-    public function jabatan()
+    public function susunanOrganisasi()
     {
-        return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
+        return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 }

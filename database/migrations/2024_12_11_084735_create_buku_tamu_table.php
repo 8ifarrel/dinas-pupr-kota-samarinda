@@ -14,16 +14,16 @@ class CreateBukuTamuTable extends Migration
             $table->string('nomor_telepon');
             $table->string('email');
             $table->text('alamat');
-            $table->unsignedBigInteger('jabatan_yang_dikunjungi');
+            $table->unsignedBigInteger('susunan_organisasi_yang_dikunjungi');
             $table->text('maksud_dan_tujuan');
             $table->enum('status', ['Pending', 'Diterima', 'Ditolak'])
                   ->default('Pending');
             $table->text('deskripsi_status');
             $table->timestamps();
 
-            $table->foreign('jabatan_yang_dikunjungi')
-                  ->references('id_jabatan')
-                  ->on('jabatan')
+            $table->foreign('susunan_organisasi_yang_dikunjungi')
+                  ->references('id_susunan_organisasi')
+                  ->on('susunan_organisasi')
                   ->onDelete('cascade');
         });
     }

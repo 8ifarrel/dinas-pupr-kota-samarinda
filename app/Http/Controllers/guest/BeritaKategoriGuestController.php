@@ -16,8 +16,8 @@ class BeritaKategoriGuestController extends Controller
     $page_title = "Informasi PUPR";
     $page_subtitle = "Kategori Berita";
 
-    $berita_kategori = BeritaKategori::with('jabatan')
-      ->select('id_berita_kategori', 'id_jabatan', 'ikon_berita_kategori')
+    $berita_kategori = BeritaKategori::with('susunanOrganisasi')
+      ->select('id_berita_kategori', 'id_susunan_organisasi', 'ikon_berita_kategori')
       ->get()
       ->map(function ($kategori) {
         $kategori->jumlah_berita_count = Berita::where('id_berita_kategori', $kategori->id_berita_kategori)->count();
@@ -39,8 +39,8 @@ class BeritaKategoriGuestController extends Controller
     $page_title = "Informasi PUPR";
     $page_subtitle = "Berita dari " . str_replace('-', ' ', ucfirst($slug_kategori));
 
-    $berita_kategori = BeritaKategori::whereHas('jabatan', function ($query) use ($slug_kategori) {
-      $query->where('slug_jabatan', $slug_kategori);
+    $berita_kategori = BeritaKategori::whereHas('susunanOrganisasi', function ($query) use ($slug_kategori) {
+      $query->where('slug_susunan_organisasi', $slug_kategori);
     })->firstOrFail();
 
     $berita = Berita::with(['kategori', 'kategori.jabatan'])
@@ -76,8 +76,8 @@ class BeritaKategoriGuestController extends Controller
   {
     $query = $request->input('query');
 
-    $berita_kategori = BeritaKategori::whereHas('jabatan', function ($query) use ($slug_kategori) {
-      $query->where('slug_jabatan', $slug_kategori);
+    $berita_kategori = BeritaKategori::whereHas('susunanOrganisasi', function ($query) use ($slug_kategori) {
+      $query->where('slug_susunan_organisasi', $slug_kategori);
     })->firstOrFail();
 
     $berita = Berita::where('id_berita_kategori', $berita_kategori->id_berita_kategori)

@@ -19,8 +19,8 @@ class StrukturOrganisasiGuestController extends Controller
 			->whereNull('id_struktur_organisasi')
 			->first();
 
-		$struktur_organisasi = StrukturOrganisasi::with('jabatan')->select(
-			'id_jabatan',
+		$struktur_organisasi = StrukturOrganisasi::with('susunanOrganisasi')->select(
+			'id_susunan_organisasi',
 			'ikon_jabatan',
 			'nomor_urut_jabatan'
 		)->get();
@@ -36,12 +36,12 @@ class StrukturOrganisasiGuestController extends Controller
 
 	public function show($slug_jabatan)
 	{
-		$struktur_organisasi = StrukturOrganisasi::with(['jabatan.pegawai', 'slider', 'jabatan'])
-			->whereHas('jabatan', function ($query) use ($slug_jabatan) {
-				$query->where('slug_jabatan', $slug_jabatan);
+		$struktur_organisasi = StrukturOrganisasi::with(['susunanOrganisasi', 'slider'])
+			->whereHas('susunanOrganisasi', function ($query) use ($slug_jabatan) {
+				$query->where('slug_susunan_organisasi', $slug_jabatan);
 			})->select(
 				'id_struktur_organisasi',
-				'id_jabatan'
+				'id_susunan_organisasi'
 			)->firstOrFail();
 
 		$struktur_organisasi_diagram = StrukturOrganisasiDiagram::where(
@@ -64,7 +64,7 @@ class StrukturOrganisasiGuestController extends Controller
 
 		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
 		$page_title = "Profil";
-		$page_subtitle = $struktur_organisasi->jabatan->nama_jabatan;
+		$page_subtitle = $struktur_organisasi->susunanOrganisasi->nama_susunan_organisasi;
 
 		return view('guest.pages.profil.struktur-organisasi.show', [
 			'meta_description' => $meta_description,

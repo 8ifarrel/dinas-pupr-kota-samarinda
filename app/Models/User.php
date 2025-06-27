@@ -45,8 +45,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function pegawai()
+    public function susunanOrganisasi()
     {
-        return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
+        return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 }

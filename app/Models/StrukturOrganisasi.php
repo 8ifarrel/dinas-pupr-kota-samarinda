@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\SusunanOrganisasi;
 
 class StrukturOrganisasi extends Model
 {
@@ -11,14 +12,14 @@ class StrukturOrganisasi extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'id_jabatan',
+        'id_susunan_organisasi',
         'ikon_jabatan',
         'nomor_urut_jabatan',
     ];
 
-    public function jabatan()
+    public function susunanOrganisasi()
     {
-        return $this->belongsTo(Jabatan::class, 'id_jabatan');
+        return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 
     public function slider()

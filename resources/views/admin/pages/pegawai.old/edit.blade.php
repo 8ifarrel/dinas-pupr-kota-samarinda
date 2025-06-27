@@ -45,6 +45,16 @@
         </select>
       </div>
       <div class="mb-4">
+        <label for="posisi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Posisi</label>
+        <select name="posisi" id="posisi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+          <option value="">Pilih Posisi</option>
+          <option value="Kepala" {{ old('posisi', $pegawai->posisi) == 'Kepala' ? 'selected' : '' }}>Kepala</option>
+          <option value="Sekretaris" {{ old('posisi', $pegawai->posisi) == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
+          <option value="PLT" {{ old('posisi', $pegawai->posisi) == 'PLT' ? 'selected' : '' }}>PLT</option>
+          <option value="Staf" {{ old('posisi', $pegawai->posisi) == 'Staf' ? 'selected' : '' }}>Staf</option>
+        </select>
+      </div>
+      <div class="mb-4">
         <label for="nama_pegawai" class="block font-medium text-gray-700">Nama Pegawai</label>
         <input type="text" name="nama_pegawai" id="nama_pegawai" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900 bg-gray-50" required autocomplete="off" value="{{ old('nama_pegawai', $pegawai->nama_pegawai) }}">
       </div>

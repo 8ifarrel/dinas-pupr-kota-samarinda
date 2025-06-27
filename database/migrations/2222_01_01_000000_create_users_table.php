@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pegawai');
+            $table->unsignedBigInteger('id_susunan_organisasi');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -21,9 +21,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('id_pegawai')
-                  ->references('id_pegawai')
-                  ->on('pegawai')
+            $table->foreign('id_susunan_organisasi')
+                  ->references('id_susunan_organisasi')
+                  ->on('susunan_organisasi')
                   ->onDelete('cascade');
         });
 

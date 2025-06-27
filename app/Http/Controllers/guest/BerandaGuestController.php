@@ -5,7 +5,7 @@ namespace App\Http\Controllers\guest;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\Slider;
-use App\Models\Pegawai;
+use App\Models\SusunanOrganisasi; 
 use App\Models\StrukturOrganisasi;
 use App\Models\Partner;
 
@@ -33,19 +33,17 @@ class BerandaGuestController extends Controller
             'foto_slider',
         )->where('is_visible', true)->orderBy('nomor_urut_slider')->get();
 
-        $struktur_organisasi = StrukturOrganisasi::with('jabatan')->select(
-            'id_jabatan',
+        $struktur_organisasi = StrukturOrganisasi::with('susunanOrganisasi')->select(
+            'id_susunan_organisasi',
             'ikon_jabatan',
             'nomor_urut_jabatan'
         )->get();
 
-        $kepala_dinas = Pegawai::with('jabatan')->select(
-            'id_jabatan',
-            'nama_pegawai',
-            'foto_pegawai'
-        )->whereHas('jabatan', function ($query) {
-            $query->where('nama_jabatan', 'Kepala Dinas');
-        })->first();
+        $kepala_dinas = SusunanOrganisasi::where('kelompok_susunan_organisasi', 'Kepala Dinas')->select(
+            'id_susunan_organisasi',
+            'nama_susunan_organisasi',
+            'deskripsi_susunan_organisasi'
+        )->first();
 
         $partner = Partner::select(
             'nama_partner',

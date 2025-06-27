@@ -10,7 +10,7 @@ class CreateStrukturOrganisasiSliderTable extends Migration
     {
         Schema::create('struktur_organisasi_slider', function (Blueprint $table) {
             $table->id('id_slider');
-            $table->integer('id_struktur_organisasi');
+            $table->unsignedInteger('id_struktur_organisasi');
             $table->string('foto');
             $table->text('keterangan');
             $table->timestamps();

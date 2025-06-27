@@ -10,14 +10,14 @@ class CreateStrukturOrganisasiTable extends Migration
     {
         Schema::create('struktur_organisasi', function (Blueprint $table) {
             $table->increments('id_struktur_organisasi');
-            $table->unsignedBigInteger('id_jabatan');
+            $table->unsignedBigInteger('id_susunan_organisasi');
             $table->string('ikon_jabatan')->nullable();
             $table->integer('nomor_urut_jabatan')->unique();
             $table->timestamps();
 
-            $table->foreign('id_jabatan')
-                  ->references('id_jabatan')
-                  ->on('jabatan')
+            $table->foreign('id_susunan_organisasi')
+                  ->references('id_susunan_organisasi')
+                  ->on('susunan_organisasi')
                   ->onDelete('cascade');
         });
     }

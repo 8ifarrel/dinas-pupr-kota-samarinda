@@ -17,4 +17,9 @@ class StrukturOrganisasiDiagram extends Model
 		'diagram_struktur_organisasi',
 		'id_struktur_organisasi'
 	];
+
+    public function strukturOrganisasi()
+    {
+        return $this->belongsTo(StrukturOrganisasi::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
+    }
 }

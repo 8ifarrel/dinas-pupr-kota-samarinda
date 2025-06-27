@@ -10,14 +10,14 @@ class CreateBeritaKategoriTable extends Migration
     {
         Schema::create('berita_kategori', function (Blueprint $table) {
             $table->id('id_berita_kategori');
-            $table->unsignedBigInteger('id_jabatan');
+            $table->unsignedBigInteger('id_susunan_organisasi');
             $table->string('ikon_berita_kategori')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_jabatan')
-                  ->references('id_jabatan')
-                  ->on('jabatan')
-                  ->onDelete('cascade');
+            $table->foreign('id_susunan_organisasi')
+                ->references('id_susunan_organisasi')
+                ->on('susunan_organisasi')
+                ->onDelete('cascade');
         });
     }
 
