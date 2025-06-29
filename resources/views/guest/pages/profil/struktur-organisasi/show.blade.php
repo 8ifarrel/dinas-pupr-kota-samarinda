@@ -13,9 +13,9 @@
       {{ $page_subtitle }}
     </h1>
 
-    @if ($struktur_organisasi->jabatan)
+    @if ($struktur_organisasi->susunanOrganisasi)
       <p class="text-center text-lg md:text-xl 2xl:text-2xl sm:px-12 md:px-24 ">
-        {{ $struktur_organisasi->jabatan->deskripsi_jabatan }}
+        {{ $struktur_organisasi->susunanOrganisasi->deskripsi_susunan_organisasi }}
       </p>
     @endif
 
@@ -62,7 +62,7 @@
     @if ($struktur_organisasi_diagram)
       <div class="flex justify-center">
         <img src="{{ Storage::url($struktur_organisasi_diagram->diagram_struktur_organisasi) }}"
-          alt="{{ $struktur_organisasi->jabatan->nama_jabatan }}">
+          alt="{{ $struktur_organisasi->susunanOrganisasi->nama_susunan_organisasi ?? '' }}">
       </div>
     @endif
   </div>
@@ -79,7 +79,7 @@
         </div>
 
         <h2 class="font-bold text-3xl uppercase">
-          SEPUTAR {{ $struktur_organisasi->jabatan->nama_jabatan }}
+          SEPUTAR {{ $struktur_organisasi->susunanOrganisasi->nama_susunan_organisasi ?? '' }}
         </h2>
       </div>
 
@@ -87,7 +87,7 @@
         @foreach ($berita as $item)
           <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
             <div class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
-              {{ $item->kategori->jabatan->nama_jabatan }}
+              {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi ?? '' }}
             </div>
             <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
             <div class="p-5 flex-grow flex flex-col justify-between">
@@ -115,7 +115,7 @@
       </div>
 
       <div class="flex justify-center pt-6 lg:pt-12">
-        <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $struktur_organisasi->jabatan->slug_jabatan]) }}"
+        <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $struktur_organisasi->susunanOrganisasi->slug_susunan_organisasi ?? '']) }}"
           class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Lihat Berita Lainnya
         </a>

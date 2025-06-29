@@ -1,4 +1,4 @@
-@extends('admin.layouts.jabatan')
+@extends('admin.layouts.susunan-organisasi')
 
 @section('css')
   <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
@@ -48,14 +48,25 @@
 @endsection
 
 @section('slot')
-  <form action="{{ route('admin.jabatan.store') }}" method="POST">
+  {{-- Error message --}}
+  @if ($errors->any())
+    <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+      <ul class="mb-0">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  <form action="{{ route('admin.susunan-organisasi.store') }}" method="POST">
     @csrf
 
     <div class="mb-4">
-      <label for="kelompok_jabatan" class="block text-sm font-medium text-gray-700">Kelompok Jabatan</label>
-      <select name="kelompok_jabatan" id="kelompok_jabatan" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+      <label for="kelompok_susunan_organisasi" class="block text-sm font-medium text-gray-700">Kelompok Susunan Organisasi</label>
+      <select name="kelompok_susunan_organisasi" id="kelompok_susunan_organisasi" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         required>
-        <option value="" selected disabled>-- Pilih Kelompok Jabatan --</option>
+        <option value="" selected disabled>-- Pilih Kelompok Susunan Organisasi --</option>
         <option value="Sekretariat">Sekretariat</option>
         <option value="Bidang">Bidang</option>
         <option value="UPTD">UPTD</option>
@@ -63,8 +74,8 @@
     </div>
 
     <div class="mb-1">
-      <label for="nama_jabatan" class="block text-sm font-medium text-gray-700">Nama Jabatan</label>
-      <input type="text" name="nama_jabatan" id="nama_jabatan" value="{{ old('nama_jabatan') }}"
+      <label for="nama_susunan_organisasi" class="block text-sm font-medium text-gray-700">Nama Susunan Organisasi</label>
+      <input type="text" name="nama_susunan_organisasi" id="nama_susunan_organisasi" value="{{ old('nama_susunan_organisasi') }}"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required />
     </div>
 
@@ -86,16 +97,16 @@
       <select name="subbagian_parent" id="subbagian_parent"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
         <option value="" disabled selected>-- Pilih Jabatan Induk --</option>
-        @foreach ($jabatanList ?? [] as $jabatan)
+        @foreach ($susunan_organisasi_list ?? [] as $susunan_organisasi)
           @if (
-              (in_array($jabatan->kelompok_jabatan, ['Bidang', 'UPTD']) &&
-                  (empty($jabatan->id_jabatan_parent) || $jabatan->id_jabatan_parent == 0 || $jabatan->id_jabatan_parent == 1)) ||
-                  ($jabatan->kelompok_jabatan == 'Sekretariat' &&
-                      (empty($jabatan->id_jabatan_parent) ||
-                          $jabatan->id_jabatan_parent == 0 ||
-                          $jabatan->id_jabatan_parent == 1)))
-            <option value="{{ $jabatan->id_jabatan }}" data-kelompok="{{ $jabatan->kelompok_jabatan }}">
-              {{ $jabatan->nama_jabatan }}
+              (in_array($susunan_organisasi->kelompok_susunan_organisasi, ['Bidang', 'UPTD']) &&
+                  (empty($susunan_organisasi->id_susunan_organisasi_parent) || $susunan_organisasi->id_susunan_organisasi_parent == 0 || $susunan_organisasi->id_susunan_organisasi_parent == 1)) ||
+                  ($susunan_organisasi->kelompok_susunan_organisasi == 'Sekretariat' &&
+                      (empty($susunan_organisasi->id_susunan_organisasi_parent) ||
+                          $susunan_organisasi->id_susunan_organisasi_parent == 0 ||
+                          $susunan_organisasi->id_susunan_organisasi_parent == 1)))
+            <option value="{{ $susunan_organisasi->id_susunan_organisasi }}" data-kelompok="{{ $susunan_organisasi->kelompok_susunan_organisasi }}">
+              {{ $susunan_organisasi->nama_susunan_organisasi }}
             </option>
           @endif
         @endforeach
@@ -106,17 +117,17 @@
       <label for="fungsional_parent" class="block text-sm font-medium text-gray-700">Jabatan Fungsional dari</label>
       <select name="fungsional_parent" id="fungsional_parent"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-        <option value="" disabled selected>-- Pilih Jabatan Induk --</option>
-        @foreach ($jabatanList ?? [] as $jabatan)
+        <option value="" disabled selected>-- Pilih Susunan Organisasi Induk --</option>
+        @foreach ($susunan_organisasi_list ?? [] as $susunan_organisasi)
           @if (
-              (in_array($jabatan->kelompok_jabatan, ['Bidang', 'UPTD']) &&
-                  (empty($jabatan->id_jabatan_parent) || $jabatan->id_jabatan_parent == 0 || $jabatan->id_jabatan_parent == 1)) ||
-                  ($jabatan->kelompok_jabatan == 'Sekretariat' &&
-                      (empty($jabatan->id_jabatan_parent) ||
-                          $jabatan->id_jabatan_parent == 0 ||
-                          $jabatan->id_jabatan_parent == 1)))
-            <option value="{{ $jabatan->id_jabatan }}" data-kelompok="{{ $jabatan->kelompok_jabatan }}">
-              {{ $jabatan->nama_jabatan }}
+              (in_array($susunan_organisasi->kelompok_susunan_organisasi, ['Bidang', 'UPTD']) &&
+                  (empty($susunan_organisasi->id_susunan_organisasi_parent) || $susunan_organisasi->id_susunan_organisasi_parent == 0 || $susunan_organisasi->id_susunan_organisasi_parent == 1)) ||
+                  ($susunan_organisasi->kelompok_susunan_organisasi == 'Sekretariat' &&
+                      (empty($susunan_organisasi->id_susunan_organisasi_parent) ||
+                          $susunan_organisasi->id_susunan_organisasi_parent == 0 ||
+                          $susunan_organisasi->id_susunan_organisasi_parent == 1)))
+            <option value="{{ $susunan_organisasi->id_susunan_organisasi }}" data-kelompok="{{ $susunan_organisasi->kelompok_susunan_organisasi }}">
+              {{ $susunan_organisasi->nama_susunan_organisasi }}
             </option>
           @endif
         @endforeach
@@ -124,15 +135,15 @@
     </div>
 
     <div class="mb-4">
-      <label for="deskripsi_jabatan" class="block text-sm font-medium text-gray-700">Deskripsi Jabatan</label>
-      <textarea name="deskripsi_jabatan" id="deskripsi_jabatan"
-        class="mt-1 block w-full p-2 border border-gray-300 rounded-md">{{ old('deskripsi_jabatan') }}</textarea>
+      <label for="deskripsi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Deskripsi Susunan Organisasi</label>
+      <textarea name="deskripsi_susunan_organisasi" id="deskripsi_susunan_organisasi"
+        class="mt-1 block w-full p-2 border border-gray-300 rounded-md">{{ old('deskripsi_susunan_organisasi') }}</textarea>
     </div>
 
     <div class="mb-4">
-      <label for="tupoksi_jabatan" class="block text-sm font-medium text-gray-700">Tupoksi Jabatan</label>
-      <input id="tupoksi_jabatan" type="hidden" name="tupoksi_jabatan" value="{{ old('tupoksi_jabatan') }}">
-      <trix-editor input="tupoksi_jabatan"></trix-editor>
+      <label for="tupoksi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Tupoksi Susunan Organisasi</label>
+      <input id="tupoksi_susunan_organisasi" type="hidden" name="tupoksi_susunan_organisasi" value="{{ old('tupoksi_susunan_organisasi') }}">
+      <trix-editor input="tupoksi_susunan_organisasi"></trix-editor>
     </div>
 
     <div class="mb-4">
@@ -152,7 +163,7 @@
     }
 
     function filterParentOptions() {
-      const kelompok = document.getElementById('kelompok_jabatan').value;
+      const kelompok = document.getElementById('kelompok_susunan_organisasi').value;
       ['subbagian_parent', 'fungsional_parent'].forEach(function(selectId) {
         const select = document.getElementById(selectId);
         if (!select) return;
@@ -183,7 +194,7 @@
       toggleParentDropdowns();
     });
 
-    document.getElementById('kelompok_jabatan').addEventListener('change', function() {
+    document.getElementById('kelompok_susunan_organisasi').addEventListener('change', function() {
       filterParentOptions();
     });
 

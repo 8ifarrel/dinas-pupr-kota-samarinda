@@ -16,11 +16,11 @@ class KepalaDinasJenjangKarir extends Model
     protected $fillable = [
         'nama_karir',
         'tanggal_masuk',
-        'id_pegawai',
+        'id_kepala_dinas',
     ];
 
-    public function pegawai()
+    public function kepalaDinas()
     {
-        return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
+        return $this->belongsTo(KepalaDinas::class, 'id_kepala_dinas', 'id');
     }
 }

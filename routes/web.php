@@ -83,7 +83,7 @@ Route::prefix('profil')->group(function () {
 		Route::get('/', [StrukturOrganisasiGuestController::class, 'index'])
 			->name('guest.profil.struktur-organisasi.index');
 
-		Route::get('/{slug_jabatan}', [StrukturOrganisasiGuestController::class, 'show'])
+		Route::get('/{slug_susunan_organisasi}', [StrukturOrganisasiGuestController::class, 'show'])
 			->name('guest.profil.struktur-organisasi.show');
 	});
 });
@@ -195,7 +195,7 @@ use App\Http\Controllers\admin\BeritaAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
 use App\Http\Controllers\admin\PengumumanAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
-use App\Http\Controllers\JabatanAdminController;
+use App\Http\Controllers\admin\SusunanOrganisasiAdminController;
 use App\Http\Controllers\admin\KepalaDinasAdminController;
 use App\Http\Controllers\admin\PegawaiAdminController;
 
@@ -339,21 +339,21 @@ Route::prefix('e-panel')->group(function () {
 		});
 
 		/**
-		 * Jabatan
+		 * Susunan Organisasi
 		 */
-		Route::prefix('jabatan')->group(function () {
-			Route::get('/', [JabatanAdminController::class, 'index'])
-				->name('admin.jabatan.index');
-			Route::get('/create', [JabatanAdminController::class, 'create'])
-				->name('admin.jabatan.create');
-			Route::post('/store', [JabatanAdminController::class, 'store'])
-				->name('admin.jabatan.store');
-			Route::get('/edit/{id}', [JabatanAdminController::class, 'edit'])
-				->name('admin.jabatan.edit');
-			Route::post('/update/{id}', [JabatanAdminController::class, 'update'])
-				->name('admin.jabatan.update');
-			Route::delete('/delete/{id}', [JabatanAdminController::class, 'destroy'])
-				->name('admin.jabatan.destroy');
+		Route::prefix('susunan-organisasi')->group(function () {
+			Route::get('/', [SusunanOrganisasiAdminController::class, 'index'])
+				->name('admin.susunan-organisasi.index');
+			Route::get('/create', [SusunanOrganisasiAdminController::class, 'create'])
+				->name('admin.susunan-organisasi.create');
+			Route::post('/store', [SusunanOrganisasiAdminController::class, 'store'])
+				->name('admin.susunan-organisasi.store');
+			Route::get('/edit/{id}', [SusunanOrganisasiAdminController::class, 'edit'])
+				->name('admin.susunan-organisasi.edit');
+			Route::put('/update/{id}', [SusunanOrganisasiAdminController::class, 'update'])
+				->name('admin.susunan-organisasi.update');
+			Route::delete('/delete/{id}', [SusunanOrganisasiAdminController::class, 'destroy'])
+				->name('admin.susunan-organisasi.destroy');
 		});
 
 		/**
@@ -365,25 +365,6 @@ Route::prefix('e-panel')->group(function () {
 			->name('admin.kepala-dinas.edit');
 		Route::post('/kepala-dinas/update', [KepalaDinasAdminController::class, 'update'])
 			->name('admin.kepala-dinas.update');
-
-		/**
-		 * Pegawai
-		 */
-		Route::prefix('pegawai')->group(function () {
-			Route::get('/', [PegawaiAdminController::class, 'index'])
-				->name('admin.pegawai.index');
-			Route::get('/create', [PegawaiAdminController::class, 'create'])
-				->name('admin.pegawai.create');
-			Route::post('/store', [PegawaiAdminController::class, 'store'])
-				->name('admin.pegawai.store');
-			// Tambahan route edit, update, destroy
-			Route::get('/edit/{id}', [PegawaiAdminController::class, 'edit'])
-				->name('admin.pegawai.edit');
-			Route::put('/update/{id}', [PegawaiAdminController::class, 'update'])
-				->name('admin.pegawai.update');
-			Route::delete('/delete/{id}', [PegawaiAdminController::class, 'destroy'])
-				->name('admin.pegawai.destroy');
-		});
 	});
 
 	/**

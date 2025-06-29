@@ -8,27 +8,29 @@
       @foreach ($slider as $key => $item)
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
           @if ($key === 0)
-          <img 
-            src="{{ Storage::url($item->foto_slider) }}" 
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 brightness-50" 
-            alt="Slider Image {{ $key + 1 }}">
+            <img src="{{ Storage::url($item->foto_slider) }}"
+              class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 brightness-50"
+              alt="Slider Image {{ $key + 1 }}">
             <div class="absolute inset-0 flex flex-col text-center items-center justify-center">
-              <h1 class="font-bold text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl md:pb-2 text-center text-white max-w-64 xs:max-w-72 sm:max-w-lg md:max-w-2xl lg:max-w-4xl">Website Resmi Dinas Pekerjaan Umum dan Penantaan Ruang Kota Samarinda</h1>
-              <p class="hidden sm:block sm:text-sm md:text-base lg:text-lg text-white sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
+              <h1
+                class="font-bold text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl md:pb-2 text-center text-white max-w-64 xs:max-w-72 sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
+                Website Resmi Dinas Pekerjaan Umum dan Penantaan Ruang Kota Samarinda</h1>
+              <p
+                class="hidden sm:block sm:text-sm md:text-base lg:text-lg text-white sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
                 Selamat datang di website Dinas Pekerjaan Umum dan Penantaan Ruang Kota Samarinda, tempat
-                informasi mengenai pembangunan, pemeliharaan, dan pengelolaan infrastruktur, serta tata ruang dan pengawasan
+                informasi mengenai pembangunan, pemeliharaan, dan pengelolaan infrastruktur, serta tata ruang dan
+                pengawasan
                 bangunan di wilayah Kota Samarinda.
               </p>
             </div>
           @else
-          <img 
-            src="{{ Storage::url($item->foto_slider) }}" 
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" 
-            alt="Slider Image {{ $key + 1 }}">
+            <img src="{{ Storage::url($item->foto_slider) }}"
+              class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              alt="Slider Image {{ $key + 1 }}">
           @endif
         </div>
       @endforeach
-    </div>    
+    </div>
 
     <!-- Slider controls -->
     <button type="button"
@@ -59,23 +61,24 @@
 
   {{-- Sambutan Kepala Dinas --}}
   <div class="bg-gray-200 p-10 md:p-12">
-    @if ($kepala_dinas)
+    @if (!empty($kepala_dinas) && $kepala_dinas->nama)
       <div class="flex flex-col-reverse lg:flex-row justify-center items-center gap-3 lg:gap-16">
         <div>
           <div class="static flex flex-col-reverse items-center">
             <div
               class="mb-[5rem] sm:mb-[3.8rem] md:mb-[3.7rem] static bg-blue rounded-t-[45%] lg:rounded-tl-[50%] lg:rounded-tr-none">
-              <img class="lg:h-[450px]" src="{{ Storage::url($kepala_dinas->foto_pegawai) }}" alt="">
+              <img class="lg:h-[450px]"
+                src="{{ $kepala_dinas->foto ? Storage::url($kepala_dinas->foto) : asset('img/default.png') }}"
+                alt="{{ $kepala_dinas->nama }}">
             </div>
 
             <div
               class="mx-[1.35rem] lg:mx-0 py-1.5 lg:py-1 px-2 lg:px-3 text-center absolute shadow-lg bg-white rounded-lg">
               <p class="font-bold text-lg lg:text-xl">
-                {{ $kepala_dinas->nama_pegawai }}
+                {{ $kepala_dinas->nama }}
               </p>
-
               <p class="text-sm lg:text-base lg:font-medium">
-                {{ $kepala_dinas->jabatan->nama_jabatan }} {{ config('app.nama_dinas') }}
+                {{ $kepala_dinas->susunanOrganisasi->nama_susunan_organisasi ?? '' }} {{ config('app.nama_dinas') }}
               </p>
             </div>
           </div>
@@ -90,11 +93,12 @@
           </div>
 
           <h1 class="font-bold text-3xl uppercase">
-            SAMBUTAN {{ $kepala_dinas->jabatan->nama_jabatan }}
+            SAMBUTAN KEPALA DINAS
           </h1>
 
+          {{-- Jika ingin menampilkan sambutan, tambahkan field sambutan di tabel/model --}}
           <p>
-            {{ $kepala_dinas->jabatan->deskripsi_jabatan }}
+            {{ $kepala_dinas->susunanOrganisasi->deskripsi_susunan_organisasi ?? '' }}
           </p>
 
           <div>
@@ -126,8 +130,9 @@
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($berita as $item)
         <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
-          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $item->kategori->jabatan->slug_jabatan ]) }}" class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
-            {{ $item->kategori->jabatan->nama_jabatan }}
+          <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $item->kategori->susunanOrganisasi->slug_susunan_organisasi]) }}"
+            class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
+            {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi }}
           </a>
           <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
           <div class="p-5 flex-grow flex flex-col justify-between">
@@ -178,17 +183,21 @@
     </div>
 
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
-      @foreach ($struktur_organisasi as $item)
-        <a href="{{ route('guest.profil.struktur-organisasi.show', ['slug_jabatan' => $item->jabatan->slug_jabatan]) }}" class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto {{ $item->nomor_urut_jabatan == 1 ? 'md:col-span-2 lg:col-span-3' : '' }}">
+      @foreach ($struktur_organisasi as $i => $item)
+        <a href="{{ route('guest.profil.struktur-organisasi.show', ['slug_susunan_organisasi' => $item->susunanOrganisasi->slug_susunan_organisasi]) }}"
+          class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto
+            @if($i === 0) md:col-span-2 lg:col-span-3 @endif">
           <figure>
             <div class="static mb-3 w-14 h-14 bg-yellow/40 rounded-full m-auto flex items-center justify-center">
-              <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}" alt="{{ $item->jabatan->nama_jabatan }}">
+              <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}"
+                alt="{{ $item->susunanOrganisasi->nama_susunan_organisasi }}">
             </div>
             <figcaption class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {{ $item->jabatan->nama_jabatan }}
+              {{ $item->susunanOrganisasi->nama_susunan_organisasi }}
             </figcaption>
           </figure>
-          <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ $item->jabatan->deskripsi_jabatan }}
+          <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+            {{ $item->susunanOrganisasi->deskripsi_susunan_organisasi }}
           </p>
           <div class="mt-auto">
             <p class="inline-flex font-medium items-center text-blue hover:underline">

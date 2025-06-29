@@ -25,11 +25,11 @@
             <tr>
               <td>
                 <a href="{{ Storage::url($item->ikon_berita_kategori) }}" data-lightbox="ikon_berita_kategori"
-                  data-title="{{ $item->jabatan->nama_jabatan }}">
+                  data-title="{{ $item->susunanOrganisasi->nama_susunan_organisasi ?? '-' }}">
                   <img src="{{ Storage::url($item->ikon_berita_kategori) }}">
                 </a>
               </td>
-              <td>{{ $item->jabatan->nama_jabatan }}</td>
+              <td>{{ $item->susunanOrganisasi->nama_susunan_organisasi ?? '-' }}</td>
               <td>
                 <div class="flex gap-2">
                   <a href="{{ route('admin.berita.kategori.edit', $item->id_berita_kategori) }}"

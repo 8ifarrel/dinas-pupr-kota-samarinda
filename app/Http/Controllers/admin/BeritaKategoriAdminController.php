@@ -14,29 +14,19 @@ class BeritaKategoriAdminController extends Controller
     {
         $page_title = "Kategori Berita";
 
-        /**
-         * Fitur agar user hanya bisa mengakses kategori berita berdasarkan jabatan yang dimiliki.
-         * Fitur ini belum dicoba karena user masih sedikit.
-         */
         $user = Auth::user();
-        $jabatan = $user->pegawai->jabatan;
+        $susunanOrganisasi = $user->susunanOrganisasi ?? null;
 
         $id_it_pupr = 0;
         $id_kepala_dinas = 1;
         $id_sekretariat = 2;
-        
-        if ($jabatan->id_jabatan == $id_it_pupr || $jabatan->id_jabatan == $id_kepala_dinas || $jabatan->id_jabatan == $id_sekretariat) {
-            $kategori = BeritaKategori::all();
+
+        if ($susunanOrganisasi && in_array($susunanOrganisasi->id_susunan_organisasi, [$id_it_pupr, $id_kepala_dinas, $id_sekretariat])) {
+            $kategori = BeritaKategori::get();
         } else {
-            $jabatanId = strpos($jabatan->kelompok_jabatan, 'Subbagian') !== false 
-                ? $jabatan->id_jabatan_parent 
-                : $jabatan->id_jabatan;
-        
-            $kategori = BeritaKategori::whereHas('jabatan', function ($query) use ($jabatanId) {
-                $query->where('id_jabatan', $jabatanId);
-            })->get();
+            $susunanOrganisasiId = $susunanOrganisasi ? $susunanOrganisasi->id_susunan_organisasi : null;
+            $kategori = BeritaKategori::where('id_susunan_organisasi', $susunanOrganisasiId)->with('susunanOrganisasi')->get();
         }
-        
 
         return view('admin.pages.berita.kategori.index', [
             'page_title' => $page_title,
@@ -47,7 +37,7 @@ class BeritaKategoriAdminController extends Controller
     public function edit($id)
     {
         $page_title = "Edit Kategori Berita";
-        $kategori = BeritaKategori::findOrFail($id);
+        $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($id);
 
         return view('admin.pages.berita.kategori.edit', [
             'page_title' => $page_title,
@@ -61,13 +51,14 @@ class BeritaKategoriAdminController extends Controller
             'ikon_berita_kategori' => 'nullable|string',
         ]);
 
-        $kategori = BeritaKategori::findOrFail($id);
+        $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($id);
 
         if ($request->has('ikon_berita_kategori')) {
             $ikonKategoriData = json_decode($request->input('ikon_berita_kategori'), true);
             if (isset($ikonKategoriData['fileUrl'])) {
                 $tempFilePath = str_replace('/storage/', '', $ikonKategoriData['fileUrl']);
-                $newFileName = 'Berita/ikon/' . $kategori->jabatan->slug_jabatan . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $slug = $kategori->susunanOrganisasi->slug_susunan_organisasi ?? 'kategori';
+                $newFileName = 'Berita/ikon/' . $slug . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
                 Storage::disk('public')->move($tempFilePath, $newFileName);
                 $kategori->ikon_berita_kategori = $newFileName;
             }

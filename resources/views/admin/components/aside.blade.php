@@ -79,11 +79,11 @@
       {{-- Susunan Organisasi & Akun Admin --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.jabatan.index') }}">
+          href="{{ route('admin.susunan-organisasi.index') }}">
           <i class="fa-solid fa-people-group"></i>
 
           <span class="ms-3">
-            Susunan Organisasi & Akun Admin
+            Susunan Organisasi
           </span>
         </a>
       </li>

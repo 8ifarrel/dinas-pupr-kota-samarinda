@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\guest;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pegawai;
+use App\Models\KepalaDinas;
 use App\Models\KepalaDinasRiwayatPendidikan;
 use App\Models\KepalaDinasJenjangKarir;
 
@@ -15,23 +15,15 @@ class ProfilKepalaDinasGuestController extends Controller
 		$page_title = "Profil";
 		$page_subtitle = "Profil Kepala Dinas";
 
-		$kepala_dinas = Pegawai::with('jabatan')->select(
-			'id_jabatan',
-			'nama_pegawai',
-			'foto_pegawai',
-		)->whereHas('jabatan', function ($query) {
-			$query->where('nama_jabatan', 'Kepala Dinas');
-		})->first();
+		$kepala_dinas = KepalaDinas::with('susunanOrganisasi')
+			->where('id_susunan_organisasi', 1)
+			->first();
 
-		$riwayat_pendidikan = KepalaDinasRiwayatPendidikan::with('pegawai.jabatan')->select(
-			'tanggal_masuk',
-			'nama_pendidikan'
-		)->orderBy('tanggal_masuk', 'desc')->get();
+		$riwayat_pendidikan = KepalaDinasRiwayatPendidikan::orderBy('tanggal_masuk', 'desc')
+			->get();
 
-		$jenjang_karir = KepalaDinasJenjangKarir::with('pegawai.jabatan')->select(
-			'tanggal_masuk',
-			'nama_karir'
-		)->orderBy('tanggal_masuk', 'desc')->get();
+		$jenjang_karir = KepalaDinasJenjangKarir::orderBy('tanggal_masuk', 'desc')
+			->get();
 
 		return view('guest.pages.profil.profil-kepala-dinas.index', [
 			'meta_description' => $meta_description,

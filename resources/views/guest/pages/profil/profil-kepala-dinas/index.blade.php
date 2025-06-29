@@ -11,8 +11,8 @@
 
 			<div class="pb-10 pt-5 px-5 md:px-10 lg:px-14">
 				<div class="text-center flex flex-col justify-center mb-5">
-					<h1 class="font-bold text-2xl md:text-3xl uppercase mb-1">{{ $kepala_dinas->nama_pegawai }}</h1>
-					<p>{{ $kepala_dinas->jabatan->deskripsi_jabatan }}</p>
+					<h1 class="font-bold text-2xl md:text-3xl uppercase mb-1">{{ $kepala_dinas->nama }}</h1>
+					<p>{{ $kepala_dinas->susunanOrganisasi->deskripsi_susunan_organisasi }}</p>
 				</div>
 
 				{{-- Ini jadi tapi ga sama panjang --}}

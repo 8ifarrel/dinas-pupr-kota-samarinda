@@ -11,16 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaAdminController extends Controller
 {
-    /**
-     * TODOO:
-     * 1. Fitur edit
-     * 2. Fitur delete
-     * 3. User hanya bisa mengakses berita berdasarkan jabatan yang dimiliki (khusus untuk IT PUPR bisa mengakses semua berita)
-     */
     public function index(Request $request)
     {
         $id = $request->query('id_kategori');
-        $kategori = BeritaKategori::findOrFail($id);
+        $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($id);
         $berita = Berita::where('id_berita_kategori', $id)
             ->orderBy('created_at', 'desc')
             ->get()
@@ -28,7 +22,7 @@ class BeritaAdminController extends Controller
                 $item->formatted_created_at = $item->created_at->translatedFormat('l, d F Y');
                 return $item;
             });
-        $page_title = "Berita dari " . $kategori->jabatan->nama_jabatan;
+        $page_title = "Berita dari " . ($kategori->susunanOrganisasi->nama_susunan_organisasi ?? '-');
 
         return view('admin.pages.berita.index', [
             'page_title' => $page_title,
@@ -39,8 +33,8 @@ class BeritaAdminController extends Controller
     public function create(Request $request)
     {
         $id = $request->query('id_kategori');
-        $kategori = BeritaKategori::findOrFail($id);
-        $page_title = "Tambah Berita untuk " . $kategori->jabatan->nama_jabatan;
+        $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($id);
+        $page_title = "Tambah Berita untuk " . ($kategori->susunanOrganisasi->nama_susunan_organisasi ?? '-');
 
         return view('admin.pages.berita.create', [
             'page_title' => $page_title,
@@ -93,7 +87,7 @@ class BeritaAdminController extends Controller
     public function edit($id)
     {
         $berita = Berita::findOrFail($id);
-        $kategori = BeritaKategori::findOrFail($berita->id_berita_kategori);
+        $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($berita->id_berita_kategori);
         $page_title = "Edit Berita";
 
         return view('admin.pages.berita.edit', [

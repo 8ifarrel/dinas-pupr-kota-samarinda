@@ -8,6 +8,7 @@ use App\Models\Slider;
 use App\Models\SusunanOrganisasi; 
 use App\Models\StrukturOrganisasi;
 use App\Models\Partner;
+use App\Models\KepalaDinas;
 
 class BerandaGuestController extends Controller
 {
@@ -16,7 +17,7 @@ class BerandaGuestController extends Controller
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
         $page_title = "Beranda";
 
-        $berita = Berita::with('kategori.jabatan')
+        $berita = Berita::with('kategori.susunanOrganisasi')
             ->select(
                 'judul_berita',
                 'slug_berita',
@@ -39,11 +40,9 @@ class BerandaGuestController extends Controller
             'nomor_urut_jabatan'
         )->get();
 
-        $kepala_dinas = SusunanOrganisasi::where('kelompok_susunan_organisasi', 'Kepala Dinas')->select(
-            'id_susunan_organisasi',
-            'nama_susunan_organisasi',
-            'deskripsi_susunan_organisasi'
-        )->first();
+        $kepala_dinas = KepalaDinas::with('susunanOrganisasi')
+            ->where('id_susunan_organisasi', 1)
+            ->first();
 
         $partner = Partner::select(
             'nama_partner',

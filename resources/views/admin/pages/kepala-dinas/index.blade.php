@@ -24,7 +24,7 @@
       </div>
       <div class="mb-4">
         <h3 class="text-xl font-semibold">Deskripsi Jabatan</h3>
-        <p>{!! $item->jabatan->deskripsi_jabatan !!}</p>
+        <p>{!! $item->jabatan->deskripsi_susunan_organisasi !!}</p>
       </div>
       <div class="mb-4">
         <h3 class="text-xl font-semibold">Tupoksi Jabatan</h3>
