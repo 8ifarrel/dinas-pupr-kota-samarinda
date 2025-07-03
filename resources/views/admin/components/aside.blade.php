@@ -87,6 +87,18 @@
           </span>
         </a>
       </li>
+
+      {{-- Buku Tamu --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.buku-tamu.index') }}">
+          <i class="fa-solid fa-book-bookmark"></i>
+
+          <span class="ms-3">
+            Buku Tamu
+          </span>
+        </a>
+      </li>
     </ul>
   </div>
 </aside>

@@ -198,6 +198,7 @@ use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
 use App\Http\Controllers\JabatanAdminController;
 use App\Http\Controllers\admin\KepalaDinasAdminController;
 use App\Http\Controllers\admin\PegawaiAdminController;
+use App\Http\Controllers\admin\BukuTamuAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -376,13 +377,24 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.pegawai.create');
 			Route::post('/store', [PegawaiAdminController::class, 'store'])
 				->name('admin.pegawai.store');
-			// Tambahan route edit, update, destroy
 			Route::get('/edit/{id}', [PegawaiAdminController::class, 'edit'])
 				->name('admin.pegawai.edit');
 			Route::put('/update/{id}', [PegawaiAdminController::class, 'update'])
 				->name('admin.pegawai.update');
 			Route::delete('/delete/{id}', [PegawaiAdminController::class, 'destroy'])
 				->name('admin.pegawai.destroy');
+		});
+
+		/**
+		 * Buku Tamu
+		 */
+		Route::prefix('buku-tamu')->group(function () {
+			Route::get('/', [BukuTamuAdminController::class, 'index'])
+				->name('admin.buku-tamu.index');
+			Route::get('/edit/{id}', [BukuTamuAdminController::class, 'edit'])
+				->name('admin.buku-tamu.edit');
+			Route::post('/update/{id}', [BukuTamuAdminController::class, 'update'])
+				->name('admin.buku-tamu.update');
 		});
 	});
 

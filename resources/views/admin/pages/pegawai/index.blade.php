@@ -8,12 +8,14 @@
 @endsection
 
 @section('slot')   
-  <div class="inline-flex gap-2 flex-wrap">
-    <a href="{{ route('admin.pegawai.create', ['jabatan' => request()->get('jabatan')]) }}"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
-      <i class="fa-solid fa-plus me-1"></i>Tambah Pegawai
-    </a>
-  </div>
+  @if ($jabatan && $jabatan->nama_jabatan !== 'Kepala Dinas')
+    <div class="inline-flex gap-2 flex-wrap">
+      <a href="{{ route('admin.pegawai.create', ['jabatan' => request()->get('jabatan')]) }}"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
+        <i class="fa-solid fa-plus me-1"></i>Tambah Pegawai
+      </a>
+    </div>
+  @endif
 
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
     <div class="relative overflow-x-auto text-sm md:text-base">
@@ -43,10 +45,14 @@
                   </a>
                 @endif
               </td>
-              <td>{{ $item->nama_pegawai }}</td>
+              <td>
+                {{ $item->nama_pegawai }}
+              </td>
               <td>
                 @if ($item->posisi == 'Sekretaris')
                   {{ $item->posisi }}
+                @elseif ($item->jabatan->kelompok_jabatan == 'Kepala Dinas')
+                  Kepala Dinas
                 @else
                   {{ $item->posisi }} {{ $item->jabatan->nama_jabatan }}
                 @endif

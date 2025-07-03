@@ -10,7 +10,8 @@
   <p>Terima kasih telah mengajukan permohonan buku tamu. Kami sangat menghargai perhatian dan waktu Anda.</p>
 
   <p>Untuk memantau <strong>status kunjungan</strong> Anda, silakan klik tautan di bawah ini:</p>
-  <a href="https://pupr.samarindakota.go.id/buku-tamu/status?id={{ $idBukuTamu }}"><strong>Lihat Status Kunjungan</strong></a>
+  {{-- <a href="https://pupr.samarindakota.go.id/buku-tamu/status?id={{ $idBukuTamu }}"><strong>Lihat Status Kunjungan</strong></a> --}}
+  <a href="{{ route('guest.buku-tamu.show', ['id' => $idBukuTamu]) }}"><strong>Lihat Status Kunjungan</strong></a>
 
   <p>Harap terus memantau status kunjungan Anda secara berkala. Terima kasih atas perhatiannya.</p>
 
