@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
         labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span><br>(kosongkan jika tidak ingin mengubah foto)',
+        credits: false,
         server: {
             process: {
                 url: "/filepond/process",

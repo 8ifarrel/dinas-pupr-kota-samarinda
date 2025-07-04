@@ -1,17 +1,11 @@
-@extends('guest.layouts.struktur-organisasi')
+@extends('guest.layouts.profil')
 
 @section('slot')
   <div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
-    <div class="text-center mb-2 lg:mb-3">
-      <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
-      </span>
-    </div>
 
-    <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ $page_subtitle }}
-    </h1>
+    <h2 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
+      Organigram <br> {{ config('app.nama_singkatan_dinas') }}
+    </h2>
 
     {{-- Diagram --}}
     <div>
@@ -24,16 +18,9 @@
 
   {{-- Card --}}
   <div class="p-10 md:p-12">
-    <div class="text-center mb-2 lg:mb-3">
-      <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
-      </span>
-    </div>
-
-    <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      TENTANG KAMI
-    </h1>
+    <h2 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
+      Susunan Organisasi <br> {{ config('app.nama_singkatan_dinas') }}
+    </h2>
 
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($struktur_organisasi as $item)

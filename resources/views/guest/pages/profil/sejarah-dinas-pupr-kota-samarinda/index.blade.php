@@ -3,7 +3,7 @@
 @section('css')
 
 <style>
-	.first-letter-custom p:first-of-type::first-letter {
+	.first-letter-custom div:first-of-type::first-letter {
 		text-transform: capitalize;
 		font-size: 4.5rem;
 		font-weight: 600;

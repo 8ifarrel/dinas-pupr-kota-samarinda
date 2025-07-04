@@ -26,4 +26,9 @@ class StrukturOrganisasi extends Model
     {
         return $this->hasMany(StrukturOrganisasiSlider::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
     }
+
+    public function strukturOrganisasiDiagram()
+    {
+        return $this->hasOne(StrukturOrganisasiDiagram::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
+    }
 }

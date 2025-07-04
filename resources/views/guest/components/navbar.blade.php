@@ -25,7 +25,8 @@
     </div>
 
     <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-      <button type="button" class="text-blue bg-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pelayanan</button>
+      <button type="button"
+        class="text-blue bg-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pelayanan</button>
       <button data-collapse-toggle="navbar-cta" type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         aria-controls="navbar-cta" aria-expanded="false">
@@ -136,7 +137,7 @@
                 </h2>
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{ route('guest.profil.sejarah-kota-samarinda.index') }}"
+                    <a href="https://samarindakota.go.id/laman/sejarah-samarinda"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sejarah</a>
                   </li>
                   <li>
@@ -260,24 +261,17 @@
 
                   <div class="border-s-2 ms-4 border-black/15">
                     <li>
-                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Peraturan
-                        Keputusan dan Kebijakan</a>
+                      <a href="{{ route('guest.ppid-pelaksana.kategori.index') }}"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Lihat PPID Pelaksana
+                      </a>
                     </li>
                     <li>
-                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
-                        yang Wajib Disediakan dan Diumumkan Secara Berkala</a>
-                    </li>
-                    <li>
-                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
-                        yang Wajib Diumumkan Secara Serta-merta</a>
-                    </li>
-                    <li>
-                      <a href="{{ route('guest.ppid-pelaksana.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Informasi
-                        yang Wajib Tersedia Setiap Saat</a>
+                      <a href=""
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Ajukan Permohonan Informasi Publik
+                      </a>
+                      </a>
                     </li>
                   </div>
                 </div>
@@ -340,7 +334,8 @@
         </li>
         <li>
           <a href="{{ route('guest.buku-tamu.index') }}"
-            class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'Buku Tamu' ? ' bg-yellow lg:bg-transparent' : '' }}">Buku Tamu</a>
+            class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'Buku Tamu' ? ' bg-yellow lg:bg-transparent' : '' }}">Buku
+            Tamu</a>
         </li>
       </ul>
     </div>

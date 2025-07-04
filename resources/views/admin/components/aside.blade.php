@@ -76,16 +76,39 @@
         </a>
       </li>
 
-      {{-- Susunan Organisasi & Akun Admin --}}
+      {{-- Struktur Organisasi --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.susunan-organisasi.index') }}">
-          <i class="fa-solid fa-people-group"></i>
+          href="{{ route('admin.struktur-organisasi.index') }}">
+          <i class="fa-solid fa-sitemap"></i>
 
           <span class="ms-3">
-            Susunan Organisasi
+            Struktur Organisasi
           </span>
         </a>
+      </li>
+
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+          <i class="fa-solid fa-building-user"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Profil</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+          <li>
+            <a href="{{ route('admin.profil.visi-dan-misi.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi dan Misi</a>
+          </li>
+          <li>
+            <a href="{{ route('admin.profil.sejarah-dinas-pupr-kota-samarinda.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sejarah</a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

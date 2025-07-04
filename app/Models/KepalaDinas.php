@@ -14,7 +14,8 @@ class KepalaDinas extends Model
         'nama',
         'foto',
         'id_susunan_organisasi',
-        // ...tambahkan kolom lain jika ada...
+        'tahun_mulai',
+        'tahun_selesai',
     ];
 
     public function jenjangKarir()

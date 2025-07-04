@@ -47,6 +47,8 @@ use App\Http\Controllers\guest\BeritaGuestController;
 use App\Http\Controllers\guest\BeritaKategoriGuestController;
 use App\Http\Controllers\guest\PengumumanGuestController;
 use App\Http\Controllers\guest\BukuTamuGuestController;
+use App\Http\Controllers\guest\PPIDPelaksanaKategoriGuestController;
+use App\Http\Controllers\guest\PPIDPelaksanaGuestController;
 
 /**
  * Portal
@@ -110,17 +112,28 @@ Route::prefix('berita')->group(function () {
 /**
  * Pengumuman
  */
-
-Route::get('/pengumuman', [PengumumanGuestController::class, 'index'])
-	->name('guest.pengumuman.index');
+Route::prefix('pengumuman')->group(callback: function () {
+	Route::get('/', [PengumumanGuestController::class, 'index'])
+		->name('guest.pengumuman.index');
+	Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
+		->name('guest.pengumuman.store');
+	Route::get('/download/{slug}', [PengumumanGuestController::class, 'download'])
+		->name('guest.pengumuman.download');
+});
 
 /**
  * PPID Pelaksana
  */
 
-Route::get('/ppid-pelaksana', function () {
-	abort(503, 'Halaman ini sedang dalam pembaharuan');
-})->name('guest.ppid-pelaksana.index');
+Route::prefix('ppid-pelaksana')->group(callback: function () {
+	Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
+		->name('guest.ppid-pelaksana.kategori.index');
+	Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
+		->name('guest.ppid-pelaksana.kategori.show');
+	// Tambahkan route download
+	Route::get('/download/{id}', [PPIDPelaksanaGuestController::class, 'download'])
+		->name('guest.ppid-pelaksana.download');
+});
 
 /**
  * E-Library
@@ -197,17 +210,18 @@ use App\Http\Controllers\admin\PengumumanAdminController;
 use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
 use App\Http\Controllers\admin\SusunanOrganisasiAdminController;
 use App\Http\Controllers\admin\KepalaDinasAdminController;
-use App\Http\Controllers\admin\PegawaiAdminController;
+use App\Http\Controllers\admin\VisiDanMisiAdminController;
+use App\Http\Controllers\admin\SejarahDinasPUPRKotaSamarindaAdminController;
+use App\Http\Controllers\admin\StrukturOrganisasiAdminController;
+use App\Http\Controllers\admin\OrganigramAdminController;
 
 Route::prefix('e-panel')->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 		/**
 		 * Login
 		 */
-
 		Route::get('/login', [LoginAdminController::class, 'index'])
 			->name('admin.login.index');
-
 		Route::post('/login', [LoginAdminController::class, 'login'])
 			->middleware('throttle:10,1')
 			->name('admin.login');
@@ -338,39 +352,82 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.pengumuman.destroy');
 		});
 
-		/**
-		 * Susunan Organisasi
-		 */
-		Route::prefix('susunan-organisasi')->group(function () {
-			Route::get('/', [SusunanOrganisasiAdminController::class, 'index'])
-				->name('admin.susunan-organisasi.index');
-			Route::get('/create', [SusunanOrganisasiAdminController::class, 'create'])
-				->name('admin.susunan-organisasi.create');
-			Route::post('/store', [SusunanOrganisasiAdminController::class, 'store'])
-				->name('admin.susunan-organisasi.store');
-			Route::get('/edit/{id}', [SusunanOrganisasiAdminController::class, 'edit'])
-				->name('admin.susunan-organisasi.edit');
-			Route::put('/update/{id}', [SusunanOrganisasiAdminController::class, 'update'])
-				->name('admin.susunan-organisasi.update');
-			Route::delete('/delete/{id}', [SusunanOrganisasiAdminController::class, 'destroy'])
-				->name('admin.susunan-organisasi.destroy');
+		Route::prefix('struktur-organisasi')->group(function () {
+			/**
+			 * Struktur Organisasi
+			 */
+			Route::get('/', [StrukturOrganisasiAdminController::class, 'index'])
+				->name('admin.struktur-organisasi.index');
+
+			/**
+			 * Organigram
+			 */
+			Route::prefix('organigram')->group(function () {
+				Route::get('/edit/{id}', [OrganigramAdminController::class, 'edit'])
+					->name('admin.struktur-organisasi.organigram.edit');
+				Route::put('/update/{id}', [OrganigramAdminController::class, 'update'])
+					->name('admin.struktur-organisasi.organigram.update');
+			});
+
+			/**
+			 * Susunan Organisasi
+			 */
+			Route::prefix('susunan-organisasi')->group(function () {
+				Route::get('/create', [SusunanOrganisasiAdminController::class, 'create'])
+					->name('admin.struktur-organisasi.susunan-organisasi.create');
+				Route::post('/store', [SusunanOrganisasiAdminController::class, 'store'])
+					->name('admin.struktur-organisasi.susunan-organisasi.store');
+				Route::get('/edit/{id}', [SusunanOrganisasiAdminController::class, 'edit'])
+					->name('admin.struktur-organisasi.susunan-organisasi.edit');
+				Route::put('/update/{id}', [SusunanOrganisasiAdminController::class, 'update'])
+					->name('admin.struktur-organisasi.susunan-organisasi.update');
+				Route::delete('/delete/{id}', [SusunanOrganisasiAdminController::class, 'destroy'])
+					->name('admin.struktur-organisasi.susunan-organisasi.destroy');
+			});
 		});
 
 		/**
 		 * Kepala Dinas
 		 */
-		Route::get('/kepala-dinas', [KepalaDinasAdminController::class, 'index'])
-			->name('admin.kepala-dinas.index');
-		Route::get('/kepala-dinas/edit', [KepalaDinasAdminController::class, 'edit'])
-			->name('admin.kepala-dinas.edit');
-		Route::post('/kepala-dinas/update', [KepalaDinasAdminController::class, 'update'])
-			->name('admin.kepala-dinas.update');
+		Route::prefix('kepala-dinas')->group(function () {
+			Route::get('/', [KepalaDinasAdminController::class, 'index'])
+				->name('admin.kepala-dinas.index');
+			Route::get('/edit', [KepalaDinasAdminController::class, 'edit'])
+				->name('admin.kepala-dinas.edit');
+			Route::post('/update', [KepalaDinasAdminController::class, 'update'])
+				->name('admin.kepala-dinas.update');
+		});
+
+		Route::prefix('profil')->group(function () {
+			/**
+			 * Visi dan Misi
+			 */
+			Route::prefix('visi-dan-misi')->group(function () {
+				Route::get('/', [VisiDanMisiAdminController::class, 'index'])
+					->name('admin.profil.visi-dan-misi.index');
+				Route::get('/edit', [VisiDanMisiAdminController::class, 'edit'])
+					->name('admin.profil.visi-dan-misi.edit');
+				Route::post('/update', [VisiDanMisiAdminController::class, 'update'])
+					->name('admin.profil.visi-dan-misi.update');
+			});
+
+			/**
+			 * Sejarah Dinas PUPR Kota Samarinda
+			 */
+			Route::prefix('sejarah-dinas-pupr-kota-samarinda')->group(function () {
+				Route::get('/', [SejarahDinasPUPRKotaSamarindaAdminController::class, 'index'])
+					->name('admin.profil.sejarah-dinas-pupr-kota-samarinda.index');
+				Route::get('/edit', [SejarahDinasPUPRKotaSamarindaAdminController::class, 'edit'])
+					->name('admin.profil.sejarah-dinas-pupr-kota-samarinda.edit');
+				Route::post('/update', [SejarahDinasPUPRKotaSamarindaAdminController::class, 'update'])
+					->name('admin.profil.sejarah-dinas-pupr-kota-samarinda.update');
+			});
+		});
 	});
 
 	/**
 	 * Logout
 	 */
-
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });

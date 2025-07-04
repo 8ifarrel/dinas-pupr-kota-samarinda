@@ -8,11 +8,12 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 FilePond.registerPlugin(FilePondPluginImagePreview);
 
 document.addEventListener("DOMContentLoaded", () => {
-    const fileInput = document.querySelector('input[name="foto_berita"]');
+    const fileInput = document.querySelector('input[name="foto_organigram"]');
     const editButton = document.querySelector("#edit-image-button");
     const cropperModalElement = document.getElementById("cropperModal");
     const imageToCrop = document.getElementById("image-to-crop");
     const cropButton = document.getElementById("crop-button");
+    const currentImg = document.getElementById("current-organigram-img");
 
     let uploadedFileUrl = null;
     let cropper = null;
@@ -36,11 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Tentukan labelIdle sesuai mode create/edit
+    let labelIdle = 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>';
+    if (currentImg) {
+        labelIdle += '<br>(kosongkan jika tidak ingin mengubah foto)';
+    }
+
     const pond = FilePond.create(fileInput, {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
-        labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>',
-        credits: false,
+        labelIdle: labelIdle,
+        // credits: false,
         server: {
             process: {
                 url: "/filepond/process",
@@ -58,7 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         onprocessfile: (error, file) => {
             if (!error) {
-                uploadedFileUrl = JSON.parse(file.serverId).fileUrl;
+                let serverId = file.serverId;
+                // Cegah error jika response bukan JSON (misal error HTML)
+                let fileUrl = null;
+                try {
+                    fileUrl = JSON.parse(serverId).fileUrl;
+                } catch (e) {
+                    // Tampilkan pesan error atau alert jika perlu
+                    alert("Terjadi kesalahan saat upload file. Silakan coba lagi.");
+                    return;
+                }
+                uploadedFileUrl = fileUrl;
                 editButton.style.display = "inline-block";
             }
         },
@@ -75,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cropperModal.show();
                 if (cropper) cropper.destroy();
                 cropper = new Cropper(imageToCrop, {
-                    aspectRatio: 16 / 9,
+                    // aspectRatio: 16 / 9,
                     viewMode: 1,
                 });
             }
@@ -85,9 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
     cropButton.addEventListener("click", () => {
         if (cropper) {
             cropper.getCroppedCanvas().toBlob((blob) => {
-                const file = new File([blob], `cropped_image.${blob.type.split('/')[1]}`, {
-                    type: blob.type,
-                });
+                const file = new File(
+                    [blob],
+                    `cropped_organigram.${blob.type.split("/")[1]}`,
+                    {
+                        type: blob.type,
+                    }
+                );
                 fetch("/filepond/revert", {
                     method: "DELETE",
                     headers: {

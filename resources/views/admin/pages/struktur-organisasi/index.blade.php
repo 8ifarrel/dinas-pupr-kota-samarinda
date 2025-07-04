@@ -6,12 +6,18 @@
 @endsection
 
 @section('slot')
-  <a href="{{ route('admin.susunan-organisasi.create') }}"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
-    <i class="fa-solid fa-plus me-1"></i>Tambah Susunan Organisasi
-  </a>
-
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
+    <div class="sm:flex sm:justify-between mb-5">
+      <h2 class="font-semibold text-2xl md:text-3xl mb-5 sm:mb-0">
+        Susunan Organisasi
+      </h2>
+
+      <a href="{{ route('admin.struktur-organisasi.susunan-organisasi.create') }}"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
+        <i class="fa-solid fa-plus me-1"></i>Tambah
+      </a>
+    </div>
+
     <div class="relative overflow-x-auto text-sm md:text-base">
       <table id="susunan-organisasi" class="stripe hover row-border table-auto" style="width:100%">
         <thead>
@@ -24,15 +30,16 @@
           </tr>
         </thead>
         <tbody>
+          @php $rowNumber = 1; @endphp
           @foreach ($susunan_organisasi as $item)
-            @if (empty($item->id_susunan_organisasi_parent) || $item->id_susunan_organisasi_parent == 0 || $item->id_susunan_organisasi_parent == 1)
-              <tr 
-                @if($item->children && count($item->children) > 0 && $item->kelompok_susunan_organisasi !== 'Kepala Dinas')
-                  data-children="{{ json_encode($item->children) }}"
-                @endif
-              >
-                <td class="{{ ($item->children && count($item->children) > 0 && $item->kelompok_susunan_organisasi !== 'Kepala Dinas') ? 'dt-control' : '' }}"></td>
-                <td>{{ $loop->iteration }}</td>
+            @if (empty($item->id_susunan_organisasi_parent) ||
+                    $item->id_susunan_organisasi_parent == 0 ||
+                    $item->id_susunan_organisasi_parent == 1)
+              <tr @if ($item->children && count($item->children) > 0 && $item->kelompok_susunan_organisasi !== 'Kepala Dinas') data-children="{{ json_encode($item->children) }}" @endif>
+                <td
+                  class="{{ $item->children && count($item->children) > 0 && $item->kelompok_susunan_organisasi !== 'Kepala Dinas' ? 'dt-control' : '' }}">
+                </td>
+                <td>{{ $rowNumber++ }}</td>
                 <td>{{ $item->nama_susunan_organisasi }}</td>
                 <td>
                   @if ($item->deskripsi_susunan_organisasi)
@@ -52,10 +59,17 @@
                 </td>
                 <td>
                   <div class="flex gap-2">
-                    <a href="{{ route('admin.susunan-organisasi.edit', $item->id_susunan_organisasi) }}"
-                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                      <i class="fa-solid fa-pencil"></i>
-                    </a>
+                    @if ($item->id_susunan_organisasi == 1)
+                      <a href="{{ route('admin.kepala-dinas.edit', $item->id_susunan_organisasi) }}"
+                        class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                        <i class="fa-solid fa-pencil"></i>
+                      </a>
+                    @else
+                      <a href="{{ route('admin.struktur-organisasi.susunan-organisasi.edit', $item->id_susunan_organisasi) }}"
+                        class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                        <i class="fa-solid fa-pencil"></i>
+                      </a>
+                    @endif
                     @if ($item->id_susunan_organisasi != 1)
                       <button data-modal-target="deleteModal-{{ $item->id_susunan_organisasi }}"
                         data-modal-toggle="deleteModal-{{ $item->id_susunan_organisasi }}"
@@ -137,7 +151,7 @@
                         </p>
                       </div>
                       <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <form action="{{ route('admin.susunan-organisasi.destroy', $item->id_susunan_organisasi) }}"
+                        <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', $item->id_susunan_organisasi) }}"
                           method="POST">
                           @csrf
                           @method('DELETE')
@@ -169,6 +183,23 @@
       </table>
     </div>
   </div>
+
+
+  <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
+    <div class="sm:flex sm:justify-between mb-5">
+      <h2 class="font-semibold text-2xl md:text-3xl mb-5 sm:mb-0">
+        Organigram
+      </h2>
+
+      <a href="{{ route('admin.struktur-organisasi.organigram.edit', 1) }}"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
+        <i class="fa-solid fa-pencil me-1.5"></i>Edit
+      </a>
+    </div>
+
+    <img src="{{ Storage::url($organigram->diagram_struktur_organisasi) }}" alt="Struktur Organisasi"
+      class="border  sm:border-2 md:border-4 border-black p-3">
+  </div>
 @endsection
 
 @section('js')
@@ -176,10 +207,11 @@
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
   <script>
-    const editRoute = "{{ route('admin.susunan-organisasi.edit', ':id') }}";
+    const editRoute = "{{ route('admin.struktur-organisasi.susunan-organisasi.edit', ':id') }}";
 
     function format(d) {
-      let filteredChildren = (d.children || []).filter(child => child.is_subbagian || child.is_susunan_organisasi_fungsional);
+      let filteredChildren = (d.children || []).filter(child => child.is_subbagian || child
+        .is_susunan_organisasi_fungsional);
 
       if (filteredChildren.length === 0) {
         return '<div class="text-center p-4">Tidak ada subbagian atau susunan-organisasi fungsional</div>';
@@ -226,7 +258,7 @@
                   </p>
                 </div>
                 <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                  <form action="{{ route('admin.susunan-organisasi.destroy', 'child.id_susunan_organisasi') }}" method="POST">
+                  <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', 'child.id_susunan_organisasi') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
