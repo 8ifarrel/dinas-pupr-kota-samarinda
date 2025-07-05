@@ -17,8 +17,8 @@ class StrukturOrganisasiAdminController extends Controller
             ->where('id_susunan_organisasi', '!=', 0)
             ->get();
         $organigram = StrukturOrganisasiDiagram::select('diagram_struktur_organisasi')
-			->whereNull('id_struktur_organisasi')
-			->first();
+            ->whereNull('id_struktur_organisasi')
+            ->first();
 
         return view('admin.pages.struktur-organisasi.index', [
             'page_title' => $page_title,

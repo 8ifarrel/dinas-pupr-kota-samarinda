@@ -32,7 +32,8 @@
                     @foreach ($struktur_organisasi->slider as $item)
                       {{-- 16:9x315 --}}
                       <li class="splide__slide px-1">
-                        <img class="mx-auto" src="{{ $item->foto }}" alt="{{ $item->keterangan }}">
+                        {{-- <img class="mx-auto" src="{{ $item->foto }}" alt="{{ $item->keterangan }}"> --}}
+                        <img class="mx-auto" src="{{ $item->foto }}" alt="Slider {{ $loop->iteration }}">
                       </li>
                     @endforeach
                   </ul>

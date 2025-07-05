@@ -146,12 +146,13 @@
                         <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                           Apakah Anda yakin ingin menghapus susunan-organisasi
                           <strong>{{ $item->nama_susunan_organisasi }}</strong>? Anda secara
-                          otomatis akan juga menghapus pegawai, subbagian, dan susunan-organisasi fungsional yang ada pada
+                          otomatis akan juga menghapus akun admin, subbagian, dan jabatan fungsional yang dimiliki oleh
                           {{ $item->nama_susunan_organisasi }}
                         </p>
                       </div>
                       <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', $item->id_susunan_organisasi) }}"
+                        <form
+                          action="{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', $item->id_susunan_organisasi) }}"
                           method="POST">
                           @csrf
                           @method('DELETE')
@@ -203,7 +204,6 @@
 @endsection
 
 @section('js')
-  {{-- DataTables --}}
   <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
   <script>
@@ -220,62 +220,75 @@
       let children = filteredChildren.map((child, index) => `
           <tr class="flex justify-between items-center">
               <td class="p-1">${String.fromCharCode(97 + index)}. ${child.nama_susunan_organisasi}</td>
-
               <td class="p-1 flex gap-x-2">
                 <a href="${editRoute.replace(':id', child.id_susunan_organisasi)}" class="flex justify-center items-center w-9 h-9 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                   <i class="fa-solid fa-pencil"></i>
                 </a>
-                <button data-modal-target="deleteModal-${child.id_susunan_organisasi}"
-                  data-modal-toggle="deleteModal-${child.id_susunan_organisasi}"
-                  class="flex justify-center items-center w-9 h-9 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                <button type="button" class="flex justify-center items-center w-9 h-9 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none btn-modal-delete"
+                  data-modal-target="deleteModal-${child.id_susunan_organisasi}">
                   <i class="fa-solid fa-trash-can"></i>
                 </button>
               </td>
           </tr>
-
-          <div id="deleteModal-${child.id_susunan_organisasi}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-2xl max-h-full">
-              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Konfirmasi Penghapusan
-                  </h3>
-                  <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="deleteModal-${child.id_susunan_organisasi}">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                  </button>
+          <tr>
+            <td colspan="2" style="padding:0;">
+              <div id="deleteModal-${child.id_susunan_organisasi}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-2xl max-h-full">
+                  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Konfirmasi Penghapusan
+                      </h3>
+                      <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white btn-modal-hide"
+                        data-modal-hide="deleteModal-${child.id_susunan_organisasi}">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                          viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                      </button>
+                    </div>
+                    <div class="p-4 md:p-5 space-y-4">
+                      <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        Apakah Anda yakin ingin menghapus susunan-organisasi <strong>${child.nama_susunan_organisasi}</strong>? Anda secara otomatis akan juga menghapus akun admin yang dimiliki oleh ${child.nama_susunan_organisasi}
+                      </p>
+                    </div>
+                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <form action="${'{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', 'dummy_id') }}'.replace('dummy_id', child.id_susunan_organisasi)}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                          class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+                      </form>
+                      <button type="button"
+                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 btn-modal-hide"
+                        data-modal-hide="deleteModal-${child.id_susunan_organisasi}">
+                        Tidak
+                      </button>
+                    </div>  
+                  </div>
                 </div>
-                <div class="p-4 md:p-5 space-y-4">
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Apakah Anda yakin ingin menghapus susunan-organisasi <strong>${child.nama_susunan_organisasi}</strong>? Anda secara otomatis akan juga menghapus pegawai yang ada pada ${child.nama_susunan_organisasi}
-                  </p>
-                </div>
-                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                  <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.destroy', 'child.id_susunan_organisasi') }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                      class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
-                  </form>
-                  <button type="button"
-                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    data-modal-hide="deleteModal-${child.id_susunan_organisasi}">
-                    Tidak
-                  </button>
-                </div>  
               </div>
-            </div>
-          </div>
+            </td>
+          </tr>
       `).join('');
 
       return `<table class="table-auto w-full">${children}</table>`;
+    }
+
+    function showBackdrop() {
+      if ($('#modal-backdrop-custom').length === 0) {
+        $('body').append(
+          '<div id="modal-backdrop-custom" modal-backdrop="" class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40"></div>'
+        );
+      }
+    }
+
+    function hideBackdrop() {
+      $('#modal-backdrop-custom').remove();
     }
 
     $(document).ready(function() {
@@ -320,6 +333,23 @@
           })).show();
           tr.addClass('shown');
         }
+      });
+
+      // Modal handler for dynamic modals in expanded rows
+      $(document).on('click', '.btn-modal-delete', function() {
+        const target = $(this).data('modal-target');
+        $('#' + target).removeClass('hidden').addClass('flex');
+        showBackdrop();
+      });
+      $(document).on('click', '.btn-modal-hide', function() {
+        const target = $(this).data('modal-hide');
+        $('#' + target).removeClass('flex').addClass('hidden');
+        hideBackdrop();
+      });
+
+      // Juga tutup backdrop jika modal di luar child (modal utama) ditutup
+      $(document).on('click', '[data-modal-hide]', function() {
+        hideBackdrop();
       });
     });
   </script>
