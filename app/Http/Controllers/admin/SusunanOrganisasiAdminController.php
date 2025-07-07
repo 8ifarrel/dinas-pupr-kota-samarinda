@@ -95,7 +95,8 @@ class SusunanOrganisasiAdminController extends Controller
       $sliderFiles = $request->file('slider_jabatan');
       $i = 1;
       foreach ($sliderFiles as $sliderFile) {
-        if (!$sliderFile || !$sliderFile->isValid()) continue;
+        if (!$sliderFile || !$sliderFile->isValid())
+          continue;
         $sliderExt = $sliderFile->getClientOriginalExtension();
         $sliderPath = "struktur-organisasi/{$slug}/slider/{$slug}-{$i}.{$sliderExt}";
         $sliderFile->storeAs("public/struktur-organisasi/{$slug}/slider", "{$slug}-{$i}.{$sliderExt}");
@@ -163,7 +164,8 @@ class SusunanOrganisasiAdminController extends Controller
         if ($diagram && $diagram->diagram_struktur_organisasi && Storage::disk('public')->exists($diagram->diagram_struktur_organisasi)) {
           Storage::disk('public')->delete($diagram->diagram_struktur_organisasi);
         }
-        if ($diagram) $diagram->delete();
+        if ($diagram)
+          $diagram->delete();
         // Hapus slider
         foreach ($susunan->strukturOrganisasi->slider as $slider) {
           if ($slider->foto && Storage::disk('public')->exists($slider->foto)) {
@@ -242,7 +244,8 @@ class SusunanOrganisasiAdminController extends Controller
       $sliderFiles = $request->file('slider_jabatan');
       $i = 1;
       foreach ($sliderFiles as $sliderFile) {
-        if (!$sliderFile || !$sliderFile->isValid()) continue;
+        if (!$sliderFile || !$sliderFile->isValid())
+          continue;
         $sliderExt = $sliderFile->getClientOriginalExtension();
         $sliderPath = "struktur-organisasi/{$slug}/slider/{$slug}-" . uniqid() . "-{$i}.{$sliderExt}";
         $sliderFile->storeAs("public/struktur-organisasi/{$slug}/slider", basename($sliderPath));

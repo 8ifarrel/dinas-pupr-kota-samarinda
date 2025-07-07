@@ -60,7 +60,7 @@ class KepalaDinasAdminController extends Controller
 
         // Update SusunanOrganisasi fields
         $susunan->update($request->except([
-            'foto_pegawai',
+            'foto',
             'riwayat_pendidikan',
             'tanggal_masuk_pendidikan',
             'jenjang_karir',
@@ -76,14 +76,30 @@ class KepalaDinasAdminController extends Controller
             $kepalaDinas->save();
         }
 
-        if ($request->has('foto_pegawai')) {
-            $fotoPegawaiData = json_decode($request->input('foto_pegawai'), true);
-            if (isset($fotoPegawaiData['fileUrl'])) {
-                $tempFilePath = str_replace('/storage/', '', $fotoPegawaiData['fileUrl']);
+        // Update foto
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($susunan->foto && Storage::disk('public')->exists($susunan->foto)) {
+                Storage::disk('public')->delete($susunan->foto);
+            }
+            $file = $request->file('foto');
+            $slugNama = Str::slug($susunan->nama_susunan_organisasi);
+            $newFileName = 'pegawai/kepala-dinas/' . $slugNama . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/pegawai/kepala-dinas', $slugNama . '.' . $file->getClientOriginalExtension());
+            $susunan->foto = $newFileName;
+            $susunan->save();
+        } elseif ($request->filled('foto')) {
+            $fotoData = json_decode($request->input('foto'), true);
+            if (isset($fotoData['fileUrl'])) {
+                // Hapus foto lama jika ada
+                if ($susunan->foto && Storage::disk('public')->exists($susunan->foto)) {
+                    Storage::disk('public')->delete($susunan->foto);
+                }
+                $tempFilePath = str_replace('/storage/', '', $fotoData['fileUrl']);
                 $slugNama = Str::slug($susunan->nama_susunan_organisasi);
                 $newFileName = 'pegawai/kepala-dinas/' . $slugNama . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
                 Storage::disk('public')->move($tempFilePath, $newFileName);
-                $susunan->foto_pegawai = $newFileName;
+                $susunan->foto = $newFileName;
                 $susunan->save();
             }
         }

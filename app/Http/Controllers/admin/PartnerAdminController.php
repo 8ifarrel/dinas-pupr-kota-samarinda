@@ -7,6 +7,7 @@ use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PartnerAdminController extends Controller
 {
@@ -35,20 +36,35 @@ class PartnerAdminController extends Controller
         $request->validate([
             'nama_partner' => 'required|string|max:255',
             'url_partner' => 'required|url|max:255',
-            'foto_partner' => 'required|string',
+            // foto_partner bisa file atau string (filepond/cropper) atau file biasa
+            'foto_partner' => 'required',
         ]);
 
         $partner = new Partner();
         $partner->nama_partner = $request->input('nama_partner');
         $partner->url_partner = $request->input('url_partner');
 
-        $fotoPartnerData = json_decode($request->input('foto_partner'), true);
-        if (isset($fotoPartnerData['fileUrl'])) {
-            $tempFilePath = str_replace('/storage/', '', $fotoPartnerData['fileUrl']);
-            $nextId = DB::select("SHOW TABLE STATUS LIKE 'partner'")[0]->Auto_increment;
-            $newFileName = 'Partner/' . $nextId . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-            Storage::disk('public')->move($tempFilePath, $newFileName);
-            $partner->foto_partner = $newFileName;
+        // Mirip struktur organisasi: handle filepond/cropper (json string) atau file biasa
+        if ($request->hasFile('foto_partner')) {
+            // Jika upload file biasa (tanpa filepond/cropper)
+            $file = $request->file('foto_partner');
+            $slug = Str::slug($request->input('nama_partner'));
+            $ext = $file->getClientOriginalExtension();
+            $path = "partner/{$slug}." . $ext;
+            $file->storeAs("public/partner", "{$slug}.{$ext}");
+            $partner->foto_partner = $path;
+        } else {
+            // Jika upload via filepond/cropper (json string)
+            $fotoPartnerData = json_decode($request->input('foto_partner'), true);
+            if (isset($fotoPartnerData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoPartnerData['fileUrl']);
+                $slug = Str::slug($request->input('nama_partner'));
+                // Gunakan nextId jika ingin urut, atau slug agar konsisten
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $path = "partner/{$slug}.{$ext}";
+                Storage::disk('public')->move($tempFilePath, $path);
+                $partner->foto_partner = $path;
+            }
         }
 
         $partner->save();
@@ -72,20 +88,38 @@ class PartnerAdminController extends Controller
         $request->validate([
             'nama_partner' => 'required|string|max:255',
             'url_partner' => 'required|url|max:255',
-            'foto_partner' => 'nullable|string',
+            'foto_partner' => 'nullable',
         ]);
 
         $partner = Partner::findOrFail($id);
         $partner->nama_partner = $request->input('nama_partner');
         $partner->url_partner = $request->input('url_partner');
 
-        if ($request->has('foto_partner')) {
+        // Mirip struktur organisasi: handle filepond/cropper (json string) atau file biasa
+        if ($request->hasFile('foto_partner')) {
+            // Hapus lama jika ada
+            if ($partner->foto_partner && Storage::disk('public')->exists($partner->foto_partner)) {
+                Storage::disk('public')->delete($partner->foto_partner);
+            }
+            $file = $request->file('foto_partner');
+            $slug = Str::slug($request->input('nama_partner'));
+            $ext = $file->getClientOriginalExtension();
+            $path = "partner/{$slug}.{$ext}";
+            $file->storeAs("public/partner", "{$slug}.{$ext}");
+            $partner->foto_partner = $path;
+        } elseif ($request->filled('foto_partner')) {
             $fotoPartnerData = json_decode($request->input('foto_partner'), true);
             if (isset($fotoPartnerData['fileUrl'])) {
+                // Hapus lama jika ada
+                if ($partner->foto_partner && Storage::disk('public')->exists($partner->foto_partner)) {
+                    Storage::disk('public')->delete($partner->foto_partner);
+                }
                 $tempFilePath = str_replace('/storage/', '', $fotoPartnerData['fileUrl']);
-                $newFileName = 'Partner/' . $partner->id_partner . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-                Storage::disk('public')->move($tempFilePath, $newFileName);
-                $partner->foto_partner = $newFileName;
+                $slug = Str::slug($request->input('nama_partner'));
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $path = "partner/{$slug}.{$ext}";
+                Storage::disk('public')->move($tempFilePath, $path);
+                $partner->foto_partner = $path;
             }
         }
 

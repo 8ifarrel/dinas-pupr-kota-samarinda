@@ -87,7 +87,6 @@
           </span>
         </a>
       </li>
-
       <li>
         <button type="button"
           class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -102,13 +101,25 @@
         <ul id="dropdown-example" class="hidden py-2 space-y-2">
           <li>
             <a href="{{ route('admin.profil.visi-dan-misi.index') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi dan Misi</a>
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi
+              dan Misi</a>
           </li>
           <li>
             <a href="{{ route('admin.profil.sejarah-dinas-pupr-kota-samarinda.index') }}"
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sejarah</a>
           </li>
         </ul>
+      </li>
+
+      {{-- Akun Admin --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-solid fa-user-lock"></i>
+
+          <span class="ms-3">
+            Akun Admin
+          </span>
+        </a>
       </li>
     </ul>
   </div>

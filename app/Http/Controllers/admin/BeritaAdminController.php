@@ -51,19 +51,29 @@ class BeritaAdminController extends Controller
         $request->validate([
             'judul_berita' => 'required|string|max:255|unique:berita',
             'id_berita_kategori' => 'required|exists:berita_kategori,id_berita_kategori',
-            'foto_berita' => 'required|string',
+            'foto_berita' => 'required',
             'isi_berita' => 'required|string',
             'preview_berita' => 'required|string|max:255',
         ]);
 
         $slug = Str::slug($request->judul_berita);
         $uuid = Str::uuid();
+        $fotoPath = null;
 
-        $fotoBeritaData = json_decode($request->input('foto_berita'), true);
-        if (isset($fotoBeritaData['fileUrl'])) {
-            $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-            $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-            Storage::disk('public')->move($tempFilePath, $newFileName);
+        // Mirip struktur organisasi: handle file biasa atau filepond/cropper (json string)
+        if ($request->hasFile('foto_berita')) {
+            $file = $request->file('foto_berita');
+            $ext = $file->getClientOriginalExtension();
+            $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . $ext;
+            $file->storeAs('public/Berita/' . now()->format('Y-m') . '/' . now()->format('d'), $uuid . '.' . $ext);
+        } else {
+            $fotoBeritaData = json_decode($request->input('foto_berita'), true);
+            if (isset($fotoBeritaData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . $ext;
+                Storage::disk('public')->move($tempFilePath, $fotoPath);
+            }
         }
 
         Berita::create([
@@ -71,7 +81,7 @@ class BeritaAdminController extends Controller
             'judul_berita' => $request->judul_berita,
             'slug_berita' => $slug,
             'id_berita_kategori' => $request->id_berita_kategori,
-            'foto_berita' => $newFileName,
+            'foto_berita' => $fotoPath,
             'sumber_foto_berita' => $request->sumber_foto_berita,
             'isi_berita' => $request->isi_berita,
             'preview_berita' => $request->preview_berita,
@@ -102,7 +112,7 @@ class BeritaAdminController extends Controller
         $request->validate([
             'judul_berita' => 'required|string|max:255|unique:berita,judul_berita,' . $id . ',uuid_berita',
             'id_berita_kategori' => 'required|exists:berita_kategori,id_berita_kategori',
-            'foto_berita' => 'nullable|string',
+            'foto_berita' => 'nullable',
             'isi_berita' => 'required|string',
             'preview_berita' => 'required|string|max:255',
         ]);
@@ -110,13 +120,29 @@ class BeritaAdminController extends Controller
         $berita = Berita::findOrFail($id);
         $slug = Str::slug($request->judul_berita);
 
-        if ($request->has('foto_berita')) {
+        // Mirip struktur organisasi: handle file biasa atau filepond/cropper (json string)
+        if ($request->hasFile('foto_berita')) {
+            // Hapus lama jika ada
+            if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
+                Storage::disk('public')->delete($berita->foto_berita);
+            }
+            $file = $request->file('foto_berita');
+            $ext = $file->getClientOriginalExtension();
+            $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $berita->uuid_berita . '.' . $ext;
+            $file->storeAs('public/Berita/' . now()->format('Y-m') . '/' . now()->format('d'), $berita->uuid_berita . '.' . $ext);
+            $berita->foto_berita = $fotoPath;
+        } elseif ($request->filled('foto_berita')) {
             $fotoBeritaData = json_decode($request->input('foto_berita'), true);
             if (isset($fotoBeritaData['fileUrl'])) {
+                // Hapus lama jika ada
+                if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
+                    Storage::disk('public')->delete($berita->foto_berita);
+                }
                 $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-                $newFileName = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $id . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-                Storage::disk('public')->move($tempFilePath, $newFileName);
-                $berita->foto_berita = $newFileName;
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $berita->uuid_berita . '.' . $ext;
+                Storage::disk('public')->move($tempFilePath, $fotoPath);
+                $berita->foto_berita = $fotoPath;
             }
         }
 

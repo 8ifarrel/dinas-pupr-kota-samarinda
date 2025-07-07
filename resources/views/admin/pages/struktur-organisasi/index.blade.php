@@ -1,4 +1,4 @@
-@extends('admin.layouts.susunan-organisasi')
+@extends('admin.layouts.struktur-organisasi')
 
 @section('css')
   {{-- DataTables --}}

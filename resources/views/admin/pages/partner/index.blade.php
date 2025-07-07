@@ -3,6 +3,8 @@
 @section('css')
   {{-- DataTables --}}
   <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
+  {{-- Lightbox2 --}}
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet" />
 @endsection
 
 @section('slot')
@@ -28,7 +30,10 @@
           @foreach ($partners as $partner)
             <tr>
               <td>
-                <img src="{{ Storage::url($partner->foto_partner) }}" width="192px" alt="{{ $partner->nama_partner }}">
+                <a href="{{ Storage::url($partner->foto_partner) }}" data-lightbox="partner"
+                  data-title="{{ $partner->nama_partner }}">
+                  <img src="{{ Storage::url($partner->foto_partner) }}" width="192px" alt="{{ $partner->nama_partner }}">
+                </a>
               </td>
               <td>{{ $partner->nama_partner }}</td>
               <td>
@@ -112,6 +117,8 @@
 @endsection
 
 @section('js')
+  {{-- Lightbox2 --}}
+  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
   {{-- DataTables --}}
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <script>

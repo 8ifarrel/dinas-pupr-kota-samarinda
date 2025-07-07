@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SliderAdminController extends Controller
 {
@@ -101,7 +102,7 @@ class SliderAdminController extends Controller
         $request->validate([
             'judul_slider' => 'required|string|max:255',
             'is_visible' => 'required|boolean',
-            'foto_slider' => 'required|string',
+            'foto_slider' => 'required',
         ]);
 
         $slider = new Slider();
@@ -109,12 +110,24 @@ class SliderAdminController extends Controller
         $slider->is_visible = $request->input('is_visible');
         $slider->nomor_urut_slider = Slider::max('nomor_urut_slider') + 1;
 
-        $fotoSliderData = json_decode($request->input('foto_slider'), true);
-        if (isset($fotoSliderData['fileUrl'])) {
-            $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
-            $newFileName = 'Slider/' . $slider->nomor_urut_slider . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-            Storage::disk('public')->move($tempFilePath, $newFileName);
-            $slider->foto_slider = $newFileName;
+        // Mirip susunan organisasi: handle filepond/cropper (json string) atau file biasa
+        if ($request->hasFile('foto_slider')) {
+            $file = $request->file('foto_slider');
+            $slug = Str::slug($request->input('judul_slider'));
+            $ext = $file->getClientOriginalExtension();
+            $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
+            $file->storeAs("public/Slider", "{$slug}-{$slider->nomor_urut_slider}.{$ext}");
+            $slider->foto_slider = $path;
+        } else {
+            $fotoSliderData = json_decode($request->input('foto_slider'), true);
+            if (isset($fotoSliderData['fileUrl'])) {
+                $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
+                $slug = Str::slug($request->input('judul_slider'));
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
+                Storage::disk('public')->move($tempFilePath, $path);
+                $slider->foto_slider = $path;
+            }
         }
 
         $slider->save();
@@ -138,20 +151,38 @@ class SliderAdminController extends Controller
         $request->validate([
             'judul_slider' => 'required|string|max:255',
             'is_visible' => 'required|boolean',
-            'foto_slider' => 'nullable|string',
+            'foto_slider' => 'nullable',
         ]);
 
         $slider = Slider::findOrFail($id);
         $slider->judul_slider = $request->input('judul_slider');
         $slider->is_visible = $request->input('is_visible');
 
-        if ($request->has('foto_slider')) {
+        // Mirip susunan organisasi: handle filepond/cropper (json string) atau file biasa
+        if ($request->hasFile('foto_slider')) {
+            // Hapus lama jika ada
+            if ($slider->foto_slider && Storage::disk('public')->exists($slider->foto_slider)) {
+                Storage::disk('public')->delete($slider->foto_slider);
+            }
+            $file = $request->file('foto_slider');
+            $slug = Str::slug($request->input('judul_slider'));
+            $ext = $file->getClientOriginalExtension();
+            $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
+            $file->storeAs("public/Slider", "{$slug}-{$slider->nomor_urut_slider}.{$ext}");
+            $slider->foto_slider = $path;
+        } elseif ($request->filled('foto_slider')) {
             $fotoSliderData = json_decode($request->input('foto_slider'), true);
             if (isset($fotoSliderData['fileUrl'])) {
+                // Hapus lama jika ada
+                if ($slider->foto_slider && Storage::disk('public')->exists($slider->foto_slider)) {
+                    Storage::disk('public')->delete($slider->foto_slider);
+                }
                 $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
-                $newFileName = 'Slider/' . $slider->nomor_urut_slider . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-                Storage::disk('public')->move($tempFilePath, $newFileName);
-                $slider->foto_slider = $newFileName;
+                $slug = Str::slug($request->input('judul_slider'));
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
+                Storage::disk('public')->move($tempFilePath, $path);
+                $slider->foto_slider = $path;
             }
         }
 

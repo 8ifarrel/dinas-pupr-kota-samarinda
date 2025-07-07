@@ -1,19 +1,51 @@
-@extends('admin.layouts.susunan-organisasi')
+@extends('admin.layouts.struktur-organisasi')
 
 @section('css')
   <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet" />
   <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet" />
   <style>
-    trix-toolbar .trix-button-group--file-tools { display: none; }
-    trix-toolbar .trix-button--icon-quote { display: none; }
-    trix-toolbar .trix-button--icon-code { display: none; }
-    trix-editor { height: 270px !important; overflow-y: auto; }
-    trix-editor h1 { font-size: 1.25rem !important; line-height: 1.25rem !important; margin-bottom: 1rem; font-weight: 600; }
-    trix-editor a:not(.no-underline) { text-decoration: underline; }
-    trix-editor a:visited { color: blue; }
-    trix-editor ul { list-style-type: disc !important; margin-left: 1rem !important; }
-    trix-editor ol { list-style-type: decimal !important; margin-left: 1rem !important; }
+    trix-toolbar .trix-button-group--file-tools {
+      display: none;
+    }
+
+    trix-toolbar .trix-button--icon-quote {
+      display: none;
+    }
+
+    trix-toolbar .trix-button--icon-code {
+      display: none;
+    }
+
+    trix-editor {
+      height: 270px !important;
+      overflow-y: auto;
+    }
+
+    trix-editor h1 {
+      font-size: 1.25rem !important;
+      line-height: 1.25rem !important;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    trix-editor a:not(.no-underline) {
+      text-decoration: underline;
+    }
+
+    trix-editor a:visited {
+      color: blue;
+    }
+
+    trix-editor ul {
+      list-style-type: disc !important;
+      margin-left: 1rem !important;
+    }
+
+    trix-editor ol {
+      list-style-type: decimal !important;
+      margin-left: 1rem !important;
+    }
   </style>
 @endsection
 
@@ -29,7 +61,8 @@
     </div>
   @endif
 
-  <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.update', $susunan->id_susunan_organisasi) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.update', $susunan->id_susunan_organisasi) }}"
+    method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -37,11 +70,13 @@
       @if ($susunan->id_susunan_organisasi == 1)
         <input type="hidden" name="kelompok_susunan_organisasi" value="Kepala Dinas">
       @else
-        <label for="kelompok_susunan_organisasi" class="block text-sm font-medium text-gray-700">Kelompok Susunan Organisasi</label>
+        <label for="kelompok_susunan_organisasi" class="block text-sm font-medium text-gray-700">Kelompok Susunan
+          Organisasi</label>
         <select name="kelompok_susunan_organisasi" id="kelompok_susunan_organisasi"
           class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
           <option value="" disabled>-- Pilih Kelompok Susunan Organisasi --</option>
-          <option value="Sekretariat" {{ $susunan->kelompok_susunan_organisasi == 'Sekretariat' ? 'selected' : '' }}>Sekretariat</option>
+          <option value="Sekretariat" {{ $susunan->kelompok_susunan_organisasi == 'Sekretariat' ? 'selected' : '' }}>
+            Sekretariat</option>
           <option value="Bidang" {{ $susunan->kelompok_susunan_organisasi == 'Bidang' ? 'selected' : '' }}>Bidang</option>
           <option value="UPTD" {{ $susunan->kelompok_susunan_organisasi == 'UPTD' ? 'selected' : '' }}>UPTD</option>
         </select>
@@ -72,7 +107,8 @@
       <label for="subbagian_parent" class="block text-sm font-medium text-gray-700">Subbagian dari</label>
       <select name="subbagian_parent" id="subbagian_parent"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-        <option value="" disabled {{ !$susunan->is_subbagian ? 'selected' : '' }}>-- Pilih Susunan Organisasi Induk --</option>
+        <option value="" disabled {{ !$susunan->is_subbagian ? 'selected' : '' }}>-- Pilih Susunan Organisasi Induk
+          --</option>
         @foreach ($parentOptions ?? [] as $item)
           @if (
               (in_array($item->kelompok_susunan_organisasi, ['Bidang', 'UPTD']) &&
@@ -98,7 +134,8 @@
       <label for="fungsional_parent" class="block text-sm font-medium text-gray-700">Jabatan Fungsional dari</label>
       <select name="fungsional_parent" id="fungsional_parent"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
-        <option value="" disabled {{ !$susunan->is_susunan_organisasi_fungsional ? 'selected' : '' }}>-- Pilih Susunan Organisasi Induk --</option>
+        <option value="" disabled {{ !$susunan->is_susunan_organisasi_fungsional ? 'selected' : '' }}>-- Pilih
+          Susunan Organisasi Induk --</option>
         @foreach ($parentOptions ?? [] as $item)
           @if (
               (in_array($item->kelompok_susunan_organisasi, ['Bidang', 'UPTD']) &&
@@ -122,13 +159,15 @@
     </div>
 
     <div class="mb-4">
-      <label for="deskripsi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Deskripsi Susunan Organisasi</label>
+      <label for="deskripsi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Deskripsi Susunan
+        Organisasi</label>
       <textarea name="deskripsi_susunan_organisasi" id="deskripsi_susunan_organisasi"
         class="mt-1 block w-full p-2 border border-gray-300 rounded-md">{{ $susunan->deskripsi_susunan_organisasi }}</textarea>
     </div>
 
     <div class="mb-4">
-      <label for="tupoksi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Tupoksi Susunan Organisasi</label>
+      <label for="tupoksi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Tupoksi Susunan
+        Organisasi</label>
       <input id="tupoksi_susunan_organisasi" type="hidden" name="tupoksi_susunan_organisasi"
         value="{{ $susunan->tupoksi_susunan_organisasi }}">
       <trix-editor input="tupoksi_susunan_organisasi"></trix-editor>
@@ -154,9 +193,10 @@
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
               <img id="ikon-preview"
-                class="ikon-preview absolute inset-0 w-full h-full object-contain rounded-lg bg-white {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->ikon_jabatan ? '' : 'hidden' }}"
+                class="absolute inset-0 w-full h-full object-contain rounded-lg bg-white {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->ikon_jabatan ? '' : 'hidden' }}"
                 src="{{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->ikon_jabatan ? Storage::url($susunan->strukturOrganisasi->ikon_jabatan) : '' }}" />
-              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer foto-preview" style="z-index:2;" />
+              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*"
+                class="hidden ikon-preview" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-ikon-btn {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->ikon_jabatan ? '' : 'hidden' }}"
@@ -193,10 +233,10 @@
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
               <img id="foto-preview"
-                class="foto-preview absolute inset-0 w-full h-full object-contain rounded-lg bg-white {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->strukturOrganisasiDiagram ? '' : 'hidden' }}"
+                class="absolute inset-0 w-full h-full object-contain rounded-lg bg-white {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->strukturOrganisasiDiagram ? '' : 'hidden' }}"
                 src="{{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->strukturOrganisasiDiagram ? Storage::url($susunan->strukturOrganisasi->strukturOrganisasiDiagram->diagram_struktur_organisasi) : '' }}" />
               <input name="foto_organigram" id="foto_organigram" type="file" accept="image/*"
-                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer foto-input" style="z-index:2;" />
+                class="hidden foto-preview " style="z-index:2;" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-foto-btn {{ $susunan->strukturOrganisasi && $susunan->strukturOrganisasi->strukturOrganisasiDiagram ? '' : 'hidden' }}"
@@ -219,16 +259,22 @@
 
     {{-- Slider --}}
     <div id="slider-group">
-      <label class="block text-sm font-medium text-gray-700 mb-1" for="slider_jabatan[]">Slider (bisa lebih dari satu)</label>
+      <label class="block text-sm font-medium text-gray-700 mb-1" for="slider_jabatan[]">Slider (bisa lebih dari
+        satu)</label>
       <div id="slider-input-list" class="mb-4 flex flex-row gap-2 overflow-x-auto">
-        @if($susunan->strukturOrganisasi && $susunan->strukturOrganisasi->slider->count())
-          @foreach($susunan->strukturOrganisasi->slider as $slider)
-            <div class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]" data-slider-id="{{ $slider->id_slider }}">
+        @if ($susunan->strukturOrganisasi && $susunan->strukturOrganisasi->slider->count())
+          @foreach ($susunan->strukturOrganisasi->slider as $slider)
+            <div
+              class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]"
+              data-slider-id="{{ $slider->id_slider }}">
               <label
                 class="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition relative overflow-hidden m-0 aspect-[16/9]">
                 <div class="slider-placeholder flex flex-col items-center justify-center pt-5 pb-6 hidden"></div>
-                <img class="slider-preview absolute inset-0 w-full h-full object-contain rounded-lg bg-white aspect-[16/9]" src="{{ Storage::url($slider->foto) }}" />
-                <input name="slider_jabatan[]" type="file" accept="image/*" class="hidden foto-preview slider-input" />
+                <img
+                  class="slider-preview absolute inset-0 w-full h-full object-contain rounded-lg bg-white aspect-[16/9]"
+                  src="{{ Storage::url($slider->foto) }}" />
+                <input name="slider_jabatan[]" type="file" accept="image/*"
+                  class="hidden foto-preview slider-input" />
               </label>
               <button type="button"
                 class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-slider-btn"
@@ -252,7 +298,8 @@
             </div>
           @endforeach
         @else
-          <div class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]">
+          <div
+            class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]">
             <label
               class="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition relative overflow-hidden m-0 aspect-[16/9]">
               <div class="slider-placeholder flex flex-col items-center justify-center pt-5 pb-6">
@@ -263,8 +310,10 @@
                 <p class="mb-1 text-xs text-gray-500 font-semibold text-center">Klik untuk upload slider</p>
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
-              <img class="slider-preview hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white aspect-[16/9]" />
-              <input name="slider_jabatan[]" type="file" accept="image/*" class="hidden foto-preview slider-input" />
+              <img
+                class="slider-preview hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white aspect-[16/9]" />
+              <input name="slider_jabatan[]" type="file" accept="image/*"
+                class="hidden foto-preview slider-input" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-slider-btn hidden"
@@ -454,35 +503,58 @@
       let lastFile = null;
       let viewer = null;
       if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {navbar: false, toolbar: true, title: false, tooltip: false, movable: false, zoomable: true, scalable: false, transition: true, fullscreen: false});
+        viewer = new Viewer(wrapper, {
+          navbar: false,
+          toolbar: true,
+          title: false,
+          tooltip: false,
+          movable: false,
+          zoomable: true,
+          scalable: false,
+          transition: true,
+          fullscreen: false
+        });
       }
       // --- HISTORY: always start with original image if exists ---
       let imageHistory = [];
       let historyPointer = -1;
       // Ambil original image dari preview src (jika ada)
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ? preview.src : null;
+      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
+        preview.src : null;
       if (originalImageSrc) {
         imageHistory = [originalImageSrc];
         historyPointer = 0;
       }
+
       function pushHistory(src) {
         if (historyPointer < imageHistory.length - 1) imageHistory = imageHistory.slice(0, historyPointer + 1);
-        imageHistory.push(src); historyPointer = imageHistory.length - 1; updateRevertBtn();
+        imageHistory.push(src);
+        historyPointer = imageHistory.length - 1;
+        updateRevertBtn();
       }
+
       function updateRevertBtn() {
         if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden'); revertBtn.style.display = '';
+          revertBtn.classList.remove('hidden');
+          revertBtn.style.display = '';
           // Tampilkan kembali required pada organigram jika ada history
           if (input) input.setAttribute('required', 'required');
         } else {
-          revertBtn.classList.add('hidden'); revertBtn.style.display = 'none';
+          revertBtn.classList.add('hidden');
+          revertBtn.style.display = 'none';
           // Hilangkan required pada organigram jika sudah di-revert ke awal
           if (input) input.removeAttribute('required');
         }
       }
+
       function setPreviewAndHistory(src, isInitial = false) {
-        preview.src = src; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        preview.src = src;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        removeBtn.classList.remove('hidden');
+        removeBtn.disabled = false;
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
         if (!isInitial) pushHistory(src);
         if (viewer) viewer.update();
       }
@@ -499,7 +571,10 @@
             imageToCrop.src = ev.target.result;
             cropperModal.classList.remove('hidden');
             if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1});
+            cropper = new Cropper(imageToCrop, {
+              viewMode: 1,
+              autoCropArea: 1
+            });
           };
           reader.readAsDataURL(input.files[0]);
         }
@@ -510,31 +585,48 @@
           imageToCrop.src = preview.src;
           cropperModal.classList.remove('hidden');
           if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1});
+          cropper = new Cropper(imageToCrop, {
+            viewMode: 1,
+            autoCropArea: 1
+          });
         }
       });
       if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
         if (cropper) {
           cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped.jpg', {type: blob.type});
+            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped.jpg', {
+              type: blob.type
+            });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(croppedFile);
             input.files = dataTransfer.files;
             const reader = new FileReader();
-            reader.onload = function(ev) { setPreviewAndHistory(ev.target.result); };
+            reader.onload = function(ev) {
+              setPreviewAndHistory(ev.target.result);
+            };
             reader.readAsDataURL(croppedFile);
-            cropper.destroy(); cropper = null; cropperModal.classList.add('hidden');
+            cropper.destroy();
+            cropper = null;
+            cropperModal.classList.add('hidden');
           }, lastFile ? lastFile.type : 'image/jpeg');
         }
       });
       if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
         cropperModal.classList.add('hidden');
-        if (cropper) { cropper.destroy(); cropper = null; }
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
         input.value = '';
       });
       if (removeBtn) removeBtn.addEventListener('click', function() {
-        setPreviewAndHistory('#'); preview.classList.add('hidden'); placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden'); removeBtn.disabled = true; editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+        setPreviewAndHistory('#');
+        preview.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+        removeBtn.classList.add('hidden');
+        removeBtn.disabled = true;
+        editBtn.classList.add('hidden');
+        editBtn.style.display = 'none';
         // Jangan reset imageHistory, agar revert tetap bisa ke original
       });
       if (revertBtn) revertBtn.addEventListener('click', function() {
@@ -542,25 +634,41 @@
           historyPointer--;
           const prevSrc = imageHistory[historyPointer];
           if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+            preview.src = prevSrc;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            removeBtn.classList.remove('hidden');
+            removeBtn.disabled = false;
+            editBtn.classList.remove('hidden');
+            editBtn.style.display = '';
           } else {
-            preview.src = '#'; preview.classList.add('hidden'); placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden'); removeBtn.disabled = true; editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+            preview.src = '#';
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            removeBtn.classList.add('hidden');
+            removeBtn.disabled = true;
+            editBtn.classList.add('hidden');
+            editBtn.style.display = 'none';
           }
           updateRevertBtn();
         }
       });
       if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+        editBtn.classList.add('hidden');
+        editBtn.style.display = 'none';
       } else {
-        editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
       }
       if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault(); ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
-        return false;
-      });
+        // Fix: prevent file input click, only show viewer if image is visible
+        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (viewer) viewer.show();
+          return false;
+        }
+      }, true);
 
       // --- IKON ---
       const ikonWrapper = document.querySelector('.ikon-viewer-wrapper');
@@ -579,38 +687,62 @@
       // --- HISTORY: always start with original image if exists ---
       let ikonHistory = [];
       let ikonHistoryPointer = -1;
-      let ikonOriginalImageSrc = ikonPreview && ikonPreview.src && !ikonPreview.classList.contains('hidden') && ikonPreview.src !== '#' ? ikonPreview.src : null;
+      let ikonOriginalImageSrc = ikonPreview && ikonPreview.src && !ikonPreview.classList.contains('hidden') &&
+        ikonPreview.src !== '#' ? ikonPreview.src : null;
       if (ikonOriginalImageSrc) {
         ikonHistory = [ikonOriginalImageSrc];
         ikonHistoryPointer = 0;
       }
       let ikonViewer = null;
       if (ikonWrapper && window.Viewer) {
-        ikonViewer = new Viewer(ikonWrapper, {navbar: false, toolbar: true, title: false, tooltip: false, movable: false, zoomable: true, scalable: false, transition: true, fullscreen: false});
+        ikonViewer = new Viewer(ikonWrapper, {
+          navbar: false,
+          toolbar: true,
+          title: false,
+          tooltip: false,
+          movable: false,
+          zoomable: true,
+          scalable: false,
+          transition: true,
+          fullscreen: false
+        });
       }
+
       function pushIkonHistory(src) {
         if (ikonHistoryPointer < ikonHistory.length - 1) ikonHistory = ikonHistory.slice(0, ikonHistoryPointer + 1);
-        ikonHistory.push(src); ikonHistoryPointer = ikonHistory.length - 1; updateRevertIkonBtn();
+        ikonHistory.push(src);
+        ikonHistoryPointer = ikonHistory.length - 1;
+        updateRevertIkonBtn();
       }
+
       function updateRevertIkonBtn() {
         if (ikonHistoryPointer > 0) {
-          revertIkonBtn.classList.remove('hidden'); revertIkonBtn.style.display = '';
+          revertIkonBtn.classList.remove('hidden');
+          revertIkonBtn.style.display = '';
           // Tampilkan kembali required pada ikon jika ada history
           if (ikonInput) ikonInput.setAttribute('required', 'required');
         } else {
-          revertIkonBtn.classList.add('hidden'); revertIkonBtn.style.display = 'none';
+          revertIkonBtn.classList.add('hidden');
+          revertIkonBtn.style.display = 'none';
           // Hilangkan required pada ikon jika sudah di-revert ke awal
           if (ikonInput) ikonInput.removeAttribute('required');
         }
       }
+
       function setIkonPreviewAndHistory(src, isInitial = false) {
-        ikonPreview.src = src; ikonPreview.classList.remove('hidden');
+        ikonPreview.src = src;
+        ikonPreview.classList.remove('hidden');
         if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-        removeIkonBtn.classList.remove('hidden'); removeIkonBtn.style.display = '';
-        editIkonBtn.classList.remove('hidden'); editIkonBtn.style.display = '';
+        removeIkonBtn.classList.remove('hidden');
+        removeIkonBtn.style.display = '';
+        editIkonBtn.classList.remove('hidden');
+        editIkonBtn.style.display = '';
         if (!isInitial) pushIkonHistory(src);
         if (window.Viewer && ikonWrapper) {
-          if (!ikonWrapper.viewer) ikonWrapper.viewer = new Viewer(ikonWrapper, {navbar: false, toolbar: true});
+          if (!ikonWrapper.viewer) ikonWrapper.viewer = new Viewer(ikonWrapper, {
+            navbar: false,
+            toolbar: true
+          });
           else ikonWrapper.viewer.update();
         }
       }
@@ -652,26 +784,38 @@
       if (cropIkonConfirmBtn) cropIkonConfirmBtn.addEventListener('click', function() {
         if (cropperIkon) {
           cropperIkon.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastIkonFile ? lastIkonFile.name : 'cropped_ikon.jpg', {type: blob.type});
+            const croppedFile = new File([blob], lastIkonFile ? lastIkonFile.name : 'cropped_ikon.jpg', {
+              type: blob.type
+            });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(croppedFile);
             ikonInput.files = dataTransfer.files;
             const reader = new FileReader();
-            reader.onload = function(ev) { setIkonPreviewAndHistory(ev.target.result); };
+            reader.onload = function(ev) {
+              setIkonPreviewAndHistory(ev.target.result);
+            };
             reader.readAsDataURL(croppedFile);
-            cropperIkon.destroy(); cropperIkon = null; cropperModalIkon.classList.add('hidden');
+            cropperIkon.destroy();
+            cropperIkon = null;
+            cropperModalIkon.classList.add('hidden');
           }, lastIkonFile ? lastIkonFile.type : 'image/jpeg');
         }
       });
       if (cropIkonCancelBtn) cropIkonCancelBtn.addEventListener('click', function() {
         cropperModalIkon.classList.add('hidden');
-        if (cropperIkon) { cropperIkon.destroy(); cropperIkon = null; }
+        if (cropperIkon) {
+          cropperIkon.destroy();
+          cropperIkon = null;
+        }
       });
       if (removeIkonBtn) removeIkonBtn.addEventListener('click', function() {
-        setIkonPreviewAndHistory('#'); ikonPreview.classList.add('hidden');
+        setIkonPreviewAndHistory('#');
+        ikonPreview.classList.add('hidden');
         if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-        removeIkonBtn.classList.add('hidden'); removeIkonBtn.style.display = 'none';
-        editIkonBtn.classList.add('hidden'); editIkonBtn.style.display = 'none';
+        removeIkonBtn.classList.add('hidden');
+        removeIkonBtn.style.display = 'none';
+        editIkonBtn.classList.add('hidden');
+        editIkonBtn.style.display = 'none';
         // Jangan reset ikonHistory, agar revert tetap bisa ke original
       });
       if (revertIkonBtn) revertIkonBtn.addEventListener('click', function() {
@@ -679,24 +823,34 @@
           ikonHistoryPointer--;
           const prevSrc = ikonHistory[ikonHistoryPointer];
           if (prevSrc && prevSrc !== '#') {
-            ikonPreview.src = prevSrc; ikonPreview.classList.remove('hidden');
+            ikonPreview.src = prevSrc;
+            ikonPreview.classList.remove('hidden');
             if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-            removeIkonBtn.classList.remove('hidden'); removeIkonBtn.style.display = '';
-            editIkonBtn.classList.remove('hidden'); editIkonBtn.style.display = '';
+            removeIkonBtn.classList.remove('hidden');
+            removeIkonBtn.style.display = '';
+            editIkonBtn.classList.remove('hidden');
+            editIkonBtn.style.display = '';
           } else {
-            ikonPreview.src = '#'; ikonPreview.classList.add('hidden');
+            ikonPreview.src = '#';
+            ikonPreview.classList.add('hidden');
             if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-            removeIkonBtn.classList.add('hidden'); removeIkonBtn.style.display = 'none';
-            editIkonBtn.classList.add('hidden'); editIkonBtn.style.display = 'none';
+            removeIkonBtn.classList.add('hidden');
+            removeIkonBtn.style.display = 'none';
+            editIkonBtn.classList.add('hidden');
+            editIkonBtn.style.display = 'none';
           }
           updateRevertIkonBtn();
         }
       });
       if (ikonPreview) ikonPreview.addEventListener('click', function(ev) {
-        ev.preventDefault(); ev.stopPropagation();
-        if (ikonViewer && !ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !== '#') ikonViewer.show();
-        return false;
-      });
+        // Fix: prevent file input click, only show viewer if image is visible
+        if (!ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !== '#') {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (ikonViewer) ikonViewer.show();
+          return false;
+        }
+      }, true);
 
       // --- SLIDER MULTI INPUT ---
       const sliderInputList = document.getElementById('slider-input-list');
@@ -706,27 +860,42 @@
       const cropSliderCancelBtn = document.getElementById('crop-slider-cancel-btn');
       let cropperSlider = null;
       let lastSliderFile = null;
+
       function getSliderHistoryStore(item) {
-        if (!item._sliderHistory) item._sliderHistory = {history: [], pointer: -1};
+        if (!item._sliderHistory) item._sliderHistory = {
+          history: [],
+          pointer: -1
+        };
         return item._sliderHistory;
       }
+
       function pushSliderHistory(item, src) {
         const store = getSliderHistoryStore(item);
         if (store.pointer < store.history.length - 1) store.history = store.history.slice(0, store.pointer + 1);
-        store.history.push(src); store.pointer = store.history.length - 1; updateRevertSliderBtn(item);
+        store.history.push(src);
+        store.pointer = store.history.length - 1;
+        updateRevertSliderBtn(item);
       }
+
       function updateRevertSliderBtn(item) {
         const store = getSliderHistoryStore(item);
         const revertBtn = item.querySelector('.revert-slider-btn');
-        if (store.pointer > 0) { revertBtn.classList.remove('hidden'); revertBtn.style.display = ''; }
-        else { revertBtn.classList.add('hidden'); revertBtn.style.display = 'none'; }
+        if (store.pointer > 0) {
+          revertBtn.classList.remove('hidden');
+          revertBtn.style.display = '';
+        } else {
+          revertBtn.classList.add('hidden');
+          revertBtn.style.display = 'none';
+        }
       }
+
       function setSliderPreviewAndHistory(item, src) {
         const preview = item.querySelector('.slider-preview');
         const placeholder = item.querySelector('.slider-placeholder');
         const removeBtn = item.querySelector('.remove-slider-btn');
         const editBtn = item.querySelector('.edit-slider-button');
-        preview.src = src; preview.classList.remove('hidden');
+        preview.src = src;
+        preview.classList.remove('hidden');
         if (placeholder) placeholder.classList.add('hidden');
         if (removeBtn) removeBtn.classList.remove('hidden');
         if (editBtn) editBtn.classList.remove('hidden');
@@ -735,18 +904,21 @@
         // Sembunyikan tombol x jika tidak ada foto dan hanya satu input
         updateRemoveSliderBtnVisibility();
       }
+
       function resetSliderPreview(item) {
         const preview = item.querySelector('.slider-preview');
         const placeholder = item.querySelector('.slider-placeholder');
         const removeBtn = item.querySelector('.remove-slider-btn');
         const editBtn = item.querySelector('.edit-slider-button');
-        preview.src = '#'; preview.classList.add('hidden');
+        preview.src = '#';
+        preview.classList.add('hidden');
         if (placeholder) placeholder.classList.remove('hidden');
         if (removeBtn) removeBtn.classList.add('hidden');
         if (editBtn) editBtn.classList.add('hidden');
         // Sembunyikan tombol x jika tidak ada foto dan hanya satu input
         updateRemoveSliderBtnVisibility();
       }
+
       function updateAddSliderBtnVisibility() {
         const items = Array.from(sliderInputList.querySelectorAll('.slider-input-item'));
         items.forEach(function(item, idx) {
@@ -758,19 +930,22 @@
         });
         updateRemoveSliderBtnVisibility();
       }
+
       function updateRemoveSliderBtnVisibility() {
         const items = Array.from(sliderInputList.querySelectorAll('.slider-input-item'));
         items.forEach(function(item) {
           const removeBtn = item.querySelector('.remove-slider-btn');
           const preview = item.querySelector('.slider-preview');
           // Jika hanya satu input dan tidak ada foto, sembunyikan tombol x
-          if (items.length === 1 && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
+          if (items.length === 1 && (preview.classList.contains('hidden') || !preview.src || preview.src ===
+            '#')) {
             if (removeBtn) removeBtn.classList.add('hidden');
           } else {
             if (removeBtn) removeBtn.classList.remove('hidden');
           }
         });
       }
+
       function createSliderInputItem() {
         const html = `
         <div class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]">
@@ -854,7 +1029,10 @@
               resetSliderPreview(item);
               const input = item.querySelector('.slider-input');
               if (input) input.value = '';
-              item._sliderHistory = {history: [], pointer: -1};
+              item._sliderHistory = {
+                history: [],
+                pointer: -1
+              };
               updateRevertSliderBtn(item);
             }
           }
@@ -871,7 +1049,8 @@
             const removeBtn = item.querySelector('.remove-slider-btn');
             const editBtn = item.querySelector('.edit-slider-button');
             if (prevSrc && prevSrc !== '#') {
-              preview.src = prevSrc; preview.classList.remove('hidden');
+              preview.src = prevSrc;
+              preview.classList.remove('hidden');
               if (placeholder) placeholder.classList.add('hidden');
               if (removeBtn) removeBtn.classList.remove('hidden');
               if (editBtn) editBtn.classList.remove('hidden');
@@ -882,6 +1061,7 @@
           }
         }
       });
+
       function updateAddSliderBtnVisibility() {
         const items = Array.from(sliderInputList.querySelectorAll('.slider-input-item'));
         items.forEach(function(item, idx) {
@@ -893,43 +1073,65 @@
         });
         updateRemoveSliderBtnVisibility();
       }
+
       function updateRemoveSliderBtnVisibility() {
         const items = Array.from(sliderInputList.querySelectorAll('.slider-input-item'));
         items.forEach(function(item) {
           const removeBtn = item.querySelector('.remove-slider-btn');
           const preview = item.querySelector('.slider-preview');
           // Jika hanya satu input dan tidak ada foto, sembunyikan tombol x
-          if (items.length === 1 && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
+          if (items.length === 1 && (preview.classList.contains('hidden') || !preview.src || preview.src ===
+            '#')) {
             if (removeBtn) removeBtn.classList.add('hidden');
           } else {
             if (removeBtn) removeBtn.classList.remove('hidden');
           }
         });
       }
-      Array.from(sliderInputList.querySelectorAll('.slider-input-item')).forEach(function(item) { initSliderViewer(item); });
+      Array.from(sliderInputList.querySelectorAll('.slider-input-item')).forEach(function(item) {
+        initSliderViewer(item);
+      });
       updateAddSliderBtnVisibility();
+
       function initSliderViewer(item) {
         const wrapper = item;
         if (wrapper && window.Viewer) {
-          if (wrapper._sliderViewer) { wrapper._sliderViewer.destroy(); wrapper._sliderViewer = null; }
+          if (wrapper._sliderViewer) {
+            wrapper._sliderViewer.destroy();
+            wrapper._sliderViewer = null;
+          }
           const img = wrapper.querySelector('.slider-preview');
           if (img) img.removeAttribute('style');
           wrapper._sliderViewer = new Viewer(wrapper, {
-            navbar: false, toolbar: true, title: false, tooltip: false, movable: false, zoomable: true, scalable: false, transition: true, fullscreen: false,
-            filter(image) { return image.classList.contains('slider-preview') && !image.classList.contains('hidden') && image.src && image.src !== '#'; }
+            navbar: false,
+            toolbar: true,
+            title: false,
+            tooltip: false,
+            movable: false,
+            zoomable: true,
+            scalable: false,
+            transition: true,
+            fullscreen: false,
+            filter(image) {
+              return image.classList.contains('slider-preview') && !image.classList.contains('hidden') && image
+                .src && image.src !== '#';
+            }
           });
         }
       }
-      Array.from(sliderInputList.querySelectorAll('.slider-input-item')).forEach(function(item) { initSliderViewer(item); });
+      Array.from(sliderInputList.querySelectorAll('.slider-input-item')).forEach(function(item) {
+        initSliderViewer(item);
+      });
       sliderInputList.addEventListener('click', function(e) {
         const preview = e.target.closest('.slider-preview');
         if (preview && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          e.preventDefault(); e.stopPropagation();
+          e.preventDefault();
+          e.stopPropagation();
           const item = preview.closest('.slider-input-item');
           if (item && item._sliderViewer) item._sliderViewer.show();
           return false;
         }
-      });
+      }, true);
       sliderInputList.addEventListener('change', function(e) {
         const input = e.target.closest('.slider-input');
         if (input && input.files && input.files[0]) {
@@ -939,7 +1141,11 @@
             imageToCropSlider.src = ev.target.result;
             cropperModalSlider.classList.remove('hidden');
             if (cropperSlider) cropperSlider.destroy();
-            cropperSlider = new Cropper(imageToCropSlider, {viewMode: 1, autoCropArea: 1, aspectRatio: 16 / 9});
+            cropperSlider = new Cropper(imageToCropSlider, {
+              viewMode: 1,
+              autoCropArea: 1,
+              aspectRatio: 16 / 9
+            });
             cropperModalSlider.currentInput = input;
           };
           reader.readAsDataURL(input.files[0]);
@@ -955,11 +1161,16 @@
             imageToCropSlider.src = preview.src;
             cropperModalSlider.classList.remove('hidden');
             if (cropperSlider) cropperSlider.destroy();
-            cropperSlider = new Cropper(imageToCropSlider, {viewMode: 1, autoCropArea: 1, aspectRatio: 16 / 9});
+            cropperSlider = new Cropper(imageToCropSlider, {
+              viewMode: 1,
+              autoCropArea: 1,
+              aspectRatio: 16 / 9
+            });
             cropperModalSlider.currentInput = item.querySelector('.slider-input');
           }
         }
       });
+
       function replaceEventListener(el, event, handler) {
         const clone = el.cloneNode(true);
         el.parentNode.replaceChild(clone, el);
@@ -971,22 +1182,33 @@
         const newConfirm = replaceEventListener(oldConfirm, 'click', function() {
           if (cropperSlider && cropperModalSlider.currentInput) {
             cropperSlider.getCroppedCanvas().toBlob(function(blob) {
-              const croppedFile = new File([blob], lastSliderFile ? lastSliderFile.name : 'cropped_slider.jpg', {type: blob.type});
+              const croppedFile = new File([blob], lastSliderFile ? lastSliderFile.name :
+                'cropped_slider.jpg', {
+                  type: blob.type
+                });
               const dataTransfer = new DataTransfer();
               dataTransfer.items.add(croppedFile);
               cropperModalSlider.currentInput.files = dataTransfer.files;
               const item = cropperModalSlider.currentInput.closest('.slider-input-item');
               const reader = new FileReader();
-              reader.onload = function(ev) { setSliderPreviewAndHistory(item, ev.target.result); };
+              reader.onload = function(ev) {
+                setSliderPreviewAndHistory(item, ev.target.result);
+              };
               reader.readAsDataURL(croppedFile);
-              cropperSlider.destroy(); cropperSlider = null; cropperModalSlider.classList.add('hidden'); cropperModalSlider.currentInput = null;
+              cropperSlider.destroy();
+              cropperSlider = null;
+              cropperModalSlider.classList.add('hidden');
+              cropperModalSlider.currentInput = null;
             }, lastSliderFile ? lastSliderFile.type : 'image/jpeg');
           }
         });
         const oldCancel = document.getElementById('crop-slider-cancel-btn');
         const newCancel = replaceEventListener(oldCancel, 'click', function() {
           cropperModalSlider.classList.add('hidden');
-          if (cropperSlider) { cropperSlider.destroy(); cropperSlider = null; }
+          if (cropperSlider) {
+            cropperSlider.destroy();
+            cropperSlider = null;
+          }
           cropperModalSlider.currentInput = null;
         });
       };

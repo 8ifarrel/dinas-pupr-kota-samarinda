@@ -1,4 +1,4 @@
-@extends('admin.layouts.susunan-organisasi')
+@extends('admin.layouts.struktur-organisasi')
 
 @section('css')
   <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
@@ -180,9 +180,9 @@
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
               <img id="ikon-preview"
-                class="ikon-preview hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
-              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*" class="hidden foto-preview"
-                />
+                class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
+              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*"
+                class="hidden ikon-preview" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-ikon-btn hidden"
@@ -219,9 +219,9 @@
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
               <img id="foto-preview"
-                class="foto-preview hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
+                class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
               <input name="foto_organigram" id="foto_organigram" type="file" accept="image/*"
-                class="hidden foto-input" />
+                class="hidden foto-preview foto-input" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-foto-btn hidden"
@@ -244,7 +244,8 @@
 
     {{-- Slider --}}
     <div id="slider-group">
-      <label class="block text-sm font-medium text-gray-700 mb-1" for="slider_jabatan[]">Slider (bisa lebih dari satu)</label>
+      <label class="block text-sm font-medium text-gray-700 mb-1" for="slider_jabatan[]">Slider (bisa lebih dari
+        satu)</label>
       <div id="slider-input-list" class="mb-4 flex flex-row gap-2 overflow-x-auto">
         <div
           class="relative group slider-viewer-wrapper h-28 sm:h-32 mb-2 slider-input-item min-w-[calc(7rem*16/9)] max-w-[calc(8rem*16/9)] flex-shrink-0 aspect-[16/9]">

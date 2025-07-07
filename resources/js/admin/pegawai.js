@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pond = FilePond.create(fileInput, {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
-        labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span><br>(kosongkan jika tidak ingin mengubah foto)',
+        labelIdle: 'Seret foto ke sini atau <span class="filepond--label-action">telusuri foto</span>',
         credits: false,
         server: {
             process: {

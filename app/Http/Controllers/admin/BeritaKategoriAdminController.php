@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BeritaKategori;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BeritaKategoriAdminController extends Controller
 {
@@ -48,19 +49,36 @@ class BeritaKategoriAdminController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'ikon_berita_kategori' => 'nullable|string',
+            'ikon_berita_kategori' => 'nullable',
         ]);
 
         $kategori = BeritaKategori::with('susunanOrganisasi')->findOrFail($id);
 
-        if ($request->has('ikon_berita_kategori')) {
+        // Mirip struktur organisasi: handle file biasa atau filepond/cropper (json string)
+        if ($request->hasFile('ikon_berita_kategori')) {
+            // Hapus lama jika ada
+            if ($kategori->ikon_berita_kategori && Storage::disk('public')->exists($kategori->ikon_berita_kategori)) {
+                Storage::disk('public')->delete($kategori->ikon_berita_kategori);
+            }
+            $file = $request->file('ikon_berita_kategori');
+            $slug = $kategori->susunanOrganisasi->slug_susunan_organisasi ?? Str::slug($kategori->nama_kategori ?? 'kategori');
+            $ext = $file->getClientOriginalExtension();
+            $path = "Berita/ikon/{$slug}.{$ext}";
+            $file->storeAs("public/Berita/ikon", "{$slug}.{$ext}");
+            $kategori->ikon_berita_kategori = $path;
+        } elseif ($request->filled('ikon_berita_kategori')) {
             $ikonKategoriData = json_decode($request->input('ikon_berita_kategori'), true);
             if (isset($ikonKategoriData['fileUrl'])) {
+                // Hapus lama jika ada
+                if ($kategori->ikon_berita_kategori && Storage::disk('public')->exists($kategori->ikon_berita_kategori)) {
+                    Storage::disk('public')->delete($kategori->ikon_berita_kategori);
+                }
                 $tempFilePath = str_replace('/storage/', '', $ikonKategoriData['fileUrl']);
-                $slug = $kategori->susunanOrganisasi->slug_susunan_organisasi ?? 'kategori';
-                $newFileName = 'Berita/ikon/' . $slug . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-                Storage::disk('public')->move($tempFilePath, $newFileName);
-                $kategori->ikon_berita_kategori = $newFileName;
+                $slug = $kategori->susunanOrganisasi->slug_susunan_organisasi ?? Str::slug($kategori->nama_kategori ?? 'kategori');
+                $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
+                $path = "Berita/ikon/{$slug}.{$ext}";
+                Storage::disk('public')->move($tempFilePath, $path);
+                $kategori->ikon_berita_kategori = $path;
             }
         }
 
