@@ -64,7 +64,6 @@ class BeritaAdminController extends Controller
         $uuid = Str::uuid();
         $fotoPath = null;
 
-        // Mirip struktur organisasi: handle file biasa atau filepond/cropper (json string)
         if ($request->hasFile('foto_berita')) {
             $file = $request->file('foto_berita');
             $ext = $file->getClientOriginalExtension();
@@ -140,7 +139,6 @@ class BeritaAdminController extends Controller
         } elseif ($request->filled('foto_berita')) {
             $fotoBeritaData = json_decode($request->input('foto_berita'), true);
             if (isset($fotoBeritaData['fileUrl'])) {
-                // Hapus lama jika ada
                 if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
                     Storage::disk('public')->delete($berita->foto_berita);
                 }

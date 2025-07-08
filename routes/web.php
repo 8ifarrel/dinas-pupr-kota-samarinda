@@ -49,6 +49,7 @@ use App\Http\Controllers\guest\PengumumanGuestController;
 use App\Http\Controllers\guest\BukuTamuGuestController;
 use App\Http\Controllers\guest\PPIDPelaksanaKategoriGuestController;
 use App\Http\Controllers\guest\PPIDPelaksanaGuestController;
+use App\Http\Controllers\guest\SKMGuestController;
 
 /**
  * Portal
@@ -159,9 +160,11 @@ Route::get('/agenda-kegiatan', function () {
  * SKM
  */
 
-Route::get('/skm', function () {
-	abort(503, 'Halaman ini sedang dalam pembaharuan');
-})->name('guest.skm.index');
+Route::get('/skm', [SKMGuestController::class, 'index'])
+	->name('guest.skm.index');
+
+Route::post('/skm', [SKMGuestController::class, 'store'])
+	->name('guest.skm.store');
 
 /**
  * Buku Tamu
