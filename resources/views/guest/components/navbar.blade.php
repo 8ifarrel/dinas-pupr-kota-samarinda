@@ -2,7 +2,7 @@
   <figure class="flex gap-2">
     <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
-    <figcaption class="my-auto text-lg text-blue font-bold w-[340px] uppercase">
+    <figcaption class="my-auto text-lg text-brand-blue font-bold w-[340px] uppercase">
       {{ config('app.nama_dinas') }}
     </figcaption>
   </figure>
@@ -12,11 +12,11 @@
   </div>
 </div>
 
-<div class="bg-blue px-4 py-2 lg:hidden">
+<div class="bg-brand-blue px-4 py-2 lg:hidden">
   <p class="text-center text-white font-semibold text-sm current-time"></p>
 </div>
 
-<nav class="bg-white lg:bg-blue border-gray-200" id="navbar">
+<nav class="bg-white lg:bg-brand-blue border-gray-200" id="navbar">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-3">
 
     <div class="lg:hidden flex gap-2">
@@ -26,7 +26,7 @@
 
     <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
       <button type="button"
-        class="text-blue bg-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Portal</button>
+        class="text-brand-blue bg-brand-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-1 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Portal</button>
       <button data-collapse-toggle="navbar-cta" type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         aria-controls="navbar-cta" aria-expanded="false">
@@ -43,13 +43,13 @@
         id="navbarMenu">
         <li>
           <a href="{{ route('guest.beranda.index') }}"
-            class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'Beranda' ? ' bg-yellow lg:bg-transparent' : '' }}"
+            class="block py-2 px-3 lg:p-0 rounded {{ $page_title == 'Beranda' ? ' bg-brand-yellow lg:bg-transparent' : '' }}"
             aria-current="page">Beranda</a>
         </li>
 
         <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarProfil"
-            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Profil' ? ' bg-yellow lg:bg-transparent' : '' }}">
+            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Profil' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
             Profil
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
@@ -59,7 +59,7 @@
           </button>
 
           <div id="dropdownNavbarProfil"
-            class="lg:!absolute lg:!inset-x-0 !top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow w-64 xs:w-72 md:w-fit lg:w-fit">
+            class="lg:!absolute lg:!inset-x-0 !top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow w-64 xs:w-72 md:w-fit lg:w-fit">
             <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
               {{-- Dinas PUPR Kota Samarinda --}}
               <div class="py-5 px-3">
@@ -157,7 +157,7 @@
         </li>
 
         {{-- <li>
-          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarInformasiPUPR" class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-yellow lg:bg-transparent' : '' }}">
+          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarInformasiPUPR" class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
             Informasi PUPR
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" >
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
@@ -181,7 +181,7 @@
 
         <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarInformasiPUPR"
-            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-yellow lg:bg-transparent' : '' }}">
+            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
             Informasi PUPR
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
@@ -191,7 +191,7 @@
           </button>
 
           <div id="dropdownNavbarInformasiPUPR"
-            class="lg:!absolute lg:!inset-x-0 !top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow w-64 xs:w-72 md:w-fit lg:w-fit">
+            class="lg:!absolute lg:!inset-x-0 !top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow w-64 xs:w-72 md:w-fit lg:w-fit">
             <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
               {{-- Berita --}}
               <div class="py-5 px-3">
@@ -293,6 +293,11 @@
                         Agenda Kegiatan Dinas PUPR Kota Samarinda</a>
                     </li>
                     <li>
+                      <a href="{{ route('guest.album-kegiatan.index') }}"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Album Kegiatan Dinas PUPR Kota Samarinda</a>
+                    </li>
+                    <li>
                       <a href="https://pu.go.id/berita/kanal"
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         Berita dari Kementerian PU</a>
@@ -303,10 +308,10 @@
             </ul>
           </div>
         </li>
-        <li>
+        {{-- <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-            class="flex items-center justify-between w-full py-2 px-3 lg:p-0 rounded {{ $page_title == 'E-Library' ? ' bg-yellow lg:bg-transparent' : '' }}">
-            E-Library PUPR
+            class="flex items-center justify-between w-full py-2 px-3 lg:p-0 rounded {{ $page_title == 'Galeri Kegiatan' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
+            Album Kegiatan
             <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -315,20 +320,21 @@
           </button>
           <!-- Dropdown menu -->
           <div id="dropdownNavbar"
-            class="border-y-4 border-blue z-50 hidden font-normal bg-white divide-y divide-gray-100 shadow w-44">
+            class="border-y-4 border-brand-blue z-50 hidden font-normal bg-white divide-y divide-gray-100 shadow w-44">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
               <li>
                 <a href="{{ route('guest.e-library.galeri-foto.index') }}"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Galeri
-                  Foto</a>
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Galeri Foto</a>
               </li>
               <li>
                 <a href="{{ route('guest.e-library.video.index') }}"
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Video</a>
               </li>
           </div>
-        </li>
+        </li> --}}
       </ul>
     </div>
   </div>
 </nav>
+
+

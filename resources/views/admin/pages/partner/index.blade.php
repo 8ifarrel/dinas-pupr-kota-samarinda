@@ -1,10 +1,7 @@
 @extends('admin.layouts.partner')
 
 @section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
-  {{-- Lightbox2 --}}
-  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet" />
+  @vite(['resources/css/lightbox.css', 'resources/css/datatables.css'])
 @endsection
 
 @section('slot')
@@ -57,7 +54,8 @@
             </tr>
 
             <!-- Modal Konfirmasi Hapus -->
-            <div id="deleteModal-{{ $partner->id_partner }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+            <div id="deleteModal-{{ $partner->id_partner }}" data-modal-backdrop="static" tabindex="-1"
+              aria-hidden="true"
               class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
               <div class="relative p-4 w-full max-w-2xl max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -117,12 +115,10 @@
 @endsection
 
 @section('js')
-  {{-- Lightbox2 --}}
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+  @vite(['resources/js/lightbox.js', 'resources/js/datatables.js'])
+
   <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
       $('#partner').DataTable({
         responsive: true
       });

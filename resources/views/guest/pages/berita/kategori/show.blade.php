@@ -4,7 +4,7 @@
   <div class="py-5 md:py-12 lg:px-48 3xl:px-48">
     <div class="text-center mb-2 lg:mb-3">
       <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
         {{ $page_title }}
       </span>
     </div>
@@ -169,3 +169,5 @@
     }
   </script>
 @endsection
+
+

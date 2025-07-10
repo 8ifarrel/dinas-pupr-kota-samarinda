@@ -23,3 +23,4 @@ class Slider extends Model
         'is_visible' => 'boolean',
     ];
 }
+

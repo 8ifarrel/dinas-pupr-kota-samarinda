@@ -17,3 +17,4 @@ class PortalGuestController extends Controller
         ]);
     }
 }
+

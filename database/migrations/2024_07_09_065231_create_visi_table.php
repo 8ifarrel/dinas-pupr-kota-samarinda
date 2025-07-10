@@ -32,3 +32,4 @@ class CreateVisiTable extends Migration
         Schema::dropIfExists('visi');
     }
 }
+

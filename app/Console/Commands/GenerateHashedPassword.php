@@ -20,3 +20,4 @@ class GenerateHashedPassword extends Command
         $this->info("Hashed Password: $hashedPassword");
     }
 }
+

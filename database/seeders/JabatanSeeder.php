@@ -47,3 +47,4 @@ class JabatanSeeder extends Seeder
         }
     }
 }
+

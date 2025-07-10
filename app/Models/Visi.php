@@ -19,3 +19,4 @@ class Visi extends Model
         'periode_selesai',
     ];
 }
+

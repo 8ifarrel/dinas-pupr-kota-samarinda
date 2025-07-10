@@ -25,3 +25,4 @@ class PengumumanSeeder extends Seeder
 		}
 	}
 }
+

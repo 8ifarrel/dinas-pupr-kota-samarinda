@@ -13,3 +13,4 @@ class SKM extends Model
         'ip_address',
     ];
 }
+

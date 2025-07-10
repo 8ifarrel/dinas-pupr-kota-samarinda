@@ -46,3 +46,4 @@ class SusunanOrganisasi extends Model
         return $this->hasMany(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 }
+

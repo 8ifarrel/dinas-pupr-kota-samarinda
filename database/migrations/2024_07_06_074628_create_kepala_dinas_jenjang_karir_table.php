@@ -33,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('kepala_dinas_jenjang_karir');
     }
 };
+

@@ -197,3 +197,4 @@ class SliderAdminController extends Controller
         return redirect()->route('admin.slider.index')->with('success', 'Slider berhasil diperbarui.');
     }
 }
+

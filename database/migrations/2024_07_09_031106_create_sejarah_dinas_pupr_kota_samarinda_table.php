@@ -26,3 +26,4 @@ return new class extends Migration
         Schema::dropIfExists('sejarah_dinas_pupr_kota_samarinda');
     }
 };
+

@@ -45,3 +45,4 @@ class FilePondController extends Controller
         return response()->json(['message' => 'File not found.'], 404);
     }
 }
+

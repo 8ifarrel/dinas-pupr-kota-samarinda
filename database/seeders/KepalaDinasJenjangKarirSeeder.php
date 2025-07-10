@@ -27,3 +27,4 @@ class KepalaDinasJenjangKarirSeeder extends Seeder
 		}
 	}
 }
+

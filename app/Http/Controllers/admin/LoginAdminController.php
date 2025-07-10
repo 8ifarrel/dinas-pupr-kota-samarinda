@@ -39,3 +39,4 @@ class LoginAdminController extends Controller
 	}
 	
 }
+

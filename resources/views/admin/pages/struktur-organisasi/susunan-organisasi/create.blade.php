@@ -1,9 +1,12 @@
-@extends('admin.layouts.struktur-organisasi')
+@extends('admin.layout')
 
-@section('css')
-  <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet" />
-  <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite([
+    'resources/css/trix.css',
+    'resources/css/viewerjs.css',
+    'resources/css/cropperjs.css'
+  ])
+
   <style>
     trix-toolbar .trix-button-group--file-tools {
       display: none;
@@ -21,46 +24,10 @@
       height: 270px !important;
       overflow-y: auto;
     }
-
-    trix-editor h1 {
-      font-size: 1.25rem !important;
-      line-height: 1.25rem !important;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    trix-editor a:not(.no-underline) {
-      text-decoration: underline;
-    }
-
-    trix-editor a:visited {
-      color: blue;
-    }
-
-    trix-editor ul {
-      list-style-type: disc !important;
-      margin-left: 1rem !important;
-    }
-
-    trix-editor ol {
-      list-style-type: decimal !important;
-      margin-left: 1rem !important;
-    }
   </style>
 @endsection
 
-@section('slot')
-  {{-- Error message --}}
-  @if ($errors->any())
-    <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-      <ul class="mb-0">
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
-
+@section('document.body')
   <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.store') }}" method="POST"
     enctype="multipart/form-data">
     @csrf
@@ -179,10 +146,8 @@
                 <p class="mb-1 text-xs text-gray-500 font-semibold text-center">Klik untuk upload ikon</p>
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
-              <img id="ikon-preview"
-                class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
-              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*"
-                class="hidden ikon-preview" />
+              <img id="ikon-preview" class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
+              <input name="ikon_jabatan" id="ikon_jabatan" type="file" accept="image/*" class="hidden ikon-preview" />
             </label>
             <button type="button"
               class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-ikon-btn hidden"
@@ -218,8 +183,7 @@
                 <p class="mb-1 text-xs text-gray-500 font-semibold text-center">Klik untuk upload organigram</p>
                 <p class="text-xs text-gray-400 text-center">PNG, JPG, JPEG <br> (max 2MB)</p>
               </div>
-              <img id="foto-preview"
-                class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
+              <img id="foto-preview" class="hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
               <input name="foto_organigram" id="foto_organigram" type="file" accept="image/*"
                 class="hidden foto-preview foto-input" />
             </label>
@@ -364,10 +328,13 @@
   </form>
 @endsection
 
-@section('js')
-  <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.js"></script>
+@section('document.end')
+  @vite([
+    'resources/js/trix.js',
+    'resources/js/viewerjs.js',
+    'resources/js/cropperjs.js'
+  ])
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const wrapper = document.querySelector('.foto-viewer-wrapper');

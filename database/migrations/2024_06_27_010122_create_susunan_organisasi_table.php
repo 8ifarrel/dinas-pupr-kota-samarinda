@@ -32,3 +32,4 @@ class CreateSusunanOrganisasiTable extends Migration
 		Schema::dropIfExists('susunan_organisasi');
 	}
 }
+

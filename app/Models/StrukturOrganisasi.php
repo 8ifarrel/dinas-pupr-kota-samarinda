@@ -32,3 +32,4 @@ class StrukturOrganisasi extends Model
         return $this->hasOne(StrukturOrganisasiDiagram::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
     }
 }
+

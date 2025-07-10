@@ -113,11 +113,11 @@
         if (lastScrollY > 88 && window.innerWidth >= 1024) {
           navbar.classList.add("bg-white", "shadow-lg");
           navbar.classList.add("fixed", "w-full", "z-50", "top-0", "start-0");
-          navbar.classList.remove("transition", "duration-200", "ease-out", "lg:bg-blue");
+          navbar.classList.remove("transition", "duration-200", "ease-out", "lg:bg-brand-blue");
           navbar.classList.add("transition", "duration-350", "ease-in");
 
-          navbarMenu.classList.remove("lg:text-white", "lg:bg-blue");
-          navbarMenu.classList.add("lg:text-blue");
+          navbarMenu.classList.remove("lg:text-white", "lg:bg-brand-blue");
+          navbarMenu.classList.add("lg:text-brand-blue");
           navbarMenu.classList.add("transition", "duration-350", "ease-in");
 
           dropdownNavbarProfil.classList.remove("!top-[148px]");
@@ -128,11 +128,11 @@
         } else {
           navbar.classList.remove("bg-white", "shadow-lg");
           navbar.classList.remove("fixed", "w-full", "z-50", "top-0", "start-0");
-          navbar.classList.add("transition", "duration-200", "ease-out", "lg:bg-blue");
+          navbar.classList.add("transition", "duration-200", "ease-out", "lg:bg-brand-blue");
           navbar.classList.remove("transition", "duration-350", "ease-in");
 
-          navbarMenu.classList.add("lg:text-white", "lg:bg-blue");
-          navbarMenu.classList.remove("lg:text-blue");
+          navbarMenu.classList.add("lg:text-white", "lg:bg-brand-blue");
+          navbarMenu.classList.remove("lg:text-brand-blue");
           navbarMenu.classList.remove("transition", "duration-350", "ease-in");
 
           dropdownNavbarProfil.classList.remove("!top-[60px]");
@@ -158,3 +158,5 @@
 </body>
 
 </html>
+
+

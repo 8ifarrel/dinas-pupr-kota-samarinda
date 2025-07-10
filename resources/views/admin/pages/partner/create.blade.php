@@ -1,16 +1,28 @@
-@extends('admin.layouts.partner')
+@extends('admin.layout')
 
-@section('css')
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet" />
-  <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css'])
+
   <style>
-    .partner-viewer-wrapper { height: 220px; }
-    .partner-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-    .partner-preview { background: #fff; }
+    .partner-viewer-wrapper {
+      height: 220px;
+    }
+
+    .partner-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .partner-preview {
+      background: #fff;
+    }
   </style>
 @endsection
 
-@section('slot')
+@section('document.body')
   <form action="{{ route('admin.partner.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
@@ -27,7 +39,8 @@
     </div>
 
     <div class="mb-4">
-      <label for="foto_partner" class="block text-sm font-medium text-gray-700">Foto Partner <span class="text-red-600">*</span></label>
+      <label for="foto_partner" class="block text-sm font-medium text-gray-700">Foto Partner <span
+          class="text-red-600">*</span></label>
       <div class="relative group partner-viewer-wrapper h-28 sm:h-32">
         <label
           class="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition relative overflow-hidden m-0"
@@ -42,8 +55,8 @@
           </div>
           <img id="partner-preview"
             class="partner-preview hidden absolute inset-0 w-full h-full object-contain rounded-lg bg-white" />
-          <input name="foto_partner" id="foto_partner" type="file" accept="image/*"
-            class="hidden partner-input" required />
+          <input name="foto_partner" id="foto_partner" type="file" accept="image/*" class="hidden partner-input"
+            required />
         </label>
         <button type="button"
           class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-partner-btn hidden"
@@ -92,9 +105,9 @@
   </div>
 @endsection
 
-@section('js')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.js"></script>
+@section('document.end')
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js'])
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const wrapper = document.querySelector('.partner-viewer-wrapper');
@@ -113,25 +126,46 @@
       let viewer = null;
       if (wrapper && window.Viewer) {
         viewer = new Viewer(wrapper, {
-          navbar: false, toolbar: true, title: false, tooltip: false, movable: false, zoomable: true, scalable: false, transition: true, fullscreen: false
+          navbar: false,
+          toolbar: true,
+          title: false,
+          tooltip: false,
+          movable: false,
+          zoomable: true,
+          scalable: false,
+          transition: true,
+          fullscreen: false
         });
       }
       let partnerHistory = [];
       let partnerHistoryPointer = -1;
+
       function pushPartnerHistory(src) {
-        if (partnerHistoryPointer < partnerHistory.length - 1) partnerHistory = partnerHistory.slice(0, partnerHistoryPointer + 1);
-        partnerHistory.push(src); partnerHistoryPointer = partnerHistory.length - 1; updateRevertPartnerBtn();
+        if (partnerHistoryPointer < partnerHistory.length - 1) partnerHistory = partnerHistory.slice(0,
+          partnerHistoryPointer + 1);
+        partnerHistory.push(src);
+        partnerHistoryPointer = partnerHistory.length - 1;
+        updateRevertPartnerBtn();
       }
+
       function updateRevertPartnerBtn() {
         if (partnerHistoryPointer > 0) {
-          revertBtn.classList.remove('hidden'); revertBtn.style.display = '';
+          revertBtn.classList.remove('hidden');
+          revertBtn.style.display = '';
         } else {
-          revertBtn.classList.add('hidden'); revertBtn.style.display = 'none';
+          revertBtn.classList.add('hidden');
+          revertBtn.style.display = 'none';
         }
       }
+
       function setPartnerPreviewAndHistory(src, isInitial = false) {
-        preview.src = src; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        preview.src = src;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        removeBtn.classList.remove('hidden');
+        removeBtn.disabled = false;
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
         if (!isInitial) pushPartnerHistory(src);
         if (viewer) viewer.update();
       }
@@ -143,7 +177,10 @@
             imageToCrop.src = ev.target.result;
             cropperModal.classList.remove('hidden');
             if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1});
+            cropper = new Cropper(imageToCrop, {
+              viewMode: 1,
+              autoCropArea: 1
+            });
           };
           reader.readAsDataURL(input.files[0]);
         }
@@ -154,26 +191,38 @@
           imageToCrop.src = preview.src;
           cropperModal.classList.remove('hidden');
           if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1});
+          cropper = new Cropper(imageToCrop, {
+            viewMode: 1,
+            autoCropArea: 1
+          });
         }
       });
       if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
         if (cropper) {
           cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_partner.jpg', {type: blob.type});
+            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_partner.jpg', {
+              type: blob.type
+            });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(croppedFile);
             input.files = dataTransfer.files;
             const reader = new FileReader();
-            reader.onload = function(ev) { setPartnerPreviewAndHistory(ev.target.result); };
+            reader.onload = function(ev) {
+              setPartnerPreviewAndHistory(ev.target.result);
+            };
             reader.readAsDataURL(croppedFile);
-            cropper.destroy(); cropper = null; cropperModal.classList.add('hidden');
+            cropper.destroy();
+            cropper = null;
+            cropperModal.classList.add('hidden');
           }, lastFile ? lastFile.type : 'image/jpeg');
         }
       });
       if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
         cropperModal.classList.add('hidden');
-        if (cropper) { cropper.destroy(); cropper = null; }
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
         input.value = '';
       });
       if (removeBtn) removeBtn.addEventListener('click', function() {
@@ -190,22 +239,35 @@
           partnerHistoryPointer--;
           const prevSrc = partnerHistory[partnerHistoryPointer];
           if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+            preview.src = prevSrc;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            removeBtn.classList.remove('hidden');
+            removeBtn.disabled = false;
+            editBtn.classList.remove('hidden');
+            editBtn.style.display = '';
           } else {
-            preview.src = '#'; preview.classList.add('hidden'); placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden'); removeBtn.disabled = true; editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+            preview.src = '#';
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            removeBtn.classList.add('hidden');
+            removeBtn.disabled = true;
+            editBtn.classList.add('hidden');
+            editBtn.style.display = 'none';
           }
           updateRevertPartnerBtn();
         }
       });
       if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+        editBtn.classList.add('hidden');
+        editBtn.style.display = 'none';
       } else {
-        editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
       }
       if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault(); ev.stopPropagation();
+        ev.preventDefault();
+        ev.stopPropagation();
         if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
         return false;
       });

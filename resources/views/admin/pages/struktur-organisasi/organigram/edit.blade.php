@@ -1,8 +1,11 @@
-@extends('admin.layouts.struktur-organisasi')
+@extends('admin.layout')
 
-@section('css')
-  <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite([
+    'resources/css/viewerjs.css',
+    'resources/css/cropperjs.css'
+  ])
+
   <style>
     .foto-placeholder {
       display: flex;
@@ -14,7 +17,7 @@
   </style>
 @endsection
 
-@section('slot')
+@section('document.body')
   <form action="{{ route('admin.struktur-organisasi.organigram.update', 1) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
@@ -63,7 +66,6 @@
     <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded-md">Simpan</button>
   </form>
 
-  <!-- Modal CropperJS untuk organigram -->
   <div id="cropperModal" tabindex="-1" aria-hidden="true"
     class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
     <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl relative mx-4 md:mx-5">
@@ -87,9 +89,12 @@
   </div>
 @endsection
 
-@section('js')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.js"></script>
+@section('document.end')
+  @vite([
+    'resources/js/viewerjs.js',
+    'resources/js/cropperjs.js'
+  ])
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // --- ORGANIGRAM ---
@@ -168,7 +173,6 @@
         return false;
       });
 
-      // Inisialisasi preview dan history pada halaman edit
       if (originalImageSrc) {
         setPreviewAndHistory(originalImageSrc, true);
         updateRevertBtn();

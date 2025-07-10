@@ -1,11 +1,10 @@
-@extends('admin.layouts.struktur-organisasi')
+@extends('admin.layout')
 
-@section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/datatables.css', 'resources/js/datatables.js'])
 @endsection
 
-@section('slot')
+@section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
     <div class="sm:flex sm:justify-between mb-5">
       <h2 class="font-semibold text-2xl md:text-3xl mb-5 sm:mb-0">
@@ -203,9 +202,7 @@
   </div>
 @endsection
 
-@section('js')
-  <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
-
+@section('document.end')
   <script>
     const editRoute = "{{ route('admin.struktur-organisasi.susunan-organisasi.edit', ':id') }}";
 
@@ -291,8 +288,8 @@
       $('#modal-backdrop-custom').remove();
     }
 
-    $(document).ready(function() {
-      let table = $('#susunan-organisasi').DataTable({
+    document.addEventListener('DOMContentLoaded', function() {
+      const table = $('#susunan-organisasi').DataTable({
         responsive: true,
         pageLength: 15,
         columns: [{
@@ -318,11 +315,10 @@
         ]
       });
 
-      // Add event listener for opening and closing details
       $('#susunan-organisasi tbody').on('click', 'td.dt-control', function() {
-        let tr = $(this).closest('tr');
-        let row = table.row(tr);
-        let childrenData = tr.attr('data-children') ? JSON.parse(tr.attr('data-children')) : [];
+        const tr = $(this).closest('tr');
+        const row = table.row(tr);
+        const childrenData = tr.data('children') ? JSON.parse(tr.attr('data-children')) : [];
 
         if (row.child.isShown()) {
           row.child.hide();
@@ -335,19 +331,18 @@
         }
       });
 
-      // Modal handler for dynamic modals in expanded rows
       $(document).on('click', '.btn-modal-delete', function() {
         const target = $(this).data('modal-target');
         $('#' + target).removeClass('hidden').addClass('flex');
         showBackdrop();
       });
+
       $(document).on('click', '.btn-modal-hide', function() {
         const target = $(this).data('modal-hide');
         $('#' + target).removeClass('flex').addClass('hidden');
         hideBackdrop();
       });
 
-      // Juga tutup backdrop jika modal di luar child (modal utama) ditutup
       $(document).on('click', '[data-modal-hide]', function() {
         hideBackdrop();
       });

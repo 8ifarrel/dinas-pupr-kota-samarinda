@@ -22,3 +22,4 @@ class PPIDPelaksanaGuestController extends Controller
     return Storage::disk('public')->download($ppid->file, $ppid->judul . '.' . pathinfo($ppid->file, PATHINFO_EXTENSION));
   }
 }
+

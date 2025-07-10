@@ -31,3 +31,4 @@ class CreateBeritaTable extends Migration
         Schema::dropIfExists('berita');
     }
 }
+

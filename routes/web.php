@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\guest\GaleriKegiatanGuestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,19 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\FilePondController;
-
-/**
- * FilePond
- */
-
-Route::prefix('filepond')->group(function () {
-	Route::post('/process', [FilePondController::class, 'process'])
-		->name('filepond.process');
-
-	Route::delete('/revert', [FilePondController::class, 'revert'])
-		->name('filepond.revert');
-});
+// 
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +39,7 @@ use App\Http\Controllers\guest\BukuTamuGuestController;
 use App\Http\Controllers\guest\PPIDPelaksanaKategoriGuestController;
 use App\Http\Controllers\guest\PPIDPelaksanaGuestController;
 use App\Http\Controllers\guest\SKMGuestController;
+use App\Http\Controllers\guest\AlbumKegiatanGuestController;
 
 /**
  * Portal
@@ -113,7 +103,8 @@ Route::prefix('berita')->group(function () {
 /**
  * Pengumuman
  */
-Route::prefix('pengumuman')->group(callback: function () {
+
+Route::prefix('pengumuman')->group( function () {
 	Route::get('/', [PengumumanGuestController::class, 'index'])
 		->name('guest.pengumuman.index');
 	Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
@@ -126,7 +117,7 @@ Route::prefix('pengumuman')->group(callback: function () {
  * PPID Pelaksana
  */
 
-Route::prefix('ppid-pelaksana')->group(callback: function () {
+Route::prefix('ppid-pelaksana')->group( function () {
 	Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
 		->name('guest.ppid-pelaksana.kategori.index');
 	Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
@@ -137,16 +128,15 @@ Route::prefix('ppid-pelaksana')->group(callback: function () {
 });
 
 /**
- * E-Library
+ * Album Kegiatan
  */
 
-Route::get('/e-library/galeri-foto', function () {
-	abort(503, 'Halaman ini sedang dalam pembaharuan');
-})->name('guest.e-library.galeri-foto.index');
-
-Route::get('/e-library/video', function () {
-	abort(503, 'Halaman ini sedang dalam pembaharuan');
-})->name('guest.e-library.video.index');
+Route::prefix('album-kegiatan')->group( function () {
+	Route::get('/', [AlbumKegiatanGuestController::class, 'index'])
+		->name('guest.album-kegiatan.index');
+	Route::get('/{slug}', [AlbumKegiatanGuestController::class, 'show'])
+		->name('guest.album-kegiatan.show');
+});
 
 /**
  * Agenda Kegiatan
@@ -463,3 +453,4 @@ Route::prefix('e-panel')->group(function () {
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });
+

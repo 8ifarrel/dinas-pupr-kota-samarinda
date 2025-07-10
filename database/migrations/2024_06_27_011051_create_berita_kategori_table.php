@@ -26,3 +26,4 @@ class CreateBeritaKategoriTable extends Migration
         Schema::dropIfExists('berita_kategori');
     }
 }
+

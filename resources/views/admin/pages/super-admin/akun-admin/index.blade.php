@@ -1,11 +1,10 @@
-@extends('admin.layouts.super')
+@extends('admin.layout')
 
-@section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/datatables.css', 'resources/js/datatables.js'])
 @endsection
 
-@section('slot')
+@section('document.body')
   <a href="{{ route('admin.super.akun-admin.create') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-plus me-1"></i>Tambah Akun Admin
@@ -112,11 +111,9 @@
   </div>
 @endsection
 
-@section('js')
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+@section('document.end')
   <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
       $('#akun-admin').DataTable({
         responsive: true
       });

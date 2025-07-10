@@ -17,3 +17,4 @@ class SejarahKotaSamarindaSeeder extends Seeder
 		]);
 	}
 }
+

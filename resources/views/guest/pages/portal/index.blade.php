@@ -50,14 +50,14 @@
     </a>
 
     {{-- Aplikasi --}}
-    <div class="px-3 py-4 bg-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl 3xl:max-w-[1300px] mx-auto">
+    <div class="px-3 py-4 bg-brand-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl 3xl:max-w-[1300px] mx-auto">
       <div class="justify-items-center text-white grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         <button data-modal-target="modal-informasi-publik" data-modal-toggle="modal-informasi-publik" type="button">
           <figure>
             <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]"
               src="https://lottie.host/dd34a41c-849f-43dc-b0bf-bb9cff0ed814/FrdooYL5sY.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
-            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
+            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
               Informasi Publik
             </figcaption>
           </figure>
@@ -68,7 +68,7 @@
             <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]"
               src="https://lottie.host/79009bb3-5d07-4937-b043-bdfec1f41bf1/l1GIKi6RYJ.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
-            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
+            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
               Layanan Aplikasi
             </figcaption>
           </figure>
@@ -79,7 +79,7 @@
             <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]"
               src="https://lottie.host/05a9c4fd-d359-4d7b-acbf-b9d560cf3739/vwyhQ7Wt8H.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
-            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
+            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
               Layanan Aduan
             </figcaption>
           </figure>
@@ -90,7 +90,7 @@
             <lottie-player class="h-[100px] lg:h-[200px] 3xl:h-[250px]"
               src="https://lottie.host/7fc5c4a3-cad9-414a-8bc5-e097ed4ca67c/zGiBmsHxZj.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
-            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-yellow">
+            <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
               Media Sosial
             </figcaption>
           </figure>
@@ -135,12 +135,12 @@
           <!-- Modal footer -->
           <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2  lg:flex lg:items-center">
             <a href="{{ route('guest.berita.kategori.index') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Berita</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Berita</a>
             <a href="{{ route('guest.ppid-pelaksana.kategori.index') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">PPID
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">PPID
               Pelaksana</a>
             <a href="{{ route('guest.pengumuman.index') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">Pengumuman</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">Pengumuman</a>
           </div>
         </div>
       </div>
@@ -183,12 +183,12 @@
           <!-- Modal footer -->
           <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
             <a href="/hantubanyu" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hantubanyu</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hantubanyu</a>
             <a href="/uptd-limbah" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">UPTD
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">UPTD
               Limbah</a>
             <a href="/uptd-jalan-dan-jembatan" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">UPTD
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">UPTD
               Jalan dan Jembatan</a>
           </div>
         </div>
@@ -232,12 +232,12 @@
           <!-- Modal footer -->
           <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
             <a href="{{ route('guest.skm.index') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SKM</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SKM</a>
             <a href="{{ url('https://www.lapor.go.id/') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">LAPOR!</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">LAPOR!</a>
             <a href="{{ url('https://e-kianpuas.samarindakota.go.id/survei/form/dinas-pekerjaan-umum-dan-penataan-ruang/39ba9d60-d13d-4bce-ae9e-a54316bed169') }}"
               type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">E-KianPuas</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">E-KianPuas</a>
           </div>
         </div>
       </div>
@@ -280,11 +280,11 @@
           <!-- Modal footer -->
           <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
             <a href="{{ url('https://www.instagram.com/dpuprkotasamarinda/') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Instagram</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Instagram</a>
             <a href="{{ url('https://www.facebook.com/dpuprkotasamarinda/') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Facebook</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Facebook</a>
             <a href="{{ url('https://www.youtube.com/@dinaspuprkotasamarinda/') }}" type="button"
-              class="text-white bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">YouTube</a>
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">YouTube</a>
           </div>
         </div>
       </div>
@@ -298,3 +298,5 @@
     </footer>
   </main>
 @endsection
+
+

@@ -29,3 +29,4 @@ class StrukturOrganisasiAdminController extends Controller
         ]);
     }
 }
+

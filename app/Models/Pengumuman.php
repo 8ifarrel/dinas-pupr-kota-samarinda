@@ -25,3 +25,4 @@ class Pengumuman extends Model
 		'updated_at' => 'datetime',
 	];
 }
+

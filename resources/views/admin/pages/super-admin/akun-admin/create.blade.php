@@ -1,9 +1,9 @@
-@extends('admin.layouts.super')
+@extends('admin.layout')
 
-@section('slot')
-
+@section('document.body')
   @php
-    $kepalaDinasSudahAda = \App\Models\User::where('id_susunan_organisasi', 1)->exists();
+    use App\Models\User;
+    $kepalaDinasSudahAda = User::where('id_susunan_organisasi', 1)->exists();
   @endphp
 
   <form action="{{ route('admin.super.akun-admin.store') }}" method="POST" autocomplete="off">
@@ -29,10 +29,9 @@
         <option value="">-- Pilih Susunan Organisasi --</option>
         @foreach ($susunan_organisasi as $so)
           @if (
-            (!$kepalaDinasSudahAda && $so->id_susunan_organisasi_parent == 1) ||
-            (!$kepalaDinasSudahAda && $so->id_susunan_organisasi == 1) ||
-            ($kepalaDinasSudahAda && $so->id_susunan_organisasi_parent == 1 && $so->id_susunan_organisasi != 1)
-          )
+              (!$kepalaDinasSudahAda && $so->id_susunan_organisasi_parent == 1) ||
+                  (!$kepalaDinasSudahAda && $so->id_susunan_organisasi == 1) ||
+                  ($kepalaDinasSudahAda && $so->id_susunan_organisasi_parent == 1 && $so->id_susunan_organisasi != 1))
             <option value="{{ $so->id_susunan_organisasi }}"
               {{ old('id_susunan_organisasi') == $so->id_susunan_organisasi ? 'selected' : '' }}>
               {{ $so->nama_susunan_organisasi }}
@@ -77,20 +76,8 @@
   </form>
 @endsection
 
-@section('js')
-  <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      const icon = document.getElementById('icon-' + id);
-      if (input.type === "password") {
-        input.type = "text";
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = "password";
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    }
-  </script>
+@section('document.end')
+  @vite('resources/js/toggle-password-visibility.js')
 @endsection
+
+

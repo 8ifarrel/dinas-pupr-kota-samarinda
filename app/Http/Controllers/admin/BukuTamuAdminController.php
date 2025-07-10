@@ -46,3 +46,4 @@ class BukuTamuAdminController extends Controller
             ->with('success', 'Status Buku Tamu berhasil diperbarui.');
     }
 }
+

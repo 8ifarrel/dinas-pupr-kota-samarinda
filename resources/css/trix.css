@@ -1,0 +1,33 @@
+@import "trix/dist/trix.css";
+
+/*
+* Special thanks to Muhammad Jamil
+* Resolving problem when using Trix rich editor with Tailwind
+* https://dev.to/fanreza/resolving-problem-when-using-trix-rich-editor-with-tailwind-13ca
+*
+*/
+
+trix-editor h1 {
+  font-size: 1.25rem !important;
+  line-height: 1.25rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 600 !important;
+}
+
+trix-editor a:not(.no-underline) {
+  text-decoration: underline !important;
+}
+
+trix-editor a:visited {
+  color: blue !important;
+}
+
+trix-editor ul {
+  list-style-type: disc !important;
+  margin-left: 1rem !important;
+}
+
+trix-editor ol {
+  list-style-type: decimal !important;
+  margin-left: 1rem !important;
+}

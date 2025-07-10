@@ -1,11 +1,10 @@
-@extends('admin.layouts.ppid-pelaksana')
+@extends('admin.layout')
 
-@section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/datatables.css', 'resources/js/datatables.js'])
 @endsection
 
-@section('slot')
+@section('document.body')
   <a href="{{ route('admin.ppid-pelaksana.create', ['kategori' => request()->query('kategori')]) }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-plus me-1"></i>Tambah PPID Pelaksana
@@ -30,8 +29,10 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $item->judul }}</td>
               <td>
-                <a href="{{ Storage::url($item->file) }}" target="_blank" class="inline-flex justify-center items-center gap-1 h-8 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                  <i class="fa-solid fa-eye"></i> <span class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat</span>
+                <a href="{{ Storage::url($item->file) }}" target="_blank"
+                  class="inline-flex justify-center items-center gap-1 h-8 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                  <i class="fa-solid fa-eye"></i> <span
+                    class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat</span>
                 </a>
               </td>
               <td>{{ $item->download_count }}</td>
@@ -109,11 +110,9 @@
   </div>
 @endsection
 
-@section('js')
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+@section('document.end')
   <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
       $('#ppid-pelaksana').DataTable({
         responsive: true
       });

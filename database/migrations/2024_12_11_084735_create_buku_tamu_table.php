@@ -33,3 +33,4 @@ class CreateBukuTamuTable extends Migration
         Schema::dropIfExists('buku_tamu');
     }
 }
+

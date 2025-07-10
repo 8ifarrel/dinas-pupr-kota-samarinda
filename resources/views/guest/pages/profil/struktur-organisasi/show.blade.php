@@ -4,7 +4,7 @@
   <div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
     <div class="text-center mb-2 lg:mb-3">
       <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
         {{ $page_title }}
       </span>
     </div>
@@ -51,7 +51,7 @@
   <div class="bg-[#f0f0f0] px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
     <div class="text-center mb-2 lg:mb-3">
       <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
         Struktur Bagian
       </span>
     </div>
@@ -74,7 +74,7 @@
       <div class="text-center pb-6 lg:pb-12 grid gap-3">
         <div>
           <span
-            class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+            class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
             BERITA TERBARU
           </span>
         </div>
@@ -87,7 +87,7 @@
       <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
         @foreach ($berita as $item)
           <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
-            <div class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
+            <div class="text-center text-sm text-white font-semibold bg-brand-blue rounded-t-xl py-2">
               {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi ?? '' }}
             </div>
             <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
@@ -101,7 +101,7 @@
               </div>
               <div class="flex justify-start">
                 <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}"
-                  class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-blue bg-yellow rounded-xl w-auto">
+                  class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-brand-blue bg-brand-yellow rounded-xl w-auto">
                   Baca berita
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     fill="none" viewBox="0 0 14 10">
@@ -117,7 +117,7 @@
 
       <div class="flex justify-center pt-6 lg:pt-12">
         <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $struktur_organisasi->susunanOrganisasi->slug_susunan_organisasi ?? '']) }}"
-          class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Lihat Berita Lainnya
         </a>
       </div>
@@ -160,3 +160,5 @@
   {{-- Splide --}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
 @endsection
+
+

@@ -21,3 +21,4 @@ class PPIDPelaksanaKategori extends Model
         return $this->hasMany(PPIDPelaksana::class, 'id_kategori');
     }
 }
+

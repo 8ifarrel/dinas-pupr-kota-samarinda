@@ -20,3 +20,4 @@ class CreateSejarahKotaSamarindaTable extends Migration
 		Schema::dropIfExists('sejarah_kota_samarinda');
 	}
 }
+

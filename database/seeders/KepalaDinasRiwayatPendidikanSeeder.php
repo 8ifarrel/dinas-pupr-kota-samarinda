@@ -27,3 +27,4 @@ class KepalaDinasRiwayatPendidikanSeeder extends Seeder
 		}
 	}
 }
+

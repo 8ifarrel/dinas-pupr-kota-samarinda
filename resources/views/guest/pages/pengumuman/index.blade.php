@@ -4,7 +4,7 @@
   <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
     <div class="text-center mb-2 lg:mb-3">
       <span
-        class="bg-blue uppercase font-bold text-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
         {{ $page_title }}
       </span>
     </div>
@@ -18,13 +18,13 @@
         style="width:100%;">
         <thead>
           <tr>
-            <th class="bg-yellow/35 border-none rounded-tl-3xl">#</th>
-            <th class="bg-yellow/35 min-w-44">Judul</th>
-            <th class="bg-yellow/35 min-w-36">Telah Dilihat</th>
-            <th class="bg-yellow/35 min-w-48">Waktu Terbit</th>
-            <th class="bg-yellow/35 min-w-48">Terakhir Diperbarui</th>
-            <th class="bg-yellow/35 border-none">Deskripsi</th>
-            <th class="bg-yellow/35 border-none rounded-tr-3xl">Lampiran</th>
+            <th class="bg-brand-yellow/35 border-none rounded-tl-3xl">#</th>
+            <th class="bg-brand-yellow/35 min-w-44">Judul</th>
+            <th class="bg-brand-yellow/35 min-w-36">Telah Dilihat</th>
+            <th class="bg-brand-yellow/35 min-w-48">Waktu Terbit</th>
+            <th class="bg-brand-yellow/35 min-w-48">Terakhir Diperbarui</th>
+            <th class="bg-brand-yellow/35 border-none">Deskripsi</th>
+            <th class="bg-brand-yellow/35 border-none rounded-tr-3xl">Lampiran</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +59,7 @@
               <td>
                 <button data-modal-target="static-modal-{{ $loop->index }}"
                   data-modal-toggle="static-modal-{{ $loop->index }}"
-                  class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 bg-blue font-semibold rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 bg-brand-blue font-semibold rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="button"
                   onclick="incrementPengumumanView('{{ $item->slug_pengumuman }}')"
                 >
@@ -71,7 +71,7 @@
               <td>
                 @if ($item->file_lampiran)
                   <a href="{{ route('guest.pengumuman.download', ['slug' => $item->slug_pengumuman]) }}"
-                    class="text-white bg-blue text-nowrap hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    class="text-white bg-brand-blue text-nowrap hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     target="_blank" rel="noopener"
                     onclick="incrementPengumumanView('{{ $item->slug_pengumuman }}')"
                   >
@@ -146,3 +146,5 @@
     });
   }
 </script>
+
+

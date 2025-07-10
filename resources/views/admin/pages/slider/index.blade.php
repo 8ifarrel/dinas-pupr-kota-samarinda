@@ -1,14 +1,10 @@
-@extends('admin.layouts.slider')
+@extends('admin.layout')
 
-@section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
-
-  {{-- Lightbox2 --}}
-  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/lightbox.css', 'resources/css/datatables.css', 'resources/js/datatables.js'])
 @endsection
 
-@section('slot')
+@section('document.body')
   <a href="{{ route('admin.slider.create') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-plus me-1"></i>Tambah Slider
@@ -143,33 +139,25 @@
   </div>
 @endsection
 
-@section('js')
-  {{-- Lightbox2 --}}
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
+@section('document.end')
+  @vite('resources/js/lightbox.js')
 
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
       $('#slider').DataTable({
         responsive: true
       });
-    });
-  </script>
 
-  {{-- Ubah nomor urutan slider --}}
-  <script>
-    $(document).ready(function() {
-      $('.slider-up').click(function(e) {
+      // Tombol "Slider Up"
+      $('.slider-up').on('click', function(e) {
         e.preventDefault();
 
         const id = $(this).data('id');
         const button = $(this);
-
         button.prop('disabled', true);
 
         $.ajax({
-          url: '/e-panel/slider/' + id + '/move-up',
+          url: `/e-panel/slider/${id}/move-up`,
           method: 'POST',
           data: {
             _token: '{{ csrf_token() }}',
@@ -189,16 +177,16 @@
         });
       });
 
-      $('.slider-down').click(function(e) {
+      // Tombol "Slider Down"
+      $('.slider-down').on('click', function(e) {
         e.preventDefault();
 
         const id = $(this).data('id');
         const button = $(this);
-
         button.prop('disabled', true);
 
         $.ajax({
-          url: '/e-panel/slider/' + id + '/move-down',
+          url: `/e-panel/slider/${id}/move-down`,
           method: 'POST',
           data: {
             _token: '{{ csrf_token() }}',

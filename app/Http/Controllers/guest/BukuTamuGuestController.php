@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BukuTamu;
-use App\Models\Jabatan;
+use App\Models\SusunanOrganisasi;
 use App\Mail\BukuTamuEmail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -31,9 +31,9 @@ class BukuTamuGuestController extends Controller
 		$page_subtitle = "Daftar";
 
 		$id_kepala_dinas = 1;
-		$jabatan = Jabatan::where('id_jabatan_parent', 1)
-			->where('id_jabatan', '!=', $id_kepala_dinas)
-			->select('id_jabatan', 'nama_jabatan')
+		$jabatan = SusunanOrganisasi::where('id_susunan_organisasi_parent', 1)
+			->where('id_susunan_organisasi', '!=', $id_kepala_dinas)
+			->select('id_susunan_organisasi', 'nama_susunan_organisasi')
 			->get();
 
 		return view('guest.pages.buku-tamu.create', [
@@ -51,7 +51,7 @@ class BukuTamuGuestController extends Controller
 			'nomor_telepon' => 'required|string',
 			'email' => 'required|email',
 			'alamat' => 'required|string',
-			'jabatan_yang_dikunjungi' => 'required|exists:jabatan,id_jabatan',
+			'jabatan_yang_dikunjungi' => 'required|exists:susunan_organisasi,id_susunan_organisasi',
 			'maksud_dan_tujuan' => 'required|string',
 		]);
 
@@ -118,3 +118,4 @@ class BukuTamuGuestController extends Controller
 		]);
 	}
 }
+

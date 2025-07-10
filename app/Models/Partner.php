@@ -18,3 +18,4 @@ class Partner extends Model
         'url_partner',
     ];
 }
+

@@ -22,3 +22,4 @@ class CreatePartnerTable extends Migration
         Schema::dropIfExists('partner');
     }
 }
+

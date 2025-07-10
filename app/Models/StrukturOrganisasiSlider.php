@@ -24,3 +24,4 @@ class StrukturOrganisasiSlider extends Model
         return $this->belongsTo(StrukturOrganisasi::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
     }
 }
+

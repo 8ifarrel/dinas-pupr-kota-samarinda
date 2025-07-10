@@ -34,3 +34,4 @@ class PegawaiSeeder extends Seeder
         }
     }
 }
+

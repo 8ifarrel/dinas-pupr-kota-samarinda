@@ -39,3 +39,5 @@
     <a href="{{ route('guest.buku-tamu.index') }}" class="text-[#0000EE] 3xl:text-2xl">Kembali ke halaman utama</a>
   </main>
 @endsection
+
+

@@ -26,7 +26,7 @@
       @foreach ($struktur_organisasi as $item)
         <a href="{{ route('guest.profil.struktur-organisasi.show', ['slug_susunan_organisasi' => $item->susunanOrganisasi->slug_susunan_organisasi]) }}" class="max-w-xs p-6 border bg-white rounded-3xl shadow-lg text-center flex flex-col mx-auto {{ $item->nomor_urut_jabatan == 1 ? 'md:col-span-2 lg:col-span-3' : '' }}">
           <figure>
-            <div class="static mb-3 w-14 h-14 bg-yellow/40 rounded-full m-auto flex items-center justify-center">
+            <div class="static mb-3 w-14 h-14 bg-brand-yellow/40 rounded-full m-auto flex items-center justify-center">
               <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}" alt="{{ $item->susunanOrganisasi->nama_susunan_organisasi }}">
             </div>
             <figcaption class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -36,7 +36,7 @@
           <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ $item->susunanOrganisasi->deskripsi_susunan_organisasi }}
           </p>
           <div class="mt-auto">
-            <p href="#" class="inline-flex font-medium items-center text-blue hover:underline">
+            <p href="#" class="inline-flex font-medium items-center text-brand-blue hover:underline">
               Pelajari selengkapnya
               <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 18 18">
@@ -50,3 +50,5 @@
     </div>
   </div>
 @endsection
+
+

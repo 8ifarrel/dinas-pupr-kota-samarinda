@@ -8,17 +8,18 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('media_galeri', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
+        Schema::create('foto_kegiatan', function (Blueprint $table) {
+            $table->id();
             $table->string('foto');
             $table->string('caption')->nullable();
-            $table->foreignId('id_media_album')->constrained('media_album')->onDelete('cascade');
+            $table->foreignId('id_album_kegiatan')->constrained('album_kegiatan')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('media_galeri');
+        Schema::dropIfExists('foto_kegiatan');
     }
 };
+

@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class MediaGaleri extends Model {
+class FotoKegiatan extends Model
+{
     use HasFactory;
 
-    protected $table = 'media_galeri';
+    protected $table = 'foto_kegiatan';
 
     public $incrementing = false;
     protected $keyType = 'uuid';
@@ -18,10 +19,11 @@ class MediaGaleri extends Model {
         'uuid',
         'foto',
         'caption',
-        'id_media_album',
+        'id_album_kegiatan',
     ];
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
         static::creating(function ($model) {
@@ -31,7 +33,8 @@ class MediaGaleri extends Model {
         });
     }
 
-    public function album() {
-        return $this->belongsTo(MediaAlbum::class, 'id_media_album');
+    public function albumKegiatan()
+    {
+        return $this->belongsTo(AlbumKegiatan::class, 'id_album_kegiatan');
     }
 }

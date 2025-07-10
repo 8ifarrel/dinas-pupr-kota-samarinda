@@ -66,7 +66,7 @@
         <div>
           <div class="static flex flex-col-reverse items-center">
             <div
-              class="mb-[5rem] sm:mb-[3.8rem] md:mb-[3.7rem] static bg-blue rounded-t-[45%] lg:rounded-tl-[50%] lg:rounded-tr-none">
+              class="mb-[5rem] sm:mb-[3.8rem] md:mb-[3.7rem] static bg-brand-blue rounded-t-[45%] lg:rounded-tl-[50%] lg:rounded-tr-none">
               <img class="lg:h-[450px]"
                 src="{{ $kepala_dinas->foto ? Storage::url($kepala_dinas->foto) : asset('img/default.png') }}"
                 alt="{{ $kepala_dinas->nama }}">
@@ -87,7 +87,7 @@
         <div class="max-w-md lg:text-start text-center grid gap-3">
           <div>
             <span
-              class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+              class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
               SAMBUTAN
             </span>
           </div>
@@ -103,7 +103,7 @@
 
           <div>
             <a href="{{ route('guest.profil.profil-kepala-dinas.index') }}"
-              class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Lihat Profil Selengkapnya
             </a>
           </div>
@@ -117,7 +117,7 @@
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
-          class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
           BERITA TERBARU
         </span>
       </div>
@@ -131,7 +131,7 @@
       @foreach ($berita as $item)
         <div class="mx-auto max-w-[320px] rounded-xl shadow-lg flex flex-col">
           <a href="{{ route('guest.berita.kategori.show', ['slug_kategori' => $item->kategori->susunanOrganisasi->slug_susunan_organisasi]) }}"
-            class="text-center text-sm text-white font-semibold bg-blue rounded-t-xl py-2">
+            class="text-center text-sm text-white font-semibold bg-brand-blue rounded-t-xl py-2">
             {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi }}
           </a>
           <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
@@ -145,7 +145,7 @@
             </div>
             <div class="flex justify-start">
               <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}"
-                class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-blue bg-yellow rounded-xl w-auto">
+                class="inline-flex items-center px-3 py-2 text-sm font-semibold text-center text-brand-blue bg-brand-yellow rounded-xl w-auto">
                 Baca berita
                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                   fill="none" viewBox="0 0 14 10">
@@ -161,7 +161,7 @@
 
     <div class="flex justify-center pt-6 lg:pt-12">
       <a href="{{ route('guest.berita.kategori.index') }}"
-        class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Lihat Berita Lainnya
       </a>
     </div>
@@ -172,7 +172,7 @@
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
-          class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
           STRUKTUR ORGANISASI
         </span>
       </div>
@@ -188,7 +188,7 @@
           class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto
             @if($i === 0) md:col-span-2 lg:col-span-3 @endif">
           <figure>
-            <div class="static mb-3 w-14 h-14 bg-yellow/40 rounded-full m-auto flex items-center justify-center">
+            <div class="static mb-3 w-14 h-14 bg-brand-yellow/40 rounded-full m-auto flex items-center justify-center">
               <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}"
                 alt="{{ $item->susunanOrganisasi->nama_susunan_organisasi }}">
             </div>
@@ -200,7 +200,7 @@
             {{ $item->susunanOrganisasi->deskripsi_susunan_organisasi }}
           </p>
           <div class="mt-auto">
-            <p class="inline-flex font-medium items-center text-blue hover:underline">
+            <p class="inline-flex font-medium items-center text-brand-blue hover:underline">
               Pelajari selengkapnya
               <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 18 18">
@@ -215,7 +215,7 @@
 
     <div class="flex justify-center pt-6 lg:pt-12">
       <a href="{{ route('guest.profil.struktur-organisasi.index') }}"
-        class="text-blue bg-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Lihat Struktur Organisasi
       </a>
     </div>
@@ -226,7 +226,7 @@
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
-          class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
           JADWAL
         </span>
       </div>
@@ -242,7 +242,7 @@
     <div class="text-center pb-6 lg:pb-12 grid gap-3">
       <div>
         <span
-          class="bg-blue font-bold text-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
+          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
           STATISTIK
         </span>
       </div>
@@ -254,19 +254,19 @@
 
     <div class="flex justify-center items-center">
       <div class="grid sm:grid-cols-3 gap-2 md:gap-4">
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-blue text-center rounded-2xl shadow">
+        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">HARI INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
 
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-blue text-center rounded-2xl shadow">
+        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">MINGGU INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
 
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-blue text-center rounded-2xl shadow">
+        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">BULAN INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
       </div>
     </div>
@@ -296,3 +296,5 @@
     </div>
   </div>
 @endsection
+
+

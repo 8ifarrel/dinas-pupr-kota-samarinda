@@ -39,3 +39,4 @@ class SKMGuestController extends Controller
 		return redirect()->back()->with('success', 'Terima kasih atas partisipasi Anda!');
 	}
 }
+

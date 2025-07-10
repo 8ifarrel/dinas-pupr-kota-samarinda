@@ -7,12 +7,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
-class MediaAlbumSeeder extends Seeder {
+class AlbumKegiatanSeeder extends Seeder {
     public function run() {
         $faker = Faker::create();
 
         for ($i = 1; $i <= 10; $i++) {
-            DB::table('media_album')->insert([
+            DB::table('album_kegiatan')->insert([
                 'judul' => "Album $i",
                 'slug' => Str::slug("Album $i"),
                 'views_count' => $faker->numberBetween(0, 1000),
@@ -22,3 +22,4 @@ class MediaAlbumSeeder extends Seeder {
         }
     }
 }
+

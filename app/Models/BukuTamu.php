@@ -27,6 +27,7 @@ class BukuTamu extends Model
 
 	public function jabatan()
 	{
-		return $this->belongsTo(Jabatan::class, 'jabatan_yang_dikunjungi', 'id_jabatan');
+		return $this->belongsTo(SusunanOrganisasi::class, 'jabatan_yang_dikunjungi', 'id_susunan_organisasi');
 	}
 }
+

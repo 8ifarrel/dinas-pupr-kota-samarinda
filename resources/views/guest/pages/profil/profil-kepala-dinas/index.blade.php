@@ -5,7 +5,7 @@
 <div class="px-5 sm:px-10 py-5 md:py-6 md:px-12">
 	<div class="block bg-white rounded-xl shadow-xl">
 		@if($kepala_dinas)
-			<div class="bg-blue static h-36 rounded-t-xl flex justify-center pt-[72px] mb-[72px]">
+			<div class="bg-brand-blue static h-36 rounded-t-xl flex justify-center pt-[72px] mb-[72px]">
 				<img class="bg-white absolute rounded-full h-36 border-2 border-black" src="https://pupr.samarindakota.go.id/temp/desy-damayanti-st-mt.png" alt="">	
 			</div>
 
@@ -337,3 +337,4 @@
 </div>
 
 @endsection
+

@@ -89,3 +89,4 @@ class VisiDanMisiAdminController extends Controller
     return redirect()->route('admin.profil.visi-dan-misi.index')->with('success', 'Visi dan Misi berhasil diperbarui.');
   }
 }
+

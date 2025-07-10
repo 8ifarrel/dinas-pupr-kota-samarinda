@@ -20,3 +20,4 @@ class Misi extends Model
         'periode_selesai',
     ];
 }
+

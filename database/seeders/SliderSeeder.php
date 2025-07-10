@@ -29,3 +29,4 @@ class SliderSeeder extends Seeder
         }
     }
 }
+

@@ -147,3 +147,4 @@ class PartnerAdminController extends Controller
         return redirect()->route('admin.partner.index')->with('success', 'Partner berhasil dihapus.');
     }
 }
+

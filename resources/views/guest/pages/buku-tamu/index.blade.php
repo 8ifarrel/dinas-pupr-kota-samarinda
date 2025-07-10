@@ -1,30 +1,36 @@
 @extends('guest.layouts.buku-tamu')
 
 @section('slot')
-  <img class="absolute h-[40rem] object-cover -z-10" src="{{ asset('image/buku-tamu/sidel_layer.png') }}"
-    alt="Background Image" />
-  <div class="relative min-h-screen flex px-24 justify-center items-center">
-    <div class="flex flex-row mx-10 justify-between items-center translate-x-14">
-      <div class="space-y-11 w-1/2 translate-y-10">
-        <p class="font-bold text-8xl font-sans">Buku Tamu <span class="text-yellow">Digital</span></p>
-        <p class="text-3xl font-sans">Selamat Datang di Buku Tamu Digital Dinas Pekerjaan Umum dan Penataan Ruang Kota
-          Samarinda</p>
-        <div class="pt-4">
-          <a href="{{ route('guest.buku-tamu.create') }}"
-            class="bg-blue hover:bg-slate-600 text-white text-lg p-4 px-6 rounded-lg">Form
-            Buku Tamu</a>
+  <div class="h-screen overflow-hidden">
+    <img class="absolute h-[40rem] object-cover -z-10" src="{{ asset('image/buku-tamu/sidel_layer.png') }}"
+      alt="Background Image" />
+    <div class="relative min-h-screen flex px-24 justify-center items-center">
+      <div class="flex flex-row mx-10 justify-between items-center translate-x-14">
+        <div class="w-1/2 translate-y-10">
+          <div class="flex gap-2 mb-2.5">
+            <img class="h-[60px]" src="{{ asset('image/logo/pemkot-samarinda.png') }}" alt="Pemerintah Kota Samarinda" />
+            <img class="h-[60px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
+          </div>
+          <p class="font-bold text-8xl font-sans mb-8">Buku Tamu <span class="text-brand-yellow">Digital</span></p>
+          <p class="text-3xl font-sans mb-8">Selamat Datang di Buku Tamu Digital Dinas Pekerjaan Umum dan Penataan Ruang Kota
+            Samarinda</p>
+          <div class="pt-4">
+            <a href="{{ route('guest.buku-tamu.create') }}"
+              class="bg-brand-blue hover:bg-slate-600 text-white text-lg p-4 px-6 rounded-lg font-semibold">Form
+              Buku Tamu</a>
+          </div>
+        </div>
+        <div class="flex justify-center items-center -translate-y-10">
+          <img class="w-[95%] h-[95%]" src="{{ asset('image/buku-tamu/buble3.png') }}" alt="Sample Image" />
         </div>
       </div>
-      <div class="flex justify-center items-center -translate-y-10">
-        <img class="w-[95%] h-[95%]" src="{{ asset('image/buku-tamu/buble3.png') }}" alt="Sample Image" />
+      <div class="absolute right-0 bottom-[-36rem]">
+        <img class="h-auto w-auto object-cover" src="{{ asset('image/buku-tamu/right_side.png') }}" alt="Group Image" />
       </div>
-    </div>
-    <div class="absolute right-0 bottom-[-36rem]">
-      <img class="h-auto w-auto object-cover" src="{{ asset('image/buku-tamu/right_side.png') }}" alt="Group Image" />
     </div>
   </div>
 
-  <div class="flex justify-center bg-slate-100 h-screen pt-14">
+  {{-- <div class="flex justify-center bg-slate-100 h-screen pt-14">
     <div class="flex flex-col items-center space-y-6">
       <p class="text-3xl font-sans">SAMBUTAN</p>
       <p class="text-7xl font-bold">KEPALA DINAS</p>
@@ -32,19 +38,19 @@
 
       <div class="h-52 w-[70rem] p-10 mt-5 bg-white rounded-3xl flex justify-center pt-10">
         <p class="text-3xl text-center">Kami menampilkan Informasi dalam bentuk <span
-            class="text-blue font-semibold">Pelayanan E-Government</span>, sehingga seluruh masyarakat, dapat mengakses
+            class="text-brand-blue font-semibold">Pelayanan E-Government</span>, sehingga seluruh masyarakat, dapat mengakses
           data terkait Perdagangan.</p>
       </div>
       <div
-        class="h-56 w-56 rounded-full overflow-hidden -translate-y-20 p-3 bg-slate-100 border-2 border-blue border-dashed">
-        <img class="object-cover h-full w-full rounded-full border-2 border-yellow border-dashed"
+        class="h-56 w-56 rounded-full overflow-hidden -translate-y-20 p-3 bg-slate-100 border-2 border-brand-blue border-dashed">
+        <img class="object-cover h-full w-full rounded-full border-2 border-brand-yellow border-dashed"
           src="{{ asset('image/buku-tamu/budesi.jpg') }}" alt="" />
       </div>
     </div>
   </div>
   <div class="absolute translate-y-[58rem] bottom-[-36rem]">
     <img class="h-auto w-auto object-cover" src="{{ asset('image/buku-tamu/side_yellow.png') }}" alt="Group Image" />
-  </div>
+  </div> --}}
 
   {{-- <div class="container flex mx-auto max-w-screen-lg bg-white pt-14 flex-col text-center items-center space-y-10 ">
     <div class="translate-x-10">
@@ -77,3 +83,5 @@
     <img class="h-auto w-auto object-cover" src="{{ asset('image/buku-tamu/right_side.png') }}" alt="Group Image" />
   </div> --}}
 @endsection
+
+

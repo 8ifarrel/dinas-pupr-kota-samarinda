@@ -66,7 +66,7 @@
       {{-- Tombol Refresh --}}
       @if ($buku_tamu->status === 'Pending')
         <a href="#" onclick="window.location.reload();"
-          class="text-white bg-blue hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 text-center me-2 mb-2">
+          class="text-white bg-brand-blue hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 text-center me-2 mb-2">
           Refresh Halaman
         </a>
       @endif
@@ -125,11 +125,11 @@
         {{-- Jabatan --}}
         <tr>
           <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Tujuan</td>
-          <td>{{ $buku_tamu->jabatan->nama_jabatan }}</td>
+          <td>{{ $buku_tamu->jabatan->nama_susunan_organisasi }}</td>
         </tr>
         {{-- Maksud --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Alasan</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Keperluan</td>
           <td>{{ $buku_tamu->maksud_dan_tujuan }}</td>
         </tr>
       </table>
@@ -145,3 +145,5 @@
     </p>
   </footer>
 @endsection
+
+

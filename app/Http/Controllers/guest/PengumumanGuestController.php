@@ -52,3 +52,4 @@ class PengumumanGuestController extends Controller
 		return Storage::disk('public')->download($pengumuman->file_lampiran, $filename);
 	}
 }
+

@@ -24,3 +24,4 @@ class CreatePengumumanTable extends Migration
     Schema::dropIfExists('pengumuman');
   }
 }
+

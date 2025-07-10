@@ -23,3 +23,4 @@ class VisiSeeder extends Seeder
         ]);
     }
 }
+

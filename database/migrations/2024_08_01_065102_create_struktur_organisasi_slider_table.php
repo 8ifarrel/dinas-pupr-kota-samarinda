@@ -28,3 +28,4 @@ class CreateStrukturOrganisasiSliderTable extends Migration
     }
 }
 
+

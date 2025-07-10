@@ -30,8 +30,10 @@ export default {
         'sans': ['Inter', 'sans-serif'],
       },
       colors: {
+        brand: {
         'yellow': 'rgba(252, 183, 23, 1)',
         'blue': 'rgba(34, 52, 104, 1)',
+        }
       }, 
     },
 
@@ -39,6 +41,35 @@ export default {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
-    require('tailwindcss-filters')
+    require('tailwindcss-filters'),
+    function ({ addComponents, theme }) {
+      addComponents({
+        '.font-dropcap div:first-of-type::first-letter': {
+          '@apply capitalize font-semibold inline-block float-left leading-none': {},
+          'fontSize': '4.5rem',
+          'letterSpacing': '0.1em',
+        },
+        '.text-multicol': {
+          '@apply text-justify': {},
+        },
+        '.text-multicol p': {
+          '@apply mb-4': {},
+        },
+      });
+
+      addComponents({
+        '@media (min-width: 768px)': {
+          '.text-multicol': {
+            columnCount: '2',
+            columnGap: '2rem',
+          },
+          '.text-multicol p': {
+            breakInside: 'avoid',
+            marginBottom: '2rem',
+          },
+        },
+      });
+    }
   ],
 }
+

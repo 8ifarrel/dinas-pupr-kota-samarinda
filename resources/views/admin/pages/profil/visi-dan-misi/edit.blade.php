@@ -1,6 +1,6 @@
-@extends('admin.layouts.profil')
+@extends('admin.layout')
 
-@section('slot')
+@section('document.body')
   <form action="{{ route('admin.profil.visi-dan-misi.update') }}" method="POST">
     @csrf
 
@@ -52,7 +52,7 @@
   </form>
 @endsection
 
-@section('js')
+@section('document.end')
   <script>
     function addField(listId, name) {
       const list = document.getElementById(listId);

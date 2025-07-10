@@ -229,3 +229,4 @@ return [
   'pupr@indonesia',
   'pupr!@#$%^',
 ];
+

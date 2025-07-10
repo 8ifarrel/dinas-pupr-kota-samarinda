@@ -4,11 +4,25 @@ import laravel from "laravel-vite-plugin";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ["resources/css/app.css", "resources/js/app.js"],
+            input: [
+                // CSS
+                "resources/css/app.css",
+                "resources/css/trix.css",
+                "resources/css/viewerjs.css",
+                "resources/css/cropperjs.css",
+                "resources/css/datatables.css",
+                "resources/css/lightbox.css",
+
+                // JS
+                "resources/js/toggle-password-visibility.js",
+                "resources/js/app.js",
+                "resources/js/trix.js",
+                "resources/js/viewerjs.js",
+                "resources/js/cropperjs.js",
+                "resources/js/datatables.js",
+                "resources/js/lightbox.js",
+            ],
             refresh: true,
         }),
     ],
-    optimizeDeps: {
-        exclude: ["dropzone"],
-    },
 });

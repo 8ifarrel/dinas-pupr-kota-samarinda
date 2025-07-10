@@ -1,6 +1,6 @@
-@extends('admin.layouts.ppid-pelaksana')
+@extends('admin.layout')
 
-@section('slot')
+@section('document.body')
     <form action="{{ route('admin.ppid-pelaksana.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -23,3 +23,5 @@
         </div>
     </form>
 @endsection
+
+

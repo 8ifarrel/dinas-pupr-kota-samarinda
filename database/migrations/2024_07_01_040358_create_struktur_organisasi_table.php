@@ -27,3 +27,4 @@ class CreateStrukturOrganisasiTable extends Migration
         Schema::dropIfExists('struktur_organisasi');
     }
 }
+

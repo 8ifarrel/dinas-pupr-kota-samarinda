@@ -38,3 +38,4 @@ class User extends Authenticatable
         return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 }
+

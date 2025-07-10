@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up() {
-        Schema::create('media_album', function (Blueprint $table) {
+        Schema::create('album_kegiatan', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
             $table->string('slug')->unique();
@@ -16,6 +16,6 @@ return new class extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists('media_album');
+        Schema::dropIfExists('album_kegiatan');
     }
 };

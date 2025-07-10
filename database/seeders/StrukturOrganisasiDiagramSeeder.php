@@ -21,3 +21,4 @@ class StrukturOrganisasiDiagramSeeder extends Seeder
         ]);
     }
 }
+

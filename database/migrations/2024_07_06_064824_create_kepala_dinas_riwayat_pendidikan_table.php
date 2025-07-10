@@ -27,3 +27,4 @@ class CreateKepalaDinasRiwayatPendidikanTable extends Migration
 		Schema::dropIfExists('kepala_dinas_riwayat_pendidikan');
 	}
 }
+

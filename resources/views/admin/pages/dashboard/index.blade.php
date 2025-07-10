@@ -1,6 +1,6 @@
-@extends('admin.layouts.dashboard')
+@extends('admin.layout')
 
-@section('slot')
+@section('document.body')
   <main>
     {{-- Selamat datang --}}
     <div class="w-full p-4 rounded-lg shadow-xl sm:p-8">
@@ -14,3 +14,5 @@
     </div>
   </main>
 @endsection
+
+

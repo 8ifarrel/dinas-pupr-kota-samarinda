@@ -79,7 +79,7 @@
         </div>
 
         <div>
-          <span class="bg-yellow text-blue text-sm font-bold me-2 px-2.5 py-0.5 3xl:px-4 3xl:py-1 rounded-full 3xl:text-xl">
+          <span class="bg-brand-yellow text-brand-blue text-sm font-bold me-2 px-2.5 py-0.5 3xl:px-4 3xl:py-1 rounded-full 3xl:text-xl">
             {{ $berita->kategori->susunanOrganisasi->nama_susunan_organisasi ?? '-' }}
           </span>
         </div>
@@ -135,3 +135,5 @@
     </div>
   </div>
 @endsection
+
+

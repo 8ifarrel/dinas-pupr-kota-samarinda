@@ -29,3 +29,4 @@ class BeritaSeeder extends Seeder
         }
     }
 }
+

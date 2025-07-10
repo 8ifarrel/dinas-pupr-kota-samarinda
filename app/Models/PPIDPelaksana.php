@@ -24,3 +24,4 @@ class PPIDPelaksana extends Model
         return $this->belongsTo(PPIDPelaksanaKategori::class, 'id_kategori');
     }
 }
+

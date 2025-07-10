@@ -14,6 +14,8 @@ class BeritaGuestController extends Controller
 
 		$berita = Berita::where('slug_berita', $slug_berita)->firstOrFail();
 
+		$berita->increment('views_count');
+
 		$berita_lainnya = Berita::select(
 			'judul_berita',
 			'slug_berita',
@@ -30,3 +32,4 @@ class BeritaGuestController extends Controller
 		]);
 	}
 }
+

@@ -19,3 +19,4 @@ class BeritaKategori extends Model
         return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
 }
+

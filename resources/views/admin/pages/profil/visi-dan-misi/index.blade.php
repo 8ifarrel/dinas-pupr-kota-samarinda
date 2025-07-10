@@ -1,6 +1,6 @@
-@extends('admin.layouts.profil')
+@extends('admin.layout')
 
-@section('slot')
+@section('document.body')
   <a href="{{ route('admin.profil.visi-dan-misi.edit') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-pencil me-1.5"></i>Edit Visi dan Misi
@@ -36,10 +36,12 @@
       @foreach ($misi as $item)
         <p class="m-2 sm:m-5 flex items-center">
           <span
-            class="border bg-blue rounded-lg w-9 h-9 sm:text-xl font-bold text-white sm:w-11 sm:h-11 flex items-center justify-center me-2 shrink-0">{{ $loop->iteration }}</span>
+            class="border bg-brand-blue rounded-lg w-9 h-9 sm:text-xl font-bold text-white sm:w-11 sm:h-11 flex items-center justify-center me-2 shrink-0">{{ $loop->iteration }}</span>
           {{ $item->deskripsi_misi }}
         </p>
       @endforeach
     @endif
   </div>
 @endsection
+
+

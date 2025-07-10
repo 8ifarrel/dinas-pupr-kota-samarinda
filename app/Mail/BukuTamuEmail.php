@@ -30,3 +30,4 @@ class BukuTamuEmail extends Mailable
 			]);
 	}
 }
+

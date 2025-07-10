@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MediaAlbum extends Model {
+class AlbumKegiatan extends Model {
     use HasFactory;
 
-    protected $table = 'media_album';
+    protected $table = 'album_kegiatan';
 
     protected $fillable = [
         'judul',
@@ -16,7 +16,7 @@ class MediaAlbum extends Model {
         'views_count',
     ];
 
-    public function galeri() {
-        return $this->hasMany(MediaGaleri::class, 'id_media_album');
+    public function fotoKegiatan() {
+        return $this->hasMany(FotoKegiatan::class, 'id_album_kegiatan');
     }
 }

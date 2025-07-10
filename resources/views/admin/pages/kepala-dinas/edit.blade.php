@@ -1,9 +1,7 @@
-@extends('admin.layouts.kepala-dinas')
+@extends('admin.layout')
 
-@section('css')
-  <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet" />
-  <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/trix.css'])
   <style>
     trix-toolbar .trix-button-group--file-tools {
       display: none;
@@ -21,35 +19,10 @@
       height: 270px !important;
       overflow-y: auto;
     }
-
-    trix-editor h1 {
-      font-size: 1.25rem !important;
-      line-height: 1.25rem !important;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    trix-editor a:not(.no-underline) {
-      text-decoration: underline;
-    }
-
-    trix-editor a:visited {
-      color: blue;
-    }
-
-    trix-editor ul {
-      list-style-type: disc !important;
-      margin-left: 1rem !important;
-    }
-
-    trix-editor ol {
-      list-style-type: decimal !important;
-      margin-left: 1rem !important;
-    }
   </style>
 @endsection
 
-@section('slot')
+@section('document.body')
   <form action="{{ route('admin.kepala-dinas.update') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
@@ -139,7 +112,6 @@
       </div>
     </div>
 
-    <!-- Modal CropperJS untuk foto pegawai -->
     <div id="cropperModalFoto" tabindex="-1" aria-hidden="true"
       class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
       <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl relative mx-4 md:mx-5">
@@ -235,10 +207,9 @@
   </form>
 @endsection
 
-@section('js')
-  <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.js"></script>
+@section('document.end')
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/trix.js'])
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const wrapper = document.querySelector('.foto-viewer-wrapper');
@@ -268,7 +239,6 @@
           fullscreen: false
         });
       }
-      // --- HISTORY: always start with original image if exists ---
       let imageHistory = [];
       let historyPointer = -1;
       let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
@@ -306,7 +276,6 @@
         if (!isInitial) pushHistory(src);
         if (viewer) viewer.update();
       }
-      // Inisialisasi preview dan history pada halaman edit
       if (originalImageSrc) {
         setPreviewAndHistory(originalImageSrc, true);
         updateRevertBtn();

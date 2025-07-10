@@ -22,3 +22,4 @@ class PartnerSeeder extends Seeder
     }
 }
 
+

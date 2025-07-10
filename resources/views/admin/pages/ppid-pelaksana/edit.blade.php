@@ -1,6 +1,6 @@
-@extends('admin.layouts.ppid-pelaksana')
+@extends('admin.layout')
 
-@section('slot')
+@section('document.body')
     <form action="{{ route('admin.ppid-pelaksana.update', $ppid_pelaksana->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('POST')
@@ -28,3 +28,5 @@
         </div>
     </form>
 @endsection
+
+

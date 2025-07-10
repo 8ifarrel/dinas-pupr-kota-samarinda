@@ -21,8 +21,8 @@
     <li style="padding-bottom: 2.5px"><strong>Nomor Telepon: </strong> {{ $data['nomor_telepon'] }}</li>
     <li style="padding-bottom: 2.5px"><strong>Email: </strong> {{ $data['email'] }}</li>
     <li style="padding-bottom: 2.5px"><strong>Alamat Asal:</strong> <br> {{ $data['alamat'] }}</li>
-    <li style="padding-bottom: 2.5px"><strong>Jabatan yang Dikunjungi:</strong> <br> {{ App\Models\Jabatan::find($data['jabatan_yang_dikunjungi'])->nama_jabatan }}</li>
-    <li><strong>Maksud dan Tujuan:</strong> <br> {{ $data['maksud_dan_tujuan'] }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Bagian yang Akan Dikunjungi:</strong> <br> {{ App\Models\SusunanOrganisasi::find($data['jabatan_yang_dikunjungi'])->nama_susunan_organisasi }}</li>
+    <li><strong>Keperluan:</strong> <br> {{ $data['maksud_dan_tujuan'] }}</li>
   </ul>
 
   <p><em>Pesan ini dibuat secara otomatis menggunakan sistem kami.</em></p>
@@ -35,3 +35,4 @@
 </body>
 
 </html>
+

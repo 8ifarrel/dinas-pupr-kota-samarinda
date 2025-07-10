@@ -88,3 +88,4 @@ class PPIDPelaksanaKategoriAdminController extends Controller
         return redirect()->route('admin.ppid-pelaksana.kategori.index')->with('success', 'Kategori PPID Pelaksana berhasil dihapus.');
     }
 }
+

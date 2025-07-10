@@ -41,3 +41,4 @@ class Berita extends Model
         return $this->belongsTo(BeritaKategori::class, 'id_berita_kategori');
     }
 }
+

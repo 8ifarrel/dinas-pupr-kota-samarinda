@@ -33,3 +33,4 @@ class CreateMisiTable extends Migration
         Schema::dropIfExists('misi');
     }
 }
+

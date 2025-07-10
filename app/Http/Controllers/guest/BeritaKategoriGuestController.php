@@ -101,3 +101,4 @@ class BeritaKategoriGuestController extends Controller
     ]);
   }
 }
+

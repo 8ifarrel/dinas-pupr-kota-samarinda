@@ -23,3 +23,4 @@ class StrukturOrganisasiSliderSeeder extends Seeder
         }
     }
 }
+

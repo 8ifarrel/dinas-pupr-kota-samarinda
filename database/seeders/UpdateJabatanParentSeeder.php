@@ -18,3 +18,4 @@ class UpdateJabatanParentSeeder extends Seeder
         DB::table('jabatan')->where('id_jabatan', 5)->update(['id_jabatan_parent' => $faker->numberBetween(1, 5)]);
     }
 }
+

@@ -54,3 +54,4 @@ class OrganigramAdminController extends Controller
     return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Organigram berhasil diperbarui.');
   }
 }
+
