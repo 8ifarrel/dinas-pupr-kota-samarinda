@@ -1,14 +1,10 @@
-@extends('admin.layouts.partner')
+@extends('admin.layout')
 
-@section('css')
-  {{-- DataTables --}}
-  <link href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" rel="stylesheet" />
-
-  {{-- Lightbox2 --}}
-  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet" />
+@section('document.head')
+  @vite(['resources/css/lightbox.css', 'resources/css/datatables.css', 'resources/js/datatables.js']);
 @endsection
 
-@section('slot')
+@section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
     <div class="relative overflow-x-auto text-sm md:text-base">
       <table id="kategori" class="stripe hover row-border table-auto" style="width:100%">
@@ -38,7 +34,8 @@
                   </a>
                   <a href="{{ route('admin.berita.index', ['id_kategori' => $item->id_berita_kategori]) }}"
                     class="flex justify-center items-center gap-1 h-10 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-eye"></i> <span class="font-medium whitespace-nowrap text-sm sm:text-base">Lihat berita</span>
+                    <i class="fa-solid fa-eye"></i> <span class="font-medium whitespace-nowrap text-sm sm:text-base">Lihat
+                      berita</span>
                   </a>
                 </div>
               </td>
@@ -58,18 +55,12 @@
   </div>
 @endsection
 
-@section('js')
-  {{-- Lightbox2 --}}
-  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
-
-  {{-- DataTables --}}
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+@section('document.end')
   <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
       $('#kategori').DataTable({
         responsive: true
       });
     });
   </script>
 @endsection
-

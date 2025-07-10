@@ -1,9 +1,8 @@
-@extends('admin.layouts.partner')
+@extends('admin.layout')
 
-@section('css')
-  <link href="https://unpkg.com/trix/dist/trix.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css" rel="stylesheet"/>
-  <link href="https://unpkg.com/cropperjs@1.6.1/dist/cropper.min.css" rel="stylesheet"/>
+@section('document.head')
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/trix.css'])
+
   <style>
     trix-toolbar .trix-button-group--file-tools {
       display: none;
@@ -21,117 +20,10 @@
       height: 270px !important;
       overflow-y: auto;
     }
-
-    /*
-		 * Fixing Trix Editor style when using Tailwind CSS
-		 * Based on solution by Muhammad Jamil
-		 * https://dev.to/fanreza/resolving-problem-when-using-trix-rich-editor-with-tailwind-13ca
-		 */
-
-    trix-editor {
-      @apply block w-full border border-gray-300 rounded-md p-3 prose prose-sm prose-slate dark:prose-invert;
-      min-height: 200px;
-      overflow-y: auto;
-      background-color: white;
-    }
-
-    trix-editor h1 {
-      font-size: 1.25rem !important;
-      line-height: 1.75rem !important;
-      margin-bottom: 1rem !important;
-      font-weight: 600 !important;
-    }
-
-    trix-editor h2 {
-      font-size: 1.125rem !important;
-      line-height: 1.5rem !important;
-      margin-bottom: 0.75rem !important;
-      font-weight: 600 !important;
-    }
-
-    trix-editor h3 {
-      font-size: 1rem !important;
-      line-height: 1.5rem !important;
-      margin-bottom: 0.5rem !important;
-      font-weight: 500 !important;
-    }
-
-    trix-editor p {
-      margin-bottom: 1rem !important;
-      line-height: 1.625 !important;
-    }
-
-    trix-editor pre {
-      background-color: #f3f4f6 !important;
-      padding: 1rem !important;
-      border-radius: 0.375rem !important;
-      overflow-x: auto;
-      font-family: monospace;
-      font-size: 0.875rem;
-    }
-
-    trix-editor ul {
-      list-style-type: disc !important;
-      padding-left: 1.25rem !important;
-      margin-bottom: 1rem !important;
-    }
-
-    trix-editor ol {
-      list-style-type: decimal !important;
-      padding-left: 1.25rem !important;
-      margin-bottom: 1rem !important;
-    }
-
-    trix-editor li {
-      margin-bottom: 0.5rem !important;
-    }
-
-    trix-editor blockquote {
-      border-left: 4px solid #d1d5db !important;
-      padding-left: 1rem !important;
-      color: #6b7280 !important;
-      font-style: italic !important;
-      margin-bottom: 1rem !important;
-    }
-
-    trix-editor a:not(.no-underline) {
-      text-decoration: underline !important;
-      color: #3b82f6 !important;
-    }
-
-    trix-editor a:visited {
-      color: #6366f1 !important;
-    }
-
-    trix-editor img {
-      max-width: 100% !important;
-      height: auto !important;
-      display: block;
-      margin: 1rem 0 !important;
-      border-radius: 0.375rem;
-    }
-
-    trix-editor hr {
-      border: none;
-      border-top: 1px solid #e5e7eb;
-      margin: 2rem 0;
-    }
-
-    trix-editor strong {
-      font-weight: 600 !important;
-    }
-
-    trix-editor em {
-      font-style: italic !important;
-    }
-
-    .foto-viewer-wrapper { height: 220px; }
-    .foto-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-    .foto-preview { background: #fff; }
   </style>
 @endsection
 
-@section('slot')
+@section('document.body')
   <form action="{{ route('admin.berita.update', $berita->uuid_berita) }}" method="POST" enctype="multipart/form-data">
     @csrf
 
@@ -150,7 +42,8 @@
         <label
           class="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition relative overflow-hidden m-0"
           tabindex="0">
-          <div class="foto-placeholder flex flex-col items-center justify-center pt-5 pb-6 {{ $berita->foto_berita ? 'hidden' : '' }}">
+          <div
+            class="foto-placeholder flex flex-col items-center justify-center pt-5 pb-6 {{ $berita->foto_berita ? 'hidden' : '' }}">
             <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M7 16V4a1 1 0 011-1h8a1 1 0 011 1v12m-4 4h-4a1 1 0 01-1-1v-1h10v1a1 1 0 01-1 1h-4z" />
@@ -161,8 +54,7 @@
           <img id="foto-preview"
             class="foto-preview absolute inset-0 w-full h-full object-contain rounded-lg bg-white aspect-[16/9] {{ $berita->foto_berita ? '' : 'hidden' }}"
             src="{{ $berita->foto_berita ? Storage::url($berita->foto_berita) : '' }}" />
-          <input name="foto_berita" id="foto_berita" type="file" accept="image/*"
-            class="hidden foto-input" />
+          <input name="foto_berita" id="foto_berita" type="file" accept="image/*" class="hidden foto-input" />
         </label>
         <button type="button"
           class="w-[30px] h-[30px] bg-white rounded-full text-red-500 hover:text-red-700 shadow-lg border border-black flex items-center justify-center absolute top-2 right-2 z-10 remove-foto-btn {{ $berita->foto_berita ? '' : 'hidden' }}"
@@ -229,10 +121,9 @@
   </div>
 @endsection
 
-@section('js')
-  <script src="https://unpkg.com/trix/dist/trix.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  <script src="https://unpkg.com/cropperjs@1.6.1/dist/cropper.js"></script>
+@section('document.end')
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/trix.js']);
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const wrapper = document.querySelector('.foto-viewer-wrapper');
@@ -251,30 +142,51 @@
       let viewer = null;
       if (wrapper && window.Viewer) {
         viewer = new Viewer(wrapper, {
-          navbar: false, toolbar: true, title: false, tooltip: false, movable: false, zoomable: true, scalable: false, transition: true, fullscreen: false
+          navbar: false,
+          toolbar: true,
+          title: false,
+          tooltip: false,
+          movable: false,
+          zoomable: true,
+          scalable: false,
+          transition: true,
+          fullscreen: false
         });
       }
       let imageHistory = [];
       let historyPointer = -1;
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ? preview.src : null;
+      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
+        preview.src : null;
       if (originalImageSrc) {
         imageHistory = [originalImageSrc];
         historyPointer = 0;
       }
+
       function pushHistory(src) {
         if (historyPointer < imageHistory.length - 1) imageHistory = imageHistory.slice(0, historyPointer + 1);
-        imageHistory.push(src); historyPointer = imageHistory.length - 1; updateRevertBtn();
+        imageHistory.push(src);
+        historyPointer = imageHistory.length - 1;
+        updateRevertBtn();
       }
+
       function updateRevertBtn() {
         if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden'); revertBtn.style.display = '';
+          revertBtn.classList.remove('hidden');
+          revertBtn.style.display = '';
         } else {
-          revertBtn.classList.add('hidden'); revertBtn.style.display = 'none';
+          revertBtn.classList.add('hidden');
+          revertBtn.style.display = 'none';
         }
       }
+
       function setPreviewAndHistory(src, isInitial = false) {
-        preview.src = src; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        preview.src = src;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        removeBtn.classList.remove('hidden');
+        removeBtn.disabled = false;
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
         if (!isInitial) pushHistory(src);
         if (viewer) viewer.update();
       }
@@ -290,7 +202,11 @@
             imageToCrop.src = ev.target.result;
             cropperModal.classList.remove('hidden');
             if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1, aspectRatio: 16 / 9});
+            cropper = new Cropper(imageToCrop, {
+              viewMode: 1,
+              autoCropArea: 1,
+              aspectRatio: 16 / 9
+            });
           };
           reader.readAsDataURL(input.files[0]);
         }
@@ -301,26 +217,39 @@
           imageToCrop.src = preview.src;
           cropperModal.classList.remove('hidden');
           if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {viewMode: 1, autoCropArea: 1, aspectRatio: 16 / 9});
+          cropper = new Cropper(imageToCrop, {
+            viewMode: 1,
+            autoCropArea: 1,
+            aspectRatio: 16 / 9
+          });
         }
       });
       if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
         if (cropper) {
           cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_berita.jpg', {type: blob.type});
+            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_berita.jpg', {
+              type: blob.type
+            });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(croppedFile);
             input.files = dataTransfer.files;
             const reader = new FileReader();
-            reader.onload = function(ev) { setPreviewAndHistory(ev.target.result); };
+            reader.onload = function(ev) {
+              setPreviewAndHistory(ev.target.result);
+            };
             reader.readAsDataURL(croppedFile);
-            cropper.destroy(); cropper = null; cropperModal.classList.add('hidden');
+            cropper.destroy();
+            cropper = null;
+            cropperModal.classList.add('hidden');
           }, lastFile ? lastFile.type : 'image/jpeg');
         }
       });
       if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
         cropperModal.classList.add('hidden');
-        if (cropper) { cropper.destroy(); cropper = null; }
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
         input.value = '';
       });
       if (removeBtn) removeBtn.addEventListener('click', function() {
@@ -337,26 +266,38 @@
           historyPointer--;
           const prevSrc = imageHistory[historyPointer];
           if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc; preview.classList.remove('hidden'); placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden'); removeBtn.disabled = false; editBtn.classList.remove('hidden'); editBtn.style.display = '';
+            preview.src = prevSrc;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            removeBtn.classList.remove('hidden');
+            removeBtn.disabled = false;
+            editBtn.classList.remove('hidden');
+            editBtn.style.display = '';
           } else {
-            preview.src = '#'; preview.classList.add('hidden'); placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden'); removeBtn.disabled = true; editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+            preview.src = '#';
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            removeBtn.classList.add('hidden');
+            removeBtn.disabled = true;
+            editBtn.classList.add('hidden');
+            editBtn.style.display = 'none';
           }
           updateRevertBtn();
         }
       });
       if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden'); editBtn.style.display = 'none';
+        editBtn.classList.add('hidden');
+        editBtn.style.display = 'none';
       } else {
-        editBtn.classList.remove('hidden'); editBtn.style.display = '';
+        editBtn.classList.remove('hidden');
+        editBtn.style.display = '';
       }
       if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault(); ev.stopPropagation();
+        ev.preventDefault();
+        ev.stopPropagation();
         if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
         return false;
       });
     });
   </script>
 @endsection
-
