@@ -25,7 +25,7 @@
         {{-- Nomor Telepon --}}
         <div class="flex gap-3">
           <div class="mb-3 w-1/2">
-            <label for="nomor_telepon" class="block text-slate-700 text-lg font-semibold mb-1">Nomor Telepon</label>
+            <label for="nomor_telepon" class="block text-slate-700 text-lg font-semibold mb-1">Nomor Telepon Pengunjung</label>
             <input type="text" id="nomor_telepon" name="nomor_telepon" value="{{ old('nomor_telepon') }}" required
               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
             <div class="text-gray-500 mt-1">Masukkan nomor telepon yang dapat dihubungi melalui WhatsApp</div>
@@ -33,7 +33,7 @@
 
           {{-- Email --}}
           <div class="mb-3 w-1/2">
-            <label for="email" class="block text-slate-700 text-lg font-semibold mb-1">Email</label>
+            <label for="email" class="block text-slate-700 text-lg font-semibold mb-1">Email Pengunjung</label>
             <input type="email" id="email" name="email" value="{{ old('email') }}" required
               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
             <div class="text-gray-500 mt-1">Masukkan email yang aktif agar Anda dapat memantau status kunjungan</div>
@@ -42,7 +42,7 @@
 
         {{-- Alamat Asal --}}
         <div class="mb-3">
-          <label for="alamat" class="block text-slate-700 text-lg font-semibold mb-1">Alamat Asal</label>
+          <label for="alamat" class="block text-slate-700 text-lg font-semibold mb-1">Alamat Asal Pengunjung</label>
           <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" required
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
           <div class="text-gray-500 mt-1">Masukkan alamat asal Anda</div>
@@ -50,8 +50,9 @@
 
         {{-- Bagian yang Akan Dikunjungi --}}
         <div class="mb-3">
-          <label for="jabatan_yang_dikunjungi" class="block text-slate-700 text-lg font-semibold mb-1">Bagian yang Akan
-            Dikunjungi</label>
+          <label for="jabatan_yang_dikunjungi" class="block text-slate-700 text-lg font-semibold mb-1">
+            Bagian yang Akan Dikunjungi
+          </label>
           <select id="jabatan_yang_dikunjungi" name="jabatan_yang_dikunjungi" required
             class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
             <option value="">-- Pilih susunan organisasi --</option>

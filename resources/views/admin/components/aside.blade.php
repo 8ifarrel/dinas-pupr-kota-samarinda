@@ -76,6 +76,18 @@
         </a>
       </li>
 
+      {{-- Buku Tamu --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.buku-tamu.index') }}">
+          <i class="fa-solid fa-book-bookmark"></i>
+
+          <span class="ms-3">
+            Buku Tamu
+          </span>
+        </a>
+      </li>
+
       {{-- Struktur Organisasi --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
@@ -121,7 +133,8 @@
 
         {{-- Akun Admin --}}
         <li>
-          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="{{ route('admin.super.akun-admin.index') }}">
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="{{ route('admin.super.akun-admin.index') }}">
             <i class="fa-solid fa-user-lock"></i>
             <span class="ms-3">
               Akun Admin
@@ -132,5 +145,3 @@
     </ul>
   </div>
 </aside>
-
-

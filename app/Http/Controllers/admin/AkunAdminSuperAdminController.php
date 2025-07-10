@@ -20,7 +20,7 @@ class AkunAdminSuperAdminController extends Controller
       ->get();
 
     $page_title = "Akun Admin";
-    $page_description = "Kelola akun admin yang digunakan untuk mengakses E-Panel.";
+    $page_description = "Kelola akun admin yang digunakan untuk mengakses E-Panel. Akun super admin tidak ditampilkan di sini.";
 
     return view('admin.pages.super-admin.akun-admin.index', compact('users', 'page_title', 'page_description'));
   }

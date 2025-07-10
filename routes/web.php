@@ -104,7 +104,7 @@ Route::prefix('berita')->group(function () {
  * Pengumuman
  */
 
-Route::prefix('pengumuman')->group( function () {
+Route::prefix('pengumuman')->group(function () {
 	Route::get('/', [PengumumanGuestController::class, 'index'])
 		->name('guest.pengumuman.index');
 	Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
@@ -117,7 +117,7 @@ Route::prefix('pengumuman')->group( function () {
  * PPID Pelaksana
  */
 
-Route::prefix('ppid-pelaksana')->group( function () {
+Route::prefix('ppid-pelaksana')->group(function () {
 	Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
 		->name('guest.ppid-pelaksana.kategori.index');
 	Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
@@ -131,7 +131,7 @@ Route::prefix('ppid-pelaksana')->group( function () {
  * Album Kegiatan
  */
 
-Route::prefix('album-kegiatan')->group( function () {
+Route::prefix('album-kegiatan')->group(function () {
 	Route::get('/', [AlbumKegiatanGuestController::class, 'index'])
 		->name('guest.album-kegiatan.index');
 	Route::get('/{slug}', [AlbumKegiatanGuestController::class, 'show'])
@@ -208,6 +208,7 @@ use App\Http\Controllers\admin\VisiDanMisiAdminController;
 use App\Http\Controllers\admin\SejarahDinasPUPRKotaSamarindaAdminController;
 use App\Http\Controllers\admin\StrukturOrganisasiAdminController;
 use App\Http\Controllers\admin\OrganigramAdminController;
+use App\Http\Controllers\admin\BukuTamuAdminController;
 
 use App\Http\Controllers\admin\AkunAdminSuperAdminController;
 
@@ -372,6 +373,18 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.pengumuman.update');
 			Route::delete('/delete/{id}', [PengumumanAdminController::class, 'destroy'])
 				->name('admin.pengumuman.destroy');
+		});
+
+		/**
+		 * Buku Tamu
+		 */
+		Route::prefix('buku-tamu')->group(function () {
+			Route::get('/', [BukuTamuAdminController::class, 'index'])
+				->name('admin.buku-tamu.index');
+			Route::get('/edit/{id}', [BukuTamuAdminController::class, 'edit'])
+				->name('admin.buku-tamu.edit');
+			Route::post('/update/{id}', [BukuTamuAdminController::class, 'update'])
+				->name('admin.buku-tamu.update');
 		});
 
 		Route::prefix('struktur-organisasi')->group(function () {

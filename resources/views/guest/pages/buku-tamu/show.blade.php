@@ -93,7 +93,7 @@
       </h2>
 
       <p class="text-start">
-        {{ $buku_tamu->deskripsi_status }}
+        {{ $buku_tamu->deskripsi_status ?? "Permintaan kunjungan sedang diproses" }}
       </p>
     </section>
 
@@ -104,27 +104,27 @@
       <table class="border-separate border-spacing-1.5">
         {{-- ID --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">ID</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Kode</td>
           <td>{{ $buku_tamu->id_buku_tamu }}</td>
         </tr>
         {{-- Nama --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Nama</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Nama Pengunjung</td>
           <td>{{ $buku_tamu->nama_pengunjung }}</td>
         </tr>
         {{-- Email --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Email</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Email Pengunjung</td>
           <td>{{ $buku_tamu->email }}</td>
         </tr>
         {{-- Alamat --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Alamat</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Alamat Asal Pengunjung</td>
           <td>{{ $buku_tamu->alamat }}</td>
         </tr>
         {{-- Jabatan --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Tujuan</td>
+          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Bagian yang Akan Dikunjungi</td>
           <td>{{ $buku_tamu->jabatan->nama_susunan_organisasi }}</td>
         </tr>
         {{-- Maksud --}}

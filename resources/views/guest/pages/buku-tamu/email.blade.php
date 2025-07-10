@@ -16,11 +16,11 @@
 
   <p><strong>Detail Pengajuan:</strong></p>
   <ul style="padding-left: 25px">
-    <li style="padding-bottom: 2.5px"><strong>ID Buku Tamu: </strong> {{ $idBukuTamu }}</li>
-    <li style="padding-bottom: 2.5px"><strong>Nama: </strong> {{ $data['nama_pengunjung'] }}</li>
-    <li style="padding-bottom: 2.5px"><strong>Nomor Telepon: </strong> {{ $data['nomor_telepon'] }}</li>
-    <li style="padding-bottom: 2.5px"><strong>Email: </strong> {{ $data['email'] }}</li>
-    <li style="padding-bottom: 2.5px"><strong>Alamat Asal:</strong> <br> {{ $data['alamat'] }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Kode: </strong> {{ $idBukuTamu }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Nama Pengunjung: </strong> {{ $data['nama_pengunjung'] }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Nomor Telepon Pengunjung: </strong> {{ $data['nomor_telepon'] }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Email Pengunjung: </strong> {{ $data['email'] }}</li>
+    <li style="padding-bottom: 2.5px"><strong>Alamat Asal Pengunjung:</strong> <br> {{ $data['alamat'] }}</li>
     <li style="padding-bottom: 2.5px"><strong>Bagian yang Akan Dikunjungi:</strong> <br> {{ App\Models\SusunanOrganisasi::find($data['jabatan_yang_dikunjungi'])->nama_susunan_organisasi }}</li>
     <li><strong>Keperluan:</strong> <br> {{ $data['maksud_dan_tujuan'] }}</li>
   </ul>

@@ -25,7 +25,7 @@ class BukuTamu extends Model
 		'deskripsi_status',
 	];
 
-	public function jabatan()
+	public function susunanOrganisasi()
 	{
 		return $this->belongsTo(SusunanOrganisasi::class, 'jabatan_yang_dikunjungi', 'id_susunan_organisasi');
 	}
