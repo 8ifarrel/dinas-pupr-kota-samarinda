@@ -53,7 +53,7 @@
           <textarea name="caption_kegiatan[]" rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md text-xs resize-none" placeholder="Deskripsi singkat (opsional)"></textarea>
         </div>
       </div>
-      <div class="text-gray-500 text-sm">Unggah minimal satu foto dan berikan deskripsi singkat untuk setiap foto. Gunakan tombol "+" untuk menambahkan foto.</div>
+      <div class="text-gray-500 text-sm">Unggah minimal satu foto dan berikan deskripsi singkat untuk setiap foto. Gunakan tombol "+" untuk menambahkan foto lagi.</div>
     </div>
 
     <!-- Modal CropperJS untuk foto kegiatan -->
