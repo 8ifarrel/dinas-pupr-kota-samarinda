@@ -1,10 +1,10 @@
-@extends('admin.layouts.partner')
+@extends('admin.layout')
 
-@section('css')
+@section('document.head')
   @vite(['resources/css/lightbox.css', 'resources/css/datatables.css'])
 @endsection
 
-@section('slot')
+@section('document.body')
   <a href="{{ route('admin.partner.create') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-plus me-1"></i>Tambah Partner
@@ -114,7 +114,7 @@
   </div>
 @endsection
 
-@section('js')
+@section('document.end')
   @vite(['resources/js/lightbox.js', 'resources/js/datatables.js'])
 
   <script>

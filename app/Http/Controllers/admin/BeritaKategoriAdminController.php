@@ -20,11 +20,9 @@ class BeritaKategoriAdminController extends Controller
         $susunanOrganisasi = $user->susunanOrganisasi ?? null;
 
         $id_kepala_dinas = 1;
-        $id_sekretariat = 2;
-
         if (
             ($user && $user->is_super_admin) ||
-            ($susunanOrganisasi && in_array($susunanOrganisasi->id_susunan_organisasi, [$id_kepala_dinas, $id_sekretariat]))
+            ($susunanOrganisasi && in_array($susunanOrganisasi->id_susunan_organisasi, [$id_kepala_dinas]))
         ) {
             $kategori = BeritaKategori::get();
         } else {

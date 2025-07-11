@@ -16,8 +16,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Judul</th>
             <th>Foto</th>
+            <th>Judul</th>
             <th>Isi</th>
             <th>Views</th>
             <th>Dibuat Pada</th>
@@ -28,13 +28,14 @@
           @foreach ($berita as $item)
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->judul_berita }}</td>
+
               <td>
                 <a href="{{ Storage::url($item->foto_berita) }}" data-lightbox="berita"
                   data-title="{{ $item->judul_berita }} <br> Sumber foto: {{ $item->sumber_foto_berita }}">
                   <img src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" width="100">
                 </a>
               </td>
+              <td>{{ $item->judul_berita }}</td>
               <td>
                 <button type="button"
                   class="flex justify-center items-center gap-1 h-8 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none"
@@ -110,8 +111,8 @@
         <tfoot>
           <tr>
             <th>#</th>
-            <th>Judul</th>
             <th>Foto</th>
+            <th>Judul</th>
             <th>Isi</th>
             <th>Views</th>
             <th>Dibuat Pada</th>

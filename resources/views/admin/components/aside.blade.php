@@ -28,18 +28,6 @@
         </a>
       </li>
 
-      {{-- Partner --}}
-      <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.partner.index') }}">
-          <i class="fa-solid fa-handshake"></i>
-
-          <span class="ms-3">
-            Partner
-          </span>
-        </a>
-      </li>
-
       {{-- Berita --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
@@ -88,6 +76,30 @@
         </a>
       </li>
 
+      {{-- Agenda Kegiatan --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.struktur-organisasi.index') }}">
+          <i class="fa-solid fa-calendar-days"></i>
+
+          <span class="ms-3">
+            Agenda Kegiatan
+          </span>
+        </a>
+      </li>
+
+      {{-- Galeri & Foto Kegiatan --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.album-kegiatan.index') }}">
+          <i class="fa-solid fa-images"></i>
+
+          <span class="ms-3">
+            Galeri & Foto Kegiatan
+          </span>
+        </a>
+      </li>
+
       {{-- Struktur Organisasi --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
@@ -99,6 +111,8 @@
           </span>
         </a>
       </li>
+
+      {{-- Profil --}}
       <li>
         <button type="button"
           class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -123,6 +137,18 @@
         </ul>
       </li>
 
+      {{-- Partner --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.partner.index') }}">
+          <i class="fa-solid fa-handshake"></i>
+
+          <span class="ms-3">
+            Partner
+          </span>
+        </a>
+      </li>
+
       @if (auth()->user()->is_super_admin)
         <div class="flex items-center mx-2 pt-1.5">
           <span class="font-medium text-sm text-gray-600 mr-3">
@@ -138,6 +164,26 @@
             <i class="fa-solid fa-user-lock"></i>
             <span class="ms-3">
               Akun Admin
+            </span>
+          </a>
+        </li>
+
+        {{-- Log --}}
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+            <i class="fa-solid fa-file-circle-exclamation"></i>
+            <span class="ms-3">
+              Log
+            </span>
+          </a>
+        </li>
+
+        {{-- Konfigurasi Sistem --}}
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+            <i class="fa-solid fa-gears"></i>
+            <span class="ms-3">
+              Konfigurasi Sistem
             </span>
           </a>
         </li>

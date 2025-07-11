@@ -209,6 +209,8 @@ use App\Http\Controllers\admin\SejarahDinasPUPRKotaSamarindaAdminController;
 use App\Http\Controllers\admin\StrukturOrganisasiAdminController;
 use App\Http\Controllers\admin\OrganigramAdminController;
 use App\Http\Controllers\admin\BukuTamuAdminController;
+use App\Http\Controllers\admin\FotoKegiatanAdminController;
+use App\Http\Controllers\admin\AlbumKegiatanAdminController;
 
 use App\Http\Controllers\admin\AkunAdminSuperAdminController;
 
@@ -431,6 +433,42 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.kepala-dinas.edit');
 			Route::post('/update', [KepalaDinasAdminController::class, 'update'])
 				->name('admin.kepala-dinas.update');
+		});
+
+		/*
+		 * Album Kegiatan
+		 */
+		Route::prefix('album-kegiatan')->group(function () {
+			Route::get('/', [AlbumKegiatanAdminController::class, 'index'])
+				->name('admin.album-kegiatan.index');
+			Route::get('/create', [AlbumKegiatanAdminController::class, 'create'])
+				->name('admin.album-kegiatan.create');
+			Route::post('/store', [AlbumKegiatanAdminController::class, 'store'])
+				->name('admin.album-kegiatan.store');
+			Route::get('/edit/{id}', [AlbumKegiatanAdminController::class, 'edit'])
+				->name('admin.album-kegiatan.edit');
+			Route::post('/update/{id}', [AlbumKegiatanAdminController::class, 'update'])
+				->name('admin.album-kegiatan.update');
+			Route::delete('/delete/{id}', [AlbumKegiatanAdminController::class, 'destroy'])
+				->name('admin.album-kegiatan.destroy');
+			Route::get('/{id}', [AlbumKegiatanAdminController::class, 'show'])
+				->name('admin.album-kegiatan.show');
+
+			/**
+			 * Foto Kegiatan
+			 */
+			Route::prefix('foto-kegiatan')->group(function () {
+				Route::get('/create/{album}', [FotoKegiatanAdminController::class, 'create'])
+					->name('admin.album-kegiatan.foto-kegiatan.create');
+				Route::post('/store/{album}', [FotoKegiatanAdminController::class, 'store'])
+					->name('admin.album-kegiatan.foto-kegiatan.store');
+				Route::get('/edit/{album}/{foto}', [FotoKegiatanAdminController::class, 'edit'])
+					->name('admin.album-kegiatan.foto-kegiatan.edit');
+				Route::put('/update/{album}/{foto}', [FotoKegiatanAdminController::class, 'update'])
+					->name('admin.album-kegiatan.foto-kegiatan.update');
+				Route::delete('/delete/{album}/{foto}', [FotoKegiatanAdminController::class, 'destroy'])
+					->name('admin.album-kegiatan.foto-kegiatan.destroy');
+			});
 		});
 
 		Route::prefix('profil')->group(function () {

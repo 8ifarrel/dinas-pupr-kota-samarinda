@@ -10,8 +10,24 @@ class BukuTamuAdminController extends Controller
 {
 	public function index()
 	{
-		$bukuTamu = BukuTamu::with('susunanOrganisasi')->orderBy('created_at', 'desc')->get();
-		$page_title = "Kelola Buku Tamu";
+		$user = auth()->user();
+		$susunanOrganisasi = $user->susunanOrganisasi ?? null;
+		$id_kepala_dinas = 1;
+
+		if (
+			($user && $user->is_super_admin) ||
+			($susunanOrganisasi && in_array($susunanOrganisasi->id_susunan_organisasi, [$id_kepala_dinas]))
+		) {
+			$bukuTamu = BukuTamu::with('susunanOrganisasi')->orderBy('created_at', 'desc')->get();
+		} else {
+			$susunanOrganisasiId = $susunanOrganisasi ? $susunanOrganisasi->id_susunan_organisasi : null;
+			$bukuTamu = BukuTamu::with('susunanOrganisasi')
+				->where('jabatan_yang_dikunjungi', $susunanOrganisasiId)
+				->orderBy('created_at', 'desc')
+				->get();
+		}
+
+		$page_title = "Buku Tamu";
 		$page_description = "Lihat dan kelola tamu yang ingin berkunjung ke Dinas PUPR Kota Samarinda";
 
 		return view('admin.pages.buku-tamu.index', [
