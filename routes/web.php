@@ -211,6 +211,7 @@ use App\Http\Controllers\admin\OrganigramAdminController;
 use App\Http\Controllers\admin\BukuTamuAdminController;
 use App\Http\Controllers\admin\FotoKegiatanAdminController;
 use App\Http\Controllers\admin\AlbumKegiatanAdminController;
+use App\Http\Controllers\admin\AgendaKegiatanAdminController;
 
 use App\Http\Controllers\admin\AkunAdminSuperAdminController;
 
@@ -375,6 +376,26 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.pengumuman.update');
 			Route::delete('/delete/{id}', [PengumumanAdminController::class, 'destroy'])
 				->name('admin.pengumuman.destroy');
+		});
+
+		/**
+		 * Agenda Kegiatan
+		 */
+		Route::prefix('agenda-kegiatan')->group(function () {
+			Route::get('/', [AgendaKegiatanAdminController::class, 'index'])
+				->name('admin.agenda-kegiatan.index');
+			Route::get('/create', [AgendaKegiatanAdminController::class, 'create'])
+				->name('admin.agenda-kegiatan.create');
+			Route::post('/store', [AgendaKegiatanAdminController::class, 'store'])
+				->name('admin.agenda-kegiatan.store');
+			Route::get('/edit/{id}', [AgendaKegiatanAdminController::class, 'edit'])
+				->name('admin.agenda-kegiatan.edit');
+			Route::post('/update/{id}', [AgendaKegiatanAdminController::class, 'update'])
+				->name('admin.agenda-kegiatan.update');
+			Route::delete('/delete/{id}', [AgendaKegiatanAdminController::class, 'destroy'])
+				->name('admin.agenda-kegiatan.destroy');
+			Route::get('/datatable', [AgendaKegiatanAdminController::class, 'datatable'])
+				->name('admin.agenda-kegiatan.datatable');
 		});
 
 		/**

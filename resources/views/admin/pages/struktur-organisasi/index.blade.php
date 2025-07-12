@@ -81,7 +81,7 @@
               </tr>
 
               <!-- Modal Deskripsi -->
-              <div id="deskripsiModal-{{ $item->id_susunan_organisasi }}" tabindex="-1" aria-hidden="true"
+              <div id="deskripsiModal-{{ $item->id_susunan_organisasi }}" data-modal-target="deskripsiModal-{{ $item->id_susunan_organisasi }}" tabindex="-1" aria-hidden="true"
                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 data-modal-target="deskripsiModal-{{ $item->id_susunan_organisasi }}">
                 <div class="relative p-4 w-full max-w-4xl max-h-full">
@@ -121,7 +121,7 @@
 
               <!-- Modal Konfirmasi Hapus -->
               @if ($item->id_susunan_organisasi != 1)
-                <div id="deleteModal-{{ $item->id_susunan_organisasi }}" data-modal-backdrop="static" tabindex="-1"
+                <div id="deleteModal-{{ $item->id_susunan_organisasi }}" data-modal-target="deleteModal-{{ $item->id_susunan_organisasi }}" data-modal-backdrop="static" tabindex="-1"
                   aria-hidden="true"
                   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                   <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -145,7 +145,7 @@
                         <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                           Apakah Anda yakin ingin menghapus susunan-organisasi
                           <strong>{{ $item->nama_susunan_organisasi }}</strong>? Anda secara
-                          otomatis akan juga menghapus akun admin, subbagian, dan jabatan fungsional yang dimiliki oleh
+                          otomatis akan juga <strong>menghapus subbagian, jabatan fungsional, dan akun admin</strong> yang dimiliki oleh
                           {{ $item->nama_susunan_organisasi }}
                         </p>
                       </div>
@@ -290,7 +290,6 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       const table = $('#susunan-organisasi').DataTable({
-        responsive: true,
         pageLength: 15,
         columns: [{
             orderable: false,
@@ -331,16 +330,30 @@
         }
       });
 
-      $(document).on('click', '.btn-modal-delete', function() {
-        const target = $(this).data('modal-target');
-        $('#' + target).removeClass('hidden').addClass('flex');
-        showBackdrop();
+      // Event delegation for all modal open/close (Flowbite style)
+      document.body.addEventListener('click', function(e) {
+        var toggleBtn = e.target.closest('[data-modal-toggle]');
+        if (toggleBtn) {
+          var modalId = toggleBtn.getAttribute('data-modal-toggle');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl) {
+            if (!modalEl.__flowbiteModal) {
+              modalEl.__flowbiteModal = new window.Modal(modalEl);
+            }
+            modalEl.__flowbiteModal.show();
+          }
+        }
       });
 
-      $(document).on('click', '.btn-modal-hide', function() {
-        const target = $(this).data('modal-hide');
-        $('#' + target).removeClass('flex').addClass('hidden');
-        hideBackdrop();
+      document.body.addEventListener('click', function(e) {
+        var hideBtn = e.target.closest('[data-modal-hide]');
+        if (hideBtn) {
+          var modalId = hideBtn.getAttribute('data-modal-hide');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
+            modalEl.__flowbiteModal.hide();
+          }
+        }
       });
 
       $(document).on('click', '[data-modal-hide]', function() {

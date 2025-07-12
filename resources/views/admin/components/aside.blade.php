@@ -1,5 +1,5 @@
 <aside
-  class="fixed bg-white top-0 left-0 z-30 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
+  class="fixed bg-white top-0 left-0 z-30 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
   id="logo-sidebar" aria-label="Sidebar">
   <div class="h-full px-3 pb-4 overflow-y-auto ">
     <ul class="space-y-2 font-medium">
@@ -79,7 +79,7 @@
       {{-- Agenda Kegiatan --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.struktur-organisasi.index') }}">
+          href="{{ route('admin.agenda-kegiatan.index') }}">
           <i class="fa-solid fa-calendar-days"></i>
 
           <span class="ms-3">
@@ -88,14 +88,14 @@
         </a>
       </li>
 
-      {{-- Galeri & Foto Kegiatan --}}
+      {{-- Album & Foto Kegiatan --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
           href="{{ route('admin.album-kegiatan.index') }}">
           <i class="fa-solid fa-images"></i>
 
           <span class="ms-3">
-            Galeri & Foto Kegiatan
+            Album & Foto Kegiatan
           </span>
         </a>
       </li>

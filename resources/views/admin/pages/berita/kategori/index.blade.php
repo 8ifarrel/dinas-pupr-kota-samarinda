@@ -58,8 +58,31 @@
 @section('document.end')
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      $('#kategori').DataTable({
-        responsive: true
+      var table = $('#kategori').DataTable();
+
+      document.body.addEventListener('click', function(e) {
+        var toggleBtn = e.target.closest('[data-modal-toggle]');
+        if (toggleBtn) {
+          var modalId = toggleBtn.getAttribute('data-modal-toggle');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl) {
+            if (!modalEl.__flowbiteModal) {
+              modalEl.__flowbiteModal = new window.Modal(modalEl);
+            }
+            modalEl.__flowbiteModal.show();
+          }
+        }
+      });
+
+      document.body.addEventListener('click', function(e) {
+        var hideBtn = e.target.closest('[data-modal-hide]');
+        if (hideBtn) {
+          var modalId = hideBtn.getAttribute('data-modal-hide');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
+            modalEl.__flowbiteModal.hide();
+          }
+        }
       });
     });
   </script>

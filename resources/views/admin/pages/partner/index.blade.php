@@ -54,7 +54,7 @@
             </tr>
 
             <!-- Modal Konfirmasi Hapus -->
-            <div id="deleteModal-{{ $partner->id_partner }}" data-modal-backdrop="static" tabindex="-1"
+            <div id="deleteModal-{{ $partner->id_partner }}" data-modal-target="deleteModal-{{ $partner->id_partner }}" data-modal-backdrop="static" tabindex="-1"
               aria-hidden="true"
               class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
               <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -119,8 +119,31 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      $('#partner').DataTable({
-        responsive: true
+      $('#partner').DataTable();
+
+      document.body.addEventListener('click', function(e) {
+        var toggleBtn = e.target.closest('[data-modal-toggle]');
+        if (toggleBtn) {
+          var modalId = toggleBtn.getAttribute('data-modal-toggle');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl) {
+            if (!modalEl.__flowbiteModal) {
+              modalEl.__flowbiteModal = new window.Modal(modalEl);
+            }
+            modalEl.__flowbiteModal.show();
+          }
+        }
+      });
+
+      document.body.addEventListener('click', function(e) {
+        var hideBtn = e.target.closest('[data-modal-hide]');
+        if (hideBtn) {
+          var modalId = hideBtn.getAttribute('data-modal-hide');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
+            modalEl.__flowbiteModal.hide();
+          }
+        }
       });
     });
   </script>

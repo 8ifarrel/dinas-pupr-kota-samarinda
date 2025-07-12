@@ -19,7 +19,6 @@
             <th class="bg-brand-yellow/35 border-none rounded-tl-3xl">#</th>
             <th class="bg-brand-yellow/35">Nama</th>
             <th class="bg-brand-yellow/35">Waktu Terbit</th>
-            <th class="bg-brand-yellow/35">Terakhir Diperbarui</th>
             <th class="bg-brand-yellow/35">Telah Diunduh</th>
             <th class="bg-brand-yellow/35 border-none rounded-tr-3xl">Aksi</th>
           </tr>
@@ -30,7 +29,6 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $item->judul }}</td>
               <td>{{ $item->created_at ? $item->created_at->format('d M Y H:i') : '-' }}</td>
-              <td>{{ $item->updated_at ? $item->updated_at->format('d M Y H:i') : '-' }}</td>
               <td>{{ $item->download_count ?? 0 }} kali</td>
               <td>
                 @if ($item->file)
@@ -55,7 +53,6 @@
             <th>#</th>
             <th>Nama</th>
             <th>Waktu Terbit</th>
-            <th>Terakhir Diperbarui</th>
             <th>Telah Diunduh</th>
             <th>Aksi</th>
           </tr>

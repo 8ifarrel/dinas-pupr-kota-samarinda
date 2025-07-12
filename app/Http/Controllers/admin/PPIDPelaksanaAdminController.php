@@ -61,6 +61,9 @@ class PPIDPelaksanaAdminController extends Controller
             'id_kategori' => $request->id_kategori,
         ]);
 
+        // Update updated_at pada kategori terkait
+        PPIDPelaksanaKategori::where('id', $request->id_kategori)->update(['updated_at' => now()]);
+
         return redirect()->route('admin.ppid-pelaksana.index', ['kategori' => $request->id_kategori])->with('success', 'PPID Pelaksana berhasil ditambahkan.');
     }
 
@@ -105,6 +108,9 @@ class PPIDPelaksanaAdminController extends Controller
 
         $ppid_pelaksana->save();
 
+        // Update updated_at pada kategori terkait
+        PPIDPelaksanaKategori::where('id', $ppid_pelaksana->id_kategori)->update(['updated_at' => now()]);
+
         return redirect()->route('admin.ppid-pelaksana.index', ['kategori' => $request->id_kategori])->with('success', 'PPID Pelaksana berhasil diperbarui.');
     }
 
@@ -117,9 +123,13 @@ class PPIDPelaksanaAdminController extends Controller
             Storage::disk('public')->delete($ppid_pelaksana->file);
         }
 
+        $kategori_id = $ppid_pelaksana->id_kategori;
         $ppid_pelaksana->delete();
 
-        return redirect()->route('admin.ppid-pelaksana.index', ['kategori' => $ppid_pelaksana->id_kategori])->with('success', 'PPID Pelaksana berhasil dihapus.');
+        // Update updated_at pada kategori terkait
+        PPIDPelaksanaKategori::where('id', $kategori_id)->update(['updated_at' => now()]);
+
+        return redirect()->route('admin.ppid-pelaksana.index', ['kategori' => $kategori_id])->with('success', 'PPID Pelaksana berhasil dihapus.');
     }
 }
 

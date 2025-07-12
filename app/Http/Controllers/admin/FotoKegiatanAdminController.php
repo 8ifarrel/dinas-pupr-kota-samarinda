@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,27 +30,29 @@ class FotoKegiatanAdminController extends Controller
   {
     $album = AlbumKegiatan::findOrFail($albumId);
     $request->validate([
-      'foto' => 'required|array|min:1',
-      'foto.*' => 'required|file|image|max:2048',
-      'caption' => 'nullable|array',
-      'caption.*' => 'nullable|string|max:255',
+        'foto' => 'required|array|min:1',
+        'foto.*' => 'required|file|image|max:2048',
+        'caption' => 'nullable|array',
+        'caption.*' => 'nullable|string|max:255',
     ]);
 
     foreach ($request->file('foto') as $idx => $file) {
-      if (!$file || !$file->isValid())
-        continue;
-      $foto = new FotoKegiatan([
-        'caption' => $request->caption[$idx] ?? null,
-        'id_album_kegiatan' => $album->id,
-      ]);
-      $foto->foto = '';
-      $foto->save();
-      $ext = $file->getClientOriginalExtension();
-      $fotoPath = "album-kegiatan/{$album->slug}/{$foto->id}.{$ext}";
-      $file->storeAs("public/album-kegiatan/{$album->slug}", "{$foto->id}.{$ext}");
-      $foto->foto = $fotoPath;
-      $foto->save();
+        if (!$file || !$file->isValid())
+            continue;
+        $foto = new FotoKegiatan([
+            'caption' => $request->caption[$idx] ?? null,
+            'id_album_kegiatan' => $album->id,
+        ]);
+        $foto->foto = '';
+        $foto->save();
+        $ext = $file->getClientOriginalExtension();
+        $fotoPath = "album-kegiatan/{$album->slug}/{$foto->id}.{$ext}";
+        $file->storeAs("public/album-kegiatan/{$album->slug}", "{$foto->id}.{$ext}");
+        $foto->foto = $fotoPath;
+        $foto->save();
     }
+
+    $album->touch();
 
     return redirect()->route('admin.album-kegiatan.show', $album->id)->with('success', 'Foto berhasil ditambahkan.');
   }
@@ -73,32 +75,41 @@ class FotoKegiatanAdminController extends Controller
   {
     $foto = FotoKegiatan::findOrFail($fotoId);
     $request->validate([
-      'caption' => 'nullable|string|max:255',
-      'foto' => 'nullable|file|image|max:2048',
+        'caption' => 'nullable|string|max:255',
+        'foto' => 'nullable|file|image|max:2048',
     ]);
     $foto->caption = $request->caption;
     if ($request->hasFile('foto')) {
-      // Hapus lama
-      if ($foto->foto && Storage::disk('public')->exists($foto->foto)) {
-        Storage::disk('public')->delete($foto->foto);
-      }
-      $album = AlbumKegiatan::findOrFail($albumId);
-      $ext = $request->file('foto')->getClientOriginalExtension();
-      $fotoPath = "album-kegiatan/{$album->slug}/{$foto->id}.{$ext}";
-      $request->file('foto')->storeAs("public/album-kegiatan/{$album->slug}", "{$foto->id}.{$ext}");
-      $foto->foto = $fotoPath;
+        // Hapus lama
+        if ($foto->foto && Storage::disk('public')->exists($foto->foto)) {
+            Storage::disk('public')->delete($foto->foto);
+        }
+        $album = AlbumKegiatan::findOrFail($albumId);
+        $ext = $request->file('foto')->getClientOriginalExtension();
+        $fotoPath = "album-kegiatan/{$album->slug}/{$foto->id}.{$ext}";
+        $request->file('foto')->storeAs("public/album-kegiatan/{$album->slug}", "{$foto->id}.{$ext}");
+        $foto->foto = $fotoPath;
     }
     $foto->save();
+
+    // Update updated_at album
+    $foto->albumKegiatan->touch();
+
     return redirect()->route('admin.album-kegiatan.show', $albumId)->with('success', 'Foto berhasil diperbarui.');
   }
 
   public function destroy($albumId, $fotoId)
   {
     $foto = FotoKegiatan::findOrFail($fotoId);
+    $album = $foto->albumKegiatan;
     if ($foto->foto && Storage::disk('public')->exists($foto->foto)) {
-      Storage::disk('public')->delete($foto->foto);
+        Storage::disk('public')->delete($foto->foto);
     }
     $foto->delete();
+
+    // Update updated_at album
+    if ($album) $album->touch();
+
     return redirect()->route('admin.album-kegiatan.show', $albumId)->with('success', 'Foto berhasil dihapus.');
   }
 }
