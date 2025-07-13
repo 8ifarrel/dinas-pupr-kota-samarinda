@@ -35,8 +35,9 @@
         <li>
           <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
             <figure>
-              <img class="w-full h-full object-cover aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}"
-                alt="image description">
+              <img class="w-full h-full object-cover aspect-[16/9]"
+                src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
+                alt="{{ $item->judul_berita }}" />
               <figcaption>
                 <h1 class="font-medium text-lg">{{ $item->judul_berita }}</h1>
               </figcaption>
@@ -169,5 +170,3 @@
     }
   </script>
 @endsection
-
-

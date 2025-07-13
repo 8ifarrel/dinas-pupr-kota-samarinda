@@ -134,7 +134,9 @@
             class="text-center text-sm text-white font-semibold bg-brand-blue rounded-t-xl py-2">
             {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi }}
           </a>
-          <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
+          <img class="aspect-[16/9]"
+            src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
+            alt="{{ $item->judul_berita }}" />
           <div class="p-5 flex-grow flex flex-col justify-between">
             <div>
               <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -186,7 +188,7 @@
       @foreach ($struktur_organisasi as $i => $item)
         <a href="{{ route('guest.profil.struktur-organisasi.show', ['slug_susunan_organisasi' => $item->susunanOrganisasi->slug_susunan_organisasi]) }}"
           class="max-w-xs p-6 bg-white rounded-3xl shadow text-center flex flex-col mx-auto
-            @if($i === 0) md:col-span-2 lg:col-span-3 @endif">
+            @if ($i === 0) md:col-span-2 lg:col-span-3 @endif">
           <figure>
             <div class="static mb-3 w-14 h-14 bg-brand-yellow/40 rounded-full m-auto flex items-center justify-center">
               <img class="absolute h-16" src="{{ Storage::url($item->ikon_jabatan) }}"
@@ -296,5 +298,3 @@
     </div>
   </div>
 @endsection
-
-

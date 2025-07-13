@@ -63,7 +63,9 @@
 
     {{-- Isi berita --}}
     <main>
-      <img class="w-full mb-3 3xl:mb-5 aspect-[16/9]" src="{{ Storage::url($berita->foto_berita) }}" alt="">
+      <img class="w-full mb-3 3xl:mb-5 aspect-[16/9]"
+        src="{{ Storage::disk('public')->exists($berita->foto_berita) ? Storage::url($berita->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
+        alt="{{ $berita->judul_berita ?? '' }}" />
 
       <div class="md:flex justify-between">
         <div class="flex gap-x-3 mb-3 md:mb-0">
@@ -79,7 +81,8 @@
         </div>
 
         <div>
-          <span class="bg-brand-yellow text-brand-blue text-sm font-bold me-2 px-2.5 py-0.5 3xl:px-4 3xl:py-1 rounded-full 3xl:text-xl">
+          <span
+            class="bg-brand-yellow text-brand-blue text-sm font-bold me-2 px-2.5 py-0.5 3xl:px-4 3xl:py-1 rounded-full 3xl:text-xl">
             {{ $berita->kategori->susunanOrganisasi->nama_susunan_organisasi ?? '-' }}
           </span>
         </div>
@@ -106,7 +109,9 @@
         @foreach ($berita_lainnya as $item)
           <li class="mb-2">
             <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
-              <img class="3xl:w-full aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
+              <img class="3xl:w-full aspect-[16/9]"
+                src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
+                alt="{{ $item->judul_berita ?? '' }}" />
               <h1 class="3xl:text-xl">{{ Str::limit($item->judul_berita, 60) }}</h1>
             </a>
           </li>
@@ -125,7 +130,9 @@
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
               <li class="splide__slide mx-2">
-                <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
+                <img class="aspect-[16/9]"
+                  src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
+                  alt="{{ $item->judul_berita ?? '' }}" />
                 <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach
@@ -135,5 +142,3 @@
     </div>
   </div>
 @endsection
-
-

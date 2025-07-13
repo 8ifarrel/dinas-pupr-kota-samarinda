@@ -13,7 +13,10 @@ class LoginAdminController extends Controller
 {
 	public function index()
 	{
-		return view('admin.pages.login.index');
+		$page_title = "Login Admin";
+		return view('admin.pages.login.index', [
+			'page_title' => $page_title,
+		]);
 	}
 
 	public function login(Request $request)

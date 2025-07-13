@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\guest;
+namespace App\Http\Controllers\Guest;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;

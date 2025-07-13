@@ -93,6 +93,9 @@ class BeritaAdminController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Touch kategori
+        BeritaKategori::find($request->id_berita_kategori)?->touch();
+
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil ditambahkan.');
     }
@@ -160,6 +163,9 @@ class BeritaAdminController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Touch kategori
+        BeritaKategori::find($request->id_berita_kategori)?->touch();
+
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil diperbarui.');
     }
@@ -172,9 +178,13 @@ class BeritaAdminController extends Controller
             Storage::disk('public')->delete($berita->foto_berita);
         }
 
+        $idKategori = $berita->id_berita_kategori;
         $berita->delete();
 
-        return redirect()->route('admin.berita.index', ['id_kategori' => $berita->id_berita_kategori])
+        // Touch kategori
+        BeritaKategori::find($idKategori)?->touch();
+
+        return redirect()->route('admin.berita.index', ['id_kategori' => $idKategori])
             ->with('success', 'Berita berhasil dihapus.');
     }
 }

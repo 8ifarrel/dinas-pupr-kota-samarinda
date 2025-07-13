@@ -12,6 +12,7 @@
           <tr>
             <th class="w-[85px]">Ikon</th>
             <th>Nama</th>
+            <th>Terakhir diperbarui</th>
             <th>Kelola</th>
           </tr>
         </thead>
@@ -26,6 +27,9 @@
                 </a>
               </td>
               <td>{{ $item->susunanOrganisasi->nama_susunan_organisasi ?? '-' }}</td>
+              <td>
+                {{ $item->updated_at ? $item->updated_at->translatedFormat('l, d F Y (H:i)') : '-' }}
+              </td>
               <td>
                 <div class="flex gap-2">
                   <a href="{{ route('admin.berita.kategori.edit', $item->id_berita_kategori) }}"
@@ -45,8 +49,9 @@
 
         <tfoot>
           <tr>
-            <th>Nama</th>
             <th>Ikon</th>
+            <th>Nama</th>
+            <th>Terakhir diperbarui</th>
             <th>Kelola</th>
           </tr>
         </tfoot>

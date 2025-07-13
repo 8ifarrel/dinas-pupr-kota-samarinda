@@ -266,13 +266,13 @@
                         Lihat PPID Pelaksana
                       </a>
                     </li>
-                    <li>
+                    {{-- <li>
                       <a href=""
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         Ajukan Permohonan Informasi Publik
                       </a>
                       </a>
-                    </li>
+                    </li> --}}
                   </div>
                 </div>
 
@@ -308,30 +308,6 @@
             </ul>
           </div>
         </li>
-        {{-- <li>
-          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-            class="flex items-center justify-between w-full py-2 px-3 lg:p-0 rounded {{ $page_title == 'Galeri Kegiatan' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
-            Album Kegiatan
-            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 10 6">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 1 4 4 4-4" />
-            </svg>
-          </button>
-          <!-- Dropdown menu -->
-          <div id="dropdownNavbar"
-            class="border-y-4 border-brand-blue z-50 hidden font-normal bg-white divide-y divide-gray-100 shadow w-44">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-              <li>
-                <a href="{{ route('guest.e-library.galeri-foto.index') }}"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Galeri Foto</a>
-              </li>
-              <li>
-                <a href="{{ route('guest.e-library.video.index') }}"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Video</a>
-              </li>
-          </div>
-        </li> --}}
       </ul>
     </div>
   </div>

@@ -61,7 +61,7 @@ class AkunAdminSuperAdminController extends Controller
       'password' => [
         'required',
         'string',
-        Password::min(10)
+        Password::min(12)
           ->letters()
           ->numbers()
           ->uncompromised(),
@@ -94,7 +94,7 @@ class AkunAdminSuperAdminController extends Controller
       'name.unique' => 'Username sudah digunakan.',
       'name.regex' => 'Username hanya boleh berisi huruf, angka, titik, strip (-), dan underscore (_).',
       'name.not_regex' => 'Username tidak boleh mengandung spasi.',
-      'password.min' => 'Password minimal 10 karakter.',
+      'password.min' => 'Password minimal 12 karakter.',
       'password.letters' => 'Password harus mengandung minimal satu huruf.',
       'password.numbers' => 'Password harus mengandung minimal satu angka.',
       'password.confirmed' => 'Konfirmasi password tidak sama.',
@@ -158,7 +158,7 @@ class AkunAdminSuperAdminController extends Controller
         $rules['password'] = [
           'required',
           'string',
-          Password::min(10)->letters()->numbers()->uncompromised(),
+          Password::min(12)->letters()->numbers()->uncompromised(),
           'confirmed',
           function ($attribute, $value, $fail) use ($request, $user) {
             if ($request->name && Str::contains(Str::lower($value), Str::lower($request->name))) {
@@ -187,7 +187,7 @@ class AkunAdminSuperAdminController extends Controller
         $rules['password'] = [
           'required',
           'string',
-          Password::min(10)->letters()->numbers()->uncompromised(),
+          Password::min(12)->letters()->numbers()->uncompromised(),
           'confirmed',
           function ($attribute, $value, $fail) use ($request, $user) {
             if ($request->name && Str::contains(Str::lower($value), Str::lower($request->name))) {
@@ -217,7 +217,7 @@ class AkunAdminSuperAdminController extends Controller
       'name.unique' => 'Username sudah digunakan.',
       'name.regex' => 'Username hanya boleh berisi huruf, angka, titik, strip (-), dan underscore (_).',
       'name.not_regex' => 'Username tidak boleh mengandung spasi.',
-      'password.min' => 'Password minimal 10 karakter.',
+      'password.min' => 'Password minimal 12 karakter.',
       'password.letters' => 'Password harus mengandung minimal satu huruf.',
       'password.numbers' => 'Password harus mengandung minimal satu angka.',
       'password.confirmed' => 'Konfirmasi password tidak sama.',

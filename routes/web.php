@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\guest\GaleriKegiatanGuestController;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Additional Route
@@ -13,7 +10,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// 
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\BlockSearchEngines;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,21 +23,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\guest\PortalGuestController;
-use App\Http\Controllers\guest\BerandaGuestController;
-use App\Http\Controllers\guest\ProfilKepalaDinasGuestController;
-use App\Http\Controllers\guest\SejarahKotaSamarindaGuestController;
-use App\Http\Controllers\guest\SejarahDinasPUPRKotaSamarindaGuestController;
-use App\Http\Controllers\guest\StrukturOrganisasiGuestController;
-use App\Http\Controllers\guest\VisiDanMisiGuestController;
-use App\Http\Controllers\guest\BeritaGuestController;
-use App\Http\Controllers\guest\BeritaKategoriGuestController;
-use App\Http\Controllers\guest\PengumumanGuestController;
-use App\Http\Controllers\guest\BukuTamuGuestController;
-use App\Http\Controllers\guest\PPIDPelaksanaKategoriGuestController;
-use App\Http\Controllers\guest\PPIDPelaksanaGuestController;
-use App\Http\Controllers\guest\SKMGuestController;
-use App\Http\Controllers\guest\AlbumKegiatanGuestController;
+use App\Http\Controllers\Guest\PortalGuestController;
+use App\Http\Controllers\Guest\BerandaGuestController;
+use App\Http\Controllers\Guest\ProfilKepalaDinasGuestController;
+use App\Http\Controllers\Guest\SejarahKotaSamarindaGuestController;
+use App\Http\Controllers\Guest\SejarahDinasPUPRKotaSamarindaGuestController;
+use App\Http\Controllers\Guest\StrukturOrganisasiGuestController;
+use App\Http\Controllers\Guest\VisiDanMisiGuestController;
+use App\Http\Controllers\Guest\BeritaGuestController;
+use App\Http\Controllers\Guest\BeritaKategoriGuestController;
+use App\Http\Controllers\Guest\PengumumanGuestController;
+use App\Http\Controllers\Guest\BukuTamuGuestController;
+use App\Http\Controllers\Guest\PPIDPelaksanaKategoriGuestController;
+use App\Http\Controllers\Guest\PPIDPelaksanaGuestController;
+use App\Http\Controllers\Guest\SKMGuestController;
+use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 
 /**
  * Portal
@@ -150,17 +148,19 @@ Route::get('/agenda-kegiatan', function () {
  * SKM
  */
 
-Route::get('/skm', [SKMGuestController::class, 'index'])
-	->name('guest.skm.index');
+Route::prefix('skm')->middleware([BlockSearchEngines::class])->group(function () {
+	Route::get('/', [SKMGuestController::class, 'index'])
+		->name('guest.skm.index');
 
-Route::post('/skm', [SKMGuestController::class, 'store'])
-	->name('guest.skm.store');
+	Route::post('/', [SKMGuestController::class, 'store'])
+		->name('guest.skm.store');
+});
 
 /**
  * Buku Tamu
  */
 
-Route::prefix('buku-tamu')->group(function () {
+Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::get('/', [BukuTamuGuestController::class, 'index'])
 		->name('guest.buku-tamu.index');
 
@@ -193,30 +193,30 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotAuthenticated;
 use App\Http\Middleware\IsSuperAdmin;
 
-use App\Http\Controllers\admin\LoginAdminController;
-use App\Http\Controllers\admin\DashboardAdminController;
-use App\Http\Controllers\admin\SliderAdminController;
-use App\Http\Controllers\admin\PartnerAdminController;
-use App\Http\Controllers\admin\BeritaKategoriAdminController;
-use App\Http\Controllers\admin\BeritaAdminController;
-use App\Http\Controllers\admin\PPIDPelaksanaKategoriAdminController;
-use App\Http\Controllers\admin\PengumumanAdminController;
-use App\Http\Controllers\admin\PPIDPelaksanaAdminController;
-use App\Http\Controllers\admin\SusunanOrganisasiAdminController;
-use App\Http\Controllers\admin\KepalaDinasAdminController;
-use App\Http\Controllers\admin\VisiDanMisiAdminController;
-use App\Http\Controllers\admin\SejarahDinasPUPRKotaSamarindaAdminController;
-use App\Http\Controllers\admin\StrukturOrganisasiAdminController;
-use App\Http\Controllers\admin\OrganigramAdminController;
-use App\Http\Controllers\admin\BukuTamuAdminController;
-use App\Http\Controllers\admin\FotoKegiatanAdminController;
-use App\Http\Controllers\admin\AlbumKegiatanAdminController;
-use App\Http\Controllers\admin\AgendaKegiatanAdminController;
-use App\Http\Controllers\admin\KelolaAkunSayaAdminController;
+use App\Http\Controllers\Admin\LoginAdminController;
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\SliderAdminController;
+use App\Http\Controllers\Admin\PartnerAdminController;
+use App\Http\Controllers\Admin\BeritaKategoriAdminController;
+use App\Http\Controllers\Admin\BeritaAdminController;
+use App\Http\Controllers\Admin\PPIDPelaksanaKategoriAdminController;
+use App\Http\Controllers\Admin\PengumumanAdminController;
+use App\Http\Controllers\Admin\PPIDPelaksanaAdminController;
+use App\Http\Controllers\Admin\SusunanOrganisasiAdminController;
+use App\Http\Controllers\Admin\KepalaDinasAdminController;
+use App\Http\Controllers\Admin\VisiDanMisiAdminController;
+use App\Http\Controllers\Admin\SejarahDinasPUPRKotaSamarindaAdminController;
+use App\Http\Controllers\Admin\StrukturOrganisasiAdminController;
+use App\Http\Controllers\Admin\OrganigramAdminController;
+use App\Http\Controllers\Admin\BukuTamuAdminController;
+use App\Http\Controllers\Admin\FotoKegiatanAdminController;
+use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
+use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
+use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 
-use App\Http\Controllers\admin\AkunAdminSuperAdminController;
+use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
-Route::prefix('e-panel')->group(function () {
+Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 		/**
 		 * Login

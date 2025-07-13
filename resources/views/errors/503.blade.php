@@ -13,6 +13,15 @@
 
   <link rel="icon" type="image/x-icon" href="" />
 
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon dan Icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon/favicon-16x16.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon/favicon-32x32.png') }}">
+  <link rel="apple-touch-icon" href="{{ asset('image/favicon/apple-touch-icon.png') }}">
+  <link rel="manifest" href="{{ asset('image/favicon/site.webmanifest') }}">
+  <link rel="shortcut icon" href="{{ asset('image/favicon/favicon.ico') }}">
+
   {{-- Tailwind --}}
   @vite('resources/css/app.css')
 </head>
@@ -45,5 +54,3 @@
 </body>
 
 </html>
-
-
