@@ -69,7 +69,7 @@
               src="https://lottie.host/79009bb3-5d07-4937-b043-bdfec1f41bf1/l1GIKi6RYJ.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
             <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
-              Layanan Aplikasi
+              Aplikasi Layanan
             </figcaption>
           </figure>
         </button>
@@ -80,7 +80,7 @@
               src="https://lottie.host/05a9c4fd-d359-4d7b-acbf-b9d560cf3739/vwyhQ7Wt8H.json" background="transparent"
               speed="1" loop autoplay></lottie-player>
             <figcaption class="text-center font-semibold text-base lg:text-xl 3xl:text-2xl text-brand-yellow">
-              Layanan Aduan
+              Kirtik dan Saran
             </figcaption>
           </figure>
         </button>
@@ -146,7 +146,7 @@
       </div>
     </div>
 
-    {{-- Modal Layanan Aplikasi --}}
+    {{-- Modal Aplikasi Layanan --}}
     <div id="modal-layanan-aplikasi" tabindex="-1" aria-hidden="true"
       class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -160,7 +160,7 @@
                   background="transparent" speed="1" loop autoplay></lottie-player>
               </div>
               <figcaption class="my-auto text-center font-semibold text-base lg:text-2xl">
-                Layanan Aplikasi
+                Aplikasi Layanan
               </figcaption>
             </figure>
             <button type="button"
@@ -177,25 +177,21 @@
           <!-- Modal body -->
           <div class="p-4 md:p-5 space-y-4">
             <p class="text-base leading-relaxed">
-              Temukan berbagai layanan aplikasi yang kami sediakan untuk memenuhi kebutuhan Anda.
+              Temukan berbagai aplikasi layanan yang kami sediakan untuk memenuhi kebutuhan Anda.
             </p>
           </div>
           <!-- Modal footer -->
           <div class="gap-3 p-4 md:p-5 border-t border-gray-300 rounded-b grid grid-cols-2 lg:flex lg:items-center">
-            <a href="/hantubanyu" type="button"
-              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hantubanyu</a>
-            <a href="/uptd-limbah" type="button"
-              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">UPTD
-              Limbah</a>
-            <a href="/uptd-jalan-dan-jembatan" type="button"
-              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 col-span-2">UPTD
-              Jalan dan Jembatan</a>
+            <a href="{{ url('https://sijakon.samarindakota.go.id/') }}" type="button"
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sijakon</a>
+            <a href="{{ url('https://gistaru.samarindakota.go.id/') }}" type="button"
+              class="text-white bg-brand-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Gistaru</a>
           </div>
         </div>
       </div>
     </div>
 
-    {{-- Modal Layanan Aduan --}}
+    {{-- Modal Kirtik dan Saran --}}
     <div id="modal-layanan-aduan" tabindex="-1" aria-hidden="true"
       class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -209,7 +205,7 @@
                   background="transparent" speed="1" loop autoplay></lottie-player>
               </div>
               <figcaption class="my-auto text-center font-semibold text-base lg:text-2xl">
-                Layanan Aduan
+                Kirtik dan Saran
               </figcaption>
             </figure>
             <button type="button"
