@@ -61,8 +61,10 @@
             </div>
             <ul class="py-1" role="none">
               <li>
-                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">
-                  Kelola Akun
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                   href="{{ route('admin.kelola-akun-saya.edit', Auth::user()->id) }}"
+                   role="menuitem">
+                  Kelola Akun Saya
                 </a>
               </li>
               <li>

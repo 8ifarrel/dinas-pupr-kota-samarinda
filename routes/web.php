@@ -212,6 +212,7 @@ use App\Http\Controllers\admin\BukuTamuAdminController;
 use App\Http\Controllers\admin\FotoKegiatanAdminController;
 use App\Http\Controllers\admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\admin\AgendaKegiatanAdminController;
+use App\Http\Controllers\admin\KelolaAkunSayaAdminController;
 
 use App\Http\Controllers\admin\AkunAdminSuperAdminController;
 
@@ -298,6 +299,18 @@ Route::prefix('e-panel')->group(function () {
 				->name('admin.partner.update');
 			Route::delete('/delete/{id}', [PartnerAdminController::class, 'destroy'])
 				->name('admin.partner.destroy');
+		});
+
+		/**
+		 * Kelola Akun Saya
+		 */
+		Route::prefix('kelola-akun-saya')->group(function () {
+			Route::get('/edit/{id}', [KelolaAkunSayaAdminController::class, 'edit'])
+				->name('admin.kelola-akun-saya.edit');
+			Route::put('/update/{id}', [KelolaAkunSayaAdminController::class, 'update'])
+				->name('admin.kelola-akun-saya.update');
+			Route::delete('/delete/{id}', [KelolaAkunSayaAdminController::class, 'destroy'])
+				->name('admin.kelola-akun-saya.destroy');
 		});
 
 		/**
