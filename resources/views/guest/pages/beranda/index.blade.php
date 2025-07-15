@@ -275,7 +275,7 @@
   </div> --}}
 
   {{-- Partner --}}
-  <div class="p-10 md:p-12">
+  <div class="p-8 sm:p-10 md:p-12">
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active flex justify-evenly">
@@ -284,9 +284,9 @@
               <ul class="splide__list">
                 @foreach ($partner as $item)
                   {{-- 16:9x315 --}}
-                  <li class="splide__slide my-auto mx-4">
-                    <a href="{{ $item->url_partner }}">
-                      <img src="{{ Storage::url($item->foto_partner) }}" alt="{{ $item->nama_partner }}">
+                  <li class="splide__slide my-auto !w-fit mx-6 sm:mx-10"> 
+                    <a href="{{ $item->url_partner }}" class="!w-fit">
+                      <img class="h-24 object-contain" src="{{ Storage::url($item->foto_partner) }}" alt="{{ $item->nama_partner }}" height="36">
                     </a>
                   </li>
                 @endforeach
