@@ -18,7 +18,7 @@
       </figcaption>
     </figure>
 
-    <ul class="mb-3 lg:mb-0 xl:mb-0 text-base xl:text-lg p-0 m-0 flex flex-col justify-between w-fit">
+    <ul class="mb-3 lg:mb-0 xl:mb-0 text-base xl:text-lg p-0 m-0 flex flex-col justify-start space-y-3 w-fit">
       <li class="mb-1 xs:mb-0 font-bold text-lg xl:text-xl">
         TAUTAN PENTING
       </li>
