@@ -54,7 +54,7 @@
       </li>
     </ul>
     <ul
-      class="xs:mx-auto sm:mx-0 mb-3 lg:mb-0 xl:mb-0 text-base xl:text-lg p-0 m-0 flex flex-col justify-between w-fit">
+      class="xs:mx-auto sm:mx-0 mb-3 lg:mb-0 xl:mb-0 text-base xl:text-lg p-0 m-0 flex flex-col justify-start space-y-3 w-fit">
       <li class="mb-1 xs:mb-0 font-bold text-lg xl:text-xl">
         KONTAK KAMI
       </li>
@@ -80,18 +80,6 @@
         <a href="mailto:dpuprkotasamarinda@gmail.com" class="flex items-center">
           <i class="fa-regular fa-envelope me-1" style="color: #000000;"></i>
           Email
-        </a>
-      </li>
-      <li>
-        <a href="tel:0541203785" class="flex items-center">
-          <i class="fa-solid fa-phone me-1" style="color: #000000;"></i>
-          0541-203785
-        </a>
-      </li>
-      <li>
-        <a href="tel:0541732072" class="flex items-center">
-          <i class="fa-solid fa-phone me-1" style="color: #000000;"></i>
-          0541-732072
         </a>
       </li>
     </ul>
