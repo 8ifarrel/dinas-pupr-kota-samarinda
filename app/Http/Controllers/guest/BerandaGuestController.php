@@ -63,7 +63,6 @@ class BerandaGuestController extends Controller
             'this_month' => StatistikPengunjung::where('created_at', '>=', $thisMonth)->count(),
         ];
 
-        // Ambil agenda kegiatan minggu berjalan
         $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
         $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
         $agenda_kegiatan = AgendaKegiatan::whereBetween('tanggal', [$startOfWeek, $endOfWeek])

@@ -262,7 +262,7 @@
     </div>
   </div>
 
-  {{-- Statistik Pengunjung --}}
+  {{-- Statistik Pengunjung test --}}
   <div class="bg-gray-200 p-6 md:p-12">
     @include('guest.components.section-title', [
         'page_subtitle' => 'Statistik',
