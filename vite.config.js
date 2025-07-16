@@ -25,6 +25,7 @@ export default defineConfig({
                 "resources/js/splidejs.js",
                 "resources/js/sweetalert2.js",
 
+                "resources/js/splide-autoscroll.js",
                 "resources/js/toggle-password-visibility.js",
                 "resources/js/clock.js",
                 "resources/js/navbar-guest.js",
