@@ -38,143 +38,156 @@ use App\Http\Controllers\Guest\PPIDPelaksanaKategoriGuestController;
 use App\Http\Controllers\Guest\PPIDPelaksanaGuestController;
 use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
+use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 
-/**
- * Portal
- */
+use App\Http\Middleware\RecordStatistikPengunjung;
 
-Route::get('/', [PortalGuestController::class, 'index'])
-	->name('guest.portal.index');
+Route::middleware(RecordStatistikPengunjung::class)->group(function () {
+	/**
+	 * Portal
+	 */
 
-/**
- * Beranda
- */
+	Route::get('/', [PortalGuestController::class, 'index'])
+		->name('guest.portal.index');
 
-Route::get('/beranda', [BerandaGuestController::class, 'index'])
-	->name('guest.beranda.index');
+	/**
+	 * Beranda
+	 */
 
-/**
- * Profil
- */
+	Route::get('/beranda', [BerandaGuestController::class, 'index'])
+		->name('guest.beranda.index');
 
-Route::prefix('profil')->group(function () {
-	Route::get('/profil-kepala-dinas', [ProfilKepalaDinasGuestController::class, 'index'])
-		->name('guest.profil.profil-kepala-dinas.index');
+	/**
+	 * Profil
+	 */
 
-	Route::get('/sejarah-kota-samarinda', [SejarahKotaSamarindaGuestController::class, 'index'])
-		->name('guest.profil.sejarah-kota-samarinda.index');
+	Route::prefix('profil')->group(callback: function () {
+		Route::get('/profil-kepala-dinas', [ProfilKepalaDinasGuestController::class, 'index'])
+			->name('guest.profil.profil-kepala-dinas.index');
 
-	Route::get('/sejarah-dinas-pupr-kota-samarinda', [SejarahDinasPUPRKotaSamarindaGuestController::class, 'index'])
-		->name('guest.profil.sejarah-dinas-pupr-kota-samarinda.index');
+		Route::get('/sejarah-kota-samarinda', [SejarahKotaSamarindaGuestController::class, 'index'])
+			->name('guest.profil.sejarah-kota-samarinda.index');
 
-	Route::get('/visi-dan-misi', [VisiDanMisiGuestController::class, 'index'])
-		->name('guest.profil.visi-dan-misi.index');
+		Route::get('/sejarah-dinas-pupr-kota-samarinda', [SejarahDinasPUPRKotaSamarindaGuestController::class, 'index'])
+			->name('guest.profil.sejarah-dinas-pupr-kota-samarinda.index');
 
-	Route::prefix('struktur-organisasi')->group(function () {
-		Route::get('/', [StrukturOrganisasiGuestController::class, 'index'])
-			->name('guest.profil.struktur-organisasi.index');
+		Route::get('/visi-dan-misi', [VisiDanMisiGuestController::class, 'index'])
+			->name('guest.profil.visi-dan-misi.index');
 
-		Route::get('/{slug_susunan_organisasi}', [StrukturOrganisasiGuestController::class, 'show'])
-			->name('guest.profil.struktur-organisasi.show');
+		Route::prefix('struktur-organisasi')->group(function () {
+			Route::get('/', [StrukturOrganisasiGuestController::class, 'index'])
+				->name('guest.profil.struktur-organisasi.index');
+
+			Route::get('/{slug_susunan_organisasi}', [StrukturOrganisasiGuestController::class, 'show'])
+				->name('guest.profil.struktur-organisasi.show');
+		});
 	});
-});
 
-/**
- * Berita
- */
+	/**
+	 * Berita
+	 */
 
-Route::prefix('berita')->group(function () {
-	Route::get('/kategori', [BeritaKategoriGuestController::class, 'index'])
-		->name('guest.berita.kategori.index');
+	Route::prefix('berita')->group(function () {
+		Route::get('/kategori', [BeritaKategoriGuestController::class, 'index'])
+			->name('guest.berita.kategori.index');
 
-	Route::get('/kategori/{slug_kategori}', [BeritaKategoriGuestController::class, 'show'])
-		->name('guest.berita.kategori.show');
+		Route::get('/kategori/{slug_kategori}', [BeritaKategoriGuestController::class, 'show'])
+			->name('guest.berita.kategori.show');
 
-	Route::get('/kategori/{slug_kategori}/search', [BeritaKategoriGuestController::class, 'search'])
-		->name('guest.berita.kategori.search');
+		Route::get('/kategori/{slug_kategori}/search', [BeritaKategoriGuestController::class, 'search'])
+			->name('guest.berita.kategori.search');
 
-	Route::get('/{slug_berita}', [BeritaGuestController::class, 'show'])
-		->name('guest.berita.show');
-});
+		Route::get('/{slug_berita}', [BeritaGuestController::class, 'show'])
+			->name('guest.berita.show');
+	});
 
 
-/**
- * Pengumuman
- */
+	/**
+	 * Pengumuman
+	 */
 
-Route::prefix('pengumuman')->group(function () {
-	Route::get('/', [PengumumanGuestController::class, 'index'])
-		->name('guest.pengumuman.index');
-	Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
-		->name('guest.pengumuman.store');
-	Route::get('/download/{slug}', [PengumumanGuestController::class, 'download'])
-		->name('guest.pengumuman.download');
-});
+	Route::prefix('pengumuman')->group(function () {
+		Route::get('/', [PengumumanGuestController::class, 'index'])
+			->name('guest.pengumuman.index');
+		Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
+			->name('guest.pengumuman.store');
+		Route::get('/download/{slug}', [PengumumanGuestController::class, 'download'])
+			->name('guest.pengumuman.download');
+	});
 
-/**
- * PPID Pelaksana
- */
+	/**
+	 * PPID Pelaksana
+	 */
 
-Route::prefix('ppid-pelaksana')->group(function () {
-	Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
-		->name('guest.ppid-pelaksana.kategori.index');
-	Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
-		->name('guest.ppid-pelaksana.kategori.show');
-	// Tambahkan route download
-	Route::get('/download/{id}', [PPIDPelaksanaGuestController::class, 'download'])
-		->name('guest.ppid-pelaksana.download');
-});
+	Route::prefix('ppid-pelaksana')->group(function () {
+		Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
+			->name('guest.ppid-pelaksana.kategori.index');
+		Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
+			->name('guest.ppid-pelaksana.kategori.show');
+		// Tambahkan route download
+		Route::get('/download/{id}', [PPIDPelaksanaGuestController::class, 'download'])
+			->name('guest.ppid-pelaksana.download');
+	});
 
-/**
- * Album Kegiatan
- */
+	/**
+	 * Album Kegiatan
+	 */
 
-Route::prefix('album-kegiatan')->group(function () {
-	Route::get('/', [AlbumKegiatanGuestController::class, 'index'])
-		->name('guest.album-kegiatan.index');
-	Route::get('/{slug}', [AlbumKegiatanGuestController::class, 'show'])
-		->name('guest.album-kegiatan.show');
-});
+	Route::prefix('album-kegiatan')->group(function () {
+		Route::get('/', [AlbumKegiatanGuestController::class, 'index'])
+			->name('guest.album-kegiatan.index');
+		Route::get('/{slug}', [AlbumKegiatanGuestController::class, 'show'])
+			->name('guest.album-kegiatan.show');
+	});
 
-/**
- * Agenda Kegiatan
- */
+	/**
+	 * Agenda Kegiatan
+	 */
 
-Route::get('/agenda-kegiatan', function () {
-	abort(503, 'Halaman ini sedang dalam pembaharuan');
-})->name('guest.agenda-kegiatan.index');
+	Route::get('/agenda-kegiatan', function () {
+		abort(503, 'Halaman ini sedang dalam pembaharuan');
+	})->name('guest.agenda-kegiatan.index');
 
-/**
- * SKM
- */
+	Route::prefix('agenda-kegiatan')->middleware([BlockSearchEngines::class])->group(function () {
+		Route::get('/ajax', [AgendaKegiatanGuestController::class, 'ajaxAgenda'])
+			->name('guest.agenda-kegiatan.ajax');
+		Route::get('/ajax-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaCount'])
+			->name('guest.agenda-kegiatan.ajax-count');
+		Route::get('/ajax-week-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaWeekCount'])
+			->name('guest.agenda-kegiatan.ajax-week-count');
+	});
 
-Route::prefix('skm')->middleware([BlockSearchEngines::class])->group(function () {
-	Route::get('/', [SKMGuestController::class, 'index'])
-		->name('guest.skm.index');
+	/**
+	 * SKM
+	 */
 
-	Route::post('/', [SKMGuestController::class, 'store'])
-		->name('guest.skm.store');
-});
+	Route::prefix('skm')->middleware([BlockSearchEngines::class])->group(function () {
+		Route::get('/', [SKMGuestController::class, 'index'])
+			->name('guest.skm.index');
+		Route::post('/', [SKMGuestController::class, 'store'])
+			->name('guest.skm.store');
+	});
 
-/**
- * Buku Tamu
- */
+	/**
+	 * Buku Tamu
+	 */
 
-Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
-	Route::get('/', [BukuTamuGuestController::class, 'index'])
-		->name('guest.buku-tamu.index');
+	Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
+		Route::get('/', [BukuTamuGuestController::class, 'index'])
+			->name('guest.buku-tamu.index');
 
-	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
-		->name('guest.buku-tamu.create');
+		Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
+			->name('guest.buku-tamu.create');
 
-	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
-		->name('guest.buku-tamu.store');
+		Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
+			->name('guest.buku-tamu.store');
 
-	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
-		->name('guest.buku-tamu.result');
+		Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
+			->name('guest.buku-tamu.result');
 
-	Route::get('/status', [BukuTamuGuestController::class, 'show'])
-		->name('guest.buku-tamu.show');
+		Route::get('/status', [BukuTamuGuestController::class, 'show'])
+			->name('guest.buku-tamu.show');
+	});
 });
 
 

@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\Slider;
-use App\Models\SusunanOrganisasi; 
+use App\Models\SusunanOrganisasi;
 use App\Models\StrukturOrganisasi;
 use App\Models\Partner;
 use App\Models\KepalaDinas;
+use App\Models\StatistikPengunjung;
+use App\Models\AgendaKegiatan;
+use Carbon\Carbon;
 
 class BerandaGuestController extends Controller
 {
@@ -50,6 +53,22 @@ class BerandaGuestController extends Controller
             'url_partner',
         )->get();
 
+        $today = Carbon::today();
+        $thisWeek = Carbon::now()->startOfWeek();
+        $thisMonth = Carbon::now()->startOfMonth();
+
+        $statistik_pengunjung = [
+            'today' => StatistikPengunjung::whereDate('created_at', $today)->count(),
+            'this_week' => StatistikPengunjung::where('created_at', '>=', $thisWeek)->count(),
+            'this_month' => StatistikPengunjung::where('created_at', '>=', $thisMonth)->count(),
+        ];
+
+        // Ambil agenda kegiatan minggu berjalan
+        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+        $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
+        $agenda_kegiatan = AgendaKegiatan::whereBetween('tanggal', [$startOfWeek, $endOfWeek])
+            ->orderBy('tanggal')->orderBy('waktu_mulai')->get();
+
         return view('guest.pages.beranda.index', [
             'meta_description' => $meta_description,
             'page_title' => $page_title,
@@ -57,7 +76,9 @@ class BerandaGuestController extends Controller
             'slider' => $slider,
             'struktur_organisasi' => $struktur_organisasi,
             'partner' => $partner,
-            'kepala_dinas' => $kepala_dinas
+            'kepala_dinas' => $kepala_dinas,
+            'statistik_pengunjung' => $statistik_pengunjung,
+            'agenda_kegiatan' => $agenda_kegiatan,
         ]);
     }
 }

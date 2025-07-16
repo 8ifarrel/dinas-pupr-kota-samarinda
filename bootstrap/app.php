@@ -4,8 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-use App\Http\Middleware\RedirectIfAuthenticated;
-use App\Http\Middleware\RedirectIfNotAuthenticated;
+use App\Http\Middleware\RecordStatistikPengunjung;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // 
+        $middleware->append(RecordStatistikPengunjung::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

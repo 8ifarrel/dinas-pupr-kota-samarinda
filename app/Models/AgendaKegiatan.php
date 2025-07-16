@@ -27,11 +27,4 @@ class AgendaKegiatan extends Model
     'dihadiri_oleh',
     'tanggal',
   ];
-
-  protected $casts = [
-    'waktu_mulai' => 'datetime:H:i:s',
-    'tanggal' => 'date',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-  ];
 }

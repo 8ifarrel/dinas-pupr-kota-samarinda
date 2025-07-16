@@ -218,69 +218,47 @@
         'page_title' => 'Agenda Kegiatan',
     ])
 
-    {{-- ayok hud kita ngoding bareng lagi :> --}}
-    <div class="space-y-6 w-fit mx-auto">
-      {{-- Tanggal --}}
-      <div class="space-y-2.5">
-        <div class="flex justify-between">
-          <div class="flex justify-start items-center gap-1.5">
-            <button class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
-              <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <span class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow">
-              1 Maret 2025 - 7 Maret 2025
-            </span>
-            <button class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
-              <i class="fa-solid fa-chevron-right"></i>
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-6 mx-auto">
+        {{-- Tanggal --}}
+        <div class="space-y-2.5">
+          <div class="flex justify-between">
+            <div class="flex justify-start items-center gap-1.5">
+              <button id="agenda-prev-week"
+                class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <span id="agenda-week-label"
+                class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow">
+                {{-- Label minggu, diisi JS --}}
+              </span>
+              <button id="agenda-next-week"
+                class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <button id="agenda-today-btn"
+              class="bg-brand-yellow text-brand-blue font-semibold rounded-xl px-3.5 py-1 shadow">
+              Hari ini
             </button>
           </div>
-          <button class="bg-brand-yellow text-brand-blue font-semibold rounded-xl px-3.5 py-1 shadow">
-            Hari ini
-          </button>
+          <div id="agenda-days"
+            class="rounded-2xl bg-brand-blue/20 p-4 text-center border border-brand-blue flex flex-row items-center justify-center gap-2.5 shadow">
+            {{-- Diisi JS: daftar hari minggu berjalan --}}
+          </div>
         </div>
-        <div
-          class="rounded-2xl bg-brand-blue/20 p-4 text-center border border-brand-blue flex flex-row items-center justify-center gap-2.5 shadow">
-          @for ($i = 1; $i <= 7; $i++)
-            <div
-              class="rounded-2xl bg-brand-blue text-white font-bold w-[95px] py-2.5 flex flex-col items-center justify-center shadow">
-              <div> {{-- Tanggal --}}
-                {{ $i }}
-              </div>
-              <div> {{-- Hari, mulai dari Senin --}}
-                {{ now()->startOfWeek()->addDays($i - 1)->translatedFormat('l') }}
-              </div>
-              <div> {{-- Jka di dalamnya ada agenda kegiatan --}}
-                <span class="text-xs font-medium text-brand-yellow">2 Kegiatan</span>
-              </div>
-            </div>
-          @endfor
+
+        <div id="agenda-list" class="flex flex-col justify-center items-center gap-3 w-5/6 mx-auto">
+          {{-- Diisi JS: daftar agenda kegiatan pada hari terpilih --}}
         </div>
       </div>
 
-      <div class="flex flex-col justify-center items-center gap-3 w-5/6 mx-auto">
-        <div class="text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow self-start">
-          3 Kegiatan pertama pada tanggal <span class="font-semibold">4 Maret 2025</span>
-        </div>
-        @for ($i = 1; $i <= 3; $i++)
-          <div class="rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue w-full shadow">
-            <p class="font-bold text-gray-800">Agenda Kegiatan {{ $i }}</p>
-            <p class="text-sm text-gray-700"><b>Waktu</b>: 13.00 WITA</p>
-            <p class="text-sm text-gray-700"><b>Pelaksana</b>: Pemkot Samarinda</p>
-            <p class="text-sm text-gray-700"><b>Lokasi</b>: Ruang Rapat 1 Kantor Pemkot Samarinda</p>
-            <div
-              class="text-sm bg-brand-blue text-brand-yellow px-2.5 py-1 rounded-full shadow inline-block font-semibold mt-1.5">
-              Dihadiri oleh: Bidang Teknologi dan Media Informasi (Teminfo)
-            </div>
-          </div>
-        @endfor
+      <div class="flex justify-center pt-3 lg:pt-6">
+        <a href="{{ route('guest.agenda-kegiatan.index') }}"
+          class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Lihat Semua Agenda Kegiatan
+        </a>
       </div>
-    </div>
-
-    <div class="flex justify-center pt-6 lg:pt-12">
-      <a href="{{ route('guest.profil.struktur-organisasi.index') }}"
-        class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Lihat Semua Agenda Kegiatan
-      </a>
     </div>
   </div>
 
@@ -288,27 +266,30 @@
   <div class="bg-gray-200 p-6 md:p-12">
     @include('guest.components.section-title', [
         'page_subtitle' => 'Statistik',
-        'page_title' => 'Jumlah Pengunjung',
+        'page_title' => 'Statistik Pengunjung',
     ])
 
     <div class="flex justify-center items-center">
       <div class="grid sm:grid-cols-3 gap-2 md:gap-4">
-        <div href="#"
-          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">HARI INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">
+            {{ $statistik_pengunjung['today'] }}
+          </p>
         </div>
 
-        <div href="#"
-          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">MINGGU INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">
+            {{ $statistik_pengunjung['this_week'] }}
+          </p>
         </div>
 
-        <div href="#"
-          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">BULAN INI</h5>
-          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
+          <p class="text-2xl md:text-3xl font-bold text-brand-yellow">
+            {{ $statistik_pengunjung['this_month'] }}
+          </p>
         </div>
       </div>
     </div>
@@ -382,6 +363,158 @@
           AutoScroll: window.SplideAutoScroll
         });
       }
+    });
+
+    // Agenda Kegiatan JS
+    document.addEventListener('DOMContentLoaded', function() {
+      // Helper untuk format tanggal
+      function formatDate(date) {
+        return date.toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+      }
+
+      function formatTime(timeStr) {
+        return timeStr ? timeStr.substring(0, 5) : '';
+      }
+
+      // Inisialisasi minggu berjalan
+      let currentDate = new Date();
+      let currentWeekStart = new Date(currentDate);
+      currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1); // Senin
+      let currentWeekEnd = new Date(currentWeekStart);
+      currentWeekEnd.setDate(currentWeekStart.getDate() + 6); // Minggu
+
+      let selectedDate = new Date(currentDate);
+
+      function updateWeekLabel() {
+        document.getElementById('agenda-week-label').textContent =
+          formatDate(currentWeekStart) + ' - ' + formatDate(currentWeekEnd);
+      }
+
+      function renderDays(weekCounts = {}) {
+        const daysContainer = document.getElementById('agenda-days');
+        daysContainer.innerHTML = '';
+        for (let i = 0; i < 7; i++) {
+          let dayDate = new Date(currentWeekStart);
+          dayDate.setDate(currentWeekStart.getDate() + i);
+          let isToday = dayDate.toDateString() === currentDate.toDateString();
+          let isSelected = dayDate.toDateString() === selectedDate.toDateString();
+          let dayStr = dayDate.toISOString().slice(0, 10);
+
+          // Tentukan style card
+          let cardClass = 'rounded-2xl font-bold w-[95px] py-2.5 flex flex-col items-center justify-center shadow cursor-pointer ';
+          if (isSelected && isToday) {
+            cardClass += 'bg-brand-blue text-white border-2 border-brand-yellow';
+          } else if (isSelected) {
+            cardClass += 'bg-brand-blue text-white';
+          } else if (isToday) {
+            cardClass += 'bg-brand-yellow text-black border-2 border-brand-yellow';
+          } else {
+            cardClass += 'bg-brand-yellow/30 text-black';
+          }
+
+          let kegiatanCount = weekCounts[dayStr] ?? 0;
+          let kegiatanColor = isSelected ? 'text-brand-yellow' : 'text-brand-blue';
+
+          let dayDiv = document.createElement('div');
+          dayDiv.className = cardClass;
+          dayDiv.dataset.date = dayStr;
+          dayDiv.innerHTML = `
+            <div>${dayDate.getDate()}</div>
+            <div>${dayDate.toLocaleDateString('id-ID', { weekday: 'long' })}</div>
+            <div><span class="text-xs font-medium ${kegiatanColor}" id="agenda-count-${dayStr}">${kegiatanCount} Kegiatan</span></div>
+          `;
+          dayDiv.onclick = function() {
+            selectedDate = dayDate;
+            renderDays(weekCounts);
+            fetchAgendaList();
+          };
+          daysContainer.appendChild(dayDiv);
+        }
+      }
+
+      function fetchWeekCounts(callback) {
+        const startStr = currentWeekStart.toISOString().slice(0, 10);
+        const endStr = currentWeekEnd.toISOString().slice(0, 10);
+        fetch(`{{ route('guest.agenda-kegiatan.ajax-week-count') }}?start=${startStr}&end=${endStr}`)
+          .then(res => res.json())
+          .then(data => {
+            callback(data);
+          });
+      }
+
+      function fetchAgendaList() {
+        const dateStr = selectedDate.toISOString().slice(0, 10);
+        fetch(`{{ route('guest.agenda-kegiatan.ajax') }}?start=${dateStr}&end=${dateStr}`)
+          .then(res => res.json())
+          .then(data => {
+            const listContainer = document.getElementById('agenda-list');
+            listContainer.innerHTML = '';
+            let infoDiv = document.createElement('div');
+            infoDiv.className =
+            'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow self-start';
+            infoDiv.innerHTML =
+              `${data.length} Kegiatan pada tanggal <span class="font-semibold">${formatDate(selectedDate)}</span>`;
+            listContainer.appendChild(infoDiv);
+
+            if (data.length === 0) {
+              let emptyDiv = document.createElement('div');
+              emptyDiv.className =
+                'rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue w-full shadow text-center';
+              emptyDiv.textContent = 'Tidak ada agenda kegiatan pada tanggal ini.';
+              listContainer.appendChild(emptyDiv);
+            } else {
+              data.forEach(item => {
+                let agendaDiv = document.createElement('div');
+                agendaDiv.className = 'rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue w-full shadow';
+                agendaDiv.innerHTML = `
+                  <p class="font-bold text-black">${item.nama}</p>
+                  <p class="text-sm text-gray-700"><b>Waktu</b>: ${formatTime(item.waktu_mulai)} WITA</p>
+                  <p class="text-sm text-gray-700"><b>Pelaksana</b>: ${item.pelaksana}</p>
+                  <p class="text-sm text-gray-700"><b>Lokasi</b>: ${item.tempat}</p>
+                  <p class="text-sm text-black"><b>Dihadiri oleh: ${item.dihadiri_oleh}</b></p>
+                `;
+                listContainer.appendChild(agendaDiv);
+              });
+            }
+          });
+      }
+
+      function updateAgendaWeek() {
+        updateWeekLabel();
+        fetchWeekCounts(function(weekCounts) {
+          renderDays(weekCounts);
+          fetchAgendaList();
+        });
+      }
+
+      document.getElementById('agenda-prev-week').onclick = function() {
+        currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+        currentWeekEnd.setDate(currentWeekEnd.getDate() - 7);
+        selectedDate = new Date(currentWeekStart);
+        updateAgendaWeek();
+      };
+      document.getElementById('agenda-next-week').onclick = function() {
+        currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+        currentWeekEnd.setDate(currentWeekEnd.getDate() + 7);
+        selectedDate = new Date(currentWeekStart);
+        updateAgendaWeek();
+      };
+      document.getElementById('agenda-today-btn').onclick = function() {
+        currentDate = new Date();
+        currentWeekStart = new Date(currentDate);
+        currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1);
+        currentWeekEnd = new Date(currentWeekStart);
+        currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
+        selectedDate = new Date(currentDate);
+        updateAgendaWeek();
+      };
+
+      // Inisialisasi
+      updateAgendaWeek();
     });
   </script>
 @endsection
