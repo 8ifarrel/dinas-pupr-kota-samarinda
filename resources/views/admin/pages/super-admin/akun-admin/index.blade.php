@@ -1,4 +1,4 @@
-@extends('admin.layouts.ppid-pelaksana')
+@extends('admin.layouts.super')
 
 @section('css')
   {{-- DataTables --}}
@@ -6,87 +6,48 @@
 @endsection
 
 @section('slot')
-
-{{-- ALERT SUCCESS --}}
-  @if (session('success'))
-    <div id="alert-success" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-100" role="alert">
-      <svg class="flex-shrink-0 w-4 h-4 me-2" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M16.707 5.293a1 1 0 0 0-1.414 0L8 12.586l-3.293-3.293A1 1 0 0 0 3.293 10.707l4 4a1 1 0 0 0 1.414 0l8-8a1 1 0 0 0 0-1.414z"/>
-      </svg>
-      <div class="ms-3 text-sm font-medium">
-        {{ session('success') }}
-      </div>
-      <button type="button" class="ms-auto bg-green-100 text-green-500 rounded-lg p-1.5 hover:bg-green-200" data-dismiss-target="#alert-success" aria-label="Close">
-        <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
-          <path stroke="currentColor" stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"/>
-        </svg>
-      </button>
-    </div>
-  @endif
-
-  {{-- Tombol Tambah --}}
-  <a href="{{ route('admin.ppid-pelaksana.create', ['kategori' => request()->query('kategori')]) }}" class="...">
-    Tambah PPID Pelaksana
-  </a>
-
-  <a href="{{ route('admin.ppid-pelaksana.create', ['kategori' => request()->query('kategori')]) }}"
+  <a href="{{ route('admin.super.akun-admin.create') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
-    <i class="fa-solid fa-plus me-1"></i>Tambah PPID Pelaksana
+    <i class="fa-solid fa-plus me-1"></i>Tambah Akun Admin
   </a>
-
-  @if (session('success'))
-  <div id="alert-success" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-100" role="alert">
-    <svg class="flex-shrink-0 w-4 h-4 me-2" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M16.707 5.293a1 1 0 0 0-1.414 0L8 12.586l-3.293-3.293A1 1 0 0 0 3.293 10.707l4 4a1 1 0 0 0 1.414 0l8-8a1 1 0 0 0 0-1.414z"/>
-    </svg>
-    <div class="ms-3 text-sm font-medium">
-      {{ session('success') }}
-    </div>
-    <button type="button" class="ms-auto bg-green-100 text-green-500 rounded-lg p-1.5 hover:bg-green-200" data-dismiss-target="#alert-success" aria-label="Close">
-      <svg class="w-3 h-3" fill="none" viewBox="0 0 14 14">
-        <path stroke="currentColor" stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7L1 13"/>
-      </svg>
-    </button>
-  </div>
-@endif
-
 
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
     <div class="relative overflow-x-auto text-sm md:text-base">
-      <table id="ppid-pelaksana" class="stripe hover row-border table-auto" style="width:100%">
+      <table id="akun-admin" class="stripe hover row-border table-auto" style="width:100%">
         <thead>
           <tr>
             <th>#</th>
-            <th>Judul</th>
-            <th>File</th>
-            <th>Download Count</th>
+            <th>Nama Lengkap</th>
+            <th>Username</th>
+            <th>Susunan Organisasi</th>
             <th>Dibuat Pada</th>
+            <th>Diubah Pada</th>
             <th>Kelola</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($ppid_pelaksana as $item)
+          @foreach ($users as $item)
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->judul }}</td>
-              <td>
-                <a href="{{ Storage::url($item->file) }}" target="_blank" class="inline-flex justify-center items-center gap-1 h-8 font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                  <i class="fa-solid fa-eye"></i> <span class="font-medium whitespace-nowrap text-xs sm:text-sm">Lihat</span>
-                </a>
-              </td>
-              <td>{{ $item->download_count }}</td>
-              <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
+              <td>{{ $item->fullname }}</td>
+              <td>{{ $item->name }}</td>
+              <td>{{ $item->susunanOrganisasi->nama_susunan_organisasi }}</td>
+              <td>{{ $item->created_at->format('d M Y H:i:s') }}</td>
+              <td>{{ $item->updated_at->format('d M Y H:is') }}</td>
               <td>
                 <div class="flex gap-2">
-                  <a href="{{ route('admin.ppid-pelaksana.edit', $item->id) }}"
+                  <a href="{{ route('admin.super.akun-admin.edit', $item->id) }}"
                     class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-pencil"></i>
                   </a>
-                  <button data-modal-target="deleteModal-{{ $item->id }}"
-                    data-modal-toggle="deleteModal-{{ $item->id }}"
-                    class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
+                  @if ($item->id_susunan_organisasi != 1)
+                    <button data-modal-target="deleteModal-{{ $item->id }}"
+                      data-modal-toggle="deleteModal-{{ $item->id }}"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  @endif
+
                 </div>
               </td>
             </tr>
@@ -113,11 +74,12 @@
                   </div>
                   <div class="p-4 md:p-5 space-y-4">
                     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      Apakah Anda yakin ingin menghapus PPID Pelaksana <strong>{{ $item->judul }}</strong>?
+                      Apakah Anda yakin ingin menghapus Akun Admin <strong>{{ $item->fullname }}</strong> dengan username
+                      <strong>{{ $item->name }}</strong>?
                     </p>
                   </div>
                   <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <form action="{{ route('admin.ppid-pelaksana.destroy', $item->id) }}" method="POST">
+                    <form action="{{ route('admin.super.akun-admin.destroy', $item->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
                       <button type="submit"
@@ -137,10 +99,11 @@
         <tfoot>
           <tr>
             <th>#</th>
-            <th>Judul</th>
-            <th>File</th>
-            <th>Download Count</th>
+            <th>Nama Lengkap</th>
+            <th>Username</th>
+            <th>Susunan Organisasi</th>
             <th>Dibuat Pada</th>
+            <th>Diubah Pada</th>
             <th>Kelola</th>
           </tr>
         </tfoot>
@@ -154,7 +117,7 @@
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <script>
     $(document).ready(function() {
-      $('#ppid-pelaksana').DataTable({
+      $('#akun-admin').DataTable({
         responsive: true
       });
     });

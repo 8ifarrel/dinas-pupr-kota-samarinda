@@ -112,25 +112,31 @@ Route::prefix('berita')->group(function () {
 /**
  * Pengumuman
  */
-Route::prefix('pengumuman')->group(callback: function () {
+Route::prefix('pengumuman')->group(function () {
 	Route::get('/', [PengumumanGuestController::class, 'index'])
 		->name('guest.pengumuman.index');
 	Route::post('/store/{slug}', [PengumumanGuestController::class, 'store'])
 		->name('guest.pengumuman.store');
 	Route::get('/download/{slug}', [PengumumanGuestController::class, 'download'])
 		->name('guest.pengumuman.download');
-});
+	});
 
 /**
  * PPID Pelaksana
  */
 
-Route::prefix('ppid-pelaksana')->group(callback: function () {
+ Route::prefix('ppid-pelaksana')->group(function () {
+	// Route baru untuk halaman utama ppid-pelaksana
+	Route::get('/', [PPIDPelaksanaGuestController::class, 'index'])
+		->name('guest.ppid-pelaksana.index');
+
 	Route::get('/kategori', [PPIDPelaksanaKategoriGuestController::class, 'index'])
 		->name('guest.ppid-pelaksana.kategori.index');
+
 	Route::get('/kategori/{slug}', [PPIDPelaksanaKategoriGuestController::class, 'show'])
 		->name('guest.ppid-pelaksana.kategori.show');
-	// Tambahkan route download
+
+	// Route download
 	Route::get('/download/{id}', [PPIDPelaksanaGuestController::class, 'download'])
 		->name('guest.ppid-pelaksana.download');
 });

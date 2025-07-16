@@ -9,6 +9,17 @@
 @endsection
 
 @section('slot')
+@if (session('success')) 
+  <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-300" role="alert">
+    {{ session('success') }}
+  </div>
+@endif
+
+@if (session('error'))
+  <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-300" role="alert">
+    {{ session('error') }}
+  </div>
+@endif
   <a href="{{ route('admin.slider.create') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5">
     <i class="fa-solid fa-plus me-1"></i>Tambah Slider
