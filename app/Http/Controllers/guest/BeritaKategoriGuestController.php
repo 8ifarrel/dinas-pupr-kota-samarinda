@@ -13,8 +13,8 @@ class BeritaKategoriGuestController extends Controller
   public function index()
   {
     $meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
-    $page_title = "Informasi PUPR";
-    $page_subtitle = "Kategori Berita";
+    $page_subtitle = "Informasi PUPR";
+    $page_title = "Kategori Berita";
 
     $berita_kategori = BeritaKategori::with('susunanOrganisasi')
       ->select('id_berita_kategori', 'id_susunan_organisasi', 'ikon_berita_kategori')
@@ -36,12 +36,13 @@ class BeritaKategoriGuestController extends Controller
   public function show($slug_kategori)
   {
     $meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda";
-    $page_title = "Informasi PUPR";
-    $page_subtitle = "Berita dari " . str_replace('-', ' ', ucfirst($slug_kategori));
+    $page_subtitle = "Informasi PUPR";
 
     $berita_kategori = BeritaKategori::whereHas('susunanOrganisasi', function ($query) use ($slug_kategori) {
       $query->where('slug_susunan_organisasi', $slug_kategori);
     })->firstOrFail();
+
+    $page_title = "Berita dari " . $berita_kategori->susunanOrganisasi->nama_susunan_organisasi;
 
     $berita = Berita::with(['kategori', 'kategori.jabatan'])
       ->where('id_berita_kategori', $berita_kategori->id_berita_kategori)
@@ -51,7 +52,7 @@ class BeritaKategoriGuestController extends Controller
         'foto_berita',
         'created_at',
         'views_count'
-      )->paginate(6);
+      )->paginate(8);
 
     $berita_lainnya = Berita::select(
       'judul_berita',

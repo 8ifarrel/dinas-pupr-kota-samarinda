@@ -1,6 +1,10 @@
-@extends('guest.layouts.berita')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.start')
+  @vite('resources/css/splidejs.css')
+@endsection
+
+@section('document.body')
   <div class="lg:flex lg:gap-5 xl:gap-7 py-5 md:py-8 lg:py-12 px-3 sm:px-6 lg:px-12 justify-center">
     {{-- Kategori --}}
     <div class="hidden lg:block flex-shrink-0 lg:w-44 xl:w-48 3xl:w-64">
@@ -121,15 +125,15 @@
 
     <div class="block lg:hidden mt-5">
       <div class="flex mb-5">
-        <h2 class="text-xl xs:text-2xl sm:text-3xl font-bold">Berita Lainnya</h2>
-        <hr class="ms-2 sm:ms-4 w-24 sm:w-48 h-[3px] xs:h-1 bg-black border-0 my-auto dark:bg-gray-700">
+        <h2 class="text-2xl sm:text-3xl font-bold">Berita Lainnya</h2>
+        <hr class="ms-4 w-20 sm:w-48 h-1 bg-black border-0 my-auto dark:bg-gray-700">
       </div>
 
       <div class="splide">
         <div class="splide__track">
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
-              <li class="splide__slide mx-2">
+              <li class="splide__slide px-2">
                 <img class="aspect-[16/9]"
                   src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
                   alt="{{ $item->judul_berita ?? '' }}" />
@@ -141,4 +145,36 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('document.end')
+  @vite('resources/js/splidejs.js')
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var splide = new Splide('.splide', {
+        type: 'loop',
+        focus: 'center',
+        drag: 'free',
+        breakpoints: {
+          640: {
+            perPage: 2,
+          },
+          768: {
+            perPage: 3,
+          },
+          1024: {
+            perPage: 3,
+          },
+          1280: {
+            perPage: 4,
+          },
+          1920: {
+            perPage: 4,
+          }
+        },
+        pagination: false,
+      });
+      splide.mount();
+    });
+  </script>
 @endsection

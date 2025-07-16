@@ -289,7 +289,7 @@
     {{-- Footer --}}
     <footer class="">
       <p class="mx-auto text-center font-semibold text-xs w-[85%] lg:w-full lg:text-base">
-        &copy; 2024 Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda.
+        &copy; 2024-2025 Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda.
       </p>
     </footer>
   </main>

@@ -11,8 +11,8 @@ class PPIDPelaksanaKategoriGuestController extends Controller
   public function index()
   {
     $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-    $page_subtitle = "Kategori PPID Pelaksana";
-    $page_title = "Informasi PUPR";
+    $page_title = "Kategori PPID Pelaksana";
+    $page_subtitle = "Informasi PUPR";
     $ppid_pelaksana_katgori = PPIDPelaksanaKategori::withCount('ppid_pelaksana')->get();
 
     return view('guest.pages.ppid-pelaksana.kategori.index', [
@@ -26,9 +26,9 @@ class PPIDPelaksanaKategoriGuestController extends Controller
   public function show($slug)
   {
     $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-    $page_title = "Informasi PUPR";
-    $page_subtitle = "PPID Pelaksana";
+    $page_subtitle = "Informasi PUPR";
     $ppid_pelaksana_kategori = PPIDPelaksanaKategori::where('slug', $slug)->firstOrFail();
+    $page_title = "PPID Pelaksana " . $ppid_pelaksana_kategori->nama;
     $ppid_pelaksana = $ppid_pelaksana_kategori->ppid_pelaksana()->orderBy('created_at', 'desc');
 
     return view('guest.pages.ppid-pelaksana.kategori.show', [

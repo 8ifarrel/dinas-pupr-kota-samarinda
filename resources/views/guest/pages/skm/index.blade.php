@@ -1,10 +1,20 @@
-@extends('guest.layouts.skm')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.start')
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="dns-prefetch" href="https://lottie.host">
+  <link rel="preconnect" href="https://lottie.host" crossorigin>
+
+  @vite('resources/css/sweetalert2.css')
+@endsection
+
+@section('document.body')
   @if (session('success'))
     <script>
-      Swal.fire({
-        html: `
+      document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+          html: `
         <div class="flex flex-col items-center">
           <!-- ICON ATAS -->
           <dotlottie-player
@@ -26,18 +36,18 @@
           </p>
         </div>
       `,
-        icon: null,
-        showConfirmButton: true,
-        confirmButtonText: 'Oke',
-        customClass: {
-          popup: 'tv-vertical:w-full tv-vertical:max-w-2xl tv-vertical:pb-10 rounded-2xl',
-          confirmButton: 'rounded-full bg-brand-blue text-brand-yellow px-4 py-2 text-lg font-bold transition-all duration-200 hover:bg-brand-yellow hover:text-brand-blue active:scale-95 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed tv-vertical:text-2xl tv-vertical:px-10 tv-vertical:py-4'
-        },
-        buttonsStyling: false
+          icon: null,
+          showConfirmButton: true,
+          confirmButtonText: 'Oke',
+          customClass: {
+            popup: 'tv-vertical:w-full tv-vertical:max-w-2xl tv-vertical:pb-10 rounded-2xl',
+            confirmButton: 'rounded-full bg-brand-blue text-brand-yellow px-4 py-2 text-lg font-bold transition-all duration-200 hover:bg-brand-yellow hover:text-brand-blue active:scale-95 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed tv-vertical:text-2xl tv-vertical:px-10 tv-vertical:py-4'
+          },
+          buttonsStyling: false
+        });
       });
     </script>
   @endif
-
 
   <div
     class="bg-gray-50 py-4 tv-vertical:py-16 tv-vertical:flex tv-vertical:items-center tv-vertical:h-[calc(100vh-639.516px)]">
@@ -111,4 +121,9 @@
   </div>
 @endsection
 
+@section('document.end')
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer>
+  </script>
 
+  @vite('resources/js/sweetalert2.js')
+@endsection

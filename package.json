@@ -13,15 +13,18 @@
         "vite": "^6.0.0"
     },
     "dependencies": {
-        "axios": "^1.6.4",
+        "@splidejs/splide": "^4.1.4",
+        "@splidejs/splide-extension-auto-scroll": "^0.5.3",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/typography": "^0.5.13",
+        "axios": "^1.6.4",
         "cropperjs": "^1.6.2",
         "datatables.net": "^2.3.2",
         "datatables.net-dt": "^2.3.2",
         "flowbite": "^3.1.2",
         "jquery": "^3.7.1",
         "lightbox2": "^2.11.5",
+        "sweetalert2": "^11.22.2",
         "tailwindcss-filters": "^3.0.0",
         "trix": "^2.1.15",
         "viewerjs": "^1.11.7"

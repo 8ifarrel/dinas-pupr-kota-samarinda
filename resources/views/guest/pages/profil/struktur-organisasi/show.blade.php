@@ -1,6 +1,10 @@
-@extends('guest.layouts.struktur-organisasi')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.start')
+  @vite('resources/css/splidejs.css')
+@endsection
+
+@section('document.body')
   <div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48">
     <div class="text-center mb-2 lg:mb-3">
       <span
@@ -90,7 +94,8 @@
             <div class="text-center text-sm text-white font-semibold bg-brand-blue rounded-t-xl py-2">
               {{ $item->kategori->susunanOrganisasi->nama_susunan_organisasi ?? '' }}
             </div>
-            <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="{{ $item->judul_berita }}" />
+            <img class="aspect-[16/9]"
+              src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}" />
             <div class="p-5 flex-grow flex flex-col justify-between">
               <div>
                 <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -125,40 +130,34 @@
   @endif
 @endsection
 
-@section('js')
-  {{-- Splide --}}
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+@section('document.end')
+  @vite('resources/js/splidejs.js')
 
   <script>
-    const splide = new Splide('.splide', {
-      type: 'loop',
-      focus: 'center',
-      breakpoints: {
-        640: {
-          perPage: 1.25,
-        },
-        768: {
-          perPage: 1.5,
-        },
-        1024: {
-          perPage: 1.75,
-        },
-        1280: {
-          perPage: 2,
-        },
-        1920: {
-          perPage: 3,
-        }
-      },
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.splide').forEach(function(element) {
+        new Splide(element, {
+          type: 'loop',
+          focus: 'center',
+          breakpoints: {
+            640: {
+              perPage: 1.25
+            },
+            768: {
+              perPage: 1.5
+            },
+            1024: {
+              perPage: 1.75
+            },
+            1280: {
+              perPage: 2
+            },
+            1920: {
+              perPage: 3
+            },
+          },
+        }).mount();
+      });
     });
-
-    splide.mount(window.splide);
   </script>
 @endsection
-
-@section('css')
-  {{-- Splide --}}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
-@endsection
-
-

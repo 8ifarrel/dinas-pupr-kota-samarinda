@@ -11,8 +11,8 @@ class PengumumanGuestController extends Controller
 	public function index()
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
-		$page_title = "Informasi PUPR";
-		$page_subtitle = "Pengumuman";
+		$page_subtitle = "Informasi PUPR";
+		$page_title = "Pengumuman";
 
 		$pengumuman = Pengumuman::select(
 			"judul_pengumuman",

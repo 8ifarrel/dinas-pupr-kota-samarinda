@@ -1,17 +1,12 @@
-@extends('guest.layouts.berita')
+@extends('guest.layouts.main')
 
-@section('slot')
-  <div class="py-5 md:py-12 lg:px-48 3xl:px-48">
-    <div class="text-center mb-2 lg:mb-3">
-      <span
-        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
-      </span>
-    </div>
+@section('document.start')
+  @vite('resources/css/splidejs.css')
+@endsection
 
-    <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ $page_subtitle }}
-    </h1>
+@section('document.body')
+  <div class="py-5 md:py-12 px-5 lg:px-48 3xl:px-48">
+    @include('guest.components.section-title')
 
     <div class="mx-auto mb-5" data-slug-kategori="{{ $slug_kategori }}">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -30,7 +25,7 @@
       </div>
     </div>
 
-    <ul id="berita-list" class="grid grid-cols-2 gap-5">
+    <ul id="berita-list" class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-5">
       @foreach ($berita as $item)
         <li>
           <a href="{{ route('guest.berita.show', ['slug_berita' => $item->slug_berita]) }}">
@@ -38,10 +33,13 @@
               <img class="w-full h-full object-cover aspect-[16/9]"
                 src="{{ Storage::disk('public')->exists($item->foto_berita) ? Storage::url($item->foto_berita) : asset('image/placeholder/no-image-16x9.webp') }}"
                 alt="{{ $item->judul_berita }}" />
+              <div class="flex items-center gap-1.5 text-sm my-0.5">
+                <i class="fa-solid fa-calendar-days"></i>
+                <time>{{ $item->created_at->translatedFormat('l, d F Y (H:i)') }}</time>
+              </div>
               <figcaption>
                 <h1 class="font-medium text-lg">{{ $item->judul_berita }}</h1>
               </figcaption>
-              <time>{{ $item->created_at->format('D, d M Y') }}</time>
             </figure>
           </a>
         </li>
@@ -54,16 +52,17 @@
 
     <div class="mt-10">
       <div class="flex mb-5">
-        <h2 class="text-3xl font-bold">Berita Lainnya</h2>
-        <hr class="ms-4 w-48 h-1 bg-black border-0 my-auto dark:bg-gray-700">
+        <h2 class="text-2xl sm:text-3xl font-bold">Berita Lainnya</h2>
+        <hr class="ms-4 w-20 sm:w-48 h-1 bg-black border-0 my-auto dark:bg-gray-700">
       </div>
 
       <div class="splide">
         <div class="splide__track">
           <ul class="splide__list">
             @foreach ($berita_lainnya as $item)
-              <li class="splide__slide mx-2">
-                <img class="aspect-[16/9]" src="{{ Storage::url($item->foto_berita) }}" alt="">
+              <li class="splide__slide px-2 !w-[200px] 2xl:!w-[350px]">
+                <img class="aspect-[16/9] !w-[200px] 2xl:!w-[350px]" src="{{ Storage::url($item->foto_berita) }}"
+                  alt="">
                 <h1>{{ Str::limit($item->judul_berita, 60) }}</h1>
               </li>
             @endforeach
@@ -72,6 +71,38 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('document.end')
+  @vite('resources/js/splidejs.js')
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var splide = new Splide('.splide', {
+        type: 'loop',
+        focus: 'center',
+        drag: 'free',
+        breakpoints: {
+          640: {
+            perPage: 2,
+          },
+          768: {
+            perPage: 3,
+          },
+          1024: {
+            perPage: 3,
+          },
+          1280: {
+            perPage: 4,
+          },
+          1920: {
+            perPage: 4,
+          }
+        },
+        pagination: false,
+      });
+      splide.mount();
+    });
+  </script>
 
   <script>
     function debounce(func, wait) {
@@ -119,12 +150,26 @@
           <figure>
             <img class="w-full h-full object-cover aspect-[16/9]" src="${item.foto_berita}" alt="image description">
             <figcaption>
+              <div class="flex items-center gap-1.5 text-sm my-0.5">
+                <i class="fa-solid fa-calendar-days"></i> 
+                <time>
+                  ${new Date(item.created_at).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                  })} (${new Date(item.created_at).toLocaleTimeString('id-ID', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                  })})
+                </time>
+              </div>
               <h1 class="font-medium text-lg">${item.judul_berita}</h1>
             </figcaption>
-            <time>${new Date(item.created_at).toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</time>
           </figure>
         </a>
-      `;
+        `;
         beritaList.appendChild(li);
       });
 

@@ -1,6 +1,10 @@
 @extends('guest.layouts.buku-tamu')
 
-@section('slot')
+@section('document.head')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
+
+@section('document.body')
   <img class="fixed w-full h-full object-cover -z-10" src="{{ asset('image/buku-tamu/bg_form.png') }}"
     alt="Background Image" />
   <div class="min-h-screen flex justify-center items-center p-4">
@@ -25,7 +29,8 @@
         {{-- Nomor Telepon --}}
         <div class="flex gap-3">
           <div class="mb-3 w-1/2">
-            <label for="nomor_telepon" class="block text-slate-700 text-lg font-semibold mb-1">Nomor Telepon Pengunjung</label>
+            <label for="nomor_telepon" class="block text-slate-700 text-lg font-semibold mb-1">Nomor Telepon
+              Pengunjung</label>
             <input type="text" id="nomor_telepon" name="nomor_telepon" value="{{ old('nomor_telepon') }}" required
               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
             <div class="text-gray-500 mt-1">Masukkan nomor telepon yang dapat dihubungi melalui WhatsApp</div>
@@ -88,5 +93,3 @@
     </div>
   </div>
 @endsection
-
-

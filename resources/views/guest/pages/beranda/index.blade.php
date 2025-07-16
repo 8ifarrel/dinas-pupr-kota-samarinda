@@ -1,6 +1,10 @@
-@extends('guest.layouts.beranda')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.start')
+  @vite('resources/css/splidejs.css')
+@endsection
+
+@section('document.body')
   {{-- Slider --}}
   <div id="default-carousel" class="relative w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
@@ -96,7 +100,6 @@
             SAMBUTAN KEPALA DINAS
           </h1>
 
-          {{-- Jika ingin menampilkan sambutan, tambahkan field sambutan di tabel/model --}}
           <p>
             {{ $kepala_dinas->susunanOrganisasi->deskripsi_susunan_organisasi ?? '' }}
           </p>
@@ -114,18 +117,10 @@
 
   {{-- Berita --}}
   <div class="p-10 md:p-12">
-    <div class="text-center pb-6 lg:pb-12 grid gap-3">
-      <div>
-        <span
-          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-          BERITA TERBARU
-        </span>
-      </div>
-
-      <h1 class="font-bold text-3xl">
-        SEPUTAR DPUPR KOTA SAMARINDA
-      </h1>
-    </div>
+    @include('guest.components.section-title', [
+        'page_subtitle' => 'BERITA TERKINI',
+        'page_title' => 'Seputar DPUPR Kota Samarinda',
+    ])
 
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($berita as $item)
@@ -171,18 +166,11 @@
 
   {{-- Struktur Organisasi --}}
   <div class="bg-gray-200 p-10 md:p-12">
-    <div class="text-center pb-6 lg:pb-12 grid gap-3">
-      <div>
-        <span
-          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-          STRUKTUR ORGANISASI
-        </span>
-      </div>
+    @include('guest.components.section-title', [
+        'page_subtitle' => 'STRUKTUR ORGANISASI',
+        'page_title' => 'Susunan Organisasi Kami',
+    ])
 
-      <h1 class="font-bold text-3xl">
-        ORGANISASI KAMI
-      </h1>
-    </div>
 
     <div class="w-fit grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-7">
       @foreach ($struktur_organisasi as $i => $item)
@@ -224,55 +212,107 @@
   </div>
 
   {{-- Agenda Kegiatan --}}
-  {{-- <div class="p-10 md:p-12">
-    <div class="text-center pb-6 lg:pb-12 grid gap-3">
-      <div>
-        <span
-          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-          JADWAL
-        </span>
+  <div class="p-10 md:p-12">
+    @include('guest.components.section-title', [
+        'page_subtitle' => 'Jadwal',
+        'page_title' => 'Agenda Kegiatan',
+    ])
+
+    {{-- ayok hud kita ngoding bareng lagi :> --}}
+    <div class="space-y-6 w-fit mx-auto">
+      {{-- Tanggal --}}
+      <div class="space-y-2.5">
+        <div class="flex justify-between">
+          <div class="flex justify-start items-center gap-1.5">
+            <button class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow">
+              1 Maret 2025 - 7 Maret 2025
+            </span>
+            <button class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <button class="bg-brand-yellow text-brand-blue font-semibold rounded-xl px-3.5 py-1 shadow">
+            Hari ini
+          </button>
+        </div>
+        <div
+          class="rounded-2xl bg-brand-blue/20 p-4 text-center border border-brand-blue flex flex-row items-center justify-center gap-2.5 shadow">
+          @for ($i = 1; $i <= 7; $i++)
+            <div
+              class="rounded-2xl bg-brand-blue text-white font-bold w-[95px] py-2.5 flex flex-col items-center justify-center shadow">
+              <div> {{-- Tanggal --}}
+                {{ $i }}
+              </div>
+              <div> {{-- Hari, mulai dari Senin --}}
+                {{ now()->startOfWeek()->addDays($i - 1)->translatedFormat('l') }}
+              </div>
+              <div> {{-- Jka di dalamnya ada agenda kegiatan --}}
+                <span class="text-xs font-medium text-brand-yellow">2 Kegiatan</span>
+              </div>
+            </div>
+          @endfor
+        </div>
       </div>
 
-      <h1 class="font-bold text-3xl">
-        AGENDA KEGIATAN
-      </h1>
+      <div class="flex flex-col justify-center items-center gap-3 w-5/6 mx-auto">
+        <div class="text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow self-start">
+          3 Kegiatan pertama pada tanggal <span class="font-semibold">4 Maret 2025</span>
+        </div>
+        @for ($i = 1; $i <= 3; $i++)
+          <div class="rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue w-full shadow">
+            <p class="font-bold text-gray-800">Agenda Kegiatan {{ $i }}</p>
+            <p class="text-sm text-gray-700"><b>Waktu</b>: 13.00 WITA</p>
+            <p class="text-sm text-gray-700"><b>Pelaksana</b>: Pemkot Samarinda</p>
+            <p class="text-sm text-gray-700"><b>Lokasi</b>: Ruang Rapat 1 Kantor Pemkot Samarinda</p>
+            <div
+              class="text-sm bg-brand-blue text-brand-yellow px-2.5 py-1 rounded-full shadow inline-block font-semibold mt-1.5">
+              Dihadiri oleh: Bidang Teknologi dan Media Informasi (Teminfo)
+            </div>
+          </div>
+        @endfor
+      </div>
     </div>
-  </div> --}}
+
+    <div class="flex justify-center pt-6 lg:pt-12">
+      <a href="{{ route('guest.profil.struktur-organisasi.index') }}"
+        class="text-brand-blue bg-brand-yellow font-bold rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Lihat Semua Agenda Kegiatan
+      </a>
+    </div>
+  </div>
 
   {{-- Statistik Pengunjung --}}
-  {{-- <div class="bg-gray-200 p-6 md:p-12">
-    <div class="text-center pb-6 lg:pb-12 grid gap-3">
-      <div>
-        <span
-          class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-          STATISTIK
-        </span>
-      </div>
-
-      <h1 class="font-bold text-3xl">
-        STATISTIK PENGUNJUNG
-      </h1>
-    </div>
+  <div class="bg-gray-200 p-6 md:p-12">
+    @include('guest.components.section-title', [
+        'page_subtitle' => 'Statistik',
+        'page_title' => 'Jumlah Pengunjung',
+    ])
 
     <div class="flex justify-center items-center">
       <div class="grid sm:grid-cols-3 gap-2 md:gap-4">
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div href="#"
+          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">HARI INI</h5>
           <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
 
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div href="#"
+          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">MINGGU INI</h5>
           <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
 
-        <div href="#" class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
+        <div href="#"
+          class="block max-w-xs py-3 px-5 md:px-6 md:py-4 bg-brand-blue text-center rounded-2xl shadow">
           <h5 class="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-white">BULAN INI</h5>
           <p class="text-2xl md:text-3xl font-bold text-brand-yellow">0</p>
         </div>
       </div>
     </div>
-  </div> --}}
+  </div>
 
   {{-- Partner --}}
   <div class="p-8 sm:p-10 md:p-12">
@@ -284,9 +324,10 @@
               <ul class="splide__list">
                 @foreach ($partner as $item)
                   {{-- 16:9x315 --}}
-                  <li class="splide__slide my-auto !w-fit mx-6 sm:mx-10"> 
+                  <li class="splide__slide my-auto !w-fit px-6 sm:px-10">
                     <a href="{{ $item->url_partner }}" class="!w-fit">
-                      <img class="h-24 object-contain" src="{{ Storage::url($item->foto_partner) }}" alt="{{ $item->nama_partner }}" height="36">
+                      <img class="h-24 object-contain" src="{{ Storage::url($item->foto_partner) }}"
+                        alt="{{ $item->nama_partner }}" height="36">
                     </a>
                   </li>
                 @endforeach
@@ -297,4 +338,50 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('document.end')
+  @vite(['resources/js/splidejs.js', 'resources/js/splide-autoscroll.js'])
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var el = document.querySelector('.splide');
+      if (el && window.SplideAutoScroll) {
+        var splide = new Splide(el, {
+          type: 'loop',
+          drag: 'free',
+          focus: 'center',
+          breakpoints: {
+            640: {
+              perPage: 2
+            },
+            768: {
+              perPage: 4
+            },
+            1024: {
+              perPage: 4
+            },
+            1280: {
+              perPage: 5
+            },
+            1920: {
+              perPage: 5
+            }
+          },
+          autoScroll: {
+            speed: 0.4
+          },
+          arrows: false,
+          pagination: false,
+          extensions: {
+            AutoScroll: window.SplideAutoScroll
+          }
+        });
+
+        splide.mount({
+          AutoScroll: window.SplideAutoScroll
+        });
+      }
+    });
+  </script>
 @endsection

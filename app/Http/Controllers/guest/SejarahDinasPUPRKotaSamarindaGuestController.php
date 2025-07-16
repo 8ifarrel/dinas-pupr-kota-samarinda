@@ -10,8 +10,8 @@ class SejarahDinasPUPRKotaSamarindaGuestController extends Controller
 	public function index()
 	{
 		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-		$page_title = "Profil";
-		$page_subtitle = "Sejarah Dinas PUPR Kota Samarinda";
+		$page_subtitle = "Profil";
+		$page_title = "Sejarah";
 
 		$sejarah_dinas_pupr_kota_samarinda = SejarahDinasPUPRKotaSamarinda::select(
 			'deskripsi_sejarah_dinas_pupr_kota_samarinda'

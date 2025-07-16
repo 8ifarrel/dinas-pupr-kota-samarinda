@@ -1,20 +1,16 @@
-@extends('guest.layouts.ppid-pelaksana')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.start')
+  @vite(['resources/css/datatables.css', 'resources/js/datatables.js'])
+@endsection
+
+@section('document.body')
   <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
-    <div class="text-center mb-2 lg:mb-3">
-      <span
-        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
-      </span>
-    </div>
-
-    <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ $page_subtitle }}
-    </h1>
+    @include('guest.components.section-title')
 
     <div class="relative overflow-x-auto text-sm md:text-base">
-      <table id="ppid-pelaksana" class="border shadow border-separate rounded-3xl stripe hover row-border table-auto w-full">
+      <table id="ppid-pelaksana"
+        class="border shadow border-separate rounded-3xl stripe hover row-border table-auto w-full">
         <thead>
           <tr>
             <th class="bg-brand-yellow/35 border-none rounded-tl-3xl">#</th>
@@ -54,4 +50,10 @@
   </div>
 @endsection
 
-
+@section('document.end')
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      $('#ppid-pelaksana').DataTable();
+    });
+  </script>
+@endsection

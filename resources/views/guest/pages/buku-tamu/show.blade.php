@@ -1,19 +1,10 @@
-{{--
-  CATATAN
-
-  Yellow: 300
-  Green: 400
-  Red: 500
-  Grey: 400
-
-  check = <i class="flex items-center justify-center w-3.5 h-3.5 fa-solid fa-check text-white"></i>
-  cross = <i class="flex items-center justify-center w-3.5 h-3.5 fa-solid fa-xmark text-white"></i>
-  loading = <i class="flex items-center justify-center w-3.5 h-3.5 fa-solid fa-hourglass-half text-white"></i>
---}}
-
 @extends('guest.layouts.buku-tamu')
 
-@section('slot')
+@section('document.head')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
+
+@section('document.body')
   <main>
     <hgroup class="flex flex-col items-center text-center py-5">
       <h1 class="text-3xl font-bold">Buku Tamu</h1>

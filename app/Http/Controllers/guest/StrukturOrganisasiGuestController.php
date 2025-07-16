@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\StrukturOrganisasi;
-use App\Models\Berita;
+use App\Models\Berita; 
+use App\Models\BeritaKategori;
 use App\Models\StrukturOrganisasiDiagram;
 
 class StrukturOrganisasiGuestController extends Controller
@@ -12,8 +13,8 @@ class StrukturOrganisasiGuestController extends Controller
 	public function index()
 	{
 		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-		$page_title = "Profil";
-		$page_subtitle = "Struktur Organisasi";
+		$page_subtitle = "Profil";
+		$page_title = "Struktur Organisasi";
 
 		$struktur_organisasi_diagram = StrukturOrganisasiDiagram::select('diagram_struktur_organisasi')
 			->whereNull('id_struktur_organisasi')
@@ -49,8 +50,13 @@ class StrukturOrganisasiGuestController extends Controller
 			$struktur_organisasi->id_struktur_organisasi
 		)->first();
 
+		$berita_kategori_ids = BeritaKategori::where(
+			'id_susunan_organisasi',
+			$struktur_organisasi->id_susunan_organisasi
+		)->pluck('id_berita_kategori');
+
 		$berita = Berita::with('kategori')
-			->where('id_berita_kategori', $struktur_organisasi->id_struktur_organisasi)
+			->whereIn('id_berita_kategori', $berita_kategori_ids)
 			->select(
 				'judul_berita',
 				'slug_berita',

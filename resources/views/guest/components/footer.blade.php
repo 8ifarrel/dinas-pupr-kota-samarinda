@@ -97,7 +97,7 @@
 
   <div class="bg-brand-blue p-1.5 w-full">
     <p class="text-white text-center text-sm">
-      © 2024 {{ config('app.nama_dinas') }}. <br>
+      © 2024-2025 {{ config('app.nama_dinas') }}. <br>
       Powered by Tim IT {{ config('app.nama_singkatan_dinas') }}.
     </p>
   </div>

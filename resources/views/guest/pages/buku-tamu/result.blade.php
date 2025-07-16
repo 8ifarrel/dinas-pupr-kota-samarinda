@@ -1,6 +1,6 @@
 @extends('guest.layouts.buku-tamu')
 
-@section('slot')
+@section('document.body')
   <main class="flex flex-col gap-3 justify-center items-center h-screen">
     <div class="p-5 3xl:px-10 border-black border-[1.5px] max-w-3xl 3xl:max-w-6xl">
       <hgroup class="text-center pb-5">

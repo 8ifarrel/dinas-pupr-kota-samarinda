@@ -1,6 +1,6 @@
 @extends('guest.layouts.buku-tamu')
 
-@section('slot')
+@section('document.body')
   <div class="h-screen overflow-hidden">
     <img class="absolute h-[40rem] object-cover -z-10" src="{{ asset('image/buku-tamu/sidel_layer.png') }}"
       alt="Background Image" />

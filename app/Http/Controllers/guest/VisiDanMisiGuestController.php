@@ -11,8 +11,8 @@ class VisiDanMisiGuestController extends Controller
     public function index()
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_title = "Profil";
-        $page_subtitle = "Visi dan Misi";
+        $page_subtitle = "Profil";
+        $page_title = "Visi dan Misi";
 
         $visi = Visi::select(
             'deskripsi_visi',

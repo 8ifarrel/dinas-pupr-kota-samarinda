@@ -1,17 +1,8 @@
-@extends('guest.layouts.album-kegiatan')
+@extends('guest.layouts.main')
 
-@section('slot')
+@section('document.body')
   <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
-    <div class="text-center mb-2 lg:mb-3">
-      <span
-        class="bg-brand-blue uppercase font-bold text-brand-yellow text-sm lg:text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">
-        {{ $page_title }}
-      </span>
-    </div>
-
-    <h1 class="text-center font-bold text-2xl lg:text-3xl pb-6 lg:pb-12 uppercase">
-      {{ $page_subtitle }}
-    </h1>
+    @include('guest.components.section-title')
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5 gap-6">
       @foreach ($album_kegiatan as $album)
@@ -52,5 +43,3 @@
     </div>
   </div>
 @endsection
-
-
