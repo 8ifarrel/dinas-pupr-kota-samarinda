@@ -76,7 +76,7 @@ class BerandaGuestController extends Controller
             'struktur_organisasi' => $struktur_organisasi,
             'partner' => $partner,
             'kepala_dinas' => $kepala_dinas,
-            'statistik_pengunjung' => $statistik_pengunjung,
+            // 'statistik_pengunjung' => $statistik_pengunjung,
             'agenda_kegiatan' => $agenda_kegiatan,
         ]);
     }
