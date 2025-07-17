@@ -29,6 +29,8 @@ class RecordStatistikPengunjung
 		'hetzner.com',
 		'sengked.com',
 		'telin.net',
+		'awandata.co.id',
+		'mobifone.vn',
 	];
 
 	public function handle(Request $request, Closure $next): Response

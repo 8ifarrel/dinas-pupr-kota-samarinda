@@ -25,8 +25,8 @@
       <li><strong>Halaman yang dikunjungi</strong> — mencatat jenis halaman yang Anda akses.</li>
     </ul>
     <p class="mb-4">
-      Data ini digunakan untuk keperluan analisis internal guna memahami perilaku penggunaan situs dan meningkatkan
-      pengalaman pengunjung. Informasi tersebut tidak mengandung data pribadi dan tidak dapat mengidentifikasi Anda secara
+      Data ini digunakan untuk keperluan analisis internal guna memahami perilaku penggunaan situs, meningkatkan
+      pengalaman pengunjung, serta memantau aktivitas mencurigakan yang berpotensi menyerang situs. Informasi tersebut tidak mengandung data pribadi dan tidak dapat mengidentifikasi Anda secara
       langsung.
     </p>
 
