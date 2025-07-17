@@ -80,7 +80,7 @@
 
     <div>
       <h1 class="mb-1 font-bold text-lg xl:text-xl">
-        PETA
+        LOKASI
       </h1>
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.690298112536!2d117.17512067507042!3d-0.45899179953650165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df5d6033b793f91%3A0xe380dade32764edd!2sKantor%20PUPR%20Samarinda!5e0!3m2!1sen!2sid!4v1704714282337!5m2!1sen!2sid"

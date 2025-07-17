@@ -19,7 +19,7 @@
           Terima kasih telah mengajukan permohonan buku tamu. <br> Kami sangat menghargai perhatian dan waktu yang Anda
           luangkan.
         </p>
-        <img src="data:image/png;base64,{{ base64_encode($qrcode) }}" alt="QR Code" class="flex-none w-[150px] 3xl:w-[250px]">
+        <img src="data:image/svg+xml;base64,{{ base64_encode($qrcode) }}" alt="QR Code" class="flex-none w-[150px] 3xl:w-[250px]">
         <p class="text-xl 3xl:text-3xl text-center">
           Silakan <strong>pindai QR code di atas</strong> atau <strong>periksa email Anda</strong> untuk memantau status
           kunjungan Anda secara berkala.

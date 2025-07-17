@@ -14,10 +14,10 @@
     <hr class="w-full border-gray-700">
 
     {{-- Progress bar --}}
-    <section class="flex flex-col items-center p-5">
+    <section class="flex flex-col items-center p-4">
       <h2 class="text-2xl font-semibold">Status Kunjungan</h2>
 
-      <ol class="relative my-5">
+      <ol class="relative my-4">
         {{-- Progress 1 --}}
         <li>
           <span
@@ -78,8 +78,8 @@
     <hr class="w-full border-gray-700">
 
     {{-- Deskripsi Status --}}
-    <section class="flex flex-col items-center py-5 px-5">
-      <h2 class="text-2xl font-semibold mb-5 text-center">
+    <section class="flex flex-col items-center p-4">
+      <h2 class="text-2xl font-semibold mb-4 text-center">
         Deskripsi Status
       </h2>
 
@@ -90,37 +90,37 @@
 
     <hr class="w-full border-gray-700">
 
-    <section class="py-5 px-5">
-      <h2 class="text-2xl font-semibold mb-5 text-center">Detail Pengunjung</h2>
+    <section class="p-4">
+      <h2 class="text-2xl font-semibold mb-4 text-center">Detail Tamu</h2>
       <table class="border-separate border-spacing-1.5">
         {{-- ID --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Kode</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Kode</td>
           <td>{{ $buku_tamu->id_buku_tamu }}</td>
         </tr>
         {{-- Nama --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Nama Pengunjung</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Nama Tamu</td>
           <td>{{ $buku_tamu->nama_pengunjung }}</td>
         </tr>
         {{-- Email --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Email Pengunjung</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Email Tamu</td>
           <td>{{ $buku_tamu->email }}</td>
         </tr>
         {{-- Alamat --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Alamat Asal Pengunjung</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Alamat Asal Tamu</td>
           <td>{{ $buku_tamu->alamat }}</td>
         </tr>
         {{-- Jabatan --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Bagian yang Akan Dikunjungi</td>
-          <td>{{ $buku_tamu->jabatan->nama_susunan_organisasi }}</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Bagian yang Dikunjungi</td>
+          <td>{{ $buku_tamu->susunanOrganisasi->nama_susunan_organisasi }}</td>
         </tr>
         {{-- Maksud --}}
         <tr>
-          <td class="align-top text-end max-w-[200px] pe-2.5 font-bold">Keperluan</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Keperluan Kunjungan</td>
           <td>{{ $buku_tamu->maksud_dan_tujuan }}</td>
         </tr>
       </table>

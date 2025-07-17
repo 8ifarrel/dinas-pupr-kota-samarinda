@@ -95,8 +95,8 @@ class BukuTamuGuestController extends Controller
 		$page_title = "Buku Tamu";
 
 		$url = route('guest.buku-tamu.show', ['id' => $idBukuTamu]);
-		$qrcode = QrCode::format('png')->size(300)->generate($url);
-		
+		$qrcode = QrCode::format('svg')->size(100)->generate($url);
+
 		return view('guest.pages.buku-tamu.result', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
@@ -111,7 +111,7 @@ class BukuTamuGuestController extends Controller
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
 		$page_title = "Buku Tamu";
 
-		$buku_tamu = BukuTamu::with('jabatan')->where('id_buku_tamu', $idBukuTamu)->first();
+		$buku_tamu = BukuTamu::with('susunanOrganisasi')->where('id_buku_tamu', $idBukuTamu)->first();
 
 		return view('guest.pages.buku-tamu.show', [
 			'meta_description' => $meta_description,
