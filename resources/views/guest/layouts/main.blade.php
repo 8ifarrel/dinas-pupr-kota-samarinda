@@ -30,17 +30,16 @@
 </head>
 
 <body>
-  </script>
   @include('guest.components.navbar')
 
   @yield('document.body')
 
   @include('guest.components.footer')
 
+  @include('guest.components.privacy-policy-notification')
+  
   @vite('resources/js/app.js')
-
   @vite('resources/js/clock.js')
-
   @vite('resources/js/navbar-guest.js')
 
   @yield('document.end')

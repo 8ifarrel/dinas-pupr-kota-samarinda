@@ -27,6 +27,8 @@
 <body class="flex items-center justify-center min-h-screen">
   @yield('slot')
 
+  @include('guest.components.privacy-policy-notification')
+
   @vite('resources/js/app.js')
 
   {{-- Lottiefiles --}}
