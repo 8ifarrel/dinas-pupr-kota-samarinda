@@ -251,7 +251,8 @@
               <div class="me-2">
                 <lottie-player class="h-[50px] lg:h-[100px]"
                   src="https://lottie.host/7fc5c4a3-cad9-414a-8bc5-e097ed4ca67c/zGiBmsHxZj.json"
-                  background="transparent" speed="1" loop autoplay></lottie-player>
+                  background="transparent" speed="1" loop autoplay>
+                </lottie-player>
               </div>
               <figcaption class="my-auto text-center font-semibold text-base lg:text-2xl">
                 Media Sosial

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Visitor;
 use App\Models\PageVisit;
 use Illuminate\Support\Str;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class RecordStatistikPengunjung
 {
@@ -15,6 +16,11 @@ class RecordStatistikPengunjung
     {
         $ip = $request->ip();
         $userAgent = $request->userAgent();
+
+        $crawlerDetect = new CrawlerDetect();
+        if ($crawlerDetect->isCrawler($userAgent)) {
+            return $next($request);
+        }
 
         $visitedPageContext = null;
         $route = $request->route();
