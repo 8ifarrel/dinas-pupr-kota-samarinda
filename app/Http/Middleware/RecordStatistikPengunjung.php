@@ -9,26 +9,36 @@ use App\Models\Visitor;
 use App\Models\PageVisit;
 use Illuminate\Support\Str;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
+use Throwable;
 
 class RecordStatistikPengunjung
 {
 	protected array $cloudAsn = [
-		'AS16509', // AWS
-		'AS14618', // AWS
-		'AS15169', // Google
-		'AS36040', // Google
-		'AS43515', // Google
-		'AS36561', // Google
-		'AS19527', // Google
-		'AS139070', // Google
-		'AS396982', // Google
-		'AS8075',  // Microsoft Azure
-		'AS16276', // OVH
-		'AS14061', // DigitalOcean
-		'AS63949', // Linode
-		'AS20473', // Vultr
-		'AS51167', // Contabo
-		'AS141995', // IDCloudHost
+		'AS16509',    // AWS
+		'AS14618',    // AWS
+		'AS15169',    // Google
+		'AS36040',    // Google
+		'AS43515',    // Google
+		'AS36561',    // Google
+		'AS19527',    // Google
+		'AS139070',   // Google
+		'AS396982',   // Google
+		'AS8075',     // Microsoft Azure
+		'AS16276',    // OVH
+		'AS14061',    // DigitalOcean
+		'AS63949',    // Linode
+		'AS20473',    // Vultr
+		'AS51167',    // Contabo
+		'AS141995',   // Contabo
+		'AS141995',   // IDCloudHost
+		'AS31898',    // OCI
+		'AS397227',   // OCI
+		'AS45102',    // Alibaba
+		'AS37963',    // Alibaba
+		'AS45090',    // Tencent
+		'AS132203',   // Tencent
+		'AS36351',    // IBM
+		'AS24940',    // Hetzner Online
 	];
 
 	public function handle(Request $request, Closure $next): Response
@@ -54,7 +64,7 @@ class RecordStatistikPengunjung
 					}
 				}
 			}
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 		}
 
 		if ($asn && in_array($asn, $this->cloudAsn, true)) {
