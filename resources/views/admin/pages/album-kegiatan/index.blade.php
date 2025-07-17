@@ -99,7 +99,7 @@
                     </p>
                   </div>
                   <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <form action="{{-- route('admin.album-kegiatan.destroy', $item->id) --}}" method="POST">
+                    <form action="{{ route('admin.album-kegiatan.destroy', $item->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
                       <button type="submit"

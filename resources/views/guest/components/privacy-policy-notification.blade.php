@@ -16,7 +16,6 @@
   document.addEventListener('DOMContentLoaded', function() {
     var notif = document.getElementById('privacy-notif');
     var btn = document.getElementById('privacy-notif-close');
-    // Tampilkan hanya jika belum pernah disetujui
     if (!localStorage.getItem('privacy_notice_accepted')) {
       notif.style.display = 'flex';
     }

@@ -70,7 +70,7 @@
 
     <h2 class="text-xl font-semibold mt-8 mb-2">Tautan Eksternal</h2>
     <p class="mb-4">
-      Situs ini mungkin mengandung tautan ke situs lain yang tidak dikelola oleh Dinas Pekerjaan Umum dan Penataan Ruang
+      Situs ini mengandung tautan ke situs lain yang tidak dikelola oleh Dinas Pekerjaan Umum dan Penataan Ruang
       Kota Samarinda. Kami tidak bertanggung jawab atas kebijakan privasi dan konten di situs-situs tersebut.
     </p>
 
