@@ -13,32 +13,22 @@ use Throwable;
 
 class RecordStatistikPengunjung
 {
-	protected array $cloudAsn = [
-		'AS16509',    // AWS
-		'AS14618',    // AWS
-		'AS15169',    // Google
-		'AS36040',    // Google
-		'AS43515',    // Google
-		'AS36561',    // Google
-		'AS19527',    // Google
-		'AS139070',   // Google
-		'AS396982',   // Google
-		'AS8075',     // Microsoft Azure
-		'AS16276',    // OVH
-		'AS14061',    // DigitalOcean
-		'AS63949',    // Linode
-		'AS20473',    // Vultr
-		'AS51167',    // Contabo
-		'AS141995',   // Contabo
-		'AS141995',   // IDCloudHost
-		'AS31898',    // OCI
-		'AS397227',   // OCI
-		'AS45102',    // Alibaba
-		'AS37963',    // Alibaba
-		'AS45090',    // Tencent
-		'AS132203',   // Tencent
-		'AS36351',    // IBM
-		'AS24940',    // Hetzner Online
+	protected array $cloudDomains = [
+		'digitalocean.com',
+		'amazon.com',
+		'microsoft.com',
+		'ovhcloud.com',
+		'linode.com',
+		'constant.com',
+		'contabo.com',
+		'oracle.com',
+		'alibabagroup.com',
+		'tencent.com',
+		'ibm.com',
+		'hetzner.de',
+		'hetzner.com',
+		'sengked.com',
+		'telin.net',
 	];
 
 	public function handle(Request $request, Closure $next): Response
@@ -51,7 +41,7 @@ class RecordStatistikPengunjung
 			return $next($request);
 		}
 
-		$asn = null;
+		$asDomain = null;
 		try {
 			$token = env('IPINFO_TOKEN', '');
 			if ($token) {
@@ -59,15 +49,16 @@ class RecordStatistikPengunjung
 				$response = @file_get_contents($url);
 				if ($response) {
 					$json = json_decode($response, true);
-					if (isset($json['asn'])) {
-						$asn = $json['asn'];
+					if (isset($json['as_domain'])) {
+						$asDomain = strtolower($json['as_domain']);
 					}
 				}
 			}
 		} catch (Throwable $e) {
+			// ignore
 		}
 
-		if ($asn && in_array($asn, $this->cloudAsn, true)) {
+		if ($asDomain && in_array($asDomain, $this->cloudDomains, true)) {
 			return $next($request);
 		}
 
