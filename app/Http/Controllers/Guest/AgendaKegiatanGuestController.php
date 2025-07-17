@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AgendaKegiatan;
+use Carbon\Carbon;
 
 class AgendaKegiatanGuestController extends Controller
 {
@@ -44,8 +45,8 @@ class AgendaKegiatanGuestController extends Controller
 
         if ($start && $end) {
             $period = [];
-            $date = \Carbon\Carbon::parse($start);
-            $endDate = \Carbon\Carbon::parse($end);
+            $date = Carbon::parse($start);
+            $endDate = Carbon::parse($end);
             while ($date->lte($endDate)) {
                 $period[] = $date->format('Y-m-d');
                 $date->addDay();

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaKategoriGuestController extends Controller
 {
+  public string $page_context = 'Berita';
+
   public function index()
   {
     $meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
@@ -29,7 +31,8 @@ class BeritaKategoriGuestController extends Controller
       'meta_description' => $meta_description,
       'page_title' => $page_title,
       'page_subtitle' => $page_subtitle,
-      'berita_kategori' => $berita_kategori
+      'berita_kategori' => $berita_kategori,
+      'page_context' => $this->page_context,
     ]);
   }
 
@@ -70,6 +73,7 @@ class BeritaKategoriGuestController extends Controller
       'berita' => $berita,
       'berita_lainnya' => $berita_lainnya,
       'slug_kategori' => $slug_kategori,
+      'page_context' => $this->page_context,
     ]);
   }
 

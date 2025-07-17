@@ -26,7 +26,6 @@ use App\Http\Middleware\BlockSearchEngines;
 use App\Http\Controllers\Guest\PortalGuestController;
 use App\Http\Controllers\Guest\BerandaGuestController;
 use App\Http\Controllers\Guest\ProfilKepalaDinasGuestController;
-use App\Http\Controllers\Guest\SejarahKotaSamarindaGuestController;
 use App\Http\Controllers\Guest\SejarahDinasPUPRKotaSamarindaGuestController;
 use App\Http\Controllers\Guest\StrukturOrganisasiGuestController;
 use App\Http\Controllers\Guest\VisiDanMisiGuestController;
@@ -39,6 +38,7 @@ use App\Http\Controllers\Guest\PPIDPelaksanaGuestController;
 use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
+use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -64,9 +64,6 @@ Route::middleware(RecordStatistikPengunjung::class)->group(function () {
 	Route::prefix('profil')->group(callback: function () {
 		Route::get('/profil-kepala-dinas', [ProfilKepalaDinasGuestController::class, 'index'])
 			->name('guest.profil.profil-kepala-dinas.index');
-
-		Route::get('/sejarah-kota-samarinda', [SejarahKotaSamarindaGuestController::class, 'index'])
-			->name('guest.profil.sejarah-kota-samarinda.index');
 
 		Route::get('/sejarah-dinas-pupr-kota-samarinda', [SejarahDinasPUPRKotaSamarindaGuestController::class, 'index'])
 			->name('guest.profil.sejarah-dinas-pupr-kota-samarinda.index');
@@ -167,6 +164,12 @@ Route::middleware(RecordStatistikPengunjung::class)->group(function () {
 		Route::post('/', [SKMGuestController::class, 'store'])
 			->name('guest.skm.store');
 	});
+
+	/**
+	 * Kebijakan Privasi
+	 */
+		Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index'])
+			->name('guest.kebijakan-privasi.index');
 
 	/**
 	 * Buku Tamu
@@ -551,4 +554,3 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });
-

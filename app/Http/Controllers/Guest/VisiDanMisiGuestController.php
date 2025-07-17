@@ -8,6 +8,8 @@ use App\Models\Misi;
 
 class VisiDanMisiGuestController extends Controller
 {
+    public string $page_context = 'Visi dan Misi';
+
     public function index()
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
@@ -31,7 +33,8 @@ class VisiDanMisiGuestController extends Controller
             'page_title' => $page_title,
             'page_subtitle' => $page_subtitle,
             'visi' => $visi,
-            'misi' => $misi 
+            'misi' => $misi,
+            'page_context' => $this->page_context, 
         ]);
     }
 }

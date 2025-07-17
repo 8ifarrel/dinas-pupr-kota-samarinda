@@ -365,9 +365,7 @@
       }
     });
 
-    // Agenda Kegiatan JS
     document.addEventListener('DOMContentLoaded', function() {
-      // Helper untuk format tanggal
       function formatDate(date) {
         return date.toLocaleDateString('id-ID', {
           day: 'numeric',
@@ -380,12 +378,11 @@
         return timeStr ? timeStr.substring(0, 5) : '';
       }
 
-      // Inisialisasi minggu berjalan
       let currentDate = new Date();
       let currentWeekStart = new Date(currentDate);
-      currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1); // Senin
+      currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1);
       let currentWeekEnd = new Date(currentWeekStart);
-      currentWeekEnd.setDate(currentWeekStart.getDate() + 6); // Minggu
+      currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
 
       let selectedDate = new Date(currentDate);
 
@@ -404,7 +401,6 @@
           let isSelected = dayDate.toDateString() === selectedDate.toDateString();
           let dayStr = dayDate.toISOString().slice(0, 10);
 
-          // Tentukan style card
           let cardClass = 'rounded-2xl font-bold w-[95px] py-2.5 flex flex-col items-center justify-center shadow cursor-pointer ';
           if (isSelected && isToday) {
             cardClass += 'bg-brand-blue text-white border-2 border-brand-yellow';
@@ -513,7 +509,6 @@
         updateAgendaWeek();
       };
 
-      // Inisialisasi
       updateAgendaWeek();
     });
   </script>

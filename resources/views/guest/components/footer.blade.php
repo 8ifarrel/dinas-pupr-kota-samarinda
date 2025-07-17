@@ -29,12 +29,6 @@
         </a>
       </li>
       <li>
-        <a href="{{ url('https://simbg.pu.go.id/') }}" target="_blank">
-          <i class="fa-solid fa-thumbtack me-1" style="color: #080808;"></i>
-          SIMBG
-        </a>
-      </li>
-      <li>
         <a href="{{ url('https://sijakon.samarindakota.go.id/') }}" target="_blank">
           <i class="fa-solid fa-thumbtack me-1" style="color: #080808;"></i>
           Sijakon
@@ -95,10 +89,22 @@
     </div>
   </div>
 
-  <div class="bg-brand-blue p-1.5 w-full">
-    <p class="text-white text-center text-sm">
-      © 2024-2025 {{ config('app.nama_dinas') }}. <br>
-      Powered by Tim IT {{ config('app.nama_singkatan_dinas') }}.
+  {{-- <div class="bg-brand-blue py-2 w-full text-white text-center text-sm space-y-0.5">
+    <p>
+      © 2024-2025 {{ config('app.nama_dinas') }}.
     </p>
+    <P class="underline">
+      Kebijakan Privasi
+    </P>
+  </div> --}}
+
+   <div class="bg-brand-blue py-2.5 w-full text-white text-center text-xs flex flex-col justify-between px-[1.35rem] md:px-36 gap-1">
+    <p>
+      © 2024-2025 {{ config('app.nama_dinas') }}
+    </p>
+
+    <a class="underline" href="{{ route('guest.kebijakan-privasi.index') }}">
+      Kebijakan Privasi & Penggunaan Kuki
+    </a>
   </div>
 </footer>

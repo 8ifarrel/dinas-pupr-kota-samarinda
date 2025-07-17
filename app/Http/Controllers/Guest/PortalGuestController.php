@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 
 class PortalGuestController extends Controller
 {
-    public function index() {
+    public string $page_context = 'Portal';
+
+    public function index()
+    {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
         $page_title = "Portal";
 
         return view('guest.pages.portal.index', [
             'meta_description' => $meta_description,
-            'page_title' =>$page_title
+            'page_title' => $page_title,
+            'page_context' => $this->page_context,
         ]);
     }
 }

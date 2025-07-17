@@ -19,9 +19,11 @@ export default {
 
       'xl': '1280px',
 
-      '2xl': '1536px', // untuk PC Besar
+      '2xl': '1536px',
 
-      '3xl': '1920px', // untuk TV horizontal
+      '3xl': '1920px',
+
+      '4xl': '2560px',
 
       'tv-vertical': {'raw': '(min-width: 1080px) and (min-height: 1920px) and (orientation: portrait)'},
     },

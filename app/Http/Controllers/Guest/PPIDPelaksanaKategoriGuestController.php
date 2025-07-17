@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class PPIDPelaksanaKategoriGuestController extends Controller
 {
+  public string $page_context = 'PPID Pelaksana';
+
   public function index()
   {
     $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
@@ -20,6 +22,7 @@ class PPIDPelaksanaKategoriGuestController extends Controller
       'page_title' => $page_title,
       'page_subtitle' => $page_subtitle,
       'ppid_pelaksana_kategori' => $ppid_pelaksana_katgori,
+      'page_context' => $this->page_context,
     ]);
   }
 
@@ -37,6 +40,7 @@ class PPIDPelaksanaKategoriGuestController extends Controller
       'page_subtitle' => $page_subtitle,
       'ppid_pelaksana_kategori' => $ppid_pelaksana_kategori,
       'ppid_pelaksana' => $ppid_pelaksana,
+      'page_context' => $this->page_context,
     ]);
   }
 }

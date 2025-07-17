@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class AlbumKegiatanGuestController extends Controller
 {
+	public string $page_context = 'Album Kegiatan';
+
 	public function index()
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
@@ -23,6 +25,7 @@ class AlbumKegiatanGuestController extends Controller
 			'page_title' => $page_title,
 			'page_subtitle' => $page_subtitle,
 			'album_kegiatan' => $album_kegiatan,
+			'page_context' => $this->page_context,
 		]);
 	}
 
@@ -44,6 +47,7 @@ class AlbumKegiatanGuestController extends Controller
 			'page_subtitle' => $page_subtitle,
 			'album' => $album,
 			'photos' => $album->fotoKegiatan,
+			'page_context' => $this->page_context,
 		]);
 	}
 }

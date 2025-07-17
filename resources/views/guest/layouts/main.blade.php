@@ -30,6 +30,7 @@
 </head>
 
 <body>
+  </script>
   @include('guest.components.navbar')
 
   @yield('document.body')

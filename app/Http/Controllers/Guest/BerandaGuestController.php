@@ -5,16 +5,17 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\Slider;
-use App\Models\SusunanOrganisasi;
 use App\Models\StrukturOrganisasi;
 use App\Models\Partner;
 use App\Models\KepalaDinas;
-use App\Models\StatistikPengunjung;
 use App\Models\AgendaKegiatan;
+use App\Models\Visitor;
 use Carbon\Carbon;
 
 class BerandaGuestController extends Controller
 {
+    public string $page_context = 'Beranda';
+
     public function index()
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
@@ -58,9 +59,9 @@ class BerandaGuestController extends Controller
         $thisMonth = Carbon::now()->startOfMonth();
 
         $statistik_pengunjung = [
-            'today' => StatistikPengunjung::whereDate('created_at', $today)->count(),
-            'this_week' => StatistikPengunjung::where('created_at', '>=', $thisWeek)->count(),
-            'this_month' => StatistikPengunjung::where('created_at', '>=', $thisMonth)->count(),
+            'today' => Visitor::whereDate('first_visit_at', $today)->count(),
+            'this_week' => Visitor::where('first_visit_at', '>=', $thisWeek)->count(),
+            'this_month' => Visitor::where('first_visit_at', '>=', $thisMonth)->count(),
         ];
 
         $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
@@ -78,6 +79,7 @@ class BerandaGuestController extends Controller
             'kepala_dinas' => $kepala_dinas,
             'statistik_pengunjung' => $statistik_pengunjung,
             'agenda_kegiatan' => $agenda_kegiatan,
+            'page_context' => $this->page_context,
         ]);
     }
 }

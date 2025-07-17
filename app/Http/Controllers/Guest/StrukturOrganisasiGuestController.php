@@ -10,6 +10,8 @@ use App\Models\StrukturOrganisasiDiagram;
 
 class StrukturOrganisasiGuestController extends Controller
 {
+	public string $page_context = 'Struktur Organisasi';
+
 	public function index()
 	{
 		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
@@ -31,7 +33,8 @@ class StrukturOrganisasiGuestController extends Controller
 			'page_title' => $page_title,
 			'page_subtitle' => $page_subtitle,
 			'struktur_organisasi_diagram' => $struktur_organisasi_diagram,
-			'struktur_organisasi' => $struktur_organisasi
+			'struktur_organisasi' => $struktur_organisasi,
+			'page_context' => $this->page_context,
 		]);
 	}
 
@@ -79,6 +82,7 @@ class StrukturOrganisasiGuestController extends Controller
 			'struktur_organisasi' => $struktur_organisasi,
 			'struktur_organisasi_diagram' => $struktur_organisasi_diagram,
 			'berita' => $berita,	
+			'page_context' => $this->page_context,
 		]);
 	}
 }

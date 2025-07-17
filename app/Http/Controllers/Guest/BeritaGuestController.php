@@ -7,6 +7,8 @@ use App\Models\Berita;
 
 class BeritaGuestController extends Controller
 {
+	public string $page_context = 'Berita';
+
 	public function show($slug_berita)
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
@@ -28,7 +30,8 @@ class BeritaGuestController extends Controller
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
 			'berita' => $berita,
-			'berita_lainnya' => $berita_lainnya
+			'berita_lainnya' => $berita_lainnya,
+			'page_context' => $this->page_context,
 		]);
 	}
 }

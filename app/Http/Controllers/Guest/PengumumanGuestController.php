@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PengumumanGuestController extends Controller
 {
+	public string $page_context = 'Pengumuman';
+
 	public function index()
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
@@ -29,6 +31,7 @@ class PengumumanGuestController extends Controller
 			'page_title' => $page_title,
 			'page_subtitle' => $page_subtitle,
 			'pengumuman' => $pengumuman,
+			'page_context' => $this->page_context,
 		]);
 	}
 

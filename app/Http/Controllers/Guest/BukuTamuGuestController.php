@@ -13,6 +13,8 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BukuTamuGuestController extends Controller
 {
+	public string $page_context = 'Buku Tamu';
+
 	public function index()
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
@@ -115,6 +117,7 @@ class BukuTamuGuestController extends Controller
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
 			'buku_tamu'	=> $buku_tamu,
+			'page_context' => $this->page_context,
 		]);
 	}
 }

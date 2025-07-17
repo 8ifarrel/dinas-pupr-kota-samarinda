@@ -50,7 +50,8 @@
     </a>
 
     {{-- Aplikasi --}}
-    <div class="px-3 py-4 bg-brand-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl 3xl:max-w-[1300px] mx-auto">
+    <div
+      class="px-3 py-4 bg-brand-blue border-[6px] lg:border-[10px] border-gray-300 max-w-6xl 3xl:max-w-[1300px] mx-auto">
       <div class="justify-items-center text-white grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
         <button data-modal-target="modal-informasi-publik" data-modal-toggle="modal-informasi-publik" type="button">
           <figure>
@@ -287,12 +288,13 @@
     </div>
 
     {{-- Footer --}}
-    <footer class="">
-      <p class="mx-auto text-center font-semibold text-xs w-[85%] lg:w-full lg:text-base">
-        &copy; 2024-2025 Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda.
+    <footer class="flex flex-col justify-between text-xs lg:text-base  mx-auto text-center font-semibold">
+      <p>
+        &copy; 2024-2025 Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
       </p>
+      <a class="underline" href="{{ route('guest.kebijakan-privasi.index') }}">
+        Kebijakan Privasi & Penggunaan Kuki
+      </a>
     </footer>
   </main>
 @endsection
-
-
