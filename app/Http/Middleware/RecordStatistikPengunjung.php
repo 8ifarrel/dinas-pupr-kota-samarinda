@@ -49,7 +49,7 @@ class RecordStatistikPengunjung
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
 				$url = "https://api.ipinfo.io/lite/{$request->ip()}?token={$token}";
-				$response = Http::timeout(2)->get($url);
+				$response = Http::timeout(120)->get($url);
 				if ($response->successful()) {
 					$asDomain = strtolower($response->json('as_domain') ?? '');
 					Log::info('IPInfo lookup result', [
