@@ -48,15 +48,22 @@ class RecordStatistikPengunjung
 		try {
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
-				$response = Http::timeout(2)->get("https://ipinfo.io/{$request->ip()}?token={$token}");
+				$url = "https://api.ipinfo.io/lite/{$request->ip()}?token={$token}";
+				$response = Http::timeout(2)->get($url);
 				if ($response->successful()) {
 					$asDomain = strtolower($response->json('as_domain') ?? '');
 					Log::info('IPInfo lookup result', [
+						'url' => $url,
 						'ip' => $request->ip(),
 						'as_domain' => $asDomain,
+						'response' => $response->json(),
 					]);
 
 					if ($asDomain && in_array($asDomain, $this->blockedCloudDomains, true)) {
+						Log::info('Blocked cloud provider detected', [
+							'ip' => $request->ip(),
+							'as_domain' => $asDomain,
+						]);
 						return $next($request);
 					}
 				}
