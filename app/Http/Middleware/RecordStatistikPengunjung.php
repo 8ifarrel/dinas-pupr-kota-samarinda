@@ -39,6 +39,7 @@ class RecordStatistikPengunjung
 		'pldt.com',
 		'excelindo.co.id',
 		'google.com',
+		'colocatel.com'
 	];
 
 
