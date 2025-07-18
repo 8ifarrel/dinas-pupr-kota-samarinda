@@ -38,6 +38,7 @@ class RecordStatistikPengunjung
 		'gthost.com',
 		'pldt.com',
 		'excelindo.co.id',
+		'google.com',
 	];
 
 
