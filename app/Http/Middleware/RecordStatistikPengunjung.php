@@ -14,7 +14,8 @@ use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class RecordStatistikPengunjung
 {
-	protected array $cloudDomains = [
+
+	protected array $blockedCloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
 		'microsoft.com',
@@ -48,9 +49,14 @@ class RecordStatistikPengunjung
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
 				$response = Http::timeout(2)->get("https://ipinfo.io/{$request->ip()}?token={$token}");
-				if ($response->successful() && $response->json('org')) {
-					$orgDomain = strtolower(explode(' ', $response->json('org'))[1] ?? '');
-					if (in_array($orgDomain, $this->cloudDomains, true)) {
+				if ($response->successful()) {
+					$asDomain = strtolower($response->json('as_domain') ?? '');
+					Log::info('IPInfo lookup result', [
+						'ip' => $request->ip(),
+						'as_domain' => $asDomain,
+					]);
+
+					if ($asDomain && in_array($asDomain, $this->blockedCloudDomains, true)) {
 						return $next($request);
 					}
 				}
