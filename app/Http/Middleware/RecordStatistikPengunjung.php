@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Visitor;
 use App\Models\PageVisit;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Throwable;
 
 class RecordStatistikPengunjung
 {
-	// blocked cloud domains
+	// Blocked domains for cloud providers
 	protected array $cloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
@@ -32,73 +34,76 @@ class RecordStatistikPengunjung
 		'telin.net',
 		'awandata.co.id',
 		'mobifone.vn',
+		'gthost.com',
+		'pldt.com',
+		'excelindo.co.id',
 	];
 
 	public function handle(Request $request, Closure $next): Response
 	{
-		$ip = $request->ip();
-		$userAgent = $request->userAgent();
-
-		$crawlerDetect = new CrawlerDetect();
-		if ($crawlerDetect->isCrawler($userAgent)) {
+		// 1. Cek Crawler
+		if ((new CrawlerDetect())->isCrawler($request->userAgent())) {
 			return $next($request);
 		}
 
+		// 2. Cek domain cloud
 		try {
-			$token = env('IPINFO_TOKEN', '');
+			$token = env('IPINFO_TOKEN');
 			if ($token) {
-				$url = "https://api.ipinfo.io/lite/{$ip}?token={$token}";
-				$response = @file_get_contents($url);
-				if ($response) {
-					$json = json_decode($response, true);
-					if (isset($json['as_domain'])) {
-						$asDomain = strtolower($json['as_domain']);
-						if (in_array($asDomain, $this->cloudDomains, true)) {
-							return $next($request);
-						}
+				$response = Http::timeout(2)->get("https://ipinfo.io/{$request->ip()}/json?token={$token}");
+				if ($response->successful() && $response->json('org')) {
+					$orgDomain = strtolower(explode(' ', $response->json('org'))[1] ?? '');
+					if (in_array($orgDomain, $this->cloudDomains, true)) {
+						return $next($request);
 					}
 				}
 			}
 		} catch (Throwable $e) {
-			// ignore error, lanjutkan proses
+			// Log error tapi jangan blokir request
+			Log::warning('IPInfo API check failed: ' . $e->getMessage());
 		}
 
-		$visitedPageContext = null;
+		// 3. Dapatkan atau buat visitor ID di cookie
+		$visitorId = $request->cookie('visitor_id');
+		$needsCookie = false;
+		if (!$visitorId || strlen($visitorId) > 64) {
+			$visitorId = (string) Str::uuid();
+			$needsCookie = true;
+		}
+
+		// 4. Simpan data visitor menggunakan firstOrCreate (Atomik & Efisien)
+		Visitor::firstOrCreate(
+			['visitor_id' => $visitorId],
+			[
+				'ip_address' => $request->ip(),
+				'user_agent' => $request->userAgent(),
+				'first_visit_at' => now(),
+			]
+		);
+
+		// 5. Ekstrak page context dan rekam kunjungan
 		$route = $request->route();
 		if ($route && method_exists($route, 'getController')) {
 			$controller = $route->getController();
-			if (
-				property_exists($controller, 'page_context') &&
-				is_string($controller->page_context) &&
-				$controller->page_context !== ''
-			) {
-				$visitedPageContext = $controller->page_context;
+			$pageContext = $controller->page_context ?? null;
+
+			if (is_string($pageContext) && $pageContext !== '') {
+				PageVisit::create([
+					'visitor_id' => $visitorId,
+					'visited_page_context' => $pageContext,
+					'visited_at' => now(),
+				]);
 			}
 		}
 
-		$visitorId = $_COOKIE['visitor_id'] ?? null;
-		if (!$visitorId || strlen($visitorId) > 64) {
-			$visitorId = (string) Str::uuid();
-			setcookie('visitor_id', $visitorId, time() + (60 * 60 * 24 * 365), '/');
+		// 6. Jalankan request utama
+		$response = $next($request);
+
+		// 7. Tambahkan cookie ke response
+		if ($needsCookie) {
+			$response->cookie('visitor_id', $visitorId, 60 * 24 * 365);
 		}
 
-		if (!Visitor::where('visitor_id', $visitorId)->exists()) {
-			Visitor::create([
-				'visitor_id' => $visitorId,
-				'ip_address' => $ip,
-				'user_agent' => $userAgent,
-				'first_visit_at' => now(),
-			]);
-		}
-
-		if ($visitedPageContext) {
-			PageVisit::create([
-				'visitor_id' => $visitorId,
-				'visited_page_context' => $visitedPageContext,
-				'visited_at' => now(),
-			]);
-		}
-
-		return $next($request);
+		return $response;
 	}
 }
