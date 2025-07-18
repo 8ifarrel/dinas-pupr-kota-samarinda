@@ -8,13 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Visitor;
 use App\Models\PageVisit;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Http; // <-- Gunakan HTTP Client
-use Illuminate\Support\Facades\Log; // <-- Gunakan untuk logging error
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class RecordStatistikPengunjung
 {
-	// Pindahkan daftar ini ke file config, misal: config('statistics.blocked_domains')
 	protected array $cloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
@@ -41,16 +40,14 @@ class RecordStatistikPengunjung
 
 	public function handle(Request $request, Closure $next): Response
 	{
-		// 1. Cek Crawler
 		if ((new CrawlerDetect())->isCrawler($request->userAgent())) {
 			return $next($request);
 		}
 
-		// 2. Cek domain cloud (opsional: bisa dipindah ke job)
 		try {
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
-				$response = Http::timeout(2)->get("https://ipinfo.io/{$request->ip()}/json?token={$token}");
+				$response = Http::timeout(2)->get("https://ipinfo.io/{$request->ip()}?token={$token}");
 				if ($response->successful() && $response->json('org')) {
 					$orgDomain = strtolower(explode(' ', $response->json('org'))[1] ?? '');
 					if (in_array($orgDomain, $this->cloudDomains, true)) {
@@ -69,7 +66,6 @@ class RecordStatistikPengunjung
 			setcookie('visitor_id', $visitorId, time() + (60 * 60 * 24 * 365), '/');
 		}
 
-		// 4. Simpan data visitor menggunakan firstOrCreate (Atomik & Efisien)
 		Visitor::firstOrCreate(
 			['visitor_id' => $visitorId],
 			[
@@ -79,7 +75,6 @@ class RecordStatistikPengunjung
 			]
 		);
 
-		// 5. Ekstrak page context dan rekam kunjungan
 		$route = $request->route();
 		if ($route && method_exists($route, 'getController')) {
 			$controller = $route->getController();
@@ -94,7 +89,6 @@ class RecordStatistikPengunjung
 			}
 		}
 
-		// 6. Jalankan request utama
 		$response = $next($request);
 
 		return $response;
