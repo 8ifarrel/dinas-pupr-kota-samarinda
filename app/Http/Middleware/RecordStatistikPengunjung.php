@@ -8,14 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Visitor;
 use App\Models\PageVisit;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http; // <-- Gunakan HTTP Client
+use Illuminate\Support\Facades\Log; // <-- Gunakan untuk logging error
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
-use Throwable;
 
 class RecordStatistikPengunjung
 {
-	// Blocked domains for cloud providers
+	// Pindahkan daftar ini ke file config, misal: config('statistics.blocked_domains')
 	protected array $cloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
@@ -39,6 +38,7 @@ class RecordStatistikPengunjung
 		'excelindo.co.id',
 	];
 
+
 	public function handle(Request $request, Closure $next): Response
 	{
 		// 1. Cek Crawler
@@ -46,7 +46,7 @@ class RecordStatistikPengunjung
 			return $next($request);
 		}
 
-		// 2. Cek domain cloud
+		// 2. Cek domain cloud (opsional: bisa dipindah ke job)
 		try {
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
@@ -58,17 +58,15 @@ class RecordStatistikPengunjung
 					}
 				}
 			}
-		} catch (Throwable $e) {
+		} catch (\Throwable $e) {
 			// Log error tapi jangan blokir request
 			Log::warning('IPInfo API check failed: ' . $e->getMessage());
 		}
 
-		// 3. Dapatkan atau buat visitor ID di cookie
-		$visitorId = $request->cookie('visitor_id');
-		$needsCookie = false;
+		$visitorId = $_COOKIE['visitor_id'] ?? null;
 		if (!$visitorId || strlen($visitorId) > 64) {
 			$visitorId = (string) Str::uuid();
-			$needsCookie = true;
+			setcookie('visitor_id', $visitorId, time() + (60 * 60 * 24 * 365), '/');
 		}
 
 		// 4. Simpan data visitor menggunakan firstOrCreate (Atomik & Efisien)
@@ -98,11 +96,6 @@ class RecordStatistikPengunjung
 
 		// 6. Jalankan request utama
 		$response = $next($request);
-
-		// 7. Tambahkan cookie ke response
-		if ($needsCookie) {
-			$response->cookie('visitor_id', $visitorId, 60 * 24 * 365);
-		}
 
 		return $response;
 	}
