@@ -8,6 +8,7 @@ use App\Models\Berita;
 use App\Models\BeritaKategori;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class BeritaAdminController extends Controller
 {
@@ -186,5 +187,24 @@ class BeritaAdminController extends Controller
 
         return redirect()->route('admin.berita.index', ['id_kategori' => $idKategori])
             ->with('success', 'Berita berhasil dihapus.');
+    }
+
+    public function trixUploadImage(Request $request)
+    {
+        $request->validate([
+            'attachment' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $file = $request->file('attachment');
+        $ext = $file->getClientOriginalExtension();
+        $filename = 'trix_' . time() . '_' . uniqid() . '.' . $ext;
+        $path = $file->storeAs('public/trix-images', $filename);
+
+        $url = Storage::url('trix-images/' . $filename);
+
+        return Response::json([
+            'success' => true,
+            'url' => $url,
+        ]);
     }
 }

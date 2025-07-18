@@ -352,6 +352,8 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 				->name('admin.berita.update');
 			Route::delete('/delete/{id}', [BeritaAdminController::class, 'destroy'])
 				->name('admin.berita.destroy');
+			Route::post('/trix-upload-image', [BeritaAdminController::class, 'trixUploadImage'])
+				->name('admin.berita.trix-upload-image');
 		});
 
 		/**
