@@ -13,6 +13,7 @@ use Throwable;
 
 class RecordStatistikPengunjung
 {
+	// blocked cloud domains
 	protected array $cloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
@@ -43,7 +44,6 @@ class RecordStatistikPengunjung
 			return $next($request);
 		}
 
-		$asDomain = null;
 		try {
 			$token = env('IPINFO_TOKEN', '');
 			if ($token) {
@@ -53,15 +53,14 @@ class RecordStatistikPengunjung
 					$json = json_decode($response, true);
 					if (isset($json['as_domain'])) {
 						$asDomain = strtolower($json['as_domain']);
+						if (in_array($asDomain, $this->cloudDomains, true)) {
+							return $next($request);
+						}
 					}
 				}
 			}
 		} catch (Throwable $e) {
-			// ignore
-		}
-
-		if ($asDomain && in_array($asDomain, $this->cloudDomains, true)) {
-			return $next($request);
+			// ignore error, lanjutkan proses
 		}
 
 		$visitedPageContext = null;
