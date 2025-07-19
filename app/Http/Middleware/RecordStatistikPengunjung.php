@@ -41,6 +41,8 @@ class RecordStatistikPengunjung
 		'google.com',
 		'colocatel.com',
 		'jetcyber.co.id',
+		'chinatelecom.cn',
+		
 	];
 
 
