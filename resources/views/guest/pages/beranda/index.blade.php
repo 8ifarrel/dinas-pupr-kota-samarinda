@@ -7,7 +7,6 @@
 @section('document.body')
   {{-- Slider --}}
   <div id="default-carousel" class="relative w-full" data-carousel="slide">
-    <!-- Carousel wrapper -->
     <div class="relative w-full pb-[42.8571%] overflow-hidden">
       @foreach ($slider as $key => $item)
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -36,7 +35,6 @@
       @endforeach
     </div>
 
-    <!-- Slider controls -->
     <button type="button"
       class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
       data-carousel-prev>
@@ -211,6 +209,10 @@
     </div>
   </div>
 
+  {{-- ================================================================= --}}
+  {{-- =================== BAGIAN YANG DIUBAH MULAI DARI SINI ================== --}}
+  {{-- ================================================================= --}}
+
   {{-- Agenda Kegiatan --}}
   <div class="p-10 md:p-12">
     @include('guest.components.section-title', [
@@ -222,14 +224,14 @@
       <div class="space-y-6 mx-auto">
         {{-- Tanggal --}}
         <div class="space-y-2.5">
-          <div class="flex justify-between">
+          <div class="flex justifu-center flex-col sm:flex-row sm:justify-between sm:items-center">
             <div class="flex justify-start items-center gap-1.5">
               <button id="agenda-prev-week"
                 class="bg-brand-blue text-white rounded-xl h-5 w-5 p-4 flex items-center justify-center shadow">
                 <i class="fa-solid fa-chevron-left"></i>
               </button>
               <span id="agenda-week-label"
-                class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow">
+                class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow w-full sm:w-auto text-center sm:text-left">
                 {{-- Label minggu, diisi JS --}}
               </span>
               <button id="agenda-next-week"
@@ -238,17 +240,18 @@
               </button>
             </div>
             <button id="agenda-today-btn"
-              class="bg-brand-yellow text-brand-blue font-semibold rounded-xl px-3.5 py-1 shadow">
-              Hari ini
+              class="bg-brand-yellow text-brand-blue font-semibold rounded-xl px-3.5 py-1 shadow mt-4 mb-1.5 sm:mb-0 sm:mt-0 self-center sm:self-auto">
+              Pergi ke hari ini
             </button>
           </div>
+
           <div id="agenda-days"
-            class="rounded-2xl bg-brand-blue/20 p-4 text-center border border-brand-blue flex flex-row items-center justify-center gap-2.5 shadow">
-            {{-- Diisi JS: daftar hari minggu berjalan --}}
+            class="rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue shadow grid grid-cols-2 sm:grid-cols-12 md:grid-cols-7 gap-2.5">
+            {{-- Diisi JS: daftar hari minggu berjalan dengan layout grid --}}
           </div>
         </div>
 
-        <div id="agenda-list" class="flex flex-col justify-center items-center gap-3 w-5/6 mx-auto">
+        <div id="agenda-list" class="flex flex-col justify-center items-center gap-3 w-full lg:w-5/6 mx-auto">
           {{-- Diisi JS: daftar agenda kegiatan pada hari terpilih --}}
         </div>
       </div>
@@ -261,6 +264,9 @@
       </div>
     </div>
   </div>
+  {{-- ================================================================= --}}
+  {{-- =================== BAGIAN YANG DIUBAH SELESAI DI SINI ================== --}}
+  {{-- ================================================================= --}}
 
   {{-- Statistik Pengunjung --}}
   <div class="bg-gray-200 p-6 md:p-12">
@@ -304,7 +310,6 @@
             <div class="splide__track">
               <ul class="splide__list">
                 @foreach ($partner as $item)
-                  {{-- 16:9x315 --}}
                   <li class="splide__slide my-auto !w-fit px-6 sm:px-10">
                     <a href="{{ $item->url_partner }}" class="!w-fit">
                       <img class="h-24 object-contain" src="{{ Storage::url($item->foto_partner) }}"
@@ -324,6 +329,9 @@
 @section('document.end')
   @vite(['resources/js/splidejs.js', 'resources/js/splide-autoscroll.js'])
 
+  {{-- ================================================================= --}}
+  {{-- ================ SCRIPT YANG DIUBAH MULAI DARI SINI ================ --}}
+  {{-- ================================================================= --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var el = document.querySelector('.splide');
@@ -358,7 +366,6 @@
             AutoScroll: window.SplideAutoScroll
           }
         });
-
         splide.mount({
           AutoScroll: window.SplideAutoScroll
         });
@@ -366,6 +373,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
+      // Kode agenda lainnya tetap sama
       function formatDate(date) {
         return date.toLocaleDateString('id-ID', {
           day: 'numeric',
@@ -380,15 +388,14 @@
 
       let currentDate = new Date();
       let currentWeekStart = new Date(currentDate);
-      currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1);
+      currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1));
       let currentWeekEnd = new Date(currentWeekStart);
       currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
-
       let selectedDate = new Date(currentDate);
 
       function updateWeekLabel() {
-        document.getElementById('agenda-week-label').textContent =
-          formatDate(currentWeekStart) + ' - ' + formatDate(currentWeekEnd);
+        document.getElementById('agenda-week-label').textContent = formatDate(currentWeekStart) + ' - ' + formatDate(
+          currentWeekEnd);
       }
 
       function renderDays(weekCounts = {}) {
@@ -401,7 +408,8 @@
           let isSelected = dayDate.toDateString() === selectedDate.toDateString();
           let dayStr = dayDate.toISOString().slice(0, 10);
 
-          let cardClass = 'rounded-2xl font-bold w-[95px] py-2.5 flex flex-col items-center justify-center shadow cursor-pointer ';
+          let cardClass =
+            'rounded-xl font-bold py-2.5 flex flex-col items-center justify-center shadow cursor-pointer ';
           if (isSelected && isToday) {
             cardClass += 'bg-brand-blue text-white border-2 border-brand-yellow';
           } else if (isSelected) {
@@ -418,6 +426,27 @@
           let dayDiv = document.createElement('div');
           dayDiv.className = cardClass;
           dayDiv.dataset.date = dayStr;
+
+          // DIUBAH (REVISI FINAL): Logika class responsif yang baru
+          const responsiveClasses = [];
+
+          // 1. Layout default (<sm): 2-2-2-1
+          if (i === 6) {
+            responsiveClasses.push('col-span-2');
+          }
+
+          // 2. Layout 'sm': 4-3 (penuh) menggunakan grid 12 kolom
+          if (i < 4) {
+            responsiveClasses.push('sm:col-span-3'); // 4 item x 3 span = 12
+          } else {
+            responsiveClasses.push('sm:col-span-4'); // 3 item x 4 span = 12
+          }
+
+          // 3. Layout 'md' ke atas: Reset agar setiap item memakan 1 kolom dari 7
+          responsiveClasses.push('md:col-span-1');
+
+          dayDiv.classList.add(...responsiveClasses);
+
           dayDiv.innerHTML = `
             <div>${dayDate.getDate()}</div>
             <div>${dayDate.toLocaleDateString('id-ID', { weekday: 'long' })}</div>
@@ -432,12 +461,12 @@
         }
       }
 
+      // Kode fetchWeekCounts, fetchAgendaList, updateAgendaWeek, dan event listener button lainnya tetap sama
       function fetchWeekCounts(callback) {
         const startStr = currentWeekStart.toISOString().slice(0, 10);
         const endStr = currentWeekEnd.toISOString().slice(0, 10);
         fetch(`{{ route('guest.agenda-kegiatan.ajax-week-count') }}?start=${startStr}&end=${endStr}`)
-          .then(res => res.json())
-          .then(data => {
+          .then(res => res.json()).then(data => {
             callback(data);
           });
       }
@@ -451,11 +480,10 @@
             listContainer.innerHTML = '';
             let infoDiv = document.createElement('div');
             infoDiv.className =
-            'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow self-start';
+            'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow sm:self-start';
             infoDiv.innerHTML =
-              `${data.length} Kegiatan pada tanggal <span class="font-semibold">${formatDate(selectedDate)}</span>`;
+              `${data.length} Kegiatan pada <span class="font-semibold">${formatDate(selectedDate)}</span>`;
             listContainer.appendChild(infoDiv);
-
             if (data.length === 0) {
               let emptyDiv = document.createElement('div');
               emptyDiv.className =
@@ -466,13 +494,8 @@
               data.forEach(item => {
                 let agendaDiv = document.createElement('div');
                 agendaDiv.className = 'rounded-2xl bg-brand-blue/20 p-4 border border-brand-blue w-full shadow';
-                agendaDiv.innerHTML = `
-                  <p class="font-bold text-black">${item.nama}</p>
-                  <p class="text-sm text-gray-700"><b>Waktu</b>: ${formatTime(item.waktu_mulai)} WITA</p>
-                  <p class="text-sm text-gray-700"><b>Pelaksana</b>: ${item.pelaksana}</p>
-                  <p class="text-sm text-gray-700"><b>Lokasi</b>: ${item.tempat}</p>
-                  <p class="text-sm text-black"><b>Dihadiri oleh: ${item.dihadiri_oleh}</b></p>
-                `;
+                agendaDiv.innerHTML =
+                  `<p class="font-bold text-black">${item.nama}</p><p class="text-sm text-gray-700"><b>Waktu</b>: ${formatTime(item.waktu_mulai)} WITA</p><p class="text-sm text-gray-700"><b>Pelaksana</b>: ${item.pelaksana}</p><p class="text-sm text-gray-700"><b>Lokasi</b>: ${item.tempat}</p><p class="text-sm text-black"><b>Dihadiri oleh: ${item.dihadiri_oleh}</b></p>`;
                 listContainer.appendChild(agendaDiv);
               });
             }
@@ -502,7 +525,8 @@
       document.getElementById('agenda-today-btn').onclick = function() {
         currentDate = new Date();
         currentWeekStart = new Date(currentDate);
-        currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + 1);
+        currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 :
+          1));
         currentWeekEnd = new Date(currentWeekStart);
         currentWeekEnd.setDate(currentWeekStart.getDate() + 6);
         selectedDate = new Date(currentDate);
