@@ -1,7 +1,7 @@
-import ImageResize from 'quill-resize-module/dist/resize.js';
+import QuillResize from 'quill-resize-module/dist/resize.js';
 
 if (window.Quill) {
-    window.Quill.register('modules/resize', ImageResize);
+    window.Quill.register('modules/resize', QuillResize);
 }
 
-window.ImageResize = ImageResize;
+window.QuillResize = QuillResize;
