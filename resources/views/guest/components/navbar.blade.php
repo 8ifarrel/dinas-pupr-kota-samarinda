@@ -61,8 +61,10 @@
           </button>
 
           <div id="dropdownNavbarProfil"
-            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
-            <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
+            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none z-50 hidden w-full lg:w-fit">
+            <ul
+              class="text-sm text-gray-700 lg:flex border-y-4 border-brand-blue font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit mx-10"
+              aria-labelledby="dropdownLargeButton">
               <div class="py-5 px-3">
                 <h2 class="font-bold px-4 pb-2 text-base">
                   Dinas PUPR Kota Samarinda
@@ -192,8 +194,10 @@
           </button>
 
           <div id="dropdownNavbarInformasiPUPR"
-            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
-            <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
+            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none z-50 hidden w-full lg:w-fit">
+            <ul
+              class="text-sm text-gray-700 lg:flex border-y-4 border-brand-blue font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit mx-10"
+              aria-labelledby="dropdownLargeButton">
               {{-- Berita --}}
               <div class="py-5 px-3">
                 <h2 class="font-bold px-4 pb-2 text-base">
