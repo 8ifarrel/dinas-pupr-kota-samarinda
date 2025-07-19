@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\BeritaKategori;
+use App\Models\BeritaFotoTambahan;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -94,8 +95,24 @@ class BeritaAdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Touch kategori
-        BeritaKategori::find($request->id_berita_kategori)?->touch();
+        // Simpan foto tambahan jika ada
+        if ($request->hasFile('foto_tambahan')) {
+            foreach ($request->file('foto_tambahan') as $foto) {
+                $ext = $foto->getClientOriginalExtension();
+                $folder = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/foto_tambahan/';
+                $filename = $uuid . '_' . Str::random(8) . '.' . $ext;
+                $fotoTambahanPath = $folder . $filename;
+                $foto->storeAs('public/' . $folder, $filename);
+
+                BeritaFotoTambahan::create([
+                    'uuid_berita' => $uuid,
+                    'foto_path' => $fotoTambahanPath,
+                    'caption' => '', // Atur caption jika ada input
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
 
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil ditambahkan.');
@@ -129,9 +146,7 @@ class BeritaAdminController extends Controller
         $berita = Berita::findOrFail($id);
         $slug = Str::slug($request->judul_berita);
 
-        // Mirip struktur organisasi: handle file biasa atau filepond/cropper (json string)
         if ($request->hasFile('foto_berita')) {
-            // Hapus lama jika ada
             if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
                 Storage::disk('public')->delete($berita->foto_berita);
             }
@@ -164,47 +179,45 @@ class BeritaAdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        // Touch kategori
-        BeritaKategori::find($request->id_berita_kategori)?->touch();
-
         return redirect()->route('admin.berita.index', ['id_kategori' => $request->id_berita_kategori])
             ->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $berita = Berita::findOrFail($id);
+        $berita = Berita::with('fotoTambahan')->findOrFail($id);
 
         if (Storage::disk('public')->exists($berita->foto_berita)) {
             Storage::disk('public')->delete($berita->foto_berita);
         }
 
-        $idKategori = $berita->id_berita_kategori;
+        foreach ($berita->fotoTambahan as $fotoTambahan) {
+            if ($fotoTambahan->foto_path && Storage::disk('public')->exists($fotoTambahan->foto_path)) {
+                Storage::disk('public')->delete($fotoTambahan->foto_path);
+            }
+            $fotoTambahan->delete();
+        }
+
         $berita->delete();
 
-        // Touch kategori
-        BeritaKategori::find($idKategori)?->touch();
-
-        return redirect()->route('admin.berita.index', ['id_kategori' => $idKategori])
+        return redirect()->route('admin.berita.index', ['id_kategori' => $berita->id_berita_kategori])
             ->with('success', 'Berita berhasil dihapus.');
     }
 
-    public function trixUploadImage(Request $request)
+    public function uploadQuillImage(Request $request)
     {
-        $request->validate([
-            'attachment' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $uuid = $request->input('uuid_berita', Str::uuid());
+            $ext = $file->getClientOriginalExtension();
+            $folder = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/foto_tambahan/';
+            $filename = $uuid . '_' . Str::random(8) . '.' . $ext;
+            $path = $file->storeAs('public/' . $folder, $filename);
 
-        $file = $request->file('attachment');
-        $ext = $file->getClientOriginalExtension();
-        $filename = 'trix_' . time() . '_' . uniqid() . '.' . $ext;
-        $path = $file->storeAs('public/trix-images', $filename);
+            $url = asset('storage/' . $folder . $filename);
 
-        $url = Storage::url('trix-images/' . $filename);
-
-        return Response::json([
-            'success' => true,
-            'url' => $url,
-        ]);
+            return Response::json(['success' => true, 'url' => $url]);
+        }
+        return Response::json(['success' => false], 400);
     }
 }

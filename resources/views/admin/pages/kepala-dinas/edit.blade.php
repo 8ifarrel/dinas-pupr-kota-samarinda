@@ -1,29 +1,11 @@
 @extends('admin.layout')
 
 @section('document.head')
-  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/trix.css'])
-  <style>
-    trix-toolbar .trix-button-group--file-tools {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-quote {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-code {
-      display: none;
-    }
-
-    trix-editor {
-      height: 270px !important;
-      overflow-y: auto;
-    }
-  </style>
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/quill.css'])
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.kepala-dinas.update') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.kepala-dinas.update') }}" method="POST" enctype="multipart/form-data" id="form-kepala-dinas">
     @csrf
 
     <div class="mb-4">
@@ -141,10 +123,10 @@
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ $susunan->deskripsi_susunan_organisasi }}</textarea>
     </div>
     <div class="mb-4">
-      <label for="tupoksi_susunan_organisasi" class="block font-medium text-gray-700">Tupoksi Jabatan</label>
+      <label for="tupoksi_susunan_organisasi" class="block font-medium text-gray-700 mb-1">Tupoksi Jabatan</label>
       <input id="tupoksi_susunan_organisasi" type="hidden" name="tupoksi_jabatan"
         value="{{ $susunan->tupoksi_susunan_organisasi }}">
-      <trix-editor input="tupoksi_susunan_organisasi"></trix-editor>
+      <div id="quill-editor-tupoksi"></div>
     </div>
     <div class="mb-4">
       <label for="periode_jabatan" class="block font-medium text-gray-700">Periode Jabatan</label>
@@ -208,7 +190,7 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/trix.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/quill.js'])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -383,6 +365,28 @@
         ev.stopPropagation();
         if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
         return false;
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var quillTupoksi = new Quill('#quill-editor-tupoksi', {
+        theme: 'snow',
+        placeholder: 'Tulis tupoksi jabatan di sini...',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+          ]
+        }
+      });
+      var isiTupoksi = document.getElementById('tupoksi_susunan_organisasi').value;
+      if (isiTupoksi) {
+        quillTupoksi.clipboard.dangerouslyPasteHTML(isiTupoksi);
+      }
+      document.getElementById('form-kepala-dinas').addEventListener('submit', function(e) {
+        document.getElementById('tupoksi_susunan_organisasi').value = quillTupoksi.root.innerHTML;
       });
     });
   </script>

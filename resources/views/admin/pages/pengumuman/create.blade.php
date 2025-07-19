@@ -1,30 +1,11 @@
 @extends('admin.layout')
 
 @section('document.head')
-  @vite(['resources/css/trix.css'])
-
-  <style>
-    trix-toolbar .trix-button-group--file-tools {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-quote {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-code {
-      display: none;
-    }
-
-    trix-editor {
-      height: 270px !important;
-      overflow-y: auto;
-    }
-  </style>
+  @vite(['resources/css/quill.css'])
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.pengumuman.store') }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.pengumuman.store') }}" method="POST" enctype="multipart/form-data" id="form-pengumuman">
     @csrf
 
     <div class="mb-4">
@@ -34,9 +15,9 @@
     </div>
 
     <div class="mb-4">
-      <label for="perihal" class="block text-sm font-medium text-gray-700">Perihal</label>
+      <label for="perihal" class="block text-sm font-medium text-gray-700 mb-1">Perihal</label>
       <input id="perihal" type="hidden" name="perihal">
-      <trix-editor input="perihal"></trix-editor>
+      <div id="quill-editor"></div>
     </div>
 
     <div class="mb-4">
@@ -55,5 +36,25 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/trix.js'])
+  @vite(['resources/js/quill.js'])
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        placeholder: 'Tulis perihal pengumuman di sini...',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+          ]
+        }
+      });
+
+      document.getElementById('form-pengumuman').addEventListener('submit', function(e) {
+        document.getElementById('perihal').value = quill.root.innerHTML;
+      });
+    });
+  </script>
 @endsection

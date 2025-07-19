@@ -1,30 +1,11 @@
 @extends('admin.layout')
 
 @section('document.head')
-  @vite(['resources/css/trix.css'])
-
-  <style>
-    trix-toolbar .trix-button-group--file-tools {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-quote {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-code {
-      display: none;
-    }
-
-    trix-editor {
-      height: 270px !important;
-      overflow-y: auto;
-    }
-  </style>
+  @vite(['resources/css/quill.css'])
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.pengumuman.update', $pengumuman->id) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.pengumuman.update', $pengumuman->id) }}" method="POST" enctype="multipart/form-data" id="form-pengumuman">
     @csrf
     @method('POST')
 
@@ -35,9 +16,9 @@
     </div>
 
     <div class="mb-4">
-      <label for="perihal" class="block text-sm font-medium text-gray-700">Perihal</label>
+      <label for="perihal" class="block text-sm font-medium text-gray-700 mb-1">Perihal</label>
       <input id="perihal" type="hidden" name="perihal" value="{{ $pengumuman->perihal }}">
-      <trix-editor input="perihal"></trix-editor>
+      <div id="quill-editor"></div>
     </div>
 
     <div class="mb-4">
@@ -61,5 +42,31 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/trix.js'])
+  @vite(['resources/js/quill.js'])
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        placeholder: 'Tulis perihal pengumuman di sini...',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+          ]
+        }
+      });
+
+      // Isi value awal dari database
+      var isiPerihal = document.getElementById('perihal').value;
+      if (isiPerihal) {
+        quill.clipboard.dangerouslyPasteHTML(isiPerihal);
+      }
+
+      document.getElementById('form-pengumuman').addEventListener('submit', function(e) {
+        document.getElementById('perihal').value = quill.root.innerHTML;
+      });
+    });
+  </script>
 @endsection

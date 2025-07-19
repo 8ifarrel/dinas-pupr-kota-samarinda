@@ -2,34 +2,15 @@
 
 @section('document.head')
   @vite([
-    'resources/css/trix.css',
+    'resources/css/quill.css',
     'resources/css/viewerjs.css',
     'resources/css/cropperjs.css'
   ])
-
-  <style>
-    trix-toolbar .trix-button-group--file-tools {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-quote {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-code {
-      display: none;
-    }
-
-    trix-editor {
-      height: 270px !important;
-      overflow-y: auto;
-    }
-  </style>
 @endsection
 
 @section('document.body')
   <form action="{{ route('admin.struktur-organisasi.susunan-organisasi.update', $susunan->id_susunan_organisasi) }}"
-    method="POST" enctype="multipart/form-data">
+    method="POST" enctype="multipart/form-data" id="form-susunan-organisasi">
     @csrf
     @method('PUT')
 
@@ -133,11 +114,11 @@
     </div>
 
     <div class="mb-4">
-      <label for="tupoksi_susunan_organisasi" class="block text-sm font-medium text-gray-700">Tupoksi Susunan
+      <label for="tupoksi_susunan_organisasi" class="block text-sm font-medium text-gray-700 mb-1">Tupoksi Susunan
         Organisasi</label>
       <input id="tupoksi_susunan_organisasi" type="hidden" name="tupoksi_susunan_organisasi"
         value="{{ $susunan->tupoksi_susunan_organisasi }}">
-      <trix-editor input="tupoksi_susunan_organisasi"></trix-editor>
+      <div id="quill-editor-tupoksi"></div>
     </div>
 
     {{-- Ikon, Organigram, Slider --}}
@@ -386,11 +367,10 @@
 
 @section('document.end')
   @vite([
-   'resources/js/trix.js',
+   'resources/js/quill.js',
    'resources/js/viewerjs.js',
    'resources/js/cropperjs.js'
   ])
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       function toggleParentDropdowns() {
@@ -1201,6 +1181,29 @@
         toggleRequiredIkonOrganigram();
       });
       toggleRequiredIkonOrganigram();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var quillTupoksi = new Quill('#quill-editor-tupoksi', {
+        theme: 'snow',
+        placeholder: 'Tulis tupoksi susunan organisasi di sini...',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+          ]
+        }
+      });
+      var isiTupoksi = document.getElementById('tupoksi_susunan_organisasi').value;
+      if (isiTupoksi) {
+        quillTupoksi.clipboard.dangerouslyPasteHTML(isiTupoksi);
+      }
+      document.getElementById('form-susunan-organisasi').addEventListener('submit', function(e) {
+        document.getElementById('tupoksi_susunan_organisasi').value = quillTupoksi.root.innerHTML;
+      });
     });
   </script>
 @endsection

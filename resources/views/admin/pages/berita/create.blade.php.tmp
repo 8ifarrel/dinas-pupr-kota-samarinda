@@ -1,11 +1,48 @@
 @extends('admin.layout')
 
 @section('document.head')
-  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/quill.css', 'resources/css/quill-resize-module.css'])
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/trix.css'])
+
+  <style>
+    trix-toolbar .trix-button--icon-quote {
+      display: none;
+    }
+
+    trix-toolbar .trix-button--icon-code {
+      display: none;
+    }
+
+    trix-editor {
+      height: 720px !important;
+      overflow-y: auto;
+    }
+
+    .trix-image-crop-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #fff;
+      border: 1px solid #888;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      transition: background 0.2s;
+    }
+
+    .trix-image-crop-btn:hover {
+      background: #e0e7ff;
+    }
+  </style>
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data" id="form-berita">
+  <form action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <input type="hidden" name="id_berita_kategori" value="{{ $kategori->id_berita_kategori }}">
@@ -58,9 +95,9 @@
     </div>
 
     <div class="mb-4">
-      <label for="isi_berita" class="block text-sm font-medium text-gray-700 mb-1">Isi Berita</label>
+      <label for="isi_berita" class="block text-sm font-medium text-gray-700">Isi Berita</label>
       <input id="isi_berita" type="hidden" name="isi_berita">
-      <div id="quill-editor" style="height:480px;"></div>
+      <trix-editor input="isi_berita"></trix-editor>
     </div>
 
     <div class="mb-4">
@@ -100,153 +137,9 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/quill.js', 'resources/js/quill-resize-module.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/trix.js']);
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var quill = new Quill('#quill-editor', {
-        theme: 'snow',
-        placeholder: 'Tulis isi berita di sini...',
-        modules: {
-          toolbar: [
-            [{
-              header: [1, 2, 3, false]
-            }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [{
-              list: 'ordered'
-            }, {
-              list: 'bullet'
-            }],
-            [{
-              align: []
-            }],
-            ['link', 'image'],
-            ['clean']
-          ],
-          resize: {
-            tools: [
-              'left', 'right', 'full',
-              {
-                text: '<i class="fa-solid fa-crop-simple"></i>',
-                verify(activeEle) {
-                  return (activeEle && activeEle.tagName === 'IMG');
-                },
-                handler(evt, button, activeEle) {
-                  // Simpan history src di elemen gambar
-                  if (!activeEle._srcHistory) activeEle._srcHistory = [activeEle.src];
-                  if (activeEle._srcHistoryPointer === undefined) activeEle._srcHistoryPointer = 0;
-                  const imgSrc = activeEle.src;
-                  const cropperModal = document.getElementById('cropperModalFoto');
-                  const imageToCrop = document.getElementById('image-to-crop-foto');
-                  let cropper = null;
-                  cropperModal.classList.remove('hidden');
-                  imageToCrop.src = imgSrc;
-                  if (window.Cropper) {
-                    if (imageToCrop.cropper) imageToCrop.cropper.destroy();
-                    cropper = new Cropper(imageToCrop, {
-                      viewMode: 1,
-                      autoCropArea: 1,
-                      aspectRatio: 16 / 9
-                    });
-                  }
-                  document.getElementById('crop-foto-confirm-btn').onclick = function() {
-                    if (cropper) {
-                      cropper.getCroppedCanvas().toBlob(function(blob) {
-                        const reader = new FileReader();
-                        reader.onload = function(ev) {
-                          // Simpan src hasil crop ke history
-                          activeEle._srcHistory.push(ev.target.result);
-                          activeEle._srcHistoryPointer = activeEle._srcHistory.length - 1;
-                          activeEle.src = ev.target.result;
-                          cropper.destroy();
-                          cropperModal.classList.add('hidden');
-                        };
-                        reader.readAsDataURL(blob);
-                      }, 'image/jpeg');
-                    }
-                  };
-                  document.getElementById('crop-foto-cancel-btn').onclick = function() {
-                    cropperModal.classList.add('hidden');
-                    if (cropper) cropper.destroy();
-                  };
-                }
-              },
-              {
-                text: '<i class="fa-solid fa-rotate-left"></i>',
-                verify(activeEle) {
-                  // Tombol hanya muncul jika sudah pernah crop (history > 1 dan pointer > 0)
-                  return (
-                    activeEle &&
-                    activeEle.tagName === 'IMG' &&
-                    Array.isArray(activeEle._srcHistory) &&
-                    activeEle._srcHistory.length > 1 &&
-                    typeof activeEle._srcHistoryPointer === 'number' &&
-                    activeEle._srcHistoryPointer > 0
-                  );
-                },
-                handler(evt, button, activeEle) {
-                  if (activeEle._srcHistoryPointer === undefined) activeEle._srcHistoryPointer = activeEle._srcHistory.length - 1;
-                  if (activeEle._srcHistoryPointer > 0) {
-                    activeEle._srcHistoryPointer--;
-                    activeEle.src = activeEle._srcHistory[activeEle._srcHistoryPointer];
-                  }
-                }
-              }
-            ]
-          }
-        }
-      });
-
-      // Custom image handler for Quill
-      function quillImageHandler() {
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.click();
-
-        input.onchange = function() {
-          const file = input.files[0];
-          if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            // Kirim UUID berita jika sudah ada
-            formData.append('uuid_berita', '{{ old('uuid_berita') ?? '' }}');
-            fetch('{{ route('admin.berita.uploadQuillImage') }}', {
-              method: 'POST',
-              headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-              },
-              body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-              if (result.success && result.url) {
-                const range = quill.getSelection();
-                quill.insertEmbed(range.index, 'image', result.url);
-              } else {
-                alert('Gagal upload gambar');
-              }
-            })
-            .catch(() => alert('Gagal upload gambar'));
-          }
-        };
-      }
-
-      // Replace default image handler
-      quill.getModule('toolbar').addHandler('image', quillImageHandler);
-
-      // Pastikan value Quill diisi ke input hidden sebelum submit
-      document.getElementById('form-berita').addEventListener('submit', function(e) {
-        document.getElementById('isi_berita').value = quill.root.innerHTML;
-      });
-    });
-
-    document.getElementById('form-berita').addEventListener('submit', function(e) {
-      document.getElementById('isi_berita').value = quill.root.innerHTML;
-    });
-
     document.addEventListener('DOMContentLoaded', function() {
       const wrapper = document.querySelector('.foto-viewer-wrapper');
       const input = document.getElementById('foto_berita');
@@ -410,6 +303,238 @@
         if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
         return false;
       });
+    });
+
+    document.addEventListener('trix-file-accept', function(event) {
+      const file = event.file;
+      if (!file.type.startsWith('image/')) {
+        event.preventDefault();
+        alert('Hanya gambar yang diperbolehkan untuk diupload.');
+        return;
+      }
+      event.preventDefault();
+
+      showTrixCropper(file);
+    });
+
+    function showTrixCropper(file) {
+      const cropperModal = document.getElementById('cropperModalFoto');
+      const imageToCrop = document.getElementById('image-to-crop-foto');
+      let cropper = null;
+
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        imageToCrop.src = ev.target.result;
+        cropperModal.classList.remove('hidden');
+        if (window._trixCropper) window._trixCropper.destroy();
+        window._trixCropper = new Cropper(imageToCrop, {
+          viewMode: 1,
+          autoCropArea: 1,
+          aspectRatio: 16 / 9
+        });
+      };
+      reader.readAsDataURL(file);
+
+      const confirmBtn = document.getElementById('crop-foto-confirm-btn');
+      const cancelBtn = document.getElementById('crop-foto-cancel-btn');
+
+      confirmBtn.onclick = null;
+      cancelBtn.onclick = null;
+
+      confirmBtn.onclick = function() {
+        if (window._trixCropper) {
+          window._trixCropper.getCroppedCanvas().toBlob(function(blob) {
+            uploadTrixImage(blob, file.name, file.type);
+            window._trixCropper.destroy();
+            window._trixCropper = null;
+            cropperModal.classList.add('hidden');
+          }, file.type || 'image/jpeg');
+        }
+      };
+      cancelBtn.onclick = function() {
+        cropperModal.classList.add('hidden');
+        if (window._trixCropper) {
+          window._trixCropper.destroy();
+          window._trixCropper = null;
+        }
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const trixEditor = document.querySelector('trix-editor');
+      if (!trixEditor) return;
+
+      function injectCropButtons() {
+        trixEditor.querySelectorAll('.trix-image-wrapper').forEach(w => {
+          const img = w.querySelector('img');
+          if (img) w.replaceWith(img);
+        });
+
+        trixEditor.querySelectorAll('img').forEach(img => {
+          if (img.closest('.trix-image-wrapper')) return;
+
+          const wrapper = document.createElement('span');
+          wrapper.className = 'trix-image-wrapper';
+          img.parentNode.insertBefore(wrapper, img);
+          wrapper.appendChild(img);
+
+          const cropBtn = document.createElement('button');
+          cropBtn.type = 'button';
+          cropBtn.className = 'trix-image-crop-btn';
+          cropBtn.title = 'Crop gambar';
+          cropBtn.innerHTML = '<i class="fa-solid fa-crop-simple"></i>';
+          wrapper.appendChild(cropBtn);
+
+          cropBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            showTrixImageCropper(img, wrapper);
+          });
+        });
+      }
+
+      trixEditor.addEventListener('trix-change', injectCropButtons);
+      trixEditor.addEventListener('trix-initialize', injectCropButtons);
+      trixEditor.addEventListener('click', injectCropButtons);
+
+      function showTrixImageCropper(img, wrapper) {
+        const cropperModal = document.getElementById('cropperModalFoto');
+        const imageToCrop = document.getElementById('image-to-crop-foto');
+        let origSrc = img.src;
+        let origType = 'image/jpeg';
+        if (origSrc.startsWith('data:')) {
+          origType = origSrc.split(';')[0].split(':')[1] || 'image/jpeg';
+        }
+        imageToCrop.src = origSrc;
+        cropperModal.classList.remove('hidden');
+        if (window._trixCropper) window._trixCropper.destroy();
+        window._trixCropper = new Cropper(imageToCrop, {
+          viewMode: 1,
+          autoCropArea: 1,
+          aspectRatio: 16 / 9
+        });
+
+        const confirmBtn = document.getElementById('crop-foto-confirm-btn');
+        const cancelBtn = document.getElementById('crop-foto-cancel-btn');
+        confirmBtn.onclick = null;
+        cancelBtn.onclick = null;
+
+        confirmBtn.onclick = function() {
+          if (window._trixCropper) {
+            window._trixCropper.getCroppedCanvas().toBlob(function(blob) {
+              uploadTrixImage(blob, 'cropped_' + Date.now() + '.jpg', blob.type, function(url) {
+                replaceTrixImage(img, url);
+              });
+              window._trixCropper.destroy();
+              window._trixCropper = null;
+              cropperModal.classList.add('hidden');
+            }, origType);
+          }
+        };
+        cancelBtn.onclick = function() {
+          cropperModal.classList.add('hidden');
+          if (window._trixCropper) {
+            window._trixCropper.destroy();
+            window._trixCropper = null;
+          }
+        };
+      }
+
+      function replaceTrixImage(img, newUrl) {
+        const editor = trixEditor.editor;
+        const range = editor.getSelectedRange();
+        const attachmentElement = img.closest('figure')?.dataset?.trixAttachment;
+        if (attachmentElement) {
+          const att = editor.getDocument().getAttachments().find(a => a.getURL() === img.src);
+          if (att) editor.removeAttachment(att);
+        } else {
+          img.src = newUrl;
+        }
+        insertTrixImage(newUrl);
+        editor.setSelectedRange(range);
+      }
+
+      setTimeout(injectCropButtons, 500);
+    });
+
+    function uploadTrixImage(blob, filename, mimeType, cb) {
+      const formData = new FormData();
+      formData.append('attachment', new File([blob], filename, {
+        type: mimeType
+      }));
+
+      fetch('{{ route('admin.berita.trix-upload-image') }}', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success && data.url) {
+            if (typeof cb === 'function') {
+              cb(data.url);
+            } else {
+              insertTrixImage(data.url);
+            }
+          } else {
+            alert('Gagal upload gambar.');
+          }
+        })
+        .catch(() => alert('Gagal upload gambar.'));
+    }
+
+    function insertTrixImage(url) {
+      const editor = document.querySelector('trix-editor');
+      if (editor) {
+        const attachment = new Trix.Attachment({
+          content: `<img src="${url}">`,
+          url: url
+        });
+        editor.editor.insertAttachment(attachment);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const trixEditor = document.querySelector('trix-editor');
+      if (trixEditor) {
+        trixEditor.addEventListener('click', function(e) {
+          const target = e.target;
+          if (target.tagName === 'IMG') {
+            e.preventDefault();
+            showTrixImageViewer(target);
+          }
+        });
+      }
+
+      function showTrixImageViewer(img) {
+        let container = document.getElementById('trix-image-viewer-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.id = 'trix-image-viewer-container';
+          container.style.display = 'none';
+          document.body.appendChild(container);
+        }
+        container.innerHTML = '';
+        const cloneImg = document.createElement('img');
+        cloneImg.src = img.src;
+        container.appendChild(cloneImg);
+
+        if (window._trixViewer) {
+          window._trixViewer.destroy();
+        }
+        window._trixViewer = new Viewer(container, {
+          navbar: false,
+          toolbar: true,
+          title: false,
+          hidden() {
+            window._trixViewer.destroy();
+            window._trixViewer = null;
+          }
+        });
+        window._trixViewer.show();
+      }
     });
   </script>
 @endsection

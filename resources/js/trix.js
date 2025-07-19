@@ -1,1 +1,0 @@
-import "trix/dist/trix.umd.min.js";

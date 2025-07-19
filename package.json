@@ -24,9 +24,10 @@
         "flowbite": "^3.1.2",
         "jquery": "^3.7.1",
         "lightbox2": "^2.11.5",
-        "sweetalert2": "^11.22.2",
+        "quill": "^2.0.3",
+        "quill-resize-module": "^2.0.4",
+        "sweetalert2": "^11.4.8",
         "tailwindcss-filters": "^3.0.0",
-        "trix": "^2.1.15",
         "viewerjs": "^1.11.7"
     }
 }

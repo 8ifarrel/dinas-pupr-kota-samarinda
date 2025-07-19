@@ -40,5 +40,11 @@ class Berita extends Model
     {
         return $this->belongsTo(BeritaKategori::class, 'id_berita_kategori');
     }
+
+    // Relasi foto tambahan
+    public function fotoTambahan()
+    {
+        return $this->hasMany(BeritaFotoTambahan::class, 'uuid_berita', 'uuid_berita');
+    }
 }
 

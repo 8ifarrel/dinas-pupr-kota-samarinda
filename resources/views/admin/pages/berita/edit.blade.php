@@ -1,30 +1,11 @@
 @extends('admin.layout')
 
 @section('document.head')
-  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/trix.css'])
-
-  <style>
-    trix-toolbar .trix-button-group--file-tools {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-quote {
-      display: none;
-    }
-
-    trix-toolbar .trix-button--icon-code {
-      display: none;
-    }
-
-    trix-editor {
-      height: 270px !important;
-      overflow-y: auto;
-    }
-  </style>
+  @vite(['resources/css/cropperjs.css', 'resources/css/viewerjs.css', 'resources/css/quill.css', 'resources/css/quill-resize-module.css'])
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.berita.update', $berita->uuid_berita) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('admin.berita.update', $berita->uuid_berita) }}" method="POST" enctype="multipart/form-data" id="form-berita">
     @csrf
 
     <input type="hidden" name="id_berita_kategori" value="{{ $kategori->id_berita_kategori }}">
@@ -80,9 +61,9 @@
     </div>
 
     <div class="mb-4">
-      <label for="isi_berita" class="block text-sm font-medium text-gray-700">Isi Berita</label>
+      <label for="isi_berita" class="block text-sm font-medium text-gray-700 mb-1">Isi Berita</label>
       <input id="isi_berita" type="hidden" name="isi_berita" value="{{ $berita->isi_berita }}">
-      <trix-editor input="isi_berita"></trix-editor>
+      <div id="quill-editor" style="height:480px;"></div>
     </div>
 
     <div class="mb-4">
@@ -122,10 +103,205 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/trix.js']);
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/quill.js', 'resources/js/quill-resize-module.js'])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        placeholder: 'Tulis isi berita di sini...',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ align: [] }],
+            ['link', 'image'],
+            ['clean']
+          ],
+          resize: {
+            tools: [
+              'left', 'right', 'full',
+              {
+                text: '<i class="fa-solid fa-crop-simple"></i>',
+                verify(activeEle) {
+                  return (activeEle && activeEle.tagName === 'IMG');
+                },
+                handler(evt, button, activeEle) {
+                  const input = document.getElementById('foto_berita');
+                  const preview = document.getElementById('foto-preview');
+                  const cropperModal = document.getElementById('cropperModalFoto');
+                  const imageToCrop = document.getElementById('image-to-crop-foto');
+                  let cropper = null;
+
+                  function setPreviewAndHistory(src) {
+                    preview.src = src;
+                    preview.classList.remove('hidden');
+                    input.value = '';
+                    if (cropper) {
+                      cropper.destroy();
+                      cropper = null;
+                    }
+                    cropperModal.classList.add('hidden');
+                  }
+
+                  if (activeEle && activeEle.tagName === 'IMG') {
+                    const imageSrc = activeEle.getAttribute('src');
+                    imageToCrop.src = imageSrc;
+                    cropperModal.classList.remove('hidden');
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(imageToCrop, {
+                      viewMode: 1,
+                      autoCropArea: 1,
+                      aspectRatio: 16 / 9
+                    });
+
+                    document.getElementById('crop-foto-confirm-btn').onclick = function() {
+                      if (cropper) {
+                        cropper.getCroppedCanvas().toBlob(function(blob) {
+                          const croppedFile = new File([blob], 'cropped_image.jpg', {
+                            type: blob.type
+                          });
+                          const dataTransfer = new DataTransfer();
+                          dataTransfer.items.add(croppedFile);
+                          input.files = dataTransfer.files;
+                          const reader = new FileReader();
+                          reader.onload = function(ev) {
+                            setPreviewAndHistory(ev.target.result);
+                          };
+                          reader.readAsDataURL(croppedFile);
+                          cropper.destroy();
+                          cropper = null;
+                          cropperModal.classList.add('hidden');
+                        }, 'image/jpeg');
+                      }
+                    };
+
+                    document.getElementById('crop-foto-cancel-btn').onclick = function() {
+                      cropperModal.classList.add('hidden');
+                      if (cropper) {
+                        cropper.destroy();
+                        cropper = null;
+                      }
+                    };
+                  }
+                }
+              },
+              {
+                text: '<i class="fa-solid fa-rotate-left"></i>',
+                verify(activeEle) {
+                  return (activeEle && activeEle.tagName === 'IMG');
+                },
+                handler(evt, button, activeEle) {
+                  const input = document.getElementById('foto_berita');
+                  const preview = document.getElementById('foto-preview');
+                  const cropperModal = document.getElementById('cropperModalFoto');
+                  const imageToCrop = document.getElementById('image-to-crop-foto');
+                  let cropper = null;
+
+                  function setPreviewAndHistory(src) {
+                    preview.src = src;
+                    preview.classList.remove('hidden');
+                    input.value = ''; // Kosongkan input file
+                    if (cropper) {
+                      cropper.destroy();
+                      cropper = null;
+                    }
+                    cropperModal.classList.add('hidden');
+                  }
+
+                  if (activeEle && activeEle.tagName === 'IMG') {
+                    const imageSrc = activeEle.getAttribute('src');
+                    imageToCrop.src = imageSrc;
+                    cropperModal.classList.remove('hidden');
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(imageToCrop, {
+                      viewMode: 1,
+                      autoCropArea: 1,
+                      aspectRatio: 16 / 9
+                    });
+
+                    document.getElementById('crop-foto-confirm-btn').onclick = function() {
+                      if (cropper) {
+                        cropper.getCroppedCanvas().toBlob(function(blob) {
+                          const croppedFile = new File([blob], 'cropped_image.jpg', {
+                            type: blob.type
+                          });
+                          const dataTransfer = new DataTransfer();
+                          dataTransfer.items.add(croppedFile);
+                          input.files = dataTransfer.files;
+                          const reader = new FileReader();
+                          reader.onload = function(ev) {
+                            setPreviewAndHistory(ev.target.result);
+                          };
+                          reader.readAsDataURL(croppedFile);
+                          cropper.destroy();
+                          cropper = null;
+                          cropperModal.classList.add('hidden');
+                        }, 'image/jpeg');
+                      }
+                    };
+
+                    document.getElementById('crop-foto-cancel-btn').onclick = function() {
+                      cropperModal.classList.add('hidden');
+                      if (cropper) {
+                        cropper.destroy();
+                        cropper = null;
+                      }
+                    };
+                  }
+                }
+              }
+            ]
+          }
+        }
+      });
+
+      var isiBerita = document.getElementById('isi_berita').value;
+      if (isiBerita) {
+        quill.clipboard.dangerouslyPasteHTML(isiBerita);
+      }
+
+      function quillImageHandler() {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = function() {
+          const file = input.files[0];
+          if (file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('uuid_berita', '{{ $berita->uuid_berita }}');
+            fetch('{{ route('admin.berita.uploadQuillImage') }}', {
+              method: 'POST',
+              headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+              },
+              body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+              if (result.success && result.url) {
+                const range = quill.getSelection();
+                quill.insertEmbed(range.index, 'image', result.url);
+              } else {
+                alert('Gagal upload gambar');
+              }
+            })
+            .catch(() => alert('Gagal upload gambar'));
+          }
+        };
+      }
+
+      quill.getModule('toolbar').addHandler('image', quillImageHandler);
+
+      document.getElementById('form-berita').addEventListener('submit', function(e) {
+        document.getElementById('isi_berita').value = quill.root.innerHTML;
+      });
+
       const wrapper = document.querySelector('.foto-viewer-wrapper');
       const input = document.getElementById('foto_berita');
       const preview = document.getElementById('foto-preview');
@@ -298,6 +474,115 @@
         if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
         return false;
       });
+
+      function cropQuillImage(activeEle) {
+        const cropperModal = document.getElementById('cropperModalFoto');
+        const imageToCrop = document.getElementById('image-to-crop-foto');
+        let cropper = null;
+        cropperModal.classList.remove('hidden');
+        imageToCrop.src = activeEle.src;
+        if (window.Cropper) {
+          if (imageToCrop.cropper) imageToCrop.cropper.destroy();
+          cropper = new Cropper(imageToCrop, {
+            viewMode: 1,
+            autoCropArea: 1,
+            aspectRatio: 16 / 9
+          });
+        }
+        document.getElementById('crop-foto-confirm-btn').onclick = function() {
+          if (cropper) {
+            cropper.getCroppedCanvas().toBlob(function(blob) {
+              const reader = new FileReader();
+              reader.onload = function(ev) {
+                let blot = Quill.find(activeEle);
+                if (blot) {
+                  const index = quill.getIndex(blot);
+                  let srcHistory = activeEle._srcHistory || [activeEle.src];
+                  let srcPointer = typeof activeEle._srcHistoryPointer === 'number' ? activeEle._srcHistoryPointer : srcHistory.length - 1;
+                  srcHistory = srcHistory.slice(0, srcPointer + 1);
+                  srcHistory.push(ev.target.result);
+                  srcPointer = srcHistory.length - 1;
+                  quill.deleteText(index, 1);
+                  quill.insertEmbed(index, 'image', ev.target.result, Quill.sources.USER);
+                  setTimeout(() => {
+                    const imgs = quill.root.querySelectorAll('img');
+                    let foundImg = null;
+                    imgs.forEach(img => {
+                      if (img.src === ev.target.result) foundImg = img;
+                    });
+                    if (foundImg) {
+                      foundImg._srcHistory = srcHistory;
+                      foundImg._srcHistoryPointer = srcPointer;
+                    }
+                  }, 10);
+                }
+                cropper.destroy();
+                cropperModal.classList.add('hidden');
+              };
+              reader.readAsDataURL(blob);
+            }, 'image/jpeg');
+          }
+        };
+        document.getElementById('crop-foto-cancel-btn').onclick = function() {
+          cropperModal.classList.add('hidden');
+          if (cropper) cropper.destroy();
+        };
+      }
+
+      quill.getModule('resize').options.tools = [
+        'left', 'right', 'full',
+        {
+          text: '<i class="fa-solid fa-crop-simple"></i>',
+          verify(activeEle) {
+            return (activeEle && activeEle.tagName === 'IMG');
+          },
+          handler(evt, button, activeEle) {
+            cropQuillImage(activeEle);
+          }
+        },
+        {
+          text: '<i class="fa-solid fa-rotate-left"></i>',
+          verify(activeEle) {
+            return (
+              activeEle &&
+              activeEle.tagName === 'IMG' &&
+              Array.isArray(activeEle._srcHistory) &&
+              activeEle._srcHistory.length > 1 &&
+              typeof activeEle._srcHistoryPointer === 'number' &&
+              activeEle._srcHistoryPointer > 0
+            );
+          },
+          handler(evt, button, activeEle) {
+            if (
+              activeEle &&
+              Array.isArray(activeEle._srcHistory) &&
+              typeof activeEle._srcHistoryPointer === 'number' &&
+              activeEle._srcHistoryPointer > 0
+            ) {
+              activeEle._srcHistoryPointer--;
+              const prevSrc = activeEle._srcHistory[activeEle._srcHistoryPointer];
+              let blot = Quill.find(activeEle);
+              if (blot) {
+                const index = quill.getIndex(blot);
+                quill.deleteText(index, 1);
+                quill.insertEmbed(index, 'image', prevSrc, Quill.sources.USER);
+                setTimeout(() => {
+                  const imgs = quill.root.querySelectorAll('img');
+                  let foundImg = null;
+                  imgs.forEach(img => {
+                    if (img.src === prevSrc) foundImg = img;
+                  });
+                  if (foundImg) {
+                    foundImg._srcHistory = activeEle._srcHistory;
+                    foundImg._srcHistoryPointer = activeEle._srcHistoryPointer;
+                  }
+                }, 10);
+              }
+            }
+          }
+        }
+      ];
+
     });
   </script>
 @endsection
