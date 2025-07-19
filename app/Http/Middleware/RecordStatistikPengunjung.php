@@ -54,7 +54,10 @@ class RecordStatistikPengunjung
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
 				$url = "https://api.ipinfo.io/lite/{$request->ip()}?token={$token}";
-				$response = Http::timeout(30)->retry(2, 1000)->get($url);
+				$response = Http::timeout(30)
+					->retry(2, 1000)
+					->get($url);
+
 				if ($response->successful()) {
 					$asDomain = strtolower($response->json('as_domain') ?? '');
 					Log::info('IPInfo lookup result', [
@@ -73,12 +76,15 @@ class RecordStatistikPengunjung
 					}
 				}
 			}
-		} catch (Throwable $e) {
-			// Log error tapi jangan blokir request
-			Log::warning('IPInfo API check failed: ' . $e->getMessage());
-		} catch (ConnectionException $e) {
+		}
+		// Tangani khusus koneksi/timeout Http client
+		catch (ConnectionException $e) {
 			Log::warning('IPInfo API connection/timeout error: ' . $e->getMessage());
 			return $next($request);
+		}
+		// Tangani exception lain tanpa memblokir request
+		catch (Throwable $e) {
+			Log::warning('IPInfo API check failed: ' . $e->getMessage());
 		}
 
 		$visitorId = $_COOKIE['visitor_id'] ?? null;
