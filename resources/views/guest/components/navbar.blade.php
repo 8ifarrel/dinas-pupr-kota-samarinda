@@ -61,7 +61,7 @@
           </button>
 
           <div id="dropdownNavbarProfil"
-            class="lg:!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
+            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
             <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
               <div class="py-5 px-3">
                 <h2 class="font-bold px-4 pb-2 text-base">
@@ -192,7 +192,7 @@
           </button>
 
           <div id="dropdownNavbarInformasiPUPR"
-            class="lg:!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
+            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none border-y-4 hidden border-brand-blue z-50 font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit">
             <ul class="text-sm text-gray-700 lg:flex" aria-labelledby="dropdownLargeButton">
               {{-- Berita --}}
               <div class="py-5 px-3">
