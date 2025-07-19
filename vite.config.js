@@ -35,7 +35,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    optimizeDeps: {
-        include: ['quill', 'quill-resize-module']
-    }
 });
