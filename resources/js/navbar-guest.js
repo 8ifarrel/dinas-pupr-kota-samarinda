@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 "ease-in"
             );
 
-            dropdownNavbarProfil.classList.remove("!top-[148px]");
-            dropdownNavbarProfil.classList.add("!top-[60px]");
+            dropdownNavbarProfil.classList.remove("lg:!top-[148px]");
+            dropdownNavbarProfil.classList.add("lg:!top-[60px]");
 
-            dropdownNavbarInformasiPUPR.classList.remove("!top-[148px]");
-            dropdownNavbarInformasiPUPR.classList.add("!top-[60px]");
+            dropdownNavbarInformasiPUPR.classList.remove("lg:!top-[148px]");
+            dropdownNavbarInformasiPUPR.classList.add("lg:!top-[60px]");
         } else {
             navbar.classList.remove(
                 "bg-white",
@@ -76,11 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 "ease-in"
             );
 
-            dropdownNavbarProfil.classList.remove("!top-[60px]");
-            dropdownNavbarProfil.classList.add("!top-[148px]");
+            dropdownNavbarProfil.classList.remove("lg:!top-[60px]");
+            dropdownNavbarProfil.classList.add("lg:!top-[148px]");
 
-            dropdownNavbarInformasiPUPR.classList.remove("!top-[60px]");
-            dropdownNavbarInformasiPUPR.classList.add("!top-[148px]");
+            dropdownNavbarInformasiPUPR.classList.remove("lg:!top-[60px]");
+            dropdownNavbarInformasiPUPR.classList.add("lg:!top-[148px]");
         }
         ticking = false;
     }
