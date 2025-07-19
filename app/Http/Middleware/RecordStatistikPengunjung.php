@@ -10,13 +10,13 @@ use App\Models\PageVisit;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
-use Throwable;
 use Illuminate\Http\Client\ConnectionException;
+use Throwable;
 
 class RecordStatistikPengunjung
 {
-
 	protected array $blockedCloudDomains = [
 		'digitalocean.com',
 		'amazon.com',
@@ -42,12 +42,26 @@ class RecordStatistikPengunjung
 		'colocatel.com',
 		'jetcyber.co.id',
 		'chinatelecom.cn',
-		
+		'cloudzy.com',
+		'facebook.com',
+		'ptbsti.com',
+		'ntup.net',
+		'tecnoveninternet.com',
+		'mangohost.net',
+		'ioh.co.id',
+		'scalaxy.com',
+		'bandwidth.co.uk',
+		'ows-networks.com',
+		'hivelocity.net',
+		'smart.com.kh',
+		'bage.dev',
+		'akari.hk',
+		'ldp.net.id',
 	];
-
 
 	public function handle(Request $request, Closure $next): Response
 	{
+		// Lewati crawler berdasarkan User-Agent
 		if ((new CrawlerDetect())->isCrawler($request->userAgent())) {
 			return $next($request);
 		}
@@ -55,27 +69,34 @@ class RecordStatistikPengunjung
 		try {
 			$token = env('IPINFO_TOKEN');
 			if ($token) {
-				$url = "https://api.ipinfo.io/lite/{$request->ip()}?token={$token}";
-				$response = Http::timeout(30)
-					->retry(2, 1000)
-					->get($url);
+				$ip = $request->ip();
+				$url = "https://api.ipinfo.io/lite/{$ip}?token={$token}";
+				$cacheKey = "ipinfo:{$ip}";
 
-				if ($response->successful()) {
-					$asDomain = strtolower($response->json('as_domain') ?? '');
-					Log::info('IPInfo lookup result', [
-						'url' => $url,
-						'ip' => $request->ip(),
+				// Ambil dari cache atau request baru jika belum ada / sudah expired
+				$info = Cache::remember($cacheKey, now()->addHours(6), function () use ($url) {
+					return Http::timeout(30)
+						->retry(2, 1000)
+						->get($url)
+						->json();
+				});
+
+				// Jika JSON valid dan ada field as_domain
+				$asDomain = strtolower($info['as_domain'] ?? '');
+				Log::info('IPInfo lookup result (cached)', [
+					'url' => $url,
+					'ip' => $ip,
+					'as_domain' => $asDomain,
+					'response' => $info,
+				]);
+
+				if ($asDomain && in_array($asDomain, $this->blockedCloudDomains, true)) {
+					Log::info('Blocked cloud provider detected', [
+						'ip' => $ip,
 						'as_domain' => $asDomain,
-						'response' => $response->json(),
 					]);
-
-					if ($asDomain && in_array($asDomain, $this->blockedCloudDomains, true)) {
-						Log::info('Blocked cloud provider detected', [
-							'ip' => $request->ip(),
-							'as_domain' => $asDomain,
-						]);
-						return $next($request);
-					}
+					// Jangan catat, langsung lanjut request
+					return $next($request);
 				}
 			}
 		}
@@ -89,12 +110,14 @@ class RecordStatistikPengunjung
 			Log::warning('IPInfo API check failed: ' . $e->getMessage());
 		}
 
-		$visitorId = $_COOKIE['visitor_id'] ?? null;
+		// Proses visitor_id cookie
+		$visitorId = $request->cookie('visitor_id');
 		if (!$visitorId || strlen($visitorId) > 64) {
 			$visitorId = (string) Str::uuid();
-			setcookie('visitor_id', $visitorId, time() + (60 * 60 * 24 * 365), '/');
+			cookie()->queue('visitor_id', $visitorId, 60 * 24 * 365); // menit * hari * tahun
 		}
 
+		// Simpan atau update record Visitor
 		Visitor::firstOrCreate(
 			['visitor_id' => $visitorId],
 			[
@@ -104,6 +127,7 @@ class RecordStatistikPengunjung
 			]
 		);
 
+		// Simpan PageVisit jika controller punya properti page_context
 		$route = $request->route();
 		if ($route && method_exists($route, 'getController')) {
 			$controller = $route->getController();
@@ -118,8 +142,6 @@ class RecordStatistikPengunjung
 			}
 		}
 
-		$response = $next($request);
-
-		return $response;
+		return $next($request);
 	}
 }
