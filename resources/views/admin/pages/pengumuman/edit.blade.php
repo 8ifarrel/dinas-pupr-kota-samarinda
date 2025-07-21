@@ -5,7 +5,8 @@
 @endsection
 
 @section('document.body')
-  <form action="{{ route('admin.pengumuman.update', $pengumuman->id) }}" method="POST" enctype="multipart/form-data" id="form-pengumuman">
+  <form action="{{ route('admin.pengumuman.update', $pengumuman->id) }}" method="POST" enctype="multipart/form-data"
+    id="form-pengumuman">
     @csrf
     @method('POST')
 
@@ -50,9 +51,15 @@
         placeholder: 'Tulis perihal pengumuman di sini...',
         modules: {
           toolbar: [
-            [{ header: [1, 2, false] }],
+            [{
+              header: [1, 2, false]
+            }],
             ['bold', 'italic', 'underline'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{
+              list: 'ordered'
+            }, {
+              list: 'bullet'
+            }],
             ['clean']
           ]
         }

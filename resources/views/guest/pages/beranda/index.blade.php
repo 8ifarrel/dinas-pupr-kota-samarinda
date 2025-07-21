@@ -468,6 +468,10 @@
             const listContainer = document.getElementById('agenda-list');
             listContainer.innerHTML = '';
             let infoDiv = document.createElement('div');
+            // infoDiv.className =
+            //   'text-sm border border-brand-blue bg-brand-blue/20 px-2.5 py-1 rounded-xl shadow sm:self-start';
+            // infoDiv.innerHTML =
+            //   `${data.length} Kegiatan pada <span class="font-semibold">${formatDate(selectedDate)}</span>`;
             listContainer.appendChild(infoDiv);
             if (data.length === 0) {
               let emptyDiv = document.createElement('div');
