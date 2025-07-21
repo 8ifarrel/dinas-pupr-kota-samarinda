@@ -251,7 +251,7 @@
                 <i class="fa-solid fa-chevron-left"></i>
               </button>
               <span id="agenda-week-label"
-                class="font-bold text-gray-700 bg-brand-yellow rounded-xl px-3.5 py-1 shadow w-full sm:w-auto text-center sm:text-left">
+                class="font-bold border border-brand-blue bg-brand-blue/20 rounded-xl px-3.5 py-1 shadow w-full sm:w-auto text-center sm:text-left">
                 {{-- Label minggu, diisi JS --}}
               </span>
               <button id="agenda-next-week"
@@ -469,7 +469,7 @@
             listContainer.innerHTML = '';
             let infoDiv = document.createElement('div');
             infoDiv.className =
-              'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow sm:self-start';
+              'text-sm border border-brand-blue bg-brand-blue/20 px-2.5 py-1 rounded-xl shadow sm:self-start';
             infoDiv.innerHTML =
               `${data.length} Kegiatan pada <span class="font-semibold">${formatDate(selectedDate)}</span>`;
             listContainer.appendChild(infoDiv);
