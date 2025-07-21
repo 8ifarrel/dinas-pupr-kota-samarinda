@@ -61,6 +61,30 @@
     </button>
   </div>
 
+  {{-- Partner --}}
+  <div class="p-4 md:p-6">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active flex justify-evenly">
+          <section class="splide w-full" aria-labelledby="carousel-heading">
+            <div class="splide__track">
+              <ul class="splide__list">
+                @foreach ($partner as $item)
+                  <li class="splide__slide my-auto !w-fit px-4 md:px-10">
+                    <a href="{{ $item->url_partner }}" class="!w-fit">
+                      <img class="h-12 md:h-16 object-contain" src="{{ Storage::url($item->foto_partner) }}"
+                        alt="{{ $item->nama_partner }}" height="36">
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {{-- Sambutan Kepala Dinas --}}
   <div class="bg-gray-200 p-10 md:p-12">
     @if (!empty($kepala_dinas) && $kepala_dinas->nama)
@@ -209,10 +233,6 @@
     </div>
   </div>
 
-  {{-- ================================================================= --}}
-  {{-- =================== BAGIAN YANG DIUBAH MULAI DARI SINI ================== --}}
-  {{-- ================================================================= --}}
-
   {{-- Agenda Kegiatan --}}
   <div class="p-10 md:p-12">
     @include('guest.components.section-title', [
@@ -264,12 +284,9 @@
       </div>
     </div>
   </div>
-  {{-- ================================================================= --}}
-  {{-- =================== BAGIAN YANG DIUBAH SELESAI DI SINI ================== --}}
-  {{-- ================================================================= --}}
 
   {{-- Statistik Pengunjung --}}
-  <div class="bg-gray-200 p-6 md:p-12">
+  {{-- <div class="bg-gray-200 p-6 md:p-12">
     @include('guest.components.section-title', [
         'page_subtitle' => 'Statistik',
         'page_title' => 'Statistik Pengunjung',
@@ -299,39 +316,12 @@
         </div>
       </div>
     </div>
-  </div>
-
-  {{-- Partner --}}
-  <div class="p-8 sm:p-10 md:p-12">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active flex justify-evenly">
-          <section class="splide w-full" aria-labelledby="carousel-heading">
-            <div class="splide__track">
-              <ul class="splide__list">
-                @foreach ($partner as $item)
-                  <li class="splide__slide my-auto !w-fit px-6 sm:px-10">
-                    <a href="{{ $item->url_partner }}" class="!w-fit">
-                      <img class="h-24 object-contain" src="{{ Storage::url($item->foto_partner) }}"
-                        alt="{{ $item->nama_partner }}" height="36">
-                    </a>
-                  </li>
-                @endforeach
-              </ul>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
+  </div> --}}
 @endsection
 
 @section('document.end')
   @vite(['resources/js/splidejs.js', 'resources/js/splide-autoscroll.js'])
 
-  {{-- ================================================================= --}}
-  {{-- ================ SCRIPT YANG DIUBAH MULAI DARI SINI ================ --}}
-  {{-- ================================================================= --}}
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var el = document.querySelector('.splide');
@@ -373,7 +363,6 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      // Kode agenda lainnya tetap sama
       function formatDate(date) {
         return date.toLocaleDateString('id-ID', {
           day: 'numeric',
@@ -480,7 +469,7 @@
             listContainer.innerHTML = '';
             let infoDiv = document.createElement('div');
             infoDiv.className =
-            'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow sm:self-start';
+              'text-sm bg-brand-yellow text-brand-blue px-2.5 py-1 rounded-full shadow sm:self-start';
             infoDiv.innerHTML =
               `${data.length} Kegiatan pada <span class="font-semibold">${formatDate(selectedDate)}</span>`;
             listContainer.appendChild(infoDiv);
