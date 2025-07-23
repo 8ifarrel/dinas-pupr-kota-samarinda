@@ -10,6 +10,7 @@
 |
 */
 
+use App\Http\Controllers\Guest\DrainaseIrigasiGuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockSearchEngines;
 
@@ -189,6 +190,24 @@ Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(funct
 
 	Route::get('/status', [BukuTamuGuestController::class, 'show'])
 		->name('guest.buku-tamu.show');
+});
+
+/**
+ * Drainase Irigasi
+ */
+
+Route::prefix('drainase-irigasi')->group(function () {
+	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
+		->name('guest.drainase-irigasi.index');
+
+	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
+		->name('guest.drainase-irigasi.create');
+
+	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
+		->name('guest.drainase-irigasi.store');
+
+	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+		->name('guest.drainase-irigasis.how');
 });
 
 /*
