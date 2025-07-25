@@ -17,7 +17,7 @@ class SKMGuestController extends Controller
 		$total_nilai = SKM::sum('nilai');
 		$rata_rata = $total_responden > 0 ? round($total_nilai / $total_responden, 3) : 0;
 
-		return view('guest.pages.skm.index', [
+		return view('guest.pages.skm.index-new', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
 			'total_responden' => $total_responden,
