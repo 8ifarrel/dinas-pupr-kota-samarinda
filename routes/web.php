@@ -154,6 +154,18 @@ Route::prefix('agenda-kegiatan')->middleware([BlockSearchEngines::class])->group
 });
 
 /**
+ * LPSE
+ */
+Route::prefix('lpse')->group(function () {
+	Route::get('/', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'index'])->name('admin.lpse.index');
+	Route::get('/create', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'create'])->name('admin.lpse.create');
+	Route::post('/store', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'store'])->name('admin.lpse.store');
+	Route::get('/edit/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'edit'])->name('admin.lpse.edit');
+	Route::post('/update/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'update'])->name('admin.lpse.update');
+	Route::delete('/delete/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'destroy'])->name('admin.lpse.destroy');
+});
+
+/**
  * SKM
  */
 
@@ -242,6 +254,25 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 	});
 
 	Route::middleware([RedirectIfNotAuthenticated::class])->group(callback: function () {
+		/**
+				 * LPSE (Layanan Pengadaan Secara Elektronik)
+				 */
+				Route::prefix('lpse')->group(function () {
+					Route::get('/', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'index'])
+						->name('admin.lpse.index');
+					Route::get('/create', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'create'])
+						->name('admin.lpse.create');
+					Route::post('/store', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'store'])
+						->name('admin.lpse.store');
+					Route::get('/edit/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'edit'])
+						->name('admin.lpse.edit');
+					Route::post('/update/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'update'])
+						->name('admin.lpse.update');
+					Route::delete('/delete/{id}', [\App\Http\Controllers\Admin\LPSEAdminController::class, 'destroy'])
+						->name('admin.lpse.destroy');
+				});
+
+				
 		Route::prefix('super-admin')->group(function () {
 			Route::middleware([IsSuperAdmin::class])->group(callback: function () {
 				/**
@@ -262,6 +293,7 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 						->name('admin.super.akun-admin.destroy');
 				});
 
+				
 				/**
 				 * Log (TBA)
 				 */
@@ -553,4 +585,3 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });
-
