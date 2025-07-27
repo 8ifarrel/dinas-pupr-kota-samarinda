@@ -3,47 +3,71 @@
 @section('title', 'Data LPSE')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Daftar LPSE</h1>
+<div class="max-w-7xl mx-auto py-6">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">📦 Daftar Paket LPSE</h1>
+        <a href="{{ route('admin.lpse.create') }}"
+           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            + Tambah LPSE
+        </a>
+    </div>
 
-    <a href="{{ route('admin.lpse.create') }}" class="btn btn-primary mb-3">+ Tambah LPSE</a>
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Kode Paket</th>
-                <th>Nama Paket</th>
-                <th>Jenis Paket</th>
-                <th>URL</th>
-                <th>Nilai</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($lpses as $lpse)
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+        @if($lpses->count())
+        <table class="min-w-full text-sm text-center border">
+            <thead class="bg-gray-100 text-gray-700">
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $lpse->kode_paket }}</td>
-                    <td>{{ $lpse->nama_paket }}</td>
-                    <td>{{ $lpse->jenis_paket }}</td>
-                    <td><a href="{{ $lpse->url_informasi_paket }}" target="_blank">Lihat</a></td>
-                    <td>Rp {{ number_format($lpse->nilai, 0, ',', '.') }}</td>
-                    <td>
-                        <a href="{{ route('admin.lpse.edit', $lpse->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.lpse.destroy', $lpse->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Yakin ingin menghapus?')">
+                    <th class="px-4 py-2 border">No</th>
+                    <th class="px-4 py-2 border">Kode Paket</th>
+                    <th class="px-4 py-2 border text-left">Nama Paket</th>
+                    <th class="px-4 py-2 border">Jenis Paket</th>
+                    <th class="px-4 py-2 border">URL</th>
+                    <th class="px-4 py-2 border">Nilai</th>
+                    <th class="px-4 py-2 border">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y">
+                @foreach ($lpses as $lpse)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border">{{ $loop->iteration }}</td>
+                    <td class="px-4 py-2 border">{{ $lpse->kode_paket }}</td>
+                    <td class="px-4 py-2 border text-left">{{ $lpse->nama_paket }}</td>
+                    <td class="px-4 py-2 border">{{ $lpse->jenis_paket }}</td>
+                    <td class="px-4 py-2 border">
+                        <a href="{{ $lpse->url_informasi_paket }}" target="_blank"
+                           class="text-blue-600 underline hover:text-blue-800">
+                            Lihat
+                        </a>
+                    </td>
+                    <td class="px-4 py-2 border">
+                        Rp {{ number_format($lpse->nilai, 0, ',', '.') }}
+                    </td>
+                    <td class="px-4 py-2 border space-x-1">
+                        <a href="{{ route('admin.lpse.edit', $lpse->id) }}"
+                           class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500 text-sm">
+                            Edit
+                        </a>
+                        <form action="{{ route('admin.lpse.destroy', $lpse->id) }}"
+                              method="POST" class="inline-block"
+                              onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
+                            <button type="submit"
+                                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+                                Hapus
+                            </button>
                         </form>
                     </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="7" class="text-center">Belum ada data LPSE</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                @endforeach
+            </tbody>
+        </table>
+        @else
+        <div class="text-center text-gray-500 py-10">
+            <h2 class="text-lg font-semibold">Belum ada data LPSE</h2>
+            <p>Klik tombol “Tambah LPSE” untuk menambahkan data baru.</p>
+        </div>
+        @endif
+    </div>
 </div>
 @endsection

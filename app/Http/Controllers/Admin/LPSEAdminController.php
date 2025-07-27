@@ -24,7 +24,7 @@ class LPSEAdminController extends Controller
     $validated = $request->validate([
         'kode_paket' => 'required|string|max:255',
         'nama_paket' => 'required|string|max:255',
-        'jenis_paket' => 'required|string|in:Jasa Konstruksi,Non Tender', // sesuaikan isi enum
+        'jenis_paket' => 'required|string|in:Jasa Konstruksi,Pengadaan Barang,Konsultasi,Jasa Lainnya,Non Tender', // sesuaikan isi enum
         'url_informasi_paket' => 'required|url',
         'nilai' => 'required|numeric|min:0',
     ]);

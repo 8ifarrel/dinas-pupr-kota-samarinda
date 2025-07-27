@@ -1,55 +1,71 @@
-@extends('layouts.admin')
+@extends('admin.layouts.app')
 
-@section('title', 'Daftar Paket LPSE')
+@section('title', 'Edit LPSE')
 
 @section('content')
-<div class="p-6 bg-white rounded shadow">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Paket LPSE</h2>
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-md rounded-xl max-w-2xl mx-auto p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Edit LPSE</h2>
 
-    <a href="{{ route('lpse.create') }}" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        + Tambah LPSE
-    </a>
+        <form action="{{ route('admin.lpse.update', $lpse->id) }}" method="POST" class="space-y-6">
+            @csrf
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full border text-sm text-left text-gray-700">
-            <thead class="bg-gray-100 text-xs uppercase">
-                <tr>
-                    <th class="px-4 py-2">No</th>
-                    <th class="px-4 py-2">Kode Paket</th>
-                    <th class="px-4 py-2">Nama Paket</th>
-                    <th class="px-4 py-2">Jenis Paket</th>
-                    <th class="px-4 py-2">URL</th>
-                    <th class="px-4 py-2">Nilai</th>
-                    <th class="px-4 py-2">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($lpse as $key => $item)
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4 py-2">{{ $key + 1 }}</td>
-                    <td class="px-4 py-2">{{ $item->kode_paket }}</td>
-                    <td class="px-4 py-2">{{ $item->nama_paket }}</td>
-                    <td class="px-4 py-2">{{ $item->jenis_paket }}</td>
-                    <td class="px-4 py-2">
-                        <a href="{{ $item->url }}" class="text-blue-600 hover:underline" target="_blank">Lihat</a>
-                    </td>
-                    <td class="px-4 py-2">Rp {{ number_format($item->nilai, 0, ',', '.') }}</td>
-                    <td class="px-4 py-2 space-x-2">
-                        <a href="{{ route('lpse.edit', $item->id) }}" class="text-indigo-600 hover:underline">Edit</a>
-                        <form action="{{ route('lpse.destroy', $item->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('Yakin ingin menghapus?')" class="text-red-600 hover:underline">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" class="px-4 py-4 text-center text-gray-500">Tidak ada data.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label for="kode_paket" class="block text-sm font-medium text-gray-700 mb-1">Kode Paket</label>
+                    <input type="text" name="kode_paket" id="kode_paket" value="{{ old('kode_paket', $lpse->kode_paket) }}"
+                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        required>
+                </div>
+
+                <div>
+                    <label for="nama_paket" class="block text-sm font-medium text-gray-700 mb-1">Nama Paket</label>
+                    <input type="text" name="nama_paket" id="nama_paket" value="{{ old('nama_paket', $lpse->nama_paket) }}"
+                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        required>
+                </div>
+
+                <div>
+                    <label for="jenis_paket" class="block text-sm font-medium text-gray-700 mb-1">Jenis Paket</label>
+                    <select name="jenis_paket" id="jenis_paket"
+                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        required>
+                        <option value="">-- Pilih Jenis --</option>
+                        @foreach (['Jasa Konstruksi', 'Pengadaan Barang', 'Konsultasi', 'Jasa Lainnya', 'Non Tender'] as $jenis)
+                            <option value="{{ $jenis }}" {{ old('jenis_paket', $lpse->jenis_paket) == $jenis ? 'selected' : '' }}>
+                                {{ $jenis }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="url_informasi_paket" class="block text-sm font-medium text-gray-700 mb-1">URL Informasi Paket</label>
+                    <input type="url" name="url_informasi_paket" id="url_informasi_paket"
+                        value="{{ old('url_informasi_paket', $lpse->url_informasi_paket) }}"
+                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        required>
+                </div>
+
+                <div>
+                    <label for="nilai" class="block text-sm font-medium text-gray-700 mb-1">Nilai (Rp)</label>
+                    <input type="number" name="nilai" id="nilai" value="{{ old('nilai', $lpse->nilai) }}"
+                        class="w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200"
+                        required>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-4 pt-4">
+                <a href="{{ route('admin.lpse.index') }}"
+                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-lg">
+                    Batal
+                </a>
+                <button type="submit"
+                    class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition">
+                    Perbarui
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

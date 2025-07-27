@@ -41,8 +41,15 @@ class LPSEAdminController extends Controller
 
     public function update(Request $request, $id)
     {
+         $validated = $request->validate([
+        'kode_paket' => 'required|string|max:100',
+        'nama_paket' => 'required|string|max:255',
+        'jenis_paket' => 'required|in:Jasa Konstruksi,Pengadaan Barang,Konsultasi,Jasa Lainnya,Non Tender',
+        'url_informasi_paket' => 'required|url',
+        'nilai' => 'required|numeric|min:0',
+    ]);
         $lpse = LPSE::findOrFail($id);
-        $lpse->update($request->all());
+        $lpse->update($validated);
         return redirect()->route('admin.lpse.index')->with('success', 'LPSE berhasil diperbarui.');
     }
 
