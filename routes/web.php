@@ -40,8 +40,7 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
-
-use App\Http\Middleware\RecordStatistikPengunjung;
+use App\Http\Controllers\Guest\SedotTinjaGuestController;
 
 /**
  * Portal
@@ -195,7 +194,6 @@ Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(funct
 /**
  * Drainase Irigasi
  */
-
 Route::prefix('drainase-irigasi')->group(function () {
 	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
 		->name('guest.drainase-irigasi.index');
@@ -207,7 +205,24 @@ Route::prefix('drainase-irigasi')->group(function () {
 		->name('guest.drainase-irigasi.store');
 
 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-		->name('guest.drainase-irigasis.how');
+		->name('guest.drainase-irigasis.show');
+});
+
+/**
+ * Sedot Tinja
+ */
+Route::prefix('sedot-tinja')->group(function () {
+	Route::get('/', [SedotTinjaGuestController::class, 'index'])
+		->name('guest.sedot-tinja.index');
+
+	Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+		->name('guest.sedot-tinja.create');
+
+	Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+		->name('guest.sedot-tinja.store');
+
+	Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
+		->name('guest.sedot-tinja.show');
 });
 
 /*
@@ -245,6 +260,7 @@ use App\Http\Controllers\Admin\FotoKegiatanAdminController;
 use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
+use App\Http\Controllers\Admin\SedotTinjaAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
@@ -563,6 +579,23 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 				Route::post('/update', [SejarahDinasPUPRKotaSamarindaAdminController::class, 'update'])
 					->name('admin.profil.sejarah-dinas-pupr-kota-samarinda.update');
 			});
+		});
+
+		/**
+		 * Sedot Tinja
+		 */
+		Route::prefix('sedot-tinja')->group(function () {
+			Route::get('/', [SedotTinjaAdminController::class, 'index'])
+				->name('admin.sedot-tinja.index');
+
+			Route::get('/kelola-laporan', [SedotTinjaAdminController::class, 'edit'])
+				->name('admin.sedot-tinja.create');
+
+			Route::post('/perbarui-laporan', [SedotTinjaAdminController::class, 'update'])
+				->name('admin.sedot-tinja.store');
+
+			Route::get('/lihat-laporan', [SedotTinjaAdminController::class, 'show'])
+				->name('admin.sedot-tinja.show');
 		});
 	});
 
