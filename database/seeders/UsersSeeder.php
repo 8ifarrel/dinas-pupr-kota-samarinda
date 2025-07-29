@@ -13,12 +13,12 @@ class UsersSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => 1,
-                'id_susunan_organisasi' => 1,
-                'fullname' => 'Admin PUPR',
-                'name' => 'admin',
-                'email' => 'admin@pupr.go.id',
-                'email_verified_at' => now(),
-                'password' => Hash::make('password'),
+                'id_susunan_organisasi' => null,
+                'fullname' => 'Muhammad Farrel Sirah',
+                'name' => '8ifarrel',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => Hash::make('mautauaja05'),
                 'is_super_admin' => 1,
                 'remember_token' => null,
                 'created_at' => now(),

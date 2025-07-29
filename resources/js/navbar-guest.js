@@ -5,12 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var dropdownNavbarInformasiPUPR = document.getElementById(
         "dropdownNavbarInformasiPUPR"
     );
+    var dropdownNavbarLayanan = document.getElementById(
+        "dropdownNavbarLayanan"
+    );
 
     if (
         !navbar ||
         !navbarMenu ||
         !dropdownNavbarProfil ||
-        !dropdownNavbarInformasiPUPR
+        !dropdownNavbarInformasiPUPR ||
+        !dropdownNavbarLayanan
     ) {
         return;
     }
@@ -50,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             dropdownNavbarInformasiPUPR.classList.remove("lg:!top-[148px]");
             dropdownNavbarInformasiPUPR.classList.add("lg:!top-[60px]");
+
+            dropdownNavbarLayanan.classList.remove("lg:!top-[148px]");
+            dropdownNavbarLayanan.classList.add("lg:!top-[60px]");
         } else {
             navbar.classList.remove(
                 "bg-white",
@@ -81,6 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             dropdownNavbarInformasiPUPR.classList.remove("lg:!top-[60px]");
             dropdownNavbarInformasiPUPR.classList.add("lg:!top-[148px]");
+
+            dropdownNavbarLayanan.classList.remove("lg:!top-[60px]");
+            dropdownNavbarLayanan.classList.add("lg:!top-[148px]");
         }
         ticking = false;
     }

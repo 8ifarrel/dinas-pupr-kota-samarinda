@@ -183,6 +183,51 @@
         </li> --}}
 
         <li>
+          <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarLayanan"
+            class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Layanan' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
+            Layanan
+            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+
+          <div id="dropdownNavbarLayanan"
+            class="!absolute lg:!inset-x-0 !top-0 lg:!top-[148px] lg:!mx-auto lg:!transform-none z-50 hidden w-full lg:w-fit">
+            <ul
+              class="text-sm text-gray-700 lg:flex border-y-4 border-brand-blue font-normal bg-white divide-y divide-gray-100 shadow lg:w-fit mx-10"
+              aria-labelledby="dropdownLargeButton">
+              <div class="py-5 px-3">
+                <h2 class="font-bold px-4 pb-2 text-base">
+                  Layanan Dinas PUPR Kota Samarinda
+                </h2>
+
+                <div class="border-s-2 ms-4 border-black/15">
+                  <li>
+                    <a href="{{-- --}}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
+                  </li>
+                  <li>
+                    <a href="{{ url('https://sijakon.samarindakota.go.id') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sijakon</a>
+                  </li>
+                  <li>
+                    <a href="{{-- --}}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
+                  </li>
+                  <li>
+                    <a href="{{ route('guest.sedot-tinja.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja</a>
+                  </li>
+                </div>
+              </div>
+
+            </ul>
+          </div>
+        </li>
+
+        <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbarInformasiPUPR"
             class="flex items-center w-full justify-between py-2 px-3 lg:p-0 rounded {{ $page_title == 'Informasi PUPR' ? ' bg-brand-yellow lg:bg-transparent' : '' }}">
             Informasi PUPR
