@@ -2,20 +2,78 @@
   class="fixed bg-white top-0 left-0 z-30 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
   id="logo-sidebar" aria-label="Sidebar">
   <div class="h-full px-3 pb-4 overflow-y-auto ">
-    
+
     <ul class="space-y-2 font-medium">
-      {{-- Dashboard --}}
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Layanan
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      {{-- Buku Tamu --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.dashboard.index') }}">
-          <i class="fa-solid fa-chart-pie">
-          </i>
+          href="{{ route('admin.buku-tamu.index') }}">
+          <i class="fa-solid fa-book-bookmark"></i>
 
           <span class="ms-3">
-            Dashboard
+            Buku Tamu
           </span>
         </a>
       </li>
+
+      {{-- Sijakon --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sijakon
+          </span>
+        </a>
+      </li>
+
+      {{-- Jalan Peduli --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Jalan Peduli
+          </span>
+        </a>
+      </li>
+
+      {{-- Drainase & Irigasi --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          </i>
+
+          <span class="ms-3">
+            Drainase & Irigasi
+          </span>
+        </a>
+      </li>
+
+      {{-- Sedot Tinja --}}
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="{{ route('admin.sedot-tinja.index') }}">
+          <i class="fa-regular fa-circle-question"></i>
+          </i>
+
+          <span class="ms-3">
+            Sedot Tinja
+          </span>
+        </a>
+      </li>
+
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Umum
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
 
       {{-- Slider --}}
       <li>
@@ -61,18 +119,6 @@
 
           <span class="ms-3">
             Pengumuman
-          </span>
-        </a>
-      </li>
-
-      {{-- Buku Tamu --}}
-      <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.buku-tamu.index') }}">
-          <i class="fa-solid fa-book-bookmark"></i>
-
-          <span class="ms-3">
-            Buku Tamu
           </span>
         </a>
       </li>

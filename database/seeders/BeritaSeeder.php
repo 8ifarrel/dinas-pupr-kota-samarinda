@@ -4,29 +4,39 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 use Illuminate\Support\Str;
 
 class BeritaSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
-
-        for ($i = 1; $i <= 100; $i++) {
-            DB::table('berita')->insert([
-                'uuid_berita' => Str::uuid(),
-                'judul_berita' => $faker->sentence($nbWords = rand(10, 20)),
-                'slug_berita' => $faker->slug,
-                'id_berita_kategori' => $faker->numberBetween(1, 5),
-                'foto_berita' => $faker->imageUrl(320, 180, 'news'),
-                'sumber_foto_berita' => $faker->name,
-                'isi_berita' => $faker->paragraphs(5, true),
-                'views_count' => $faker->numberBetween(0, 100),
+        DB::table('berita')->insert([
+            [
+                'uuid_berita' => (string) Str::uuid(),
+                'judul_berita' => 'Berita Pertama',
+                'slug_berita' => 'berita-pertama',
+                'id_berita_kategori' => 14,
+                'foto_berita' => 'berita1.jpg',
+                'sumber_foto_berita' => 'Dinas PUPR',
+                'isi_berita' => 'Isi berita pertama.',
+                'preview_berita' => 'Preview berita pertama.',
+                'views_count' => 10,
                 'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
+                'updated_at' => now(),
+            ],
+            [
+                'uuid_berita' => (string) Str::uuid(),
+                'judul_berita' => 'Berita Kedua',
+                'slug_berita' => 'berita-kedua',
+                'id_berita_kategori' => 17,
+                'foto_berita' => 'berita2.jpg',
+                'sumber_foto_berita' => 'Dinas PUPR',
+                'isi_berita' => 'Isi berita kedua.',
+                'preview_berita' => 'Preview berita kedua.',
+                'views_count' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
-
