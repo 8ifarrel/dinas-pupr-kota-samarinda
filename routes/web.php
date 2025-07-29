@@ -297,7 +297,7 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		});
 
 		/**
-		 * Partner
+		 * Partners
 		 */
 		Route::prefix('partner')->group(function () {
 			Route::get('/', [PartnerAdminController::class, 'index'])
