@@ -1,0 +1,81 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class KelurahanSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('kelurahan')->insert([
+            ['id' => 44461, 'nama' => 'Tani Aman', 'kecamatan_id' => 3139],
+            ['id' => 44462, 'nama' => 'Sengkotek', 'kecamatan_id' => 3139],
+            ['id' => 44463, 'nama' => 'Simpang Tiga (Loa Janan Ilir)', 'kecamatan_id' => 3139],
+            ['id' => 44464, 'nama' => 'Rapak Dalam', 'kecamatan_id' => 3139],
+            ['id' => 44465, 'nama' => 'Harapan Baru', 'kecamatan_id' => 3139],
+            ['id' => 44466, 'nama' => 'Bantuas', 'kecamatan_id' => 3140],
+            ['id' => 44467, 'nama' => 'Rawa Makmur', 'kecamatan_id' => 3140],
+            ['id' => 44468, 'nama' => 'Simpang Pasir', 'kecamatan_id' => 3140],
+            ['id' => 44469, 'nama' => 'Bukuan', 'kecamatan_id' => 3140],
+            ['id' => 44470, 'nama' => 'Handil Bakti', 'kecamatan_id' => 3140],
+            ['id' => 44471, 'nama' => 'Sidomulyo', 'kecamatan_id' => 3141],
+            ['id' => 44472, 'nama' => 'Pelita', 'kecamatan_id' => 3141],
+            ['id' => 44473, 'nama' => 'Sidodamai', 'kecamatan_id' => 3141],
+            ['id' => 44474, 'nama' => 'Sei/Sungai Dama', 'kecamatan_id' => 3141],
+            ['id' => 44475, 'nama' => 'Selili', 'kecamatan_id' => 3141],
+            ['id' => 44476, 'nama' => 'Bugis', 'kecamatan_id' => 3142],
+            ['id' => 44477, 'nama' => 'Sei/Sungai Pinang Luar', 'kecamatan_id' => 3142],
+            ['id' => 44478, 'nama' => 'Karang Mumus', 'kecamatan_id' => 3142],
+            ['id' => 44479, 'nama' => 'Pasar Pagi', 'kecamatan_id' => 3142],
+            ['id' => 44480, 'nama' => 'Pelabuhan', 'kecamatan_id' => 3142],
+            ['id' => 44481, 'nama' => 'Mesjid', 'kecamatan_id' => 3143],
+            ['id' => 44482, 'nama' => 'Sei/Sungai Keledang', 'kecamatan_id' => 3143],
+            ['id' => 44483, 'nama' => 'Baqa/Baka/Rapak Dalam', 'kecamatan_id' => 3143],
+            ['id' => 44484, 'nama' => 'Sidodadi', 'kecamatan_id' => 3144],
+            ['id' => 44485, 'nama' => 'Teluk Lerong Ilir', 'kecamatan_id' => 3144],
+            ['id' => 44486, 'nama' => 'Bukit Pinang', 'kecamatan_id' => 3144],
+            ['id' => 44487, 'nama' => 'Air Hitam', 'kecamatan_id' => 3144],
+            ['id' => 44488, 'nama' => 'Air Putih', 'kecamatan_id' => 3144],
+            ['id' => 44489, 'nama' => 'Dadi Mulya', 'kecamatan_id' => 3144],
+            ['id' => 44490, 'nama' => 'Gunung Kelua', 'kecamatan_id' => 3144],
+            ['id' => 44491, 'nama' => 'Jawa', 'kecamatan_id' => 3144],
+            ['id' => 44492, 'nama' => 'Tanah Merah', 'kecamatan_id' => 3145],
+            ['id' => 44493, 'nama' => 'Sempaja Selatan', 'kecamatan_id' => 3145],
+            ['id' => 44494, 'nama' => 'Sempaja Utara', 'kecamatan_id' => 3145],
+            ['id' => 44495, 'nama' => 'Sei/Sungai Siring', 'kecamatan_id' => 3145],
+            ['id' => 44496, 'nama' => 'Lempake', 'kecamatan_id' => 3145],
+            ['id' => 44497, 'nama' => 'Makroman', 'kecamatan_id' => 3146],
+            ['id' => 44498, 'nama' => 'Sambutan', 'kecamatan_id' => 3146],
+            ['id' => 44499, 'nama' => 'Sindang Sari', 'kecamatan_id' => 3146],
+            ['id' => 44500, 'nama' => 'Pulau Atas', 'kecamatan_id' => 3146],
+            ['id' => 44501, 'nama' => 'Sei/Sungai Kapih', 'kecamatan_id' => 3146],
+            ['id' => 44502, 'nama' => 'Loa Buah', 'kecamatan_id' => 3147],
+            ['id' => 44503, 'nama' => 'Teluk Lerong Ulu', 'kecamatan_id' => 3147],
+            ['id' => 44504, 'nama' => 'Karang Asam Ilir', 'kecamatan_id' => 3147],
+            ['id' => 44505, 'nama' => 'Karang Asam Ulu', 'kecamatan_id' => 3147],
+            ['id' => 44506, 'nama' => 'Loa Bakung', 'kecamatan_id' => 3147],
+            ['id' => 44507, 'nama' => 'Karang Anyar', 'kecamatan_id' => 3147],
+            ['id' => 44508, 'nama' => 'Lok Bahu', 'kecamatan_id' => 3147],
+            ['id' => 44509, 'nama' => 'Temindung Permai', 'kecamatan_id' => 3148],
+            ['id' => 44510, 'nama' => 'Gunung Lingai', 'kecamatan_id' => 3148],
+            ['id' => 44511, 'nama' => 'Mugirejo', 'kecamatan_id' => 3148],
+            ['id' => 44512, 'nama' => 'Bandara', 'kecamatan_id' => 3148],
+            ['id' => 44513, 'nama' => 'Sei/Sungai Pinang Dalam', 'kecamatan_id' => 3148],
+            ['id' => 44514, 'nama' => 'Talang Dukun', 'kecamatan_id' => 3148],
+            ['id' => 44515, 'nama' => 'Tajung Serian', 'kecamatan_id' => 3148],
+            ['id' => 44516, 'nama' => 'Sungai Pinang Nibung', 'kecamatan_id' => 3148],
+            ['id' => 44517, 'nama' => 'Sungai Pinang II', 'kecamatan_id' => 3148],
+            ['id' => 44518, 'nama' => 'Sungai Pinang III', 'kecamatan_id' => 3148],
+            ['id' => 44519, 'nama' => 'Sungai Pinang Lagati', 'kecamatan_id' => 3148],
+            ['id' => 44520, 'nama' => 'Sungai Pinang', 'kecamatan_id' => 3148],
+            ['id' => 44521, 'nama' => 'Sungai Pinang I', 'kecamatan_id' => 3148],
+            ['id' => 44522, 'nama' => 'Serijabo Baru', 'kecamatan_id' => 3148],
+            ['id' => 44523, 'nama' => 'Serijabo', 'kecamatan_id' => 3148],
+            ['id' => 44524, 'nama' => 'Pinang Mas', 'kecamatan_id' => 3148],
+            ['id' => 44525, 'nama' => 'Penyandingan', 'kecamatan_id' => 3148],
+            ['id' => 44526, 'nama' => 'Pinang Jaya', 'kecamatan_id' => 3148],
+        ]);
+    }
+}

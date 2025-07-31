@@ -29,7 +29,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
+        'sans': ['Sora', 'sans-serif'],
       },
       colors: {
         brand: {
@@ -74,4 +74,3 @@ export default {
     }
   ],
 }
-

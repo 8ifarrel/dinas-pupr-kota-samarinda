@@ -3,28 +3,22 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\KepalaDinasRiwayatPendidikan;
-use App\Models\Pegawai;
-use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class KepalaDinasRiwayatPendidikanSeeder extends Seeder
 {
-	public function run()
-	{
-		$faker = Faker::create();
-		$pegawaiKepalaDinas = Pegawai::whereHas('jabatan', function ($query) {
-			$query->where('nama_jabatan', 'Kepala Dinas');
-		})->get();
-
-		foreach ($pegawaiKepalaDinas as $pegawai) {
-			for ($i = 0; $i < 5; $i++) {
-				KepalaDinasRiwayatPendidikan::create([
-					'nama_pendidikan' => $faker->sentence($nbWords = 9, $variableNbWords = true),
-					'tanggal_masuk' => $faker->date,
-					'id_pegawai' => $pegawai->id_pegawai,
-				]);
-			}
-		}
-	}
+    public function run()
+    {
+        DB::table('kepala_dinas_riwayat_pendidikan')->insert([
+            [
+                'id_pendidikan' => 1,
+                'id_kepala_dinas' => 1,
+                'nama_pendidikan' => 'S1 Teknik Sipil',
+                'tanggal_masuk' => '1990-08-01',
+                'id_susunan_organisasi' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
 }
-
