@@ -57,8 +57,7 @@
 
       {{-- Sedot Tinja --}}
       <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
           <i class="fa-regular fa-circle-question"></i>
           </i>
 
@@ -211,6 +210,17 @@
             <i class="fa-solid fa-user-lock"></i>
             <span class="ms-3">
               Akun Admin
+            </span>
+          </a>
+        </li>
+
+        {{-- API Keys --}}
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="{{ route('admin.super.api-key.index') }}">
+            <i class="fa-solid fa-key"></i>
+            <span class="ms-3">
+              API Key
             </span>
           </a>
         </li>
