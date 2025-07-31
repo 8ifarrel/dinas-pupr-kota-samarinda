@@ -5,16 +5,18 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AlbumKegiatanSeeder extends Seeder
+class PpidPelaksanaSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('album_kegiatan')->insert([
+        DB::table('ppid_pelaksana')->insert([
             [
                 'id' => 1,
-                'judul' => 'Kegiatan 1',
-                'slug' => 'kegiatan-1',
-                'views_count' => 10,
+                'judul' => 'Dokumen 1',
+                'slug' => 'dokumen-1',
+                'file' => 'dokumen1.pdf',
+                'id_kategori' => 1,
+                'download_count' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
