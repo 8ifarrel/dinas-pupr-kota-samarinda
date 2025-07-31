@@ -27,6 +27,7 @@ export default defineConfig({
                 "resources/js/quill.js",
                 "resources/js/quill-resize-module.js",
 
+                "resources/js/chartjs.js",
                 "resources/js/splide-autoscroll.js",
                 "resources/js/toggle-password-visibility.js",
                 "resources/js/clock.js",
