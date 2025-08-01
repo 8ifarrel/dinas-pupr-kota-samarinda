@@ -6,6 +6,30 @@
     $kepalaDinasSudahAda = User::where('id_susunan_organisasi', 1)->exists();
   @endphp
 
+  <div class="border shadow bg-white rounded-lg p-5 mb-6 space-y-2">
+    <h2 class="font-bold text-lg">Petunjuk & Keamanan</h2>
+    <p class="text-slate-500">Beberapa hal yang perlu diperhatikan saat membuat akun Admin.</p>
+    <ul class="space-y-2 text-sm text-slate-600">
+      <li class="flex items-start gap-2">
+        <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="leading-relaxed">Buat <b>password yang kuat</b> dengan kombinasi huruf dan angka (minimal 12 karakter)</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="leading-relaxed">Pastikan <b>nama lengkap</b> sesuai dengan identitas asli untuk memudahkan
+          identifikasi.</span>
+      </li>
+    </ul>
+  </div>
+
   <form action="{{ route('admin.super.akun-admin.store') }}" method="POST" autocomplete="off">
     @csrf
 
@@ -79,5 +103,3 @@
 @section('document.end')
   @vite('resources/js/toggle-password-visibility.js')
 @endsection
-
-
