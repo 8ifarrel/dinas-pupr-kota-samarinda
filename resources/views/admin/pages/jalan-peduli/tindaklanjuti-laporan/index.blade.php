@@ -208,7 +208,7 @@
               <a href="#" class="btn-hover bg-yellow-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center justify-center gap-2 text-sm">
                 <i class="fa-solid fa-download"></i> Unduh
               </a>
-              <a href="" class="btn-hover bg-green-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2 text-sm">
+              <a href="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.edit', 1) }}" class="btn-hover bg-green-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2 text-sm">
                 <i class="fa-solid fa-pen-to-square"></i> Edit
               </a>
               <button type="button" class="btn-hover bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 text-sm">
