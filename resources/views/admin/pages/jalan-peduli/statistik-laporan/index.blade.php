@@ -7,13 +7,11 @@
 @section('document.body')
   {{-- Filter dummy --}}
   <div class="sticky top-[80px] z-30 w-full">
-    <div class="container mx-auto py-4">
+    <div class="container mx-auto">
       <div class="backdrop-blur-sm rounded-xl">
         <div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-lg border ">
           <div class="flex items-center gap-2 flex-wrap">
-            <button
-              id="toggleFilterBtn"
-              type="button"
+            <button id="toggleFilterBtn" type="button"
               class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 transition-all duration-200 transform hover:scale-105">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="2">
@@ -219,78 +217,80 @@
       </div>
     </div>
   </div>
-  {{-- TODO: Ganti semua data dummy di atas dengan data dari backend --}}
 @endsection
 
 @section('document.end')
-  {{-- Dummy ChartJS --}}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  @vite(['resources/js/chartjs.js', 'resources/js/chartjs-plugin-datalabels.js'])
+
   <script>
-    // Dummy data
-    const laporanMasukData = [12, 101];
-    const laporanDetailData = [3, 7, 8, 5, 78];
-    const jenisKerusakanLabels = ['Berlubang', 'Retak', 'Amblas'];
-    const jenisKerusakanData = [60, 40, 23];
-    const jenisKerusakanColors = ['#FF6384', '#36A2EB', '#FFCE56'];
-    const tingkatKerusakanLabels = ['Ringan', 'Sedang', 'Berat'];
-    const tingkatKerusakanData = [80, 30, 13];
-    const tingkatKerusakanColors = ['#f59e0b', '#ef4444', '#84cc16'];
-
-    function renderChart(canvasId, labels, data, colors) {
-      const ctx = document.getElementById(canvasId).getContext('2d');
-      return new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: colors,
-            borderWidth: 2,
-            borderColor: '#fff'
-          }]
-        },
-        options: {
-          cutout: '65%',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            datalabels: {
-              color: '#fff',
-              font: {
-                size: 11,
-                weight: 'bold'
-              },
-              formatter: (value) => value > 0 ? value : ''
-            },
-            legend: {
-              display: false
-            }
-          }
-        },
-        plugins: [ChartDataLabels]
-      });
-    }
-
-    function renderLegend(containerId, labels, colors) {
-      const legendBox = document.getElementById(containerId);
-      legendBox.innerHTML = '';
-      labels.forEach((label, idx) => {
-        const item = document.createElement('div');
-        item.className = 'flex items-center gap-3 text-sm';
-        const colorDiv = document.createElement('div');
-        colorDiv.className = 'w-4 h-4 rounded-full';
-        colorDiv.style.backgroundColor = colors[idx % colors.length];
-        const span = document.createElement('span');
-        span.className = 'font-medium text-slate-600';
-        span.textContent = label;
-        item.appendChild(colorDiv);
-        item.appendChild(span);
-        legendBox.appendChild(item);
-      });
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
+      if (window.Chart && window.ChartDataLabels) {
+        Chart.register(window.ChartDataLabels);
+      }
+
+      // TODO: Ganti semua data dummy di atas dengan data dari backend
+      const laporanMasukData = [12, 101];
+      const laporanDetailData = [3, 7, 8, 5, 78];
+      const jenisKerusakanLabels = ['Berlubang', 'Retak', 'Amblas'];
+      const jenisKerusakanData = [60, 40, 23];
+      const jenisKerusakanColors = ['#FF6384', '#36A2EB', '#FFCE56'];
+      const tingkatKerusakanLabels = ['Ringan', 'Sedang', 'Berat'];
+      const tingkatKerusakanData = [80, 30, 13];
+      const tingkatKerusakanColors = ['#f59e0b', '#ef4444', '#84cc16'];
+
+      function renderChart(canvasId, labels, data, colors) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        return new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: data,
+              backgroundColor: colors,
+              borderWidth: 2,
+              borderColor: '#fff'
+            }]
+          },
+          options: {
+            cutout: '65%',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              datalabels: {
+                color: '#fff',
+                font: {
+                  size: 11,
+                  weight: 'bold'
+                },
+                formatter: (value) => value > 0 ? value : ''
+              },
+              legend: {
+                display: false
+              }
+            }
+          },
+          plugins: [window.ChartDataLabels]
+        });
+      }
+
+      function renderLegend(containerId, labels, colors) {
+        const legendBox = document.getElementById(containerId);
+        legendBox.innerHTML = '';
+        labels.forEach((label, idx) => {
+          const item = document.createElement('div');
+          item.className = 'flex items-center gap-3 text-sm';
+          const colorDiv = document.createElement('div');
+          colorDiv.className = 'w-4 h-4 rounded-full';
+          colorDiv.style.backgroundColor = colors[idx % colors.length];
+          const span = document.createElement('span');
+          span.className = 'font-medium text-slate-600';
+          span.textContent = label;
+          item.appendChild(colorDiv);
+          item.appendChild(span);
+          legendBox.appendChild(item);
+        });
+      }
+
       renderChart('laporanMasukChart', ['Pending', 'Accept'], laporanMasukData, ['#9ca3af', '#10b981']);
       renderChart('laporanChart', ['Belum Dikerjakan', 'Sedang Dikerjakan', 'Telah di Survei', 'Disposisi',
         'Telah Dikerjakan'
@@ -300,10 +300,8 @@
       renderChart('tingkatKerusakanChart', tingkatKerusakanLabels, tingkatKerusakanData, tingkatKerusakanColors);
       renderLegend('tingkatKerusakanLegend', tingkatKerusakanLabels, tingkatKerusakanColors);
       // TODO: Ganti data chart dengan data dari backend
-    });
 
-    // Toggle filter panel logic
-    document.addEventListener('DOMContentLoaded', function() {
+      // Toggle filter panel logic
       var btn = document.getElementById('toggleFilterBtn');
       var panel = document.getElementById('filterPanel');
       var label = document.getElementById('toggleFilterBtnLabel');

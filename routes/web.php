@@ -247,6 +247,7 @@ use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
+use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
@@ -330,6 +331,15 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 			Route::prefix('statistik-laporan')->group(function () {
 				Route::get('/', [JalanPeduliStatistikLaporanAdminController::class, 'index'])
 					->name('admin.jalan-peduli.statistik-laporan.index');
+			});
+
+			Route::prefix('tindaklanjuti-laporan')->group(function () {
+				Route::get('/', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'index'])
+					->name('admin.jalan-peduli.tindaklanjuti-laporan.index');
+				Route::get('/edit/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'edit'])
+					->name('admin.jalan-peduli.tindaklanjuti-laporan.edit');
+				Route::post('/update/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'update'])
+					->name('admin.jalan-peduli.tindaklanjuti-laporan.update');
 			});
 		});
 
