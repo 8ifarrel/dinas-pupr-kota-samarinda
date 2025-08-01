@@ -43,6 +43,8 @@ use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
+use App\Http\Controllers\Guest\LaporanGuestController;
+
 /**
  * Portal
  */
@@ -209,6 +211,16 @@ Route::prefix('drainase-irigasi')->group(function () {
 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
 		->name('guest.drainase-irigasis.how');
 });
+
+/**
+  *	Jalan Peduli
+  */
+
+Route::get('/laporan/data', [LaporanGuestController::class, 'index'])->name('laporan.data');
+
+// Route::get('/laporan/map', function () {
+//     return view('laporan.peta-sebaran');
+// })->name('laporan.public.map');
 
 /*
 |--------------------------------------------------------------------------

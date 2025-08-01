@@ -7,16 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('kelurahan', function (Blueprint $table) {
+        Schema::create('kecamatans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama', 255);
-            $table->unsignedBigInteger('kecamatan_id');
-            $table->foreign('kecamatan_id')->references('id')->on('kecamatan')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('kelurahan');
+        Schema::dropIfExists('kecamatan');
     }
 };

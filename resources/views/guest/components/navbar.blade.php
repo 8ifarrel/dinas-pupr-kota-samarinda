@@ -205,7 +205,7 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{-- --}}"
+                    <a href="{{ route('laporan.data') }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
                   </li>
                   <li>

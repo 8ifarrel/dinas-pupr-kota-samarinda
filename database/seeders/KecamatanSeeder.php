@@ -9,7 +9,7 @@ class KecamatanSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('kecamatan')->insert([
+        DB::table('kecamatans')->insert([
             ['id' => 3139, 'nama' => 'Loa Janan Ilir'],
             ['id' => 3140, 'nama' => 'Palaran'],
             ['id' => 3141, 'nama' => 'Samarinda Ilir'],

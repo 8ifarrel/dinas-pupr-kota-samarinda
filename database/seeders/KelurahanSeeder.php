@@ -9,7 +9,7 @@ class KelurahanSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('kelurahan')->insert([
+        DB::table('kelurahans')->insert([
             ['id' => 44461, 'nama' => 'Tani Aman', 'kecamatan_id' => 3139],
             ['id' => 44462, 'nama' => 'Sengkotek', 'kecamatan_id' => 3139],
             ['id' => 44463, 'nama' => 'Simpang Tiga (Loa Janan Ilir)', 'kecamatan_id' => 3139],
