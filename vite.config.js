@@ -15,6 +15,7 @@ export default defineConfig({
                 "resources/css/sweetalert2.css",
                 "resources/css/quill.css",
                 "resources/css/quill-resize-module.css",
+                "resources/css/leaflet.css",
 
                 // JS ------
                 "resources/js/app.js",
@@ -26,7 +27,10 @@ export default defineConfig({
                 "resources/js/sweetalert2.js",
                 "resources/js/quill.js",
                 "resources/js/quill-resize-module.js",
+                "resources/js/leaflet.js",
 
+                "resources/js/chartjs.js",
+                "resources/js/chartjs-plugin-datalabels.js",
                 "resources/js/splide-autoscroll.js",
                 "resources/js/toggle-password-visibility.js",
                 "resources/js/clock.js",

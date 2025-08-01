@@ -22,5 +22,4 @@ class JalanPeduliStatistikLaporanAdminController extends Controller
             // TODO: kirim data jalan peduli ke view
         ]);
     }
-
 }
