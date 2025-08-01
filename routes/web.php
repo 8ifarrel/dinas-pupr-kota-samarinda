@@ -113,6 +113,18 @@ Route::prefix('pengumuman')->group(function () {
 });
 
 /**
+ * Jalan Peduli
+ */
+Route::prefix('jalan-peduli')->group(function () {
+	Route::get('/', function () {
+		return view('guest.pages.jalan-peduli.index', [
+			'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+			'page_title' => 'Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.index');
+});
+
+/**
  * PPID Pelaksana
  */
 
@@ -247,7 +259,6 @@ use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
-use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -280,22 +291,6 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 						->name('admin.super.akun-admin.update');
 					Route::delete('/delete/{id}', [AkunAdminSuperAdminController::class, 'destroy'])
 						->name('admin.super.akun-admin.destroy');
-				});
-
-				/**
-				 * API Key
-				 */
-				Route::prefix('api-key')->group(function () {
-					Route::get('/', [APIKeySuperAdminController::class, 'index'])
-						->name('admin.super.api-key.index');
-					Route::get('/create', [APIKeySuperAdminController::class, 'create'])
-						->name('admin.super.api-key.create');
-					Route::post('/store', [APIKeySuperAdminController::class, 'store'])
-						->name('admin.super.api-key.store');
-					Route::put('/update/{id}', [APIKeySuperAdminController::class, 'update'])
-						->name('admin.super.api-key.update');
-					Route::delete('/delete/{id}', [APIKeySuperAdminController::class, 'destroy'])
-						->name('admin.super.api-key.destroy');
 				});
 
 				/**
@@ -590,3 +585,14 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		->name('admin.logout');
 });
 
+/**
+ * Jalan Peduli
+ */
+Route::prefix('jalan-peduli')->group(function () {
+    Route::get('/', function () {
+        return view('guest.pages.jalan-peduli.index', [
+            'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+            'page_title' => 'Jalan Peduli'
+        ]);
+    })->name('guest.jalan-peduli.index');
+});
