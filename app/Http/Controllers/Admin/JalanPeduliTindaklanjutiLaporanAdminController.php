@@ -33,8 +33,8 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
         $page_title = "Jalan Peduli - Edit Laporan";
         $page_description = "Catat perkembangan penanganan laporan masuk dengan ID $id";
 
-        // TODO: Cari data Jalan Peduli berdasarkan ID
-        // TODO: Tampilkan form dengan data yang ingin diedit
+        // TODO: Validasi apakah laporan dengan ID tersebut ada dalam database
+        // TODO: Ambil data laporan Jalan Peduli berdasarkan ID dari model
 
         return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.edit', [
             'page_title' => $page_title,
@@ -54,5 +54,17 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
         // TODO: Validasi data yang dikirim dari form
         // TODO: Update data Jalan Peduli berdasarkan ID
         // TODO: Redirect atau berikan response setelah update
+    }
+
+    /**
+     * Menghapus data laporan dari database berdasarkan ID.
+     *
+     * @param  int  $id
+     */
+    public function destroy($id)
+    {
+        // TODO: Validasi data yang dikirim dari form
+        // TODO: Hapus data laporan berdasarkan ID
+        // TODO: Redirect atau berikan response setelah penghapusan
     }
 }

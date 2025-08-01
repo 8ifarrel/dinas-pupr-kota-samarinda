@@ -340,6 +340,8 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.edit');
 				Route::post('/update/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'update'])
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.update');
+				Route::delete('/delete/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'destroy'])
+					->name('admin.jalan-peduli.tindaklanjuti-laporan.destroy');
 			});
 		});
 
