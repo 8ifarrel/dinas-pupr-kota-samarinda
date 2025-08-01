@@ -246,6 +246,7 @@ use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
+use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
@@ -315,14 +316,21 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		 * Jalan Peduli
 		 */
 		Route::prefix('jalan-peduli')->group(function () {
-			Route::get('/laporan-masuk', [JalanPeduliLaporanMasukAdminController::class, 'index'])
-				->name('admin.jalan-peduli.laporan-masuk.index');
-			Route::get('/laporan-masuk/lihat/{id}', [JalanPeduliLaporanMasukAdminController::class, 'show'])
-				->name('admin.jalan-peduli.laporan-masuk.show');
-			Route::post('/laporan-masuk/update/{id}', [JalanPeduliLaporanMasukAdminController::class, 'update'])
-				->name('admin.jalan-peduli.laporan-masuk.update');
-			Route::post('/laporan-masuk/delete/{id}', [JalanPeduliLaporanMasukAdminController::class, 'destroy'])
-				->name('admin.jalan-peduli.laporan-masuk.destroy');
+			Route::prefix('laporan-masuk')->group(function () {
+				Route::get('', [JalanPeduliLaporanMasukAdminController::class, 'index'])
+					->name('admin.jalan-peduli.laporan-masuk.index');
+				Route::get('/lihat/{id}', [JalanPeduliLaporanMasukAdminController::class, 'show'])
+					->name('admin.jalan-peduli.laporan-masuk.show');
+				Route::post('/update/{id}', [JalanPeduliLaporanMasukAdminController::class, 'update'])
+					->name('admin.jalan-peduli.laporan-masuk.update');
+				Route::post('/delete/{id}', [JalanPeduliLaporanMasukAdminController::class, 'destroy'])
+					->name('admin.jalan-peduli.laporan-masuk.destroy');
+			});
+
+			Route::prefix('statistik-laporan')->group(function () {
+				Route::get('/', [JalanPeduliStatistikLaporanAdminController::class, 'index'])
+					->name('admin.jalan-peduli.statistik-laporan.index');
+			});
 		});
 
 		/**

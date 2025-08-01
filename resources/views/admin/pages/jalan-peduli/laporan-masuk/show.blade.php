@@ -8,7 +8,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
       <div class="lg:col-span-2">
         <div class="flex justify-between mb-4 text-gray-500">
-          <span>ID Laporan: <strong class="text-gray-700 font-medium">1</strong></span>
+          <span>ID Laporan: <strong>1</strong></span>
           <span class="text-gray-600">Diajukan pada <strong>12 Juni 2024 14:30</strong></span>
           {{-- TODO: Ganti dengan $laporan->id_laporan dan $laporan->created_at --}}
         </div>
