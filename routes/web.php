@@ -245,6 +245,7 @@ use App\Http\Controllers\Admin\FotoKegiatanAdminController;
 use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
+use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
@@ -309,6 +310,20 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		 */
 		Route::get('/dashboard', [DashboardAdminController::class, 'index'])
 			->name('admin.dashboard.index');
+
+		/**
+		 * Jalan Peduli
+		 */
+		Route::prefix('jalan-peduli')->group(function () {
+			Route::get('/laporan-masuk', [JalanPeduliLaporanMasukAdminController::class, 'index'])
+				->name('admin.jalan-peduli.laporan-masuk.index');
+			Route::get('/laporan-masuk/lihat/{id}', [JalanPeduliLaporanMasukAdminController::class, 'show'])
+				->name('admin.jalan-peduli.laporan-masuk.show');
+			Route::post('/laporan-masuk/update/{id}', [JalanPeduliLaporanMasukAdminController::class, 'update'])
+				->name('admin.jalan-peduli.laporan-masuk.update');
+			Route::post('/laporan-masuk/delete/{id}', [JalanPeduliLaporanMasukAdminController::class, 'destroy'])
+				->name('admin.jalan-peduli.laporan-masuk.destroy');
+		});
 
 		/**
 		 * Slider
