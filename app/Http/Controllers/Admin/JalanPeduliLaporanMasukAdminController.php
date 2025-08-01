@@ -35,7 +35,6 @@ class JalanPeduliLaporanMasukAdminController extends Controller
         // TODO: Validasi apakah laporan dengan ID tersebut ada dalam database
         // TODO: Ambil data laporan Jalan Peduli berdasarkan ID dari model
 
-
         return view('admin.pages.jalan-peduli.laporan-masuk.show', [
             'page_title' => $page_title,
             'page_description' => $page_description,
