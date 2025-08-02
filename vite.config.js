@@ -37,6 +37,8 @@ export default defineConfig({
                 "resources/js/navbar-guest.js",
                 "resources/js/jalan-peduli/animasi.js",
                 "resources/js/jalan-peduli/shepherd-tour.js",
+                "resources/js/jalan-peduli/buat-laporan.js",
+                "resources/js/jalan-peduli/pdf-viewer.js",
             ],
             refresh: true,
         }),

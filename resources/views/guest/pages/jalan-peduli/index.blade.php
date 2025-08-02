@@ -166,7 +166,7 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
                 </h1>
                 
                 <div class="w-full max-w-4xl mx-auto mb-10">
-                    <a href="#" class="block bg-brand-blue text-white p-8 sm:p-10 rounded-3xl shadow-2xl hover:bg-[#223468] btn-hover transform hover:scale-105 transition-all duration-300 create-report-button ring-4 ring-blue-200 focus:outline-none focus:ring-8 focus:ring-blue-100 relative overflow-hidden" style="min-height: 120px;">
+                    <a href="{{ route('guest.jalan-peduli.laporan.create') }}" class="block bg-brand-blue text-white p-8 sm:p-10 rounded-3xl shadow-2xl hover:bg-[#223468] btn-hover transform hover:scale-105 transition-all duration-300 create-report-button ring-4 ring-blue-200 focus:outline-none focus:ring-8 focus:ring-blue-100 relative overflow-hidden" style="min-height: 120px;">
                         <div class="flex items-center justify-center space-x-5 sm:space-x-7 relative z-10">
                             <div class="bg-[#3b5fc9] ring-4 ring-blue-100 p-5 sm:p-6 rounded-full flex items-center justify-center shadow-lg" style="min-width:70px; min-height:70px;">
                                 <i class="fa-solid fa-plus text-white text-4xl sm:text-5xl"></i>
@@ -254,4 +254,4 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
 @vite(['resources/js/jalan-peduli/shepherd-tour.js'])
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-@endsection```
+@endsection
