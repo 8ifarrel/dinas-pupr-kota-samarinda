@@ -112,17 +112,6 @@ Route::prefix('pengumuman')->group(function () {
 		->name('guest.pengumuman.download');
 });
 
-/**
- * Jalan Peduli
- */
-Route::prefix('jalan-peduli')->group(function () {
-	Route::get('/', function () {
-		return view('guest.pages.jalan-peduli.index', [
-			'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
-			'page_title' => 'Jalan Peduli'
-		]);
-	})->name('guest.jalan-peduli.index');
-});
 
 /**
  * PPID Pelaksana
@@ -232,6 +221,13 @@ Route::prefix('jalan-peduli')->group(function () {
             'page_title' => 'Jalan Peduli'
         ]);
     })->name('guest.jalan-peduli.index');
+
+	Route::get('/buat-laporan', function () {
+		return view('guest.pages.jalan-peduli.laporan.create-laporan', [
+			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+			'page_title' => 'Buat Laporan Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.laporan.create');
 });
 
 
