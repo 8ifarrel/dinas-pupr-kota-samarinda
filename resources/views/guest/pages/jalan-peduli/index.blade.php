@@ -198,7 +198,7 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
                         </div>
                     </a>
 
-                    <a href="#" class="bg-white border-2 border-green-200 hover:border-green-400 p-5 sm:p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 map-report-button group">
+                    <a href="{{ route('laporan.public.map') }}" class="bg-white border-2 border-green-200 hover:border-green-400 p-5 sm:p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 map-report-button group">
                         <div class="text-center">
                             <div class="bg-green-100 group-hover:bg-green-200 p-3 sm:p-4 rounded-full w-14 sm:w-16 h-14 sm:h-16 mx-auto mb-4 flex items-center justify-center transition-colors duration-300">
                                 <i class="fa-solid fa-map-location-dot text-green-600 text-xl sm:text-2xl group-hover:text-green-700"></i>
