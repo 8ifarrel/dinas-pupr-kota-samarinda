@@ -4,12 +4,12 @@
 {{-- Additional styles and scripts for Jalan Peduli page --}}
 <meta property="og:title" content="Website Jalan Peduli">
 <meta property="og:description" content="Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.">
-<meta property="og:image" content="{{ asset('images/dinas-pupr-kota-samarinda.png') }}">
+<meta property="og:image" content="{{ asset('image/logo/dinas-pupr-kota-samarinda.png') }}">
 <meta property="og:url" content="{{ url()->current() }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Website Jalan Peduli">
 <meta name="twitter:description" content="Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.">
-<meta name="twitter:image" content="{{ asset('images/dinas-pupr-kota-samarinda.png') }}">
+<meta name="twitter:image" content="{{ asset('image/logo/dinas-pupr-kota-samarinda.png') }}">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/@sjmc11/tourguidejs/dist/css/tour.min.css">
