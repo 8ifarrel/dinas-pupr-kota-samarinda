@@ -4,16 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up()
+return new class extends Migration
+{
+    public function up(): void
     {
         Schema::create('kecamatan', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama', 255);
+            $table->unsignedSmallInteger('id')->primary();
+            $table->string('nama');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('kecamatan');
     }
