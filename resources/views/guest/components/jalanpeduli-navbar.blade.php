@@ -119,9 +119,9 @@
                 <div class="flex flex-col items-end">
                     <!-- Desktop Menu - Right aligned -->
                     <div class="hidden lg:flex desktop-menu-container justify-end space-x-1">
-                        <a href="{{ url('/') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
+                        <a href="{{ route('guest.jalan-peduli.index') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
                             <i class="fas fa-home text-sm"></i>
-                            <span class="text-sm">Menu Utama</span>
+                            <span class="text-sm">Menu Jalan Peduli</span>
                         </a>
                         <a href="#" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
                         {{-- <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300"> --}}
@@ -144,12 +144,12 @@
             <div id="mobile-menu" class="lg:hidden hidden fixed top-[120px] left-0 w-full z-40 pb-2 px-4">
                 <div class="bg-white rounded-xl custom-shadow p-2 slide-in-from-right">
                     <div class="grid grid-cols-2 gap-2">
-                        <!-- Menu Utama -->
-                        <a href="{{ url('/') }}" class="{{ Route::currentRouteName() == 'home' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600' }} transition-all duration-300">
+                        <!-- Menu Jalan Peduli -->
+                        <a href="{{ route('guest.jalan-peduli.index') }}" class="{{ Route::currentRouteName() == 'home' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600' }} transition-all duration-300">
                             <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center mb-2">
                                 <i class="fas fa-home text-white"></i>
                             </div>
-                            <span class="text-sm font-medium text-center">Menu Utama</span>
+                            <span class="text-sm font-medium text-center">Menu Jalan Peduli</span>
                         </a>
 
                         <!-- Cek Status -->

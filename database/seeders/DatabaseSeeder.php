@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
             PageVisitsSeeder::class,
             
             // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
+            JalanPeduliStatusSeeder::class,
             JalanPeduliPelaporSeeder::class,
             JalanPeduliLaporanSeeder::class,
         ]);
