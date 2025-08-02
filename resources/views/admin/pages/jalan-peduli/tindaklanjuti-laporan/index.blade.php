@@ -158,16 +158,60 @@
     </div>
     @if ($laporans->hasPages())
       <div class="mt-12 flex justify-center fade-in">
-        {{-- ...pagination code... --}}
-        {{-- Gunakan $laporans->links() untuk pagination --}}
-        {{ $laporans->links() }}
+        <nav class="inline-flex rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white" aria-label="Pagination">
+          {{-- Previous Button --}}
+          @if ($laporans->onFirstPage())
+            <span class="px-4 py-2 text-gray-400 bg-gray-50 cursor-not-allowed select-none flex items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </span>
+          @else
+            <a href="{{ $laporans->previousPageUrl() }}" rel="prev"
+              class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-semibold transition-colors flex items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </a>
+          @endif
+
+          {{-- Page Numbers --}}
+          @foreach ($laporans->links()->elements[0] as $page => $url)
+            @if ($page == $laporans->currentPage())
+              <span class="px-4 py-2 bg-primary-navy text-black font-bold shadow-inner">{{ $page }}</span>
+            @else
+              <a href="{{ $url }}"
+                class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-medium transition-colors text-gray-600">{{ $page }}</a>
+            @endif
+          @endforeach
+
+          {{-- Next Button --}}
+          @if ($laporans->hasMorePages())
+            <a href="{{ $laporans->nextPageUrl() }}" rel="next"
+              class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-semibold transition-colors flex items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          @else
+            <span class="px-4 py-2 text-gray-400 bg-gray-50 cursor-not-allowed select-none flex items-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          @endif
+        </nav>
+        <div class="ml-4 flex items-center text-gray-500">
+          Halaman <span class="font-bold text-primary-navy mx-1">{{ $laporans->currentPage() }}</span>
+          dari <span class="font-bold text-primary-navy mx-1">{{ $laporans->lastPage() }}</span>
+        </div>
       </div>
     @endif
 
     {{-- Dummy Map --}}
     <div class="mt-10">
       <h4 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">Peta Lokasi Laporan</h4>
-      <div id="map" class="relative z-0 h-[50vh] sm:h-96 w-full rounded-lg"></div>
+      <div id="map" class="relative z-0 h-[50vh] sm:h-96 md:h-[500px] w-full rounded-lg"></div>
     </div>
   </div>
 @endsection
@@ -273,4 +317,4 @@
   </script>
 @endsection
 
- 
+

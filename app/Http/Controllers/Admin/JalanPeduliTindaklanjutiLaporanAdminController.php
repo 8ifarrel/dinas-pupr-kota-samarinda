@@ -49,7 +49,7 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             return response()->json($laporans);
         }
 
-        $laporans = $query->orderByDesc('created_at')->paginate(12);
+        $laporans = $query->orderByDesc('created_at')->paginate(6);
 
         return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.index', [
             'page_title' => $page_title,
