@@ -97,7 +97,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="hidden my-4 mx-16 lg:flex justify-between items-center">
+    <div class="hidden my-4 mx-16 lg:flex justify-between items-center relative z-[60] bg-white">
         <figure class="flex gap-2">
             <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
             <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
@@ -132,6 +132,11 @@
                         <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
                             <i class="fas fa-map-marked-alt text-sm"></i>
                             <span class="text-sm">Peta Laporan</span>
+                        </a>
+
+                        <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
+                            <i class="fas fa-question-circle text-sm"></i>
+                            <span class="text-sm">FAQ</span>
                         </a>
                     </div>
 
@@ -173,8 +178,18 @@
                             </div>
                             <span class="text-sm font-medium text-center">Peta Laporan</span>
                         </a>
-
                     </div>
+
+                    <!-- FAQ Section - Full Width -->
+                    <div class="mt-2">
+                        <a href="{{ route('faq') }}" class="{{ Route::currentRouteName() == 'faq' ? 'flex items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition-all duration-300">
+                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-question-circle text-white text-sm"></i>
+                            </div>
+                            <span class="font-medium">Frequently Asked Questions</span>
+                        </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>

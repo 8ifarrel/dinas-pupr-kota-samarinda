@@ -214,6 +214,8 @@ Route::prefix('drainase-irigasi')->group(function () {
 /**
  * Jalan Peduli Utama
  */
+use App\Http\Controllers\Guest\FaqController;
+
 Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/', function () {
 		return view('guest.pages.jalan-peduli.index', [
@@ -242,6 +244,8 @@ Route::prefix('jalan-peduli')->group(function () {
 			'page_title' => 'Buat Laporan Jalan Peduli'
 		]);
 	})->name('laporan.public.map');
+
+	Route::get('/laporan/faq', [FaqController::class, 'index'])->name('faq');
 });
 
 
