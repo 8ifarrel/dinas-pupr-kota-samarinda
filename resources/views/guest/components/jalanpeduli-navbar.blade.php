@@ -123,10 +123,15 @@
                             <i class="fas fa-home text-sm"></i>
                             <span class="text-sm">Menu Jalan Peduli</span>
                         </a>
-                        <a href="#" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
+                        <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
                         {{-- <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300"> --}}
                             <i class="fas fa-search text-sm"></i>
                             <span class="text-sm">Cek Status</span>
+                        </a>
+
+                        <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
+                            <i class="fas fa-map-marked-alt text-sm"></i>
+                            <span class="text-sm">Peta Laporan</span>
                         </a>
                     </div>
 
@@ -160,6 +165,15 @@
                             </div>
                             <span class="text-sm font-medium text-center">Cek Status</span>
                         </a>
+
+                        <!-- Peta Laporan -->
+                        <a href="{{ route('laporan.public.map') }}" class="{{ Route::currentRouteName() == 'laporan.public.map' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600' }} transition-all duration-300">
+                            <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-map-marked-alt text-white"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Peta Laporan</span>
+                        </a>
+
                     </div>
                 </div>
             </div>
