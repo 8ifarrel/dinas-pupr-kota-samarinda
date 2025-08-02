@@ -35,6 +35,8 @@ export default defineConfig({
                 "resources/js/toggle-password-visibility.js",
                 "resources/js/clock.js",
                 "resources/js/navbar-guest.js",
+                "resources/js/jalan-peduli/animasi.js",
+                "resources/js/jalan-peduli/shepherd-tour.js",
             ],
             refresh: true,
         }),

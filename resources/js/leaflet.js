@@ -1,3 +1,3 @@
-import L from 'leaflet/dist/leaflet.js';
+import L from 'leaflet';
 
 window.L = L;

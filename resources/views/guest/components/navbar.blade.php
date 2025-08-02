@@ -205,8 +205,8 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
+                    <a href="{{ route('guest.jalan-peduli.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli</a>
                   </li>
                   <li>
                     <a href="{{ url('https://sijakon.samarindakota.go.id') }}"
@@ -361,4 +361,4 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav>```

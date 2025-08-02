@@ -19,6 +19,7 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/typography": "^0.5.13",
         "axios": "^1.6.4",
+        "chart.js": "^4.5.0",
         "chartjs": "^0.3.24",
         "chartjs-plugin-datalabels": "^2.2.0",
         "cropperjs": "^1.6.2",
