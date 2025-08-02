@@ -6,37 +6,70 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
     {
         $this->call([
+            // Seeder dasar organisasi dan struktur
             SusunanOrganisasiSeeder::class,
-            BeritaKategoriSeeder::class,
-            BeritaSeeder::class,
-            BeritaFotoTambahanSeeder::class,
-            BukuTamuSeeder::class,
-            KecamatanSeeder::class,
-            KelurahanSeeder::class,
-            KepalaDinasSeeder::class,
-            KepalaDinasJenjangKarirSeeder::class,
-            KepalaDinasRiwayatPendidikanSeeder::class,
-            AlbumKegiatanSeeder::class,
-            FotoKegiatanSeeder::class,
-            SliderSeeder::class,
             StrukturOrganisasiSeeder::class,
             StrukturOrganisasiDiagramSeeder::class,
             StrukturOrganisasiSliderSeeder::class,
-            MisiSeeder::class,
+            
+            // Seeder kepala dinas
+            KepalaDinasSeeder::class,
+            KepalaDinasJenjangKarirSeeder::class,
+            KepalaDinasRiwayatPendidikanSeeder::class,
+            
+            // Seeder visi dan misi
             VisiSeeder::class,
+            MisiSeeder::class,
+            SejarahDinasPuprKotaSamarindaSeeder::class,
+            
+            // Seeder lokasi (kecamatan dan kelurahan)
+            KecamatanSeeder::class,
+            KelurahanSeeder::class,
+            
+            // Seeder berita dan kategori
+            BeritaKategoriSeeder::class,
+            BeritaSeeder::class,
+            BeritaFotoTambahanSeeder::class,
+            
+            // Seeder pengumuman
             PengumumanSeeder::class,
-            PartnerSeeder::class,
+            
+            // Seeder PPID
             PpidPelaksanaKategoriSeeder::class,
             PpidPelaksanaSeeder::class,
+            
+            // Seeder album dan foto kegiatan
+            AlbumKegiatanSeeder::class,
+            FotoKegiatanSeeder::class,
+            
+            // Seeder slider
+            SliderSeeder::class,
+            
+            // Seeder partner
+            PartnerSeeder::class,
+            
+            // Seeder buku tamu
+            BukuTamuSeeder::class,
+            
+            // Seeder SKM (Survei Kepuasan Masyarakat)
+            SkmSeeder::class,
+            
+            // Seeder users dan admin
             UsersSeeder::class,
+            
+            // Seeder statistik pengunjung
             VisitorsSeeder::class,
             PageVisitsSeeder::class,
-            SkmSeeder::class,
-            SejarahDinasPuprKotaSamarindaSeeder::class,
-            // Seeder untuk tabel lain jika ada
+            
+            // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
+            JalanPeduliPelaporSeeder::class,
+            JalanPeduliLaporanSeeder::class,
         ]);
     }
 }
