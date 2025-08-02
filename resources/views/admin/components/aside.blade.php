@@ -249,7 +249,8 @@
         {{-- Log --}}
         <li>
           <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
-            <i class="fa-solid fa-file-circle-exclamation"></i>
+            {{-- <i class="fa-solid fa-file-circle-exclamation"></i> --}}
+            <i class="fa-regular fa-circle-question"></i>
             <span class="ms-3">
               Log
             </span>
@@ -259,7 +260,8 @@
         {{-- Konfigurasi Sistem --}}
         <li>
           <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
-            <i class="fa-solid fa-gears"></i>
+            {{-- <i class="fa-solid fa-gears"></i> --}}
+            <i class="fa-regular fa-circle-question"></i>
             <span class="ms-3">
               Konfigurasi Sistem
             </span>

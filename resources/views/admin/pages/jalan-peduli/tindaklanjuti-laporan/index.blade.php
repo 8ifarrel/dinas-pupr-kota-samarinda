@@ -135,30 +135,80 @@
           </div>
           <div class="px-5 pb-5 mt-auto">
             <div class="flex justify-end gap-3">
+              {{-- Tombol edit --}}
               <a href="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.edit', $laporan->id_laporan) }}" class="btn-hover bg-yellow-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center justify-center gap-2 text-sm">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 7.125L18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
                 Edit
               </a>
-              {{-- Hapus: implementasi backend --}}
-              <form id="delete-form-{{ $laporan->id_laporan }}" action="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.destroy', $laporan->id_laporan) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button 
-                  type="button" 
-                  @click="showConfirmModal = true; deleteFormId = 'delete-form-{{ $laporan->id_laporan }}'"
-                  class="btn-hover w-full bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 text-sm">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
-                  Hapus
+              {{-- Tombol Lihat --}}
+              <a href="{{ route('admin.jalan-peduli.laporan-masuk.show', $laporan->id_laporan) }}"
+                class="btn-hover bg-blue-700 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-2 text-sm">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Lihat
+              </a>
+              {{-- Tombol Hapus --}}
+              <button data-modal-target="deleteModal-{{ $laporan->id_laporan }}"
+                data-modal-toggle="deleteModal-{{ $laporan->id_laporan }}"
+                class="btn-hover bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 text-sm">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {{-- Modal konfirmasi hapus --}}
+        <div id="deleteModal-{{ $laporan->id_laporan }}" data-modal-target="deleteModal-{{ $laporan->id_laporan }}"
+          data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  Konfirmasi Penghapusan
+                </h3>
+                <button type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  </svg>
+                  <span class="sr-only">Close modal</span>
                 </button>
-              </form>
+              </div>
+              <div class="p-4 md:p-5 space-y-4">
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                  Apakah Anda yakin ingin <strong>menghapus</strong> laporan dengan ID
+                  <strong>{{ $laporan->id_laporan }}</strong>? Laporan yang telah dihapus <strong>tidak dapat
+                    dipulihkan</strong>.
+                </p>
+              </div>
+              <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <form action="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.destroy', $laporan->id_laporan) }}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit"
+                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+                </form>
+                <button type="button"
+                  class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
+                  Tidak
+                </button>
+              </div>
             </div>
           </div>
         </div>
       @endforeach
     </div>
     @if ($laporans->hasPages())
-      <div class="mt-12 flex justify-center fade-in">
-        <nav class="inline-flex rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white" aria-label="Pagination">
+      <div class="mt-12 flex justify-center items-center flex-col fade-in gap-3">
+        <nav class="inline-flex rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white w-fit" aria-label="Pagination">
           {{-- Previous Button --}}
           @if ($laporans->onFirstPage())
             <span class="px-4 py-2 text-gray-400 bg-gray-50 cursor-not-allowed select-none flex items-center">
@@ -201,7 +251,7 @@
             </span>
           @endif
         </nav>
-        <div class="ml-4 flex items-center text-gray-500">
+        <div class="flex items-center text-gray-500">
           Halaman <span class="font-bold text-primary-navy mx-1">{{ $laporans->currentPage() }}</span>
           dari <span class="font-bold text-primary-navy mx-1">{{ $laporans->lastPage() }}</span>
         </div>
@@ -313,6 +363,31 @@
             console.error('Gagal mengambil data peta:', error);
           });
       }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.addEventListener('click', function(e) {
+        var toggleBtn = e.target.closest('[data-modal-toggle]');
+        if (toggleBtn) {
+          var modalId = toggleBtn.getAttribute('data-modal-toggle');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl) {
+            if (!modalEl.__flowbiteModal) {
+              modalEl.__flowbiteModal = new window.Modal(modalEl);
+            }
+            modalEl.__flowbiteModal.show();
+          }
+        }
+        var hideBtn = e.target.closest('[data-modal-hide]');
+        if (hideBtn) {
+          var modalId = hideBtn.getAttribute('data-modal-hide');
+          var modalEl = document.getElementById(modalId);
+          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
+            modalEl.__flowbiteModal.hide();
+          }
+        }
+      });
     });
   </script>
 @endsection
