@@ -76,172 +76,93 @@
   <div class="container mx-auto py-4 sm:py-6 lg:py-8">
     {{-- TODO: Ganti dengan loop data laporan dari backend --}}
     <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8">
-      {{-- Dummy laporan untuk semua status --}}
-      @php
-        $dummyLaporan = [
-          [
-            'id' => '2024-001',
-            'status' => 'Belum Dikerjakan',
-            'gradient' => 'from-amber-400 to-orange-500',
-            'badge' => 'bg-amber-100 text-amber-800',
-            'alamat' => 'Jl. Dummy Raya No. 101',
-            'kecamatan' => 'Kec. Contoh',
-            'kelurahan' => 'Kel. Dummy',
-            'jenis' => 'Berlubang',
-            'tingkat' => 'Ringan',
-            'tanggal' => '12 Juni 2024',
-            'link' => 'https://maps.google.com/?q=-0.502106,117.153709',
-            'keterangan' => 'Belum ada keterangan.',
-          ],
-          [
-            'id' => '2024-002',
-            'status' => 'Sedang Dikerjakan',
-            'gradient' => 'from-sky-400 to-cyan-500',
-            'badge' => 'bg-sky-100 text-sky-800',
-            'alamat' => 'Jl. Dummy Raya No. 102',
-            'kecamatan' => 'Kec. Contoh',
-            'kelurahan' => 'Kel. Dummy',
-            'jenis' => 'Retak buaya',
-            'tingkat' => 'Sedang',
-            'tanggal' => '13 Juni 2024',
-            'link' => 'https://maps.google.com/?q=-0.505,117.16',
-            'keterangan' => 'Sedang proses pengerjaan.',
-          ],
-          [
-            'id' => '2024-003',
-            'status' => 'Telah Dikerjakan',
-            'gradient' => 'from-green-400 to-emerald-500',
-            'badge' => 'bg-green-100 text-green-800',
-            'alamat' => 'Jl. Dummy Raya No. 103',
-            'kecamatan' => 'Kec. Contoh',
-            'kelurahan' => 'Kel. Dummy',
-            'jenis' => 'Ambles',
-            'tingkat' => 'Berat',
-            'tanggal' => '14 Juni 2024',
-            'link' => 'https://maps.google.com/?q=-0.51,117.17',
-            'keterangan' => 'Sudah selesai dikerjakan.',
-          ],
-          [
-            'id' => '2024-004',
-            'status' => 'Telah di Survei',
-            'gradient' => 'from-cyan-400 to-teal-500',
-            'badge' => 'bg-cyan-100 text-cyan-800',
-            'alamat' => 'Jl. Dummy Raya No. 104',
-            'kecamatan' => 'Kec. Contoh',
-            'kelurahan' => 'Kel. Dummy',
-            'jenis' => 'Permukaan tergerus',
-            'tingkat' => 'Sedang',
-            'tanggal' => '15 Juni 2024',
-            'link' => 'https://maps.google.com/?q=-0.515,117.18',
-            'keterangan' => 'Sudah disurvei, menunggu tindak lanjut.',
-          ],
-          [
-            'id' => '2024-005',
-            'status' => 'Disposisi',
-            'gradient' => 'from-purple-400 to-fuchsia-500',
-            'badge' => 'bg-purple-100 text-purple-800',
-            'alamat' => 'Jl. Dummy Raya No. 105',
-            'kecamatan' => 'Kec. Contoh',
-            'kelurahan' => 'Kel. Dummy',
-            'jenis' => 'Longsor',
-            'tingkat' => 'Berat',
-            'tanggal' => '16 Juni 2024',
-            'link' => 'https://maps.google.com/?q=-0.52,117.19',
-            'keterangan' => 'Perlu disposisi ke bidang terkait.',
-          ],
-        ];
-      @endphp
-      @foreach ($dummyLaporan as $laporan)
+      @foreach ($laporans as $laporan)
+        @php
+          $statusNama = strtolower($laporan->status->nama_status ?? 'tidak diketahui');
+          $statusInfo = [
+            'belum_dikerjakan' => ['gradient' => 'from-amber-400 to-orange-500', 'badge' => 'bg-amber-100 text-amber-800', 'text' => 'Belum Dikerjakan'],
+            'telah_dikerjakan' => ['gradient' => 'from-green-400 to-emerald-500', 'badge' => 'bg-green-100 text-green-800', 'text' => 'Telah Dikerjakan'],
+            'sedang_dikerjakan' => ['gradient' => 'from-sky-400 to-cyan-500', 'badge' => 'bg-sky-100 text-sky-800', 'text' => 'Sedang Dikerjakan'],
+            'telah_disurvei' => ['gradient' => 'from-cyan-400 to-teal-500', 'badge' => 'bg-cyan-100 text-cyan-800', 'text' => 'Telah Disurvei'],
+            'disposisi' => ['gradient' => 'from-purple-400 to-fuchsia-500', 'badge' => 'bg-purple-100 text-purple-800', 'text' => 'Disposisi'],
+            'tidak diketahui' => ['gradient' => 'from-gray-400 to-slate-500', 'badge' => 'bg-gray-100 text-gray-800', 'text' => 'Tidak Diketahui'],
+          ];
+          $currentStatus = $statusInfo[$statusNama] ?? $statusInfo['tidak diketahui'];
+        @endphp
+
         <div class="bg-white rounded-2xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1 overflow-hidden border border-gray-200/50 flex flex-col">
-          <div class="h-2 bg-gradient-to-r {{ $laporan['gradient'] }}"></div>
+          <div class="h-2 bg-gradient-to-r {{ $currentStatus['gradient'] }}"></div>
           <div class="p-5 flex-grow">
             <div class="flex justify-between items-center mb-4">
-              <span class="text-xs font-bold bg-blue-50 text-blue-800 px-3 py-1 rounded-full">ID: {{ $laporan['id'] }}</span>
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold {{ $laporan['badge'] }}">
-                {{ $laporan['status'] }}
+              <span class="text-xs font-bold bg-blue-50 text-blue-800 px-3 py-1 rounded-full">ID: {{ $laporan->id_laporan }}</span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold {{ $currentStatus['badge'] }}">
+                {{ $currentStatus['text'] }}
               </span>
             </div>
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
               <div class="flex items-start gap-3">
                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
                 <div>
-                  <h3 class="text-lg font-bold text-gray-800 leading-tight">{{ $laporan['alamat'] }}</h3>
-                  <p class="text-sm text-gray-500">{{ $laporan['kecamatan'] }}, {{ $laporan['kelurahan'] }}</p>
+                  <h3 class="text-lg font-bold text-gray-800 leading-tight">{{ $laporan->alamat_lengkap_kerusakan }}</h3>
+                  <p class="text-sm text-gray-500">{{ $laporan->kecamatan->nama ?? '-' }}, {{ $laporan->kelurahan->nama ?? '-' }}</p>
                 </div>
               </div>
               <hr class="my-4 border-slate-200">
               <div class="space-y-3 text-sm">
                 <div class="flex items-center">
                   <span class="w-24 text-gray-500">Jenis</span>
-                  <span class="font-semibold text-gray-700">: {{ $laporan['jenis'] }}</span>
+                  <span class="font-semibold text-gray-700">: {{ $laporan->jenis_kerusakan ?? 'N/A' }}</span>
                 </div>
                 <div class="flex items-center">
                   <span class="w-24 text-gray-500">Tingkat</span>
-                  <span class="font-semibold text-gray-700">: {{ $laporan['tingkat'] }}</span>
+                  <span class="font-semibold text-gray-700">: {{ $laporan->tingkat_kerusakan ? Str::title($laporan->tingkat_kerusakan) : 'N/A' }}</span>
                 </div>
                 <div class="flex items-center">
                   <span class="w-24 text-gray-500">Tanggal</span>
-                  <span class="font-semibold text-gray-700">: {{ $laporan['tanggal'] }}</span>
+                  <span class="font-semibold text-gray-700">: {{ $laporan->created_at->locale('id')->isoFormat('DD MMMM YYYY') }}</span>
                 </div>
                 <div class="flex items-center">
                   <span class="w-24 text-gray-500">Link Peta</span>
-                  <span class="font-semibold text-gray-700">: <a href="{{ $laporan['link'] }}" target="_blank" class="text-blue-600 hover:underline">Lihat di Peta</a></span>
+                  <span class="font-semibold text-gray-700">: <a href="{{ $laporan->link_koordinat }}" target="_blank" class="text-blue-600 hover:underline">Lihat di Peta</a></span>
                 </div>
               </div>
-              @if($laporan['status'] === 'Disposisi')
+              @if($statusNama === 'disposisi' && !empty($laporan->keterangan))
                 <blockquote class="mt-4 p-3 bg-purple-50 border-l-4 border-purple-400 rounded-r-lg">
-                  <p class="text-sm text-purple-800 italic">"{{ $laporan['keterangan'] }}"</p>
-                </blockquote>
-              @else
-                <blockquote class="mt-4 p-3 bg-gray-50 border-l-4 border-gray-300 rounded-r-lg">
-                  <p class="text-sm text-gray-700 italic">{{ $laporan['keterangan'] }}</p>
+                  <p class="text-sm text-purple-800 italic">"{{ $laporan->keterangan }}"</p>
                 </blockquote>
               @endif
             </div>
           </div>
           <div class="px-5 pb-5 mt-auto">
-            <div class="flex flex-wrap justify-end gap-3">
-              {{-- TODO: Ganti href dan aksi dengan route dan id laporan dari backend --}}
-              <a href="#" class="btn-hover bg-blue-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 text-sm">
-                <i class="fa-solid fa-eye"></i> Lihat
+            <div class="flex justify-end gap-3">
+              <a href="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.edit', $laporan->id_laporan) }}" class="btn-hover bg-yellow-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center justify-center gap-2 text-sm">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 7.125L18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
+                Edit
               </a>
-              <a href="#" class="btn-hover bg-yellow-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-yellow-600 flex items-center justify-center gap-2 text-sm">
-                <i class="fa-solid fa-download"></i> Unduh
-              </a>
-              <a href="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.edit', 1) }}" class="btn-hover bg-green-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2 text-sm">
-                <i class="fa-solid fa-pen-to-square"></i> Edit
-              </a>
-              <button type="button" class="btn-hover bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 text-sm">
-                <i class="fa-solid fa-trash-can"></i> Hapus
-              </button>
-              {{-- TODO: Tambahkan modal konfirmasi hapus, dan aksi edit sesuai backend --}}
+              {{-- Hapus: implementasi backend --}}
+              <form id="delete-form-{{ $laporan->id_laporan }}" action="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.destroy', $laporan->id_laporan) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button 
+                  type="button" 
+                  @click="showConfirmModal = true; deleteFormId = 'delete-form-{{ $laporan->id_laporan }}'"
+                  class="btn-hover w-full bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2 text-sm">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                  Hapus
+                </button>
+              </form>
             </div>
           </div>
         </div>
       @endforeach
-      {{-- TODO: Loop data laporan dari backend --}}
     </div>
-
-    {{-- Dummy Pagination --}}
-    <div class="mt-12 flex justify-center fade-in">
-      <nav class="inline-flex rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white" aria-label="Pagination">
-        <span class="px-4 py-2 text-gray-400 bg-gray-50 cursor-not-allowed select-none flex items-center">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </span>
-        <span class="px-4 py-2 bg-primary-navy text-white font-bold shadow-inner">1</span>
-        <a href="#" class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-semibold transition-colors">2</a>
-        <a href="#" class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-semibold transition-colors flex items-center">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
-      </nav>
-      <div class="ml-4 flex items-center text-sm text-gray-500">
-        Halaman <span class="font-bold text-primary-navy mx-1">1</span> dari <span class="font-bold text-primary-navy mx-1">2</span>
+    @if ($laporans->hasPages())
+      <div class="mt-12 flex justify-center fade-in">
+        {{-- ...pagination code... --}}
+        {{-- Gunakan $laporans->links() untuk pagination --}}
+        {{ $laporans->links() }}
       </div>
-    </div>
+    @endif
 
     {{-- Dummy Map --}}
     <div class="mt-10">
@@ -254,7 +175,6 @@
 @section('document.end')
   @vite('resources/js/leaflet.js')
   <script>
-    // Toggle filter panel logic (tradisional, sama seperti statistik-laporan)
     document.addEventListener('DOMContentLoaded', function() {
       var btn = document.getElementById('toggleFilterBtn');
       var panel = document.getElementById('filterPanel');
@@ -265,7 +185,7 @@
         panel.classList.toggle('hidden', !isOpen);
         label.textContent = isOpen ? 'Sembunyikan Filter' : 'Tampilkan Filter';
       });
-      // Dummy Leaflet map untuk semua status
+      // Leaflet map: fetch data dari backend
       if (window.L) {
         var map = L.map('map').setView([-0.502106, 117.153709], 12);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -304,68 +224,53 @@
           popupAnchor: [0, -32],
         });
 
-        // Dummy marker data dengan icon sesuai status
-        var dummyMarkers = [
-          {
-            id: '2024-001',
-            lat: -0.502106,
-            lng: 117.153709,
-            status: 'Belum Dikerjakan',
-            alamat: 'Jl. Dummy Raya No. 101',
-            keterangan: 'Belum ada keterangan.',
-            icon: iconBelumDikerjakan
-          },
-          {
-            id: '2024-002',
-            lat: -0.505,
-            lng: 117.16,
-            status: 'Sedang Dikerjakan',
-            alamat: 'Jl. Dummy Raya No. 102',
-            keterangan: 'Sedang proses pengerjaan.',
-            icon: iconSedangDikerjakan
-          },
-          {
-            id: '2024-003',
-            lat: -0.51,
-            lng: 117.17,
-            status: 'Telah Dikerjakan',
-            alamat: 'Jl. Dummy Raya No. 103',
-            keterangan: 'Sudah selesai dikerjakan.',
-            icon: iconTelahDikerjakan
-          },
-          {
-            id: '2024-004',
-            lat: -0.515,
-            lng: 117.18,
-            status: 'Telah di Survei',
-            alamat: 'Jl. Dummy Raya No. 104',
-            keterangan: 'Sudah disurvei, menunggu tindak lanjut.',
-            icon: iconTelahDisurvei
-          },
-          {
-            id: '2024-005',
-            lat: -0.52,
-            lng: 117.19,
-            status: 'Disposisi',
-            alamat: 'Jl. Dummy Raya No. 105',
-            keterangan: 'Perlu disposisi ke bidang terkait.',
-            icon: iconDisposisi
+        function getStatusIcon(status) {
+          switch (status.toLowerCase()) {
+            case 'belum_dikerjakan': return iconBelumDikerjakan;
+            case 'sedang_dikerjakan': return iconSedangDikerjakan;
+            case 'telah_dikerjakan': return iconTelahDikerjakan;
+            case 'telah_disurvei': return iconTelahDisurvei;
+            case 'disposisi': return iconDisposisi;
+            default: return iconBelumDikerjakan;
           }
-        ];
+        }
 
-        dummyMarkers.forEach(function(item) {
-          L.marker([item.lat, item.lng], { icon: item.icon })
-            .addTo(map)
-            .bindPopup(
-              `<div style="font-size:14px;">
-                <b>ID:</b> ${item.id}<br>
-                <b>Status:</b> ${item.status}<br>
-                <b>Alamat:</b> ${item.alamat}<br>
-                <b>Keterangan:</b> ${item.keterangan}
-              </div>`
-            );
-        });
+        // Ambil data laporan dari backend (hanya yang sudah disetujui)
+        fetch('{{ route("admin.jalan-peduli.tindaklanjuti-laporan.index") }}?map=1')
+          .then(response => response.json())
+          .then(data => {
+            if (!data || !Array.isArray(data)) return;
+            let bounds = [];
+            data.forEach(laporan => {
+              const statusNama = laporan.status?.nama_status || 'belum_dikerjakan';
+              if (!laporan.latitude || !laporan.longitude) return;
+              const icon = getStatusIcon(statusNama);
+              const marker = L.marker(
+                [parseFloat(laporan.latitude), parseFloat(laporan.longitude)],
+                { icon: icon }
+              ).addTo(map);
+
+              marker.bindPopup(`
+                <div style="font-size:14px;">
+                  <b>ID:</b> ${laporan.id_laporan}<br>
+                  <b>Status:</b> ${statusNama}<br>
+                  <b>Alamat:</b> ${laporan.alamat_lengkap_kerusakan}<br>
+                  <b>Deskripsi:</b> ${laporan.deskripsi_laporan || 'Tidak ada'}<br>
+                  <b>Latitude:</b> ${laporan.latitude}<br>
+                  <b>Longitude:</b> ${laporan.longitude}<br>
+                  <b>Dibuat:</b> ${laporan.created_at ? new Date(laporan.created_at).toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}
+                </div>
+              `);
+              bounds.push([laporan.latitude, laporan.longitude]);
+            });
+            if (bounds.length > 0) map.fitBounds(bounds);
+          })
+          .catch(error => {
+            console.error('Gagal mengambil data peta:', error);
+          });
       }
     });
   </script>
 @endsection
+
+ 
