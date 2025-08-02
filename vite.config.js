@@ -40,6 +40,7 @@ export default defineConfig({
                 "resources/js/jalan-peduli/buat-laporan.js",
                 "resources/js/jalan-peduli/pdf-viewer.js",
                 "resources/js/jalan-peduli/publik-map.js",
+                "resources/js/jalan-peduli/faq.js",
             ],
             refresh: true,
         }),

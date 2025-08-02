@@ -32,9 +32,18 @@ export default {
         'sans': ['Sora', 'sans-serif'],
       },
       colors: {
+        // Warna Primer
+        'primary-yellow': '#f9a825', // Warna kuning cerah
+        'primary-navy': '#1a237e',   // Warna biru navy gelap
+  
+        // Warna Sekunder/Aksen
+        'secondary-light-gray': '#f3f4f6', // Warna abu-abu terang
+        'secondary-pale-blue': '#dbeafe',  // Warna biru pucat
+        'secondary-pale-yellow': '#fef08a', // Warna kuning pucat
         brand: {
-        'yellow': 'rgba(252, 183, 23, 1)',
-        'blue': 'rgba(34, 52, 104, 1)',
+          'yellow': 'rgba(252, 183, 23, 1)',
+          'blue': 'rgba(34, 52, 104, 1)',
+          
         }
       }, 
     },
