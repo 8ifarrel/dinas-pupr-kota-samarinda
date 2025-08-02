@@ -222,6 +222,19 @@ Route::prefix('drainase-irigasi')->group(function () {
 		->name('guest.drainase-irigasis.how');
 });
 
+/**
+ * Jalan Peduli Utama
+ */
+Route::prefix('jalan-peduli')->group(function () {
+    Route::get('/', function () {
+        return view('guest.pages.jalan-peduli.index', [
+            'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+            'page_title' => 'Jalan Peduli'
+        ]);
+    })->name('guest.jalan-peduli.index');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Halaman Admin (E-Panel)
@@ -620,14 +633,3 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		->name('admin.logout');
 });
 
-/**
- * Jalan Peduli
- */
-Route::prefix('jalan-peduli')->group(function () {
-    Route::get('/', function () {
-        return view('guest.pages.jalan-peduli.index', [
-            'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
-            'page_title' => 'Jalan Peduli'
-        ]);
-    })->name('guest.jalan-peduli.index');
-});
