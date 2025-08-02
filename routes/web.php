@@ -230,6 +230,13 @@ Route::prefix('jalan-peduli')->group(function () {
 	})->name('guest.jalan-peduli.laporan.create');
 });
 
+Route::get('/laporan/data', function () {
+	return view('guest.pages.jalan-peduli.laporan.data',[
+		'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+		'page_title' => 'Buat Laporan Jalan Peduli'
+	]);
+})->name('laporan.data');
+
 
 /*
 |--------------------------------------------------------------------------
