@@ -112,6 +112,7 @@ Route::prefix('pengumuman')->group(function () {
 		->name('guest.pengumuman.download');
 });
 
+
 /**
  * PPID Pelaksana
  */
@@ -210,6 +211,26 @@ Route::prefix('drainase-irigasi')->group(function () {
 		->name('guest.drainase-irigasis.how');
 });
 
+/**
+ * Jalan Peduli Utama
+ */
+Route::prefix('jalan-peduli')->group(function () {
+	Route::get('/', function () {
+		return view('guest.pages.jalan-peduli.index', [
+			'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+			'page_title' => 'Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.index');
+
+	Route::get('/buat-laporan', function () {
+		return view('guest.pages.jalan-peduli.laporan.create-laporan', [
+			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+			'page_title' => 'Buat Laporan Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.laporan.create');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Halaman Admin (E-Panel)
@@ -248,9 +269,9 @@ use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
+use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
-use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
