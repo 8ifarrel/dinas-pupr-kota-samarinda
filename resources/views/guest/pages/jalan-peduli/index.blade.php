@@ -121,7 +121,7 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
                             <div class="w-20 h-20 rounded-full bg-white border-4 border-gray-300 text-gray-400 flex items-center justify-center text-3xl shadow-lg stepper-icon step-circle">
                                 <i class="fa-solid fa-check step-icon-element"></i>
                             </div>
-                            <p class="mt-3 font-semibold text-sm step-text step-label">Selesai</p>
+                            <p class="mt-3 font-semibold text-sm step-text step-label">Pantau Laporan</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
                             <div class="w-16 h-16 rounded-full bg-white border-4 border-gray-300 text-gray-400 flex items-center justify-center text-2xl shadow-lg stepper-icon step-circle">
                                 <i class="fa-solid fa-check step-icon-element"></i>
                             </div>
-                            <p class="mt-3 font-semibold text-sm step-text step-label">Selesai</p>
+                            <p class="mt-3 font-semibold text-sm step-text step-label">Pantau Laporan</p>
                         </div>
                     </div>
                 </div>
@@ -254,4 +254,4 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
 @vite(['resources/js/jalan-peduli/shepherd-tour.js'])
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-@endsection```
+@endsection
