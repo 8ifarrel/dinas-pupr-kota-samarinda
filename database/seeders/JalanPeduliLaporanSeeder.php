@@ -7,6 +7,7 @@ use App\Models\JalanPeduliPelapor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Exception;
 
 class JalanPeduliLaporanSeeder extends Seeder
 {
@@ -28,7 +29,7 @@ class JalanPeduliLaporanSeeder extends Seeder
             }
         }
 
-        throw new \Exception("ID laporan penuh untuk prefix $prefix");
+        throw new Exception("ID laporan penuh untuk prefix $prefix");
     }
 
     public function run(): void
@@ -63,10 +64,13 @@ class JalanPeduliLaporanSeeder extends Seeder
 
                     for ($j = 1; $j <= $jumlahFoto; $j++) {
                         $url = "https://picsum.photos/600/400?random=" . rand(1, 1000);
-                        $filename = "dummy_kerusakan_{$pelapor->id}_{$i}_{$j}.jpg";
+                        $now = now();
+                        $filename = $j . '_' . $now->format('HisdmY') . '.jpg';
+                        $id_laporan = $this->generateIdLaporan($lokasi['kecamatan_id'], $lokasi['kelurahan_id']);
+                        $fotoPath = "jalan_peduli/{$id_laporan}/{$filename}";
 
                         $imageContents = file_get_contents($url);
-                        Storage::disk('public')->put("foto_kerusakan/{$filename}", $imageContents);
+                        Storage::disk('public')->put($fotoPath, $imageContents);
 
                         $fotoFilenames[] = $filename;
                     }

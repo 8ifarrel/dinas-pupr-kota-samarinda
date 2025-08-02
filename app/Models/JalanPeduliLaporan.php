@@ -57,4 +57,9 @@ class JalanPeduliLaporan extends Model
     {
         return $this->belongsTo(JalanPeduliStatus::class, 'status_id', 'status_id');
     }
+
+    public function ipLogs()
+    {
+        return $this->hasMany(JalanPeduliIPLog::class, 'laporan_id', 'id_laporan');
+    }
 }

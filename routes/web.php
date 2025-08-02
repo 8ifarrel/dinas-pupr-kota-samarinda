@@ -215,12 +215,12 @@ Route::prefix('drainase-irigasi')->group(function () {
  * Jalan Peduli Utama
  */
 Route::prefix('jalan-peduli')->group(function () {
-    Route::get('/', function () {
-        return view('guest.pages.jalan-peduli.index', [
-            'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
-            'page_title' => 'Jalan Peduli'
-        ]);
-    })->name('guest.jalan-peduli.index');
+	Route::get('/', function () {
+		return view('guest.pages.jalan-peduli.index', [
+			'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+			'page_title' => 'Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.index');
 
 	Route::get('/buat-laporan', function () {
 		return view('guest.pages.jalan-peduli.laporan.create-laporan', [
@@ -269,6 +269,7 @@ use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
+use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
@@ -303,6 +304,22 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 						->name('admin.super.akun-admin.update');
 					Route::delete('/delete/{id}', [AkunAdminSuperAdminController::class, 'destroy'])
 						->name('admin.super.akun-admin.destroy');
+				});
+
+				/**
+				 * API Key
+				 */
+				Route::prefix('api-key')->group(function () {
+					Route::get('/', [APIKeySuperAdminController::class, 'index'])
+						->name('admin.super.api-key.index');
+					Route::get('/create', [APIKeySuperAdminController::class, 'create'])
+						->name('admin.super.api-key.create');
+					Route::post('/store', [APIKeySuperAdminController::class, 'store'])
+						->name('admin.super.api-key.store');
+					Route::put('/update/{id}', [APIKeySuperAdminController::class, 'update'])
+						->name('admin.super.api-key.update');
+					Route::delete('/delete/{id}', [APIKeySuperAdminController::class, 'destroy'])
+						->name('admin.super.api-key.destroy');
 				});
 
 				/**
