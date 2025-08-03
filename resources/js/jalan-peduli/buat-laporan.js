@@ -91,26 +91,38 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&accept-language=id`);
             if (!response.ok) throw new Error('Gagal menghubungi server geocoding.');
             const data = await response.json();
+            console.log('Reverse geocoding data:', data);
+            
             if (data && data.address) {
                 const address = data.address;
                 alamatInput.value = address.road || 'Nama jalan tidak ditemukan dari peta.';
                 alamatInput.title = `Alamat ini diisi otomatis dari peta: ${data.display_name}. Anda dapat mengubahnya.`;
                 alamatInput.placeholder = 'Alamat Lengkap Lokasi Kerusakan';
 
-                const kecamatanName = address.city_district || address.suburb || address.county;
+                // Cari kecamatan dengan berbagai kemungkinan field dari nominatim
+                const kecamatanName = address.city_district || address.suburb || address.county || address.state_district;
+                console.log('Kecamatan from geocoding:', kecamatanName);
+                
                 let kecamatanFound = false;
                 if (kecamatanName) {
                     for (let option of kecamatanSelect.options) {
                         if (option.text.toLowerCase().includes(kecamatanName.toLowerCase())) {
                             kecamatanSelect.value = option.value;
                             kecamatanFound = true;
+                            console.log('Kecamatan matched:', option.text);
                             break;
                         }
                     }
                 }
+                
+                // Cari kelurahan dengan berbagai kemungkinan field dari nominatim
+                const kelurahanName = address.village || address.hamlet || address.neighbourhood || address.residential;
+                console.log('Kelurahan from geocoding:', kelurahanName);
+                
                 if (kecamatanFound) {
-                    await fetchKelurahan(kecamatanSelect.value, kelurahanSelect, null, address.village || address.hamlet);
+                    await fetchKelurahan(kecamatanSelect.value, kelurahanSelect, null, kelurahanName);
                 } else {
+                    console.log('Kecamatan not found, available options:', Array.from(kecamatanSelect.options).map(opt => opt.text));
                     kelurahanSelect.innerHTML = '<option value="">-- Kecamatan tidak cocok, pilih manual --</option>';
                     kelurahanSelect.disabled = false;
                 }
@@ -649,8 +661,75 @@ document.addEventListener('DOMContentLoaded', function() {
             if (kelurahans.length === 0) {
                 kelSelect.innerHTML = '<option value="">Tidak ada kelurahan</option>';
             } else {
+                // Fungsi untuk menormalisasi nama untuk pencocokan
+                const normalizeName = (name) => {
+                    return name.toLowerCase()
+                        .replace(/\s+/g, '') // Hilangkan spasi
+                        .replace(/[\/\-\.]/g, '') // Hilangkan slash, dash, titik
+                        .replace(/sei|sungai/g, 'sungai') // Normalisasi variasi "Sei/Sungai"
+                        .replace(/\(.*?\)/g, ''); // Hilangkan teks dalam kurung
+                };
+                
+                let selectedKelurahanId = null;
+                
+                // Prioritas 1: Jika ada selKelId yang spesifik
+                if (selKelId) {
+                    selectedKelurahanId = selKelId;
+                }
+                // Prioritas 2: Jika ada selKelName dari reverse geocoding, coba cocokkan dengan nama
+                else if (selKelName) {
+                    const normalizedSelKelName = normalizeName(selKelName);
+                    console.log('Mencari kelurahan untuk:', selKelName, '(normalized:', normalizedSelKelName, ')');
+                    
+                    // Cari pencocokan terbaik
+                    let bestMatch = null;
+                    let bestScore = 0;
+                    
+                    kelurahans.forEach(kel => {
+                        const normalizedKelName = normalizeName(kel.nama);
+                        console.log('Membandingkan dengan:', kel.nama, '(normalized:', normalizedKelName, ')');
+                        
+                        // Exact match (skor tertinggi)
+                        if (normalizedKelName === normalizedSelKelName) {
+                            bestMatch = kel.id;
+                            bestScore = 100;
+                            console.log('Exact match found:', kel.nama);
+                        }
+                        // Contains match
+                        else if (bestScore < 80) {
+                            if (normalizedKelName.includes(normalizedSelKelName) || normalizedSelKelName.includes(normalizedKelName)) {
+                                bestMatch = kel.id;
+                                bestScore = 80;
+                                console.log('Contains match found:', kel.nama);
+                            }
+                        }
+                        // Partial word match
+                        else if (bestScore < 60) {
+                            const kelWords = normalizedKelName.split(/[^a-z]/);
+                            const selWords = normalizedSelKelName.split(/[^a-z]/);
+                            const commonWords = kelWords.filter(word => word.length > 2 && selWords.includes(word));
+                            if (commonWords.length > 0) {
+                                bestMatch = kel.id;
+                                bestScore = 60;
+                                console.log('Partial match found:', kel.nama, 'common words:', commonWords);
+                            }
+                        }
+                    });
+                    
+                    if (bestMatch) {
+                        selectedKelurahanId = bestMatch;
+                        const matchedKelurahan = kelurahans.find(k => k.id == bestMatch);
+                        console.log(`Kelurahan auto-selected: ${matchedKelurahan.nama} (score: ${bestScore})`);
+                    } else {
+                        console.log('No kelurahan match found for:', selKelName);
+                    }
+                }
+                
                 kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>' +
-                    kelurahans.map(kel => `<option value="${kel.id}"${selKelId == kel.id ? ' selected' : ''}>${kel.nama}</option>`).join('');
+                    kelurahans.map(kel => {
+                        const isSelected = selectedKelurahanId == kel.id;
+                        return `<option value="${kel.id}"${isSelected ? ' selected' : ''}>${kel.nama}</option>`;
+                    }).join('');
             }
             kelSelect.disabled = false;
         } catch (error) {

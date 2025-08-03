@@ -181,16 +181,22 @@ class JalanPeduliLaporanGuestController extends Controller
                 ]
             );
 
-            // simpan ip
-            // $ipInfo = IpInfoService::getIpInfo();
+            // 5. Buat ID Laporan unik
+            $id_tahun = Carbon::now()->format('y');
+            $id_kecamatan = substr(str_pad($request->lokasi_kecamatan_id, 2, '0', STR_PAD_LEFT), -2);
+            $id_kelurahan = substr(str_pad($request->lokasi_kelurahan_id, 2, '0', STR_PAD_LEFT), -2);
+            $prefix = $id_tahun . $id_kecamatan . $id_kelurahan;
+            $lastLaporan = JalanPeduliLaporan::where('id_laporan', 'like', $prefix . '%')->orderBy('id_laporan', 'desc')->first();
+            $nextNumber = $lastLaporan ? ((int) substr($lastLaporan->id_laporan, -4)) + 1 : 1;
+            $id_laporan = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
-
-            // 4. Proses dan Simpan Foto
+            // 4. Proses dan Simpan Foto dengan ID Laporan
             $foto_filenames = [];
             if ($request->hasFile('foto_kerusakan')) {
                 foreach ($request->file('foto_kerusakan') as $file) {
                     $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-                    $file->storeAs('foto_kerusakan', $filename, 'public');
+                    // Simpan ke folder berdasarkan ID laporan
+                    $file->storeAs("jalan_peduli/{$id_laporan}", $filename, 'public');
                     $foto_filenames[] = $filename;
                 }
             }
@@ -200,17 +206,9 @@ class JalanPeduliLaporanGuestController extends Controller
             if ($request->hasFile('dokumen_pendukung')) {
                 $pdfFile = $request->file('dokumen_pendukung');
                 $dokumenFilename = Str::uuid() . '.' . $pdfFile->getClientOriginalExtension();
-                $pdfFile->storeAs('dokumen_pendukung', $dokumenFilename, 'public');
+                // Simpan dokumen ke folder berdasarkan ID laporan
+                $pdfFile->storeAs("jalan_peduli/{$id_laporan}", $dokumenFilename, 'public');
             }
-
-            // 5. Buat ID Laporan unik
-            $id_tahun = Carbon::now()->format('y');
-            $id_kecamatan = substr(str_pad($request->lokasi_kecamatan_id, 2, '0', STR_PAD_LEFT), -2);
-            $id_kelurahan = substr(str_pad($request->lokasi_kelurahan_id, 2, '0', STR_PAD_LEFT), -2);
-            $prefix = $id_tahun . $id_kecamatan . $id_kelurahan;
-            $lastLaporan = JalanPeduliLaporan::where('id_laporan', 'like', $prefix . '%')->orderBy('id_laporan', 'desc')->first();
-            $nextNumber = $lastLaporan ? ((int) substr($lastLaporan->id_laporan, -4)) + 1 : 1;
-            $id_laporan = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
             // 6. Buat entri Laporan baru
             JalanPeduliLaporan::create([
@@ -572,33 +570,26 @@ class JalanPeduliLaporanGuestController extends Controller
     //     $laporan->status_id = $request->status_id;
     //     $laporan->keterangan = $request->keterangan;
     //     $laporan->jenis_kerusakan = $request->jenis_kerusakan;
-    //     $laporan->tingkat_kerusakan = $request->tingkat_kerusakan;
+    public function getKelurahans($kecamatan_id)
+    {
+        try {
+            $kelurahans = Kelurahan::where('kecamatan_id', $kecamatan_id)
+                ->orderBy('nama')
+                ->get(['id', 'nama']);
 
-    //     $laporan->save();
-
-    //     return redirect()->route('admin.jalan-peduli.laporan-masuk.index')->with('success', 'Laporan berhasil diperbarui');
-    // }
-
-    // public function getKelurahans($kecamatan_id)
-    // {
-    //     try {
-    //         $kelurahans = \App\Models\Kelurahan::where('kecamatan_id', $kecamatan_id)
-    //             ->orderBy('nama')
-    //             ->get(['id', 'nama'])
-    //             ->toArray(); // pastikan array
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'data' => $kelurahans // selalu array
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'data' => [], // tetap array meski error
-    //             'message' => 'Gagal mengambil data kelurahan'
-    //         ], 500);
-    //     }
-    // }
+            return response()->json([
+                'success' => true,
+                'data' => $kelurahans
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching kelurahans: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Gagal mengambil data kelurahan'
+            ], 500);
+        }
+    }
 
     // public function destroy($id)
     // {

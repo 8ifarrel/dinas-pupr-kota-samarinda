@@ -1,10 +1,22 @@
 @extends('admin.layout')
 
 @section('document.head')
+<!-- FancyBox CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 @endsection
 
 @section('document.body')
   <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
+    <!-- Header dengan tombol kembali -->
+    <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+      <h1 class="text-2xl font-bold text-gray-900">Detail Laporan</h1>
+      <a href="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.index') }}" 
+         class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-lg shadow-sm transition duration-200 ease-in-out transform hover:-translate-y-0.5">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Kembali ke Tindak Lanjut
+      </a>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
       <div class="lg:col-span-2">
         <div class="flex justify-between mb-4 text-gray-500">
@@ -42,10 +54,13 @@
         <div class="mb-8">
           <h4 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">Foto Kerusakan</h4>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            @foreach ($fotoArray as $foto)
-              <a href="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" target="_blank" title="Lihat Gambar Penuh">
-                <img src="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" alt="Foto Kerusakan"
-                  class="w-full h-[100px] object-cover rounded-md border border-gray-200 transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md" />
+            @foreach ($fotoArray as $index => $foto)
+              <a href="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" 
+                 data-fancybox="gallery" 
+                 data-caption="Foto Kerusakan {{ $index + 1 }} - {{ $laporan->id_laporan }}"
+                 title="Klik untuk memperbesar">
+                <img src="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" alt="Foto Kerusakan {{ $index + 1 }}"
+                  class="w-full h-[100px] object-cover rounded-md border border-gray-200 transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md cursor-pointer" />
               </a>
             @endforeach
           </div>
@@ -170,4 +185,48 @@
 @endsection
 
 @section('document.end')
+<!-- FancyBox JS -->
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+  // Initialize FancyBox
+  Fancybox.bind("[data-fancybox]", {
+    // Options
+    Toolbar: {
+      display: {
+        left: ["infobar"],
+        middle: [
+          "zoomIn",
+          "zoomOut",
+          "toggle1to1",
+          "rotateCCW",
+          "rotateCW",
+          "flipX",
+          "flipY",
+        ],
+        right: ["slideshow", "thumbs", "close"],
+      },
+    },
+    Thumbs: {
+      autoStart: false,
+    },
+    // Customizations
+    l10n: {
+      CLOSE: "Tutup",
+      NEXT: "Selanjutnya", 
+      PREV: "Sebelumnya",
+      MODAL: "Anda dapat menutup modal ini dengan menekan tombol escape",
+      ERROR: "Terjadi kesalahan saat memuat gambar",
+      IMAGE_ERROR: "Gambar tidak dapat dimuat",
+      ELEMENT_NOT_FOUND: "Elemen HTML tidak ditemukan",
+      AJAX_NOT_FOUND: "Error loading AJAX : Not Found",
+      AJAX_FORBIDDEN: "Error loading AJAX : Forbidden",
+      IFRAME_ERROR: "Error loading page",
+      TOGGLE_ZOOM: "Toggle tingkat zoom",
+      TOGGLE_THUMBS: "Toggle thumbnail",
+      TOGGLE_SLIDESHOW: "Toggle slideshow",
+      TOGGLE_FULLSCREEN: "Toggle fullscreen",
+      DOWNLOAD: "Unduh",
+    }
+  });
+</script>
 @endsection
