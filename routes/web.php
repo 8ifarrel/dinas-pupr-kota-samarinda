@@ -391,6 +391,10 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.update');
 				Route::delete('/delete/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'destroy'])
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.destroy');
+				// UPDATED: Route for downloading individual report (now a ZIP with CSV and photos)
+				Route::get('/laporan/{id_laporan}/download', [JalanPeduliLaporanMasukAdminController::class, 'download'])->name('admin.laporan.download');
+				// UPDATED: Route for downloading ALL filtered reports (now a ZIP with PDF summary and photos)
+				Route::get('/laporan/download-all', [JalanPeduliLaporanMasukAdminController::class, 'downloadAll'])->name('admin.laporan.downloadAll');
 			});
 		});
 

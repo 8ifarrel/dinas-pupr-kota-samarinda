@@ -11,10 +11,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('/kecamatans', [WilayahController::class, 'getKecamatans']);
-// Route::get('/kelurahans/by-kecamatan/{kecamatanId}', [WilayahController::class, 'getKelurahansByKecamatan']);
-// Route::post('/verify-captcha', [CaptchaController::class, 'verify']);
-
 //---------------GOOGLE MAP GET KORDINAT--------------------//
 Route::get('/kordinat', [MapController::class, 'getCoordinates']);
 // ---------------LAPORAN API--------------------//
