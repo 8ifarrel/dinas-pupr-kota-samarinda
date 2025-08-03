@@ -20,13 +20,25 @@
           <form method="GET" class="inline">
             <select id="filter-status" name="status_id" class="border rounded px-2 py-1 border-gray-400"
               onchange="this.form.submit()">
-              @foreach ($statuses as $status)
-                <option value="{{ $status->value }}" {{ request('status_id') === $status->value ? 'selected' : '' }}>
-                  {{ $status->label }}
-                </option>
-              @endforeach
+              <option value="" {{ request('status_id') === null || request('status_id') === '' ? 'selected' : '' }}>Semua Status</option>
+              <option value="accept" {{ request('status_id') === 'accept' ? 'selected' : '' }}>Accept</option>
+              <option value="1" {{ request('status_id') === '1' ? 'selected' : '' }}>Pending</option>
             </select>
           </form>
+{{--
+// === INSTRUKSI CONTROLLER ===
+// Pada controller index():
+// if ($request->filled('status_id')) {
+//   if ($request->status_id === 'accept') {
+//     $query->whereIn('status_id', [2,3,4,5,7]);
+//   } elseif (in_array($request->status_id, ['1','6'])) {
+//     $query->where('status_id', $request->status_id);
+//   } else {
+//     $query->where('status_id', $request->status_id);
+//   }
+// }
+// ============================
+--}}
         </div>
       </div>
       <table id="jalan-peduli" class="stripe hover row-border table-auto" style="width:100%">
@@ -53,17 +65,20 @@
               <td>{{ $item->alamat_lengkap_kerusakan }}</td>
               <td>
                 @php
-                  $pendingStatusId = 1;
-                  $approvedStatusIds = [2, 3, 4, 5, 6];
+                  $status = $item->status;
                   $statusId = $item->status_id;
-                  $statusLabel = '-';
-                  $statusClass = 'bg-gray-100 text-gray-800';
-                  if ($statusId == $pendingStatusId) {
-                      $statusLabel = 'Pending';
+                  if ($statusId == 1) {
                       $statusClass = 'bg-yellow-100 text-yellow-800';
-                  } elseif (in_array($statusId, $approvedStatusIds)) {
-                      $statusLabel = 'Disetujui';
+                      $statusLabel = 'Pending';
+                  } elseif (in_array($statusId, [2,3,4,5,7])) {
                       $statusClass = 'bg-green-100 text-green-800';
+                      $statusLabel = 'Accept';
+                  } elseif ($statusId == 6) {
+                      $statusClass = 'bg-red-100 text-red-800';
+                      $statusLabel = 'Reject';
+                  } else {
+                      $statusClass = 'bg-gray-100 text-gray-800';
+                      $statusLabel = $status ? ucwords(str_replace('_', ' ', $status->nama_status)) : '-';
                   }
                 @endphp
                 <span class="{{ $statusClass }} text-xs me-2 px-1.5 py-0.5 rounded border border-gray-400">
@@ -78,7 +93,7 @@
                 <div class="grid grid-cols-2 gap-2">
                   {{-- Tombol Setuju --}}
                   @php
-                    $isApproved = in_array($item->status_id, [2, 3, 4, 5, 6]);
+                    $isApproved = in_array($item->status_id, [2, 3, 4, 5, 7]);
                   @endphp
                   <button data-modal-target="acceptModal-{{ $item->id_laporan }}"
                     data-modal-toggle="acceptModal-{{ $item->id_laporan }}"

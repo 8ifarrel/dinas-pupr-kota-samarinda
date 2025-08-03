@@ -633,29 +633,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchKelurahan(kecId, kelSelect, selKelId = null, selKelName = null) {
         if (!kecId) {
-            kelSelect.innerHTML = '<option value="">-- Pilih Kecamatan Dahulu --</option>';
+            kelSelect.innerHTML = '<option value="">-- Pilih Kecamatan Dulu --</option>';
             kelSelect.disabled = true;
             return;
         }
         kelSelect.innerHTML = '<option value="">Memuat kelurahan...</option>';
         kelSelect.disabled = true;
         try {
-            const response = await fetch(`${KELURAHAN_BY_KECAMATAN_URL_PREFIX}${kecId}`);
-            if (!response.ok) throw new Error('Gagal memuat data kelurahan');
-            const data = await response.json();
-            kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';
-            data.forEach(kel => {
-                const opt = new Option(kel.nama, kel.id);
-                if ((selKelId && kel.id == selKelId) || (selKelName && kel.nama.toLowerCase().includes(selKelName.toLowerCase()))) {
-                    opt.selected = true;
-                }
-                kelSelect.add(opt);
-            });
-        } catch (error) {
-            console.error("Error fetching kelurahan:", error);
-            kelSelect.innerHTML = '<option value="">-- Gagal memuat data --</option>';
-        } finally {
+            const response = await fetch(`/api/kelurahans/by-kecamatan/${kecId}`);
+            const result = await response.json();
+            let kelurahans = [];
+            if (result.success && Array.isArray(result.data)) {
+                kelurahans = result.data;
+            }
+            if (kelurahans.length === 0) {
+                kelSelect.innerHTML = '<option value="">Tidak ada kelurahan</option>';
+            } else {
+                kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>' +
+                    kelurahans.map(kel => `<option value="${kel.id}"${selKelId == kel.id ? ' selected' : ''}>${kel.nama}</option>`).join('');
+            }
             kelSelect.disabled = false;
+        } catch (error) {
+            kelSelect.innerHTML = '<option value="">Gagal memuat kelurahan</option>';
+            kelSelect.disabled = true;
+            console.error("Error fetching kelurahan:", error);
         }
     }
 

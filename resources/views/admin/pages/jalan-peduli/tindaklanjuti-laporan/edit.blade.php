@@ -17,6 +17,13 @@
     .filepond--label-action {
       text-decoration-color: #3b82f6;
     }
+    /* Pastikan peta tidak "menonjol" di atas overlay modal */
+    .leaflet-pane {
+        z-index: 10 !important;
+    }
+    .leaflet-top, .leaflet-bottom {
+        z-index: 10 !important;
+    }
   </style>
 @endsection
 
@@ -159,17 +166,7 @@
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium text-gray-500">Status</span>
               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                @php
-                  $statusLabels = [
-                    1 => 'Pending',
-                    2 => 'Belum Dikerjakan',
-                    3 => 'Disposisi',
-                    4 => 'Telah Disurvei',
-                    5 => 'Sedang Dikerjakan',
-                    6 => 'Telah Dikerjakan',
-                  ];
-                @endphp
-                {{ $statusLabels[$laporan->status_id] ?? \Illuminate\Support\Str::title($laporan->status->nama_status) }}
+                {{ ucwords(str_replace('_', ' ', $laporan->status->nama_status)) }}
               </span>
             </div>
             <div class="flex justify-between items-center">
@@ -207,20 +204,10 @@
             @method('POST')
             <div>
               <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status Pengerjaan</label>
-              @php
-                $statusLabels = [
-                  1 => 'Pending',
-                  2 => 'Belum Dikerjakan',
-                  3 => 'Disposisi',
-                  4 => 'Telah Disurvei',
-                  5 => 'Sedang Dikerjakan',
-                  6 => 'Telah Dikerjakan',
-                ];
-              @endphp
               <select name="status_id" id="status" required
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                @foreach($statusLabels as $key => $label)
-                  <option value="{{ $key }}" {{ $laporan->status_id == $key ? 'selected' : '' }}>{{ $label }}</option>
+                @foreach(\App\Models\JalanPeduliStatus::all() as $status)
+                  <option value="{{ $status->status_id }}" {{ $laporan->status_id == $status->status_id ? 'selected' : '' }}>{{ ucwords(str_replace('_', ' ', $status->nama_status)) }}</option>
                 @endforeach
               </select>
             </div>
@@ -241,23 +228,23 @@
               <label for="tingkat_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Tingkat Kerusakan</label>
               <select name="tingkat_kerusakan" id="tingkat_kerusakan" required
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option value="ringan" {{ $laporan->tingkat_kerusakan == 'ringan' ? 'selected' : '' }}>Ringan</option>
-                <option value="sedang" {{ $laporan->tingkat_kerusakan == 'sedang' ? 'selected' : '' }}>Sedang</option>
-                <option value="berat" {{ $laporan->tingkat_kerusakan == 'berat' ? 'selected' : '' }}>Berat</option>
+                <option value="ringan" {{ strtolower($laporan->tingkat_kerusakan) == 'ringan' ? 'selected' : '' }}>Ringan</option>
+                <option value="sedang" {{ strtolower($laporan->tingkat_kerusakan) == 'sedang' ? 'selected' : '' }}>Sedang</option>
+                <option value="berat" {{ strtolower($laporan->tingkat_kerusakan) == 'berat' ? 'selected' : '' }}>Berat</option>
               </select>
             </div>
             <div>
               <label for="jenis_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kerusakan</label>
               <select name="jenis_kerusakan" id="jenis_kerusakan" required
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <option value="Lubang-lubang" {{ $laporan->jenis_kerusakan == 'Lubang-lubang' ? 'selected' : '' }}>Lubang-lubang</option>
-                <option value="Ambles" {{ $laporan->jenis_kerusakan == 'Ambles' ? 'selected' : '' }}>Ambles</option>
-                <option value="Retak buaya" {{ $laporan->jenis_kerusakan == 'Retak buaya' ? 'selected' : '' }}>Retak buaya</option>
-                <option value="Permukaan tergerus" {{ $laporan->jenis_kerusakan == 'Permukaan tergerus' ? 'selected' : '' }}>Permukaan tergerus</option>
-                <option value="Penurunan slab di sambungan" {{ $laporan->jenis_kerusakan == 'Penurunan slab di sambungan' ? 'selected' : '' }}>Penurunan slab di sambungan</option>
-                <option value="Slab pecah/retak di sambungan" {{ $laporan->jenis_kerusakan == 'Slab pecah/retak di sambungan' ? 'selected' : '' }}>Slab pecah/retak di sambungan</option>
-                <option value="Permukaan tidak rata" {{ $laporan->jenis_kerusakan == 'Permukaan tidak rata' ? 'selected' : '' }}>Permukaan tidak rata</option>
-                <option value="Longsor" {{ $laporan->jenis_kerusakan == 'Longsor' ? 'selected' : '' }}>Longsor</option>
+                <option value="Lubang-lubang" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Lubang-lubang') ? 'selected' : '' }}>Lubang-lubang</option>
+                <option value="Ambles" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Ambles') ? 'selected' : '' }}>Ambles</option>
+                <option value="Retak buaya" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Retak buaya') ? 'selected' : '' }}>Retak buaya</option>
+                <option value="Permukaan tergerus" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Permukaan tergerus') ? 'selected' : '' }}>Permukaan tergerus</option>
+                <option value="Penurunan slab di sambungan" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Penurunan slab di sambungan') ? 'selected' : '' }}>Penurunan slab di sambungan</option>
+                <option value="Slab pecah/retak di sambungan" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Slab pecah/retak di sambungan') ? 'selected' : '' }}>Slab pecah/retak di sambungan</option>
+                <option value="Permukaan tidak rata" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Permukaan tidak rata') ? 'selected' : '' }}>Permukaan tidak rata</option>
+                <option value="Longsor" {{ strtolower($laporan->jenis_kerusakan) == strtolower('Longsor') ? 'selected' : '' }}>Longsor</option>
               </select>
             </div>
             <div class="pt-4">
@@ -272,7 +259,7 @@
           </form>
         </div>
         <div class="mt-6">
-          {{-- Tombol Hapus --}}
+          {{-- Tombol Hapus (modalnya dipindah ke bawah) --}}
           <button data-modal-target="deleteModal-{{ $laporan->id_laporan }}"
             data-modal-toggle="deleteModal-{{ $laporan->id_laporan }}"
             class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
@@ -284,49 +271,53 @@
             Hapus Laporan
           </button>
         </div>
-        {{-- Modal konfirmasi hapus --}}
-        <div id="deleteModal-{{ $laporan->id_laporan }}" data-modal-target="deleteModal-{{ $laporan->id_laporan }}"
-          data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
-          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-          <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  Konfirmasi Penghapusan
-                </h3>
-                <button type="button"
-                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                  </svg>
-                  <span class="sr-only">Close modal</span>
-                </button>
-              </div>
-              <div class="p-4 md:p-5 space-y-4">
-                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                  Apakah Anda yakin ingin <strong>menghapus</strong> laporan dengan ID
-                  <strong>{{ $laporan->id_laporan }}</strong>? Laporan yang telah dihapus <strong>tidak dapat
-                    dipulihkan</strong>.
-                </p>
-              </div>
-              <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <form action="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.destroy', $laporan->id_laporan) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit"
-                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
-                </form>
-                <button type="button"
-                  class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
-                  Tidak
-                </button>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- ==== PEMINDAHAN MODAL KE SINI ==== --}}
+  {{-- Modal konfirmasi hapus --}}
+  <div id="deleteModal-{{ $laporan->id_laporan }}" data-modal-target="deleteModal-{{ $laporan->id_laporan }}"
+    data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <!-- Overlay -->
+    <div class="fixed inset-0 bg-black/40 z-40"></div>
+    <div class="relative p-4 w-full max-w-2xl max-h-full z-50">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            Konfirmasi Penghapusan
+          </h3>
+          <button type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <div class="p-4 md:p-5 space-y-4">
+          <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            Apakah Anda yakin ingin <strong>menghapus</strong> laporan dengan ID
+            <strong>{{ $laporan->id_laporan }}</strong>? Laporan yang telah dihapus <strong>tidak dapat
+              dipulihkan</strong>.
+          </p>
+        </div>
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+          <form action="{{ route('admin.jalan-peduli.tindaklanjuti-laporan.destroy', $laporan->id_laporan) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+              class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+          </form>
+          <button type="button"
+            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            data-modal-hide="deleteModal-{{ $laporan->id_laporan }}">
+            Tidak
+          </button>
         </div>
       </div>
     </div>
@@ -420,27 +411,29 @@
       statusSelect.addEventListener('change', toggleFields);
       toggleFields();
 
-      // Modal
-      document.body.addEventListener('click', function(e) {
-        var toggleBtn = e.target.closest('[data-modal-toggle]');
-        if (toggleBtn) {
-          var modalId = toggleBtn.getAttribute('data-modal-toggle');
-          var modalEl = document.getElementById(modalId);
-          if (window.Modal && modalEl) {
-            if (!modalEl.__flowbiteModal) {
-              modalEl.__flowbiteModal = new window.Modal(modalEl);
+      // Modal (logic Anda sudah benar, tidak perlu diubah)
+      document.querySelectorAll('[data-modal-toggle]').forEach(function (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            const modalId = this.getAttribute('data-modal-toggle');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
             }
-            modalEl.__flowbiteModal.show();
-          }
-        }
-        var hideBtn = e.target.closest('[data-modal-hide]');
-        if (hideBtn) {
-          var modalId = hideBtn.getAttribute('data-modal-hide');
-          var modalEl = document.getElementById(modalId);
-          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
-            modalEl.__flowbiteModal.hide();
-          }
-        }
+        });
+      });
+
+      document.querySelectorAll('[data-modal-hide]').forEach(function (hideBtn) {
+          hideBtn.addEventListener('click', function () {
+              const modalId = this.getAttribute('data-modal-hide');
+              const modal = document.getElementById(modalId);
+              if (modal) {
+                  modal.classList.add('hidden');
+                  modal.classList.remove('flex');
+                  document.body.classList.remove('overflow-hidden');
+              }
+          });
       });
     });
   </script>

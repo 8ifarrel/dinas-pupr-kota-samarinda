@@ -44,6 +44,9 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             });
         }
 
+        // Ambil semua status dari tabel untuk mapping label/warna di view
+        $allStatuses = \App\Models\JalanPeduliStatus::all();
+
         // Jika request map=1, return JSON untuk peta
         if ($request->has('map')) {
             $laporans = $query->get();
@@ -56,6 +59,7 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             'page_title' => $page_title,
             'page_description' => $page_description,
             'laporans' => $laporans,
+            'allStatuses' => $allStatuses,
         ]);
     }
 
