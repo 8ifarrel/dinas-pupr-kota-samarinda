@@ -123,8 +123,21 @@
                             <i class="fas fa-home text-sm"></i>
                             <span class="text-sm">Menu Jalan Peduli</span>
                         </a>
+
+                        <a href="{{ route('guest.jalan-peduli.laporan.create') }}"
+                            class="desktop-menu-item flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg transition-all duration-300
+                            {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create' ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}
+                            group">
+                             <span class="w-5 h-5 flex items-center justify-center border rounded-full transition-all duration-300
+                                  {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create'
+                                        ? 'border-blue-600 text-blue-600'
+                                        : 'border-gray-600 text-gray-600 group-hover:border-blue-600 group-hover:text-blue-600' }}">
+                                  <i class="fas fa-plus text-sm"></i>
+                             </span>
+                             <span class="text-sm">Buat Laporan</span>
+                        </a>
+
                         <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
-                        {{-- <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300"> --}}
                             <i class="fas fa-search text-sm"></i>
                             <span class="text-sm">Cek Status</span>
                         </a>
