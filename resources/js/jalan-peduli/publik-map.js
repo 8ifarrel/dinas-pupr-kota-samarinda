@@ -46,12 +46,49 @@ document.addEventListener('DOMContentLoaded', function() {
     L.control.layers(baseLayers).addTo(publicMap);
 
     // --- DEFINISI IKON ---
-    const iconBelumDikerjakan = new L.Icon({ iconUrl: "/images/map/yellow-dot.png", iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
-    const iconSedangDikerjakan = new L.Icon({ iconUrl: "/images/map/orange-dot.png", iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
-    const iconTelahDikerjakan = new L.Icon({ iconUrl: "/images/map/green-dot.png", iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
-    const iconTelahDisurvei = new L.Icon({ iconUrl: "/images/map/blue-dot.png", iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
-    const iconDisposisi = new L.Icon({ iconUrl: "/images/map/purple-dot.png", iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
-    const iconDefault = new L.Icon({ iconUrl: '/images/map/red-dot.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32] });
+    const iconBaseUrl = '/image/map/'; // Path ke direktori public
+
+    const iconBelumDikerjakan = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}yellow-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
+
+    const iconSedangDikerjakan = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}orange-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
+
+    const iconTelahDikerjakan = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}green-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
+
+    const iconTelahDisurvei = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}blue-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
+
+    const iconDisposisi = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}purple-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
+
+    const iconDefault = new L.Icon({ 
+        iconUrl: `${iconBaseUrl}red-dot.png`, 
+        iconSize: [32, 32], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32] 
+    });
 
     let allMarkers = [];
     let originalData = [];
@@ -233,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </p>
                                         </div>
                                         <div class="bg-gray-50 p-2.5">
-                                            <a href="/laporan/data?search=${encodeURIComponent(detail.id_laporan || '')}"
+                                            <a href="/jalan-peduli/laporan/data?search=${encodeURIComponent(detail.id_laporan || '')}"
                                             class="block w-full text-center py-2 px-3 rounded-md text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-sm">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1 -mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 001.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" /><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" /></svg>
                                                 Lihat Detail

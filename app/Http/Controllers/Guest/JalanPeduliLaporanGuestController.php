@@ -321,162 +321,162 @@ class JalanPeduliLaporanGuestController extends Controller
         ], compact('laporans'));
     }
     
-    // public function getPublicMapStats(Request $request)
-    // {
-    //     try {
-    //         // Mengambil ID status yang relevan untuk peta publik
-    //         $desiredStatusNames = ['disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'telah_dikerjakan', 'belum_dikerjakan'];
-    //         $statusIds = Status::whereIn('nama_status', $desiredStatusNames)->pluck('status_id')->toArray();
+    public function getPublicMapStats(Request $request)
+    {
+        try {
+            // Mengambil ID status yang relevan untuk peta publik
+            $desiredStatusNames = ['disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'telah_dikerjakan', 'belum_dikerjakan'];
+            $statusIds = JalanPeduliStatus::whereIn('nama_status', $desiredStatusNames)->pluck('status_id')->toArray();
 
-    //         if (empty($statusIds)) {
-    //             Log::warning('Tidak ada status ID yang cocok untuk peta publik ditemukan untuk nama: ' . implode(', ', $desiredStatusNames));
-    //             return response()->json([
-    //                 'belum_dikerjakan' => 0,
-    //                 'sedang_dikerjakan' => 0,
-    //                 'telah_dikerjakan' => 0,
-    //                 'telah_disurvei' => 0,
-    //                 'disposisi' => 0,
-    //             ]);
-    //         }
+            if (empty($statusIds)) {
+                Log::warning('Tidak ada status ID yang cocok untuk peta publik ditemukan untuk nama: ' . implode(', ', $desiredStatusNames));
+                return response()->json([
+                    'belum_dikerjakan' => 0,
+                    'sedang_dikerjakan' => 0,
+                    'telah_dikerjakan' => 0,
+                    'telah_disurvei' => 0,
+                    'disposisi' => 0,
+                ]);
+            }
 
-    //         $stats = Laporan::query()
-    //             ->select('status_id', \DB::raw('count(*) as total'))
-    //             ->whereIn('status_id', $statusIds)
-    //             ->groupBy('status_id')
-    //             ->get();
+            $stats = JalanPeduliLaporan::query()
+                ->select('status_id', \DB::raw('count(*) as total'))
+                ->whereIn('status_id', $statusIds)
+                ->groupBy('status_id')
+                ->get();
 
-    //         // Membuat array hasil dengan default 0 jika status tidak ada
-    //         $results = [
-    //             'belum_dikerjakan' => 0,
-    //             'sedang_dikerjakan' => 0,
-    //             'telah_dikerjakan' => 0,
-    //             'telah_disurvei' => 0,
-    //             'disposisi' => 0,
-    //         ];
+            // Membuat array hasil dengan default 0 jika status tidak ada
+            $results = [
+                'belum_dikerjakan' => 0,
+                'sedang_dikerjakan' => 0,
+                'telah_dikerjakan' => 0,
+                'telah_disurvei' => 0,
+                'disposisi' => 0,
+            ];
 
-    //         // Memetakan kembali ke nama status agar mudah digunakan di frontend
-    //         $statusMapping = Status::whereIn('status_id', $statusIds)->pluck('nama_status', 'status_id')->toArray();
+            // Memetakan kembali ke nama status agar mudah digunakan di frontend
+            $statusMapping = JalanPeduliStatus::whereIn('status_id', $statusIds)->pluck('nama_status', 'status_id')->toArray();
 
-    //         foreach ($stats as $stat) {
-    //             $namaStatus = $statusMapping[$stat->status_id] ?? null;
-    //             if ($namaStatus) {
-    //                 $results[$namaStatus] = $stat->total;
-    //             }
-    //         }
+            foreach ($stats as $stat) {
+                $namaStatus = $statusMapping[$stat->status_id] ?? null;
+                if ($namaStatus) {
+                    $results[$namaStatus] = $stat->total;
+                }
+            }
 
-    //         Log::info('Stats laporan publik diambil: ' . json_encode($results));
-    //         return response()->json($results);
+            Log::info('Stats laporan publik diambil: ' . json_encode($results));
+            return response()->json($results);
 
-    //     } catch (\Exception $e) {
-    //         Log::error("Error fetching public map statistics: " . $e->getMessage());
-    //         // Mengembalikan nilai default jika terjadi error
-    //         return response()->json([
-    //             'belum_dikerjakan' => '-',
-    //             'sedang_dikerjakan' => '-',
-    //             'telah_dikerjakan' => '-',
-    //             'telah_disurvei' => '-',
-    //             'disposisi' => '-',
-    //         ], 500);
-    //     }
-    // }
+        } catch (\Exception $e) {
+            Log::error("Error fetching public map statistics: " . $e->getMessage());
+            // Mengembalikan nilai default jika terjadi error
+            return response()->json([
+                'belum_dikerjakan' => '-',
+                'sedang_dikerjakan' => '-',
+                'telah_dikerjakan' => '-',
+                'telah_disurvei' => '-',
+                'disposisi' => '-',
+            ], 500);
+        }
+    }
     
-    // public function getPublicMapCoordinates(Request $request)
-    // {
-    //     try {
-    //         $desiredStatusNames = ['disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'telah_dikerjakan', 'belum_dikerjakan'];
-    //         $statusIds = Status::whereIn('nama_status', $desiredStatusNames)->pluck('status_id')->toArray();
+    public function getPublicMapCoordinates(Request $request)
+    {
+        try {
+            $desiredStatusNames = ['disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'telah_dikerjakan', 'belum_dikerjakan'];
+            $statusIds = JalanPeduliStatus::whereIn('nama_status', $desiredStatusNames)->pluck('status_id')->toArray();
 
-    //         if (empty($statusIds)) {
-    //             Log::warning('Tidak ada status ID yang cocok untuk peta publik ditemukan untuk nama: ' . implode(', ', $desiredStatusNames));
-    //             return response()->json([]);
-    //         }
+            if (empty($statusIds)) {
+                Log::warning('Tidak ada status ID yang cocok untuk peta publik ditemukan untuk nama: ' . implode(', ', $desiredStatusNames));
+                return response()->json([]);
+            }
 
-    //         $query = Laporan::with(['status' => function ($query) {
-    //             $query->select('status_id', 'nama_status');
-    //         }])
-    //             ->whereIn('status_id', $statusIds)
-    //             ->whereNotNull('latitude')->whereNotNull('longitude')
-    //             ->where('latitude', '!=', '')->where('longitude', '!=', '')
-    //             ->select('id_laporan', 'latitude', 'longitude', 'deskripsi_laporan', 'status_id', 'foto_kerusakan', 'tingkat_kerusakan', 'created_at', 'nomor_ponsel', 'alamat_lengkap_kerusakan');
+            $query = JalanPeduliLaporan::with(['status' => function ($query) {
+                $query->select('status_id', 'nama_status');
+            }])
+                ->whereIn('status_id', $statusIds)
+                ->whereNotNull('latitude')->whereNotNull('longitude')
+                ->where('latitude', '!=', '')->where('longitude', '!=', '')
+                ->select('id_laporan', 'latitude', 'longitude', 'deskripsi_laporan', 'status_id', 'foto_kerusakan', 'tingkat_kerusakan', 'created_at', 'nomor_ponsel', 'alamat_lengkap_kerusakan');
 
-    //         // [BARU] Tambahkan logika pencarian
-    //         if ($request->filled('search')) {
-    //             $searchTerm = $request->input('search');
-    //             $query->where(function ($q) use ($searchTerm) {
-    //                 $q->where('id_laporan', 'like', '%' . $searchTerm . '%')
-    //                 ->orWhere('nomor_ponsel', 'like', '%' . $searchTerm . '%')
-    //                 ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%');
-    //             });
-    //         }
+            // [BARU] Tambahkan logika pencarian
+            if ($request->filled('search')) {
+                $searchTerm = $request->input('search');
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('id_laporan', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('nomor_ponsel', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%');
+                });
+            }
 
-    //         // [BARU] Tambahkan filter status
-    //         if ($request->filled('status')) {
-    //             $query->whereHas('status', function ($q) use ($request) {
-    //                 $q->where('nama_status', $request->input('status'));
-    //             });
-    //         }
+            // [BARU] Tambahkan filter status
+            if ($request->filled('status')) {
+                $query->whereHas('status', function ($q) use ($request) {
+                    $q->where('nama_status', $request->input('status'));
+                });
+            }
 
-    //         // [BARU] Tambahkan filter tingkat kerusakan
-    //         if ($request->filled('tingkat')) {
-    //             $query->where('tingkat_kerusakan', $request->input('tingkat'));
-    //         }
+            // [BARU] Tambahkan filter tingkat kerusakan
+            if ($request->filled('tingkat')) {
+                $query->where('tingkat_kerusakan', $request->input('tingkat'));
+            }
 
-    //         $laporans = $query->orderBy('created_at', 'desc')->limit(500)->get();
+            $laporans = $query->orderBy('created_at', 'desc')->limit(500)->get();
 
-    //         $transformedLaporans = $laporans->map(function ($laporan) {
-    //             $fotoKerusakanArray = is_string($laporan->foto_kerusakan) ? json_decode($laporan->foto_kerusakan, true) : $laporan->foto_kerusakan;
-    //             if (!is_array($fotoKerusakanArray)) {
-    //                 $fotoKerusakanArray = [];
-    //             }
+            $transformedLaporans = $laporans->map(function ($laporan) {
+                $fotoKerusakanArray = is_string($laporan->foto_kerusakan) ? json_decode($laporan->foto_kerusakan, true) : $laporan->foto_kerusakan;
+                if (!is_array($fotoKerusakanArray)) {
+                    $fotoKerusakanArray = [];
+                }
 
-    //             $latitude = $laporan->latitude;
-    //             $longitude = $laporan->longitude;
-    //             if (!is_numeric($latitude) || !is_numeric($longitude)) {
-    //                 Log::warning("Koordinat tidak valid untuk laporan ID: {$laporan->id_laporan}. Lat: {$latitude}, Lon: {$longitude}");
-    //             }
+                $latitude = $laporan->latitude;
+                $longitude = $laporan->longitude;
+                if (!is_numeric($latitude) || !is_numeric($longitude)) {
+                    Log::warning("Koordinat tidak valid untuk laporan ID: {$laporan->id_laporan}. Lat: {$latitude}, Lon: {$longitude}");
+                }
 
-    //             return [
-    //                 'id_laporan'        => $laporan->id_laporan,
-    //                 'latitude'          => (float) $latitude,
-    //                 'longitude'         => (float) $longitude,
-    //                 'deskripsi_laporan' => $laporan->deskripsi_laporan,
-    //                 'foto_kerusakan'    => $fotoKerusakanArray,
-    //                 'status'            => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
-    //                 'tingkat_kerusakan' => $laporan->tingkat_kerusakan,
-    //                 'created_at'        => $laporan->created_at->toIso8601String(),
-    //             ];
-    //         });
+                return [
+                    'id_laporan'        => $laporan->id_laporan,
+                    'latitude'          => (float) $latitude,
+                    'longitude'         => (float) $longitude,
+                    'deskripsi_laporan' => $laporan->deskripsi_laporan,
+                    'foto_kerusakan'    => $fotoKerusakanArray,
+                    'status'            => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
+                    'tingkat_kerusakan' => $laporan->tingkat_kerusakan,
+                    'created_at'        => $laporan->created_at->toIso8601String(),
+                ];
+            });
 
-    //         Log::info('Mengambil ' . $transformedLaporans->count() . ' laporan untuk peta publik.');
-    //         return response()->json($transformedLaporans);
+            Log::info('Mengambil ' . $transformedLaporans->count() . ' laporan untuk peta publik.');
+            return response()->json($transformedLaporans);
 
-    //     } catch (\Exception $e) {
-    //         Log::error("Error fetching public map coordinates: " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine());
-    //         return response()->json(['error' => 'Gagal mengambil data peta publik.'], 500);
-    //     }
-    // }
+        } catch (\Exception $e) {
+            Log::error("Error fetching public map coordinates: " . $e->getMessage() . " in " . $e->getFile() . ":" . $e->getLine());
+            return response()->json(['error' => 'Gagal mengambil data peta publik.'], 500);
+        }
+    }
 
-    // public function getCoordinatesApi()
-    // {
-    //     $laporans = Laporan::with('status:status_id,nama_status')
-    //         ->select('id_laporan', 'deskripsi_laporan', 'latitude', 'longitude', 'status_id', 'created_at', 'foto_kerusakan', 'tingkat_kerusakan')
-    //         ->get()
-    //         ->map(function ($laporan) {
-    //             $fotoKerusakanArray = is_string($laporan->foto_kerusakan) ? json_decode($laporan->foto_kerusakan, true) : $laporan->foto_kerusakan;
-    //             if (!is_array($fotoKerusakanArray)) { $fotoKerusakanArray = []; }
-    //             return [
-    //                 'id_laporan' => $laporan->id_laporan,
-    //                 'deskripsi_laporan' => $laporan->deskripsi_laporan,
-    //                 'latitude' => (float)$laporan->latitude,
-    //                 'longitude' => (float)$laporan->longitude,
-    //                 'created_at' => $laporan->created_at->toIso8601String(),
-    //                 'foto_kerusakan' => $fotoKerusakanArray,
-    //                 'status' => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
-    //                 'tingkat_kerusakan' => $laporan->tingkat_kerusakan
-    //             ];
-    //         });
-    //     return response()->json($laporans);
-    // }
+    public function getCoordinatesApi()
+    {
+        $laporans = JalanPeduliLaporan::with('status:status_id,nama_status')
+            ->select('id_laporan', 'deskripsi_laporan', 'latitude', 'longitude', 'status_id', 'created_at', 'foto_kerusakan', 'tingkat_kerusakan')
+            ->get()
+            ->map(function ($laporan) {
+                $fotoKerusakanArray = is_string($laporan->foto_kerusakan) ? json_decode($laporan->foto_kerusakan, true) : $laporan->foto_kerusakan;
+                if (!is_array($fotoKerusakanArray)) { $fotoKerusakanArray = []; }
+                return [
+                    'id_laporan' => $laporan->id_laporan,
+                    'deskripsi_laporan' => $laporan->deskripsi_laporan,
+                    'latitude' => (float)$laporan->latitude,
+                    'longitude' => (float)$laporan->longitude,
+                    'created_at' => $laporan->created_at->toIso8601String(),
+                    'foto_kerusakan' => $fotoKerusakanArray,
+                    'status' => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
+                    'tingkat_kerusakan' => $laporan->tingkat_kerusakan
+                ];
+            });
+        return response()->json($laporans);
+    }
     
     //     public function adminDashboard(Request $request)
     // {
@@ -542,72 +542,72 @@ class JalanPeduliLaporanGuestController extends Controller
     //     return view('admin.dashboard', compact('laporans'));
     // }
 
-    public function edit($id)
-    {
-        $laporan = Laporan::with(['kecamatan', 'kelurahan'])->where('id_laporan', $id)->firstOrFail();
-        return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.edit', compact('laporan'));
-    }
+    // public function edit($id)
+    // {
+    //     $laporan = Laporan::with(['kecamatan', 'kelurahan'])->where('id_laporan', $id)->firstOrFail();
+    //     return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.edit', compact('laporan'));
+    // }
 
-    public function update(Request $request, $id)
-    {
-        $laporan = Laporan::findOrFail($id);
+    // public function update(Request $request, $id)
+    // {
+    //     $laporan = Laporan::findOrFail($id);
 
-        // Validasi jika perlu
-        $request->validate([
-            'status_id'        => 'required|exists:status,status_id',
-            'keterangan'       => 'nullable|string',
-            'jenis_kerusakan'  => 'nullable|string|max:255',
-            'tingkat_kerusakan'=> 'nullable|string|max:255',
-            'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
-        ]);
+    //     // Validasi jika perlu
+    //     $request->validate([
+    //         'status_id'        => 'required|exists:status,status_id',
+    //         'keterangan'       => 'nullable|string',
+    //         'jenis_kerusakan'  => 'nullable|string|max:255',
+    //         'tingkat_kerusakan'=> 'nullable|string|max:255',
+    //         'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
+    //     ]);
 
-        if ($request->hasFile('foto_lanjutan')) {
-            $file = $request->file('foto_lanjutan');
-            $filename = \Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('foto_lanjutan', $filename, 'public');
-            $laporan->foto_lanjutan = $filename;
-        }
+    //     if ($request->hasFile('foto_lanjutan')) {
+    //         $file = $request->file('foto_lanjutan');
+    //         $filename = \Str::uuid() . '.' . $file->getClientOriginalExtension();
+    //         $file->storeAs('foto_lanjutan', $filename, 'public');
+    //         $laporan->foto_lanjutan = $filename;
+    //     }
 
-        // Update kolom lainnya
-        $laporan->status_id = $request->status_id;
-        $laporan->keterangan = $request->keterangan;
-        $laporan->jenis_kerusakan = $request->jenis_kerusakan;
-        $laporan->tingkat_kerusakan = $request->tingkat_kerusakan;
+    //     // Update kolom lainnya
+    //     $laporan->status_id = $request->status_id;
+    //     $laporan->keterangan = $request->keterangan;
+    //     $laporan->jenis_kerusakan = $request->jenis_kerusakan;
+    //     $laporan->tingkat_kerusakan = $request->tingkat_kerusakan;
 
-        $laporan->save();
+    //     $laporan->save();
 
-        return redirect()->route('admin.jalan-peduli.laporan-masuk.index')->with('success', 'Laporan berhasil diperbarui');
-    }
+    //     return redirect()->route('admin.jalan-peduli.laporan-masuk.index')->with('success', 'Laporan berhasil diperbarui');
+    // }
 
-    public function getKelurahans($kecamatan_id)
-    {
-        try {
-            $kelurahans = \App\Models\Kelurahan::where('kecamatan_id', $kecamatan_id)
-                ->orderBy('nama')
-                ->get(['id', 'nama'])
-                ->toArray(); // pastikan array
+    // public function getKelurahans($kecamatan_id)
+    // {
+    //     try {
+    //         $kelurahans = \App\Models\Kelurahan::where('kecamatan_id', $kecamatan_id)
+    //             ->orderBy('nama')
+    //             ->get(['id', 'nama'])
+    //             ->toArray(); // pastikan array
 
-            return response()->json([
-                'success' => true,
-                'data' => $kelurahans // selalu array
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'data' => [], // tetap array meski error
-                'message' => 'Gagal mengambil data kelurahan'
-            ], 500);
-        }
-    }
+    //         return response()->json([
+    //             'success' => true,
+    //             'data' => $kelurahans // selalu array
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'data' => [], // tetap array meski error
+    //             'message' => 'Gagal mengambil data kelurahan'
+    //         ], 500);
+    //     }
+    // }
 
-    public function destroy($id)
-    {
-        $laporan = Laporan::findOrFail($id);
-        $photos = json_decode($laporan->foto_kerusakan, true) ?? [];
-        foreach ($photos as $photo) {
-            Storage::disk('public')->delete('foto_kerusakan/' . $photo);
-        }
-        $laporan->delete();
-        return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
-    }
+    // public function destroy($id)
+    // {
+    //     $laporan = Laporan::findOrFail($id);
+    //     $photos = json_decode($laporan->foto_kerusakan, true) ?? [];
+    //     foreach ($photos as $photo) {
+    //         Storage::disk('public')->delete('foto_kerusakan/' . $photo);
+    //     }
+    //     $laporan->delete();
+    //     return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
+    // }
 }
