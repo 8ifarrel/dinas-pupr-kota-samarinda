@@ -79,15 +79,20 @@
       @foreach ($laporans as $laporan)
         @php
           $statusNama = strtolower($laporan->status->nama_status ?? 'tidak diketahui');
-          $statusInfo = [
-            'belum_dikerjakan' => ['gradient' => 'from-amber-400 to-orange-500', 'badge' => 'bg-amber-100 text-amber-800', 'text' => 'Belum Dikerjakan'],
-            'telah_dikerjakan' => ['gradient' => 'from-green-400 to-emerald-500', 'badge' => 'bg-green-100 text-green-800', 'text' => 'Telah Dikerjakan'],
-            'sedang_dikerjakan' => ['gradient' => 'from-sky-400 to-cyan-500', 'badge' => 'bg-sky-100 text-sky-800', 'text' => 'Sedang Dikerjakan'],
-            'telah_disurvei' => ['gradient' => 'from-cyan-400 to-teal-500', 'badge' => 'bg-cyan-100 text-cyan-800', 'text' => 'Telah Disurvei'],
-            'disposisi' => ['gradient' => 'from-purple-400 to-fuchsia-500', 'badge' => 'bg-purple-100 text-purple-800', 'text' => 'Disposisi'],
-            'tidak diketahui' => ['gradient' => 'from-gray-400 to-slate-500', 'badge' => 'bg-gray-100 text-gray-800', 'text' => 'Tidak Diketahui'],
-          ];
-          $currentStatus = $statusInfo[$statusNama] ?? $statusInfo['tidak diketahui'];
+          // Mapping label dan warna status dari tabel
+          $statusMap = collect($allStatuses)->mapWithKeys(function($s) {
+            $label = ucwords(str_replace('_', ' ', $s->nama_status));
+            $colorMap = [
+              'belum_dikerjakan' => ['gradient' => 'from-amber-400 to-orange-500', 'badge' => 'bg-amber-100 text-amber-800'],
+              'telah_dikerjakan' => ['gradient' => 'from-green-400 to-emerald-500', 'badge' => 'bg-green-100 text-green-800'],
+              'sedang_dikerjakan' => ['gradient' => 'from-sky-400 to-cyan-500', 'badge' => 'bg-sky-100 text-sky-800'],
+              'telah_disurvei' => ['gradient' => 'from-cyan-400 to-teal-500', 'badge' => 'bg-cyan-100 text-cyan-800'],
+              'disposisi' => ['gradient' => 'from-purple-400 to-fuchsia-500', 'badge' => 'bg-purple-100 text-purple-800'],
+            ];
+            $color = $colorMap[$s->nama_status] ?? ['gradient' => 'from-gray-400 to-slate-500', 'badge' => 'bg-gray-100 text-gray-800'];
+            return [strtolower($s->nama_status) => array_merge($color, ['text' => $label])];
+          });
+          $currentStatus = $statusMap[$statusNama] ?? ['gradient' => 'from-gray-400 to-slate-500', 'badge' => 'bg-gray-100 text-gray-800', 'text' => ucwords(str_replace('_', ' ', $statusNama))];
         @endphp
 
         <div class="bg-white rounded-2xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1 overflow-hidden border border-gray-200/50 flex flex-col">

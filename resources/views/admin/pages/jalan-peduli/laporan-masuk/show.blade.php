@@ -70,10 +70,30 @@
           </h4>
 
           <div class="text-center mb-6">
-            <span
-              class="inline-flex items-center font-semibold rounded-full px-5 py-2 bg-yellow-100 text-yellow-800 text-base">
-              <i class="fas fa-hourglass-half mr-2 text-base"></i>
-              <span class="font-medium">{{ $laporan->status->nama_status ?? '-' }}</span>
+            @php
+              $statusId = $laporan->status_id;
+              $statusNama = strtolower($laporan->status->nama_status ?? '-');
+              if ($statusId == 1) {
+                  $statusClass = 'bg-yellow-100 text-yellow-800';
+                  $icon = 'fa-hourglass-half';
+                  $label = 'Pending';
+              } elseif (in_array($statusId, [2,3,4,5,7])) {
+                  $statusClass = 'bg-green-100 text-green-800';
+                  $icon = 'fa-check-circle';
+                  $label = 'Accept';
+              } elseif ($statusId == 6) {
+                  $statusClass = 'bg-red-100 text-red-800';
+                  $icon = 'fa-times-circle';
+                  $label = 'Reject';
+              } else {
+                  $statusClass = 'bg-gray-100 text-gray-800';
+                  $icon = 'fa-info-circle';
+                  $label = ucwords(str_replace('_', ' ', $statusNama));
+              }
+            @endphp
+            <span class="inline-flex items-center font-semibold rounded-full px-5 py-2 {{ $statusClass }} text-base">
+              <i class="fas {{ $icon }} mr-2 text-base"></i>
+              <span class="font-medium">{{ $label }}</span>
             </span>
           </div>
 

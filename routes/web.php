@@ -226,12 +226,11 @@ Route::prefix('jalan-peduli')->group(function () {
 		]);
 	})->name('guest.jalan-peduli.index');
 
-	Route::get('/buat-laporan', function () {
-		return view('guest.pages.jalan-peduli.laporan.create-laporan', [
-			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
-			'page_title' => 'Buat Laporan Jalan Peduli'
-		]);
-	})->name('guest.jalan-peduli.laporan.create');
+	Route::get('/buat-laporan', [JalanPeduliLaporanGuestController::class, 'create'])
+		->name('guest.jalan-peduli.laporan.create');
+
+	Route::post('/buat-laporan', [JalanPeduliLaporanGuestController::class, 'store'])
+		->name('guest.jalan-peduli.laporan.store');
 
 	Route::get('/laporan/map', function () {
 		return view('guest.pages.jalan-peduli.laporan.peta-sebaran',[
@@ -247,6 +246,14 @@ Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/laporan/faq', [JalanPeduliFaqGuestController::class, 'index'])->name('faq');
 
 	Route::get('/statistik', [JalanPeduliStatistikLaporanGuestController::class, 'index'])->name('guest.jalan-peduli.statistik-laporan');
+});
+
+/**
+ * API Routes untuk Jalan Peduli
+ */
+Route::prefix('api')->group(function () {
+	Route::get('/kelurahans/by-kecamatan/{kecamatan_id}', [JalanPeduliLaporanGuestController::class, 'getKelurahans'])
+		->name('api.kelurahans.by-kecamatan');
 });
 
 

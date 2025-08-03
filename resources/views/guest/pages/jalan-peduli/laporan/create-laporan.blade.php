@@ -386,7 +386,7 @@
                 </div>
             </div>
             
-            <form id="laporanForm" action="#" method="POST" enctype="multipart/form-data">
+            <form id="laporanForm" action="{{ route('guest.jalan-peduli.laporan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{-- STEP 1: Reporter Data --}}
                 <div id="step-1" class="space-y-6">
@@ -413,9 +413,9 @@
                             <label for="kecamatan_id" class="form-label">Kecamatan <span class="text-red-500">*</span></label>
                             <select id="kecamatan_id" name="kecamatan_id" class="form-select" required>
                                 <option value="" disabled {{ old('kecamatan_id') ? '' : 'selected' }}>-- Pilih Kecamatan --</option>
-                                {{-- @foreach($kecamatans as $kecamatan)
+                                @foreach($kecamatans as $kecamatan)
                                     <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <div>
@@ -454,9 +454,9 @@
                             <label for="lokasi_kecamatan_id" class="form-label">Kecamatan (Lokasi)<span class="text-red-500">*</span></label>
                             <select id="lokasi_kecamatan_id" name="lokasi_kecamatan_id" class="form-select" required>
                                 <option value="" disabled {{ old('lokasi_kecamatan_id') ? '' : 'selected' }}>-- Pilih Kecamatan --</option>
-                                {{-- @foreach($kecamatans as $kecamatan)
+                                @foreach($kecamatans as $kecamatan)
                                     <option value="{{ $kecamatan->id }}" {{ old('lokasi_kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <div>
@@ -680,5 +680,60 @@
                 }
             });
         @endif
+
+        // Handle Kecamatan-Kelurahan Dropdown Dependencies
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handler untuk dropdown kecamatan pelapor
+            const kecamatanSelect = document.getElementById('kecamatan_id');
+            const kelurahanSelect = document.getElementById('kelurahan_id');
+            
+            // Handler untuk dropdown kecamatan lokasi
+            const lokasiKecamatanSelect = document.getElementById('lokasi_kecamatan_id');
+            const lokasiKelurahanSelect = document.getElementById('lokasi_kelurahan_id');
+            
+            function updateKelurahans(kecamatanId, kelurahanDropdown, placeholderText = '-- Pilih Kelurahan --') {
+                kelurahanDropdown.innerHTML = '<option value="" disabled selected>Loading...</option>';
+                
+                if (!kecamatanId) {
+                    kelurahanDropdown.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>';
+                    return;
+                }
+                
+                fetch(`/api/kelurahans/by-kecamatan/${kecamatanId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        kelurahanDropdown.innerHTML = `<option value="" disabled selected>${placeholderText}</option>`;
+                        
+                        if (data.success && data.data.length > 0) {
+                            data.data.forEach(kelurahan => {
+                                const option = document.createElement('option');
+                                option.value = kelurahan.id;
+                                option.textContent = kelurahan.nama;
+                                kelurahanDropdown.appendChild(option);
+                            });
+                        } else {
+                            kelurahanDropdown.innerHTML = '<option value="" disabled selected>Tidak ada data kelurahan</option>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        kelurahanDropdown.innerHTML = '<option value="" disabled selected>Error loading data</option>';
+                    });
+            }
+            
+            // Event listener untuk kecamatan pelapor
+            if (kecamatanSelect) {
+                kecamatanSelect.addEventListener('change', function() {
+                    updateKelurahans(this.value, kelurahanSelect);
+                });
+            }
+            
+            // Event listener untuk kecamatan lokasi
+            if (lokasiKecamatanSelect) {
+                lokasiKecamatanSelect.addEventListener('change', function() {
+                    updateKelurahans(this.value, lokasiKelurahanSelect);
+                });
+            }
+        });
     </script>
 @endsection

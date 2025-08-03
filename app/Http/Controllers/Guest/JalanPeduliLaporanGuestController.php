@@ -5,258 +5,266 @@ namespace App\Http\Controllers\Guest;
 use Illuminate\Support\Facades\Http;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
-use App\Models\Pelapor;
+use App\Models\JalanPeduliPelapor;
 use App\Models\JalanPeduliLaporan;
-use App\Models\Status;
+use App\Models\JalanPeduliStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Http\Controllers\PelaporController;
+use App\Http\Controllers\Guest\JalanPeduliPelaporController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 use App\Services\IpInfoService;
-use App\Models\IpLog;
+use App\Models\JalanPeduliIPLog;
 
 class JalanPeduliLaporanGuestController extends Controller
 {
-    // public function create()
-    // {
-    //     $kecamatans = Kecamatan::orderBy('nama')->get();
-    //     return view('laporan.create', compact('kecamatans'));
-    // }
+    public function create()
+    {
+        // Ambil data kecamatan dan kelurahan untuk dropdown
+        $kecamatans = \App\Models\Kecamatan::orderBy('nama')->get();
+        $kelurahans = \App\Models\Kelurahan::orderBy('nama')->get();
 
-    // protected function sanitizeAndValidateTextInput($input, $fieldName, $maxLength, $required = true)
-    // {
-    //     // Jika field wajib dan input kosong
-    //     if ($required && empty(trim($input))) {
-    //         $validator = Validator::make([], [], []);
-    //         $validator->errors()->add($fieldName, "Field {$fieldName} wajib diisi.");
-    //         throw new \Illuminate\Validation\ValidationException($validator);
-    //     }
+        return view('guest.pages.jalan-peduli.laporan.create-laporan', [
+            'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+            'page_title' => 'Buat Laporan Jalan Peduli',
+            'kecamatans' => $kecamatans,
+            'kelurahans' => $kelurahans
+        ]);
+    }
 
-    //     // Jika input kosong dan tidak wajib, kembalikan null
-    //     if (!$required && empty(trim($input))) {
-    //         return null;
-    //     }
+    protected function sanitizeAndValidateTextInput($input, $fieldName, $maxLength, $required = true)
+    {
+        // Jika field wajib dan input kosong
+        if ($required && empty(trim($input))) {
+            $validator = Validator::make([], [], []);
+            $validator->errors()->add($fieldName, "Field {$fieldName} wajib diisi.");
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
-    //     // Bersihkan input dari tag HTML dan encode karakter khusus
-    //     $cleanedInput = strip_tags($input);
-    //     $cleanedInput = htmlspecialchars($cleanedInput, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        // Jika input kosong dan tidak wajib, kembalikan null
+        if (!$required && empty(trim($input))) {
+            return null;
+        }
 
-    //     // Periksa panjang input
-    //     if (strlen($cleanedInput) > $maxLength) {
-    //         $validator = Validator::make([], [], []);
-    //         $validator->errors()->add($fieldName, "Field {$fieldName} tidak boleh lebih dari {$maxLength} karakter.");
-    //         throw new \Illuminate\Validation\ValidationException($validator);
-    //     }
+        // Bersihkan input dari tag HTML dan encode karakter khusus
+        $cleanedInput = strip_tags($input);
+        $cleanedInput = htmlspecialchars($cleanedInput, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
-    //     // Daftar karakter yang diizinkan (huruf, angka, spasi, tanda baca umum)
-    //     $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!-:/';
-    //     $cleanedInputCheck = str_split($cleanedInput);
-    //     foreach ($cleanedInputCheck as $char) {
-    //         if (strpos($allowedChars, $char) === false) {
-    //             $validator = Validator::make([], [], []);
-    //             $validator->errors()->add($fieldName, "Field {$fieldName} berisi karakter tidak valid.");
-    //             throw new \Illuminate\Validation\ValidationException($validator);
-    //         }
-    //     }
-    //     return $cleanedInput;
-    // }
+        // Periksa panjang input
+        if (strlen($cleanedInput) > $maxLength) {
+            $validator = Validator::make([], [], []);
+            $validator->errors()->add($fieldName, "Field {$fieldName} tidak boleh lebih dari {$maxLength} karakter.");
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
 
-    // public function store(Request $request)
-    // {
-    //     // 1. Verifikasi Captcha di Backend
-    //     $captchaResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-    //         'secret'   => env('TURNSTILE_SECRET'),
-    //         'response' => $request->input('cf-turnstile-response'),
-    //         'remoteip' => $request->ip(),
-    //     ]);
+        // Daftar karakter yang diizinkan (huruf, angka, spasi, tanda baca umum)
+        $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,?!-:/';
+        $cleanedInputCheck = str_split($cleanedInput);
+        foreach ($cleanedInputCheck as $char) {
+            if (strpos($allowedChars, $char) === false) {
+                $validator = Validator::make([], [], []);
+                $validator->errors()->add($fieldName, "Field {$fieldName} berisi karakter tidak valid.");
+                throw new \Illuminate\Validation\ValidationException($validator);
+            }
+        }
+        return $cleanedInput;
+    }
 
-    //     if (!$captchaResponse->json('success')) {
-    //         return back()->withErrors(['captcha' => 'Verifikasi keamanan gagal. Silakan coba lagi.'])->withInput();
-    //     }
+    public function store(Request $request)
+    {
+        // 1. Verifikasi Captcha di Backend
+        $captchaResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret'   => env('TURNSTILE_SECRET'),
+            'response' => $request->input('cf-turnstile-response'),
+            'remoteip' => $request->ip(),
+        ]);
 
-    //     // 2. Validasi data yang masuk
-    //     $validator = Validator::make($request->all(), [
-    //         'nama_lengkap'             => 'required|string|max:255',
-    //         'nomor_ponsel'             => 'required|regex:/^08[0-9]{8,11}$/',
-    //         'email'                    => 'nullable|email|max:255',
-    //         'latitude'                 => 'required|numeric',
-    //         'longitude'                => 'required|numeric',
-    //         'foto_kerusakan'           => 'required|array|min:1',
-    //         'foto_kerusakan.*'         => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
-    //         'kecamatan_id'             => 'required|exists:kecamatans,id',
-    //         'kelurahan_id'             => 'required|exists:kelurahans,id',
-    //         'lokasi_kecamatan_id'      => 'required|exists:kecamatans,id',
-    //         'lokasi_kelurahan_id'      => 'required|exists:kelurahans,id',
-    //         'rt_pelapor'               => 'nullable|digits_between:1,3',
-    //         'rw_pelapor'               => 'nullable|digits_between:1,3',
-    //         'dokumen_pendukung'        => 'nullable|mimes:pdf|max:10240',
-    //         'rating_kepuasan'          => 'required|integer|min:1|max:5',
-    //         'jenis_kerusakan'          => 'nullable|string',
-    //         'tingkat_kerusakan'        => 'nullable|string',
-    //     ], [
-    //         'foto_kerusakan.required' => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
-    //         'foto_kerusakan.min'      => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
-    //         'foto_kerusakan.*.image'  => 'File yang diunggah harus berupa gambar.',
-    //         'foto_kerusakan.*.mimes'  => 'Format gambar harus jpeg, png, jpg, atau webp.',
-    //         'foto_kerusakan.*.max'    => 'Ukuran setiap foto tidak boleh lebih dari 10MB.',
-    //         'nomor_ponsel.regex'      => 'Format nomor ponsel tidak valid. Contoh: 081234567890.',
-    //     ]);
+        if (!$captchaResponse->json('success')) {
+            return back()->withErrors(['captcha' => 'Verifikasi keamanan gagal. Silakan coba lagi.'])->withInput();
+        }
 
-    //     if ($validator->fails()) {
-    //         return back()->withErrors($validator)->withInput();
-    //     }
+        // 2. Validasi data yang masuk
+        $validator = Validator::make($request->all(), [
+            'nama_lengkap'             => 'required|string|max:255',
+            'nomor_ponsel'             => 'required|regex:/^08[0-9]{8,11}$/',
+            'email'                    => 'nullable|email|max:255',
+            'latitude'                 => 'required|numeric',
+            'longitude'                => 'required|numeric',
+            'foto_kerusakan'           => 'required|array|min:1',
+            'foto_kerusakan.*'         => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'kecamatan_id'             => 'required|exists:kecamatan,id',
+            'kelurahan_id'             => 'required|exists:kelurahan,id',
+            'lokasi_kecamatan_id'      => 'required|exists:kecamatan,id',
+            'lokasi_kelurahan_id'      => 'required|exists:kelurahan,id',
+            'rt_pelapor'               => 'nullable|digits_between:1,3',
+            'rw_pelapor'               => 'nullable|digits_between:1,3',
+            'dokumen_pendukung'        => 'nullable|mimes:pdf|max:10240',
+            'rating_kepuasan'          => 'required|integer|min:1|max:5',
+            'jenis_kerusakan'          => 'nullable|string',
+            'tingkat_kerusakan'        => 'nullable|string',
+        ], [
+            'foto_kerusakan.required' => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
+            'foto_kerusakan.min'      => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
+            'foto_kerusakan.*.image'  => 'File yang diunggah harus berupa gambar.',
+            'foto_kerusakan.*.mimes'  => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'foto_kerusakan.*.max'    => 'Ukuran setiap foto tidak boleh lebih dari 10MB.',
+            'nomor_ponsel.regex'      => 'Format nomor ponsel tidak valid. Contoh: 081234567890.',
+        ]);
 
-    //     try {
-    //         // validasi
-    //         $alamat_pelapor = $this->sanitizeAndValidateTextInput($request->alamat_pelapor, 'alamat_pelapor', 1000);
-    //         $alamat_lengkap_kerusakan = $this->sanitizeAndValidateTextInput($request->alamat_lengkap_kerusakan, 'alamat_lengkap_kerusakan', 1000);
-    //         $deskripsi_laporan = $this->sanitizeAndValidateTextInput($request->deskripsi_laporan, 'deskripsi_laporan', 1000);
-    //         $feedback = $this->sanitizeAndValidateTextInput($request->feedback, 'feedback', 1000, false);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
-    //         // =========================================================================
-    //         // [MODIFIKASI] Blok Pengecekan Duplikat Koordinat Persis
-    //         // =========================================================================
-    //         $newLat = (float) $request->latitude;
-    //         $newLon = (float) $request->longitude;
+        try {
+            // validasi
+            $alamat_pelapor = $this->sanitizeAndValidateTextInput($request->alamat_pelapor, 'alamat_pelapor', 1000);
+            $alamat_lengkap_kerusakan = $this->sanitizeAndValidateTextInput($request->alamat_lengkap_kerusakan, 'alamat_lengkap_kerusakan', 1000);
+            $deskripsi_laporan = $this->sanitizeAndValidateTextInput($request->deskripsi_laporan, 'deskripsi_laporan', 1000);
+            $feedback = $this->sanitizeAndValidateTextInput($request->feedback, 'feedback', 1000, false);
 
-    //         // Status yang dianggap "aktif"
-    //         $activeStatusNames = ['pending', 'disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'belum_dikerjakan'];
-    //         $activeStatusIds = Status::whereIn('nama_status', $activeStatusNames)->pluck('status_id');
+            // =========================================================================
+            // [MODIFIKASI] Blok Pengecekan Duplikat Koordinat Persis
+            // =========================================================================
+            $newLat = (float) $request->latitude;
+            $newLon = (float) $request->longitude;
 
-    //         // Konversi ke string dengan presisi tinggi untuk perbandingan persis
-    //         $newLatStr = number_format($newLat, 10, '.', '');
-    //         $newLonStr = number_format($newLon, 10, '.', '');
+            // Status yang dianggap "aktif"
+            $activeStatusNames = ['pending', 'disposisi', 'telah_disurvei', 'sedang_dikerjakan', 'belum_dikerjakan'];
+            $activeStatusIds = JalanPeduliStatus::whereIn('nama_status', $activeStatusNames)->pluck('status_id');
 
-    //         // Cek apakah sudah ada laporan aktif dengan koordinat persis sama
-    //         $duplicateLaporan = Laporan::with('status')
-    //             ->whereIn('status_id', $activeStatusIds)
-    //             ->whereRaw('CAST(latitude AS DECIMAL(12,10)) = ?', [$newLatStr])
-    //             ->whereRaw('CAST(longitude AS DECIMAL(12,10)) = ?', [$newLonStr])
-    //             ->first();
+            // Konversi ke string dengan presisi tinggi untuk perbandingan persis
+            $newLatStr = number_format($newLat, 10, '.', '');
+            $newLonStr = number_format($newLon, 10, '.', '');
 
-    //         if ($duplicateLaporan) {
-    //             $statusName = optional($duplicateLaporan->status)->nama_status ?? 'sedang diproses';
-    //             $statusMap = [
-    //                 'pending'            => 'Pending',
-    //                 'disposisi'          => 'Disposisi',
-    //                 'telah_disurvei'     => 'Telah Disurvei',
-    //                 'sedang_dikerjakan'  => 'Sedang Dikerjakan',
-    //                 'belum_dikerjakan'   => 'Belum Dikerjakan',
-    //                 'telah_dikerjakan'   => 'Telah Dikerjakan',
-    //             ];
-    //             $statusName = $statusMap[$statusName] ?? ucwords(str_replace('_', ' ', $statusName));
-    //             $message = "Gagal mengirim laporan. Sudah ada laporan aktif lain (ID: <b>{$duplicateLaporan->id_laporan}</b>) yang dilaporkan pada lokasi dengan koordinat persis sama (status: '<b>{$statusName}</b>'). Mohon pilih lokasi yang berbeda.";
+            // Cek apakah sudah ada laporan aktif dengan koordinat persis sama
+            $duplicateLaporan = JalanPeduliLaporan::with('status')
+                ->whereIn('status_id', $activeStatusIds)
+                ->whereRaw('CAST(latitude AS DECIMAL(12,10)) = ?', [$newLatStr])
+                ->whereRaw('CAST(longitude AS DECIMAL(12,10)) = ?', [$newLonStr])
+                ->first();
 
-    //             return back()->withErrors(['lokasi' => $message])->withInput();
-    //         }
-    //         // =========================================================================
-    //         // Akhir dari Blok Pengecekan Lokasi
-    //         // =========================================================================
+            if ($duplicateLaporan) {
+                $statusName = optional($duplicateLaporan->status)->nama_status ?? 'sedang diproses';
+                $statusMap = [
+                    'pending'            => 'Pending',
+                    'disposisi'          => 'Disposisi',
+                    'telah_disurvei'     => 'Telah Disurvei',
+                    'sedang_dikerjakan'  => 'Sedang Dikerjakan',
+                    'belum_dikerjakan'   => 'Belum Dikerjakan',
+                    'telah_dikerjakan'   => 'Telah Dikerjakan',
+                ];
+                $statusName = $statusMap[$statusName] ?? ucwords(str_replace('_', ' ', $statusName));
+                $message = "Gagal mengirim laporan. Sudah ada laporan aktif lain (ID: <b>{$duplicateLaporan->id_laporan}</b>) yang dilaporkan pada lokasi dengan koordinat persis sama (status: '<b>{$statusName}</b>'). Mohon pilih lokasi yang berbeda.";
 
-    //         // 3. Simpan data Pelapor
-    //         $pelapor = PelaporController::simpanAtauAmbilPelapor(
-    //         [
-    //                 'nama_lengkap' => $request->nama_lengkap,
-    //                 'nomor_ponsel' => $request->nomor_ponsel,
-    //                 'email' => $request->email,
-    //                 'alamat_pelapor' => $alamat_pelapor,
-    //                 'kecamatan_id' => $request->kecamatan_id,
-    //                 'kelurahan_id' => $request->kelurahan_id,
-    //                 'rt' => $request->rt_pelapor,
-    //                 'rw' => $request->rw_pelapor,
-    //             ]
-    //         );
+                return back()->withErrors(['lokasi' => $message])->withInput();
+            }
+            // =========================================================================
+            // Akhir dari Blok Pengecekan Lokasi
+            // =========================================================================
 
-    //         // simpan ip
-    //         // $ipInfo = IpInfoService::getIpInfo();
+            // 3. Simpan data Pelapor
+            $pelapor = JalanPeduliPelaporController::simpanAtauAmbilPelapor(
+            [
+                    'nama_lengkap' => $request->nama_lengkap,
+                    'nomor_ponsel' => $request->nomor_ponsel,
+                    'email' => $request->email,
+                    'alamat_pelapor' => $alamat_pelapor,
+                    'kecamatan_id' => $request->kecamatan_id,
+                    'kelurahan_id' => $request->kelurahan_id,
+                    'rt' => $request->rt_pelapor,
+                    'rw' => $request->rw_pelapor,
+                ]
+            );
+
+            // simpan ip
+            // $ipInfo = IpInfoService::getIpInfo();
 
 
-    //         // 4. Proses dan Simpan Foto
-    //         $foto_filenames = [];
-    //         if ($request->hasFile('foto_kerusakan')) {
-    //             foreach ($request->file('foto_kerusakan') as $file) {
-    //                 $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-    //                 $file->storeAs('foto_kerusakan', $filename, 'public');
-    //                 $foto_filenames[] = $filename;
-    //             }
-    //         }
+            // 4. Proses dan Simpan Foto
+            $foto_filenames = [];
+            if ($request->hasFile('foto_kerusakan')) {
+                foreach ($request->file('foto_kerusakan') as $file) {
+                    $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('foto_kerusakan', $filename, 'public');
+                    $foto_filenames[] = $filename;
+                }
+            }
 
-    //         // proses pdf
-    //         $dokumenFilename = null;
-    //         if ($request->hasFile('dokumen_pendukung')) {
-    //             $pdfFile = $request->file('dokumen_pendukung');
-    //             $dokumenFilename = Str::uuid() . '.' . $pdfFile->getClientOriginalExtension();
-    //             $pdfFile->storeAs('dokumen_pendukung', $dokumenFilename, 'public');
-    //         }
+            // proses pdf
+            $dokumenFilename = null;
+            if ($request->hasFile('dokumen_pendukung')) {
+                $pdfFile = $request->file('dokumen_pendukung');
+                $dokumenFilename = Str::uuid() . '.' . $pdfFile->getClientOriginalExtension();
+                $pdfFile->storeAs('dokumen_pendukung', $dokumenFilename, 'public');
+            }
 
-    //         // 5. Buat ID Laporan unik
-    //         $id_tahun = Carbon::now()->format('y');
-    //         $id_kecamatan = substr(str_pad($request->lokasi_kecamatan_id, 2, '0', STR_PAD_LEFT), -2);
-    //         $id_kelurahan = substr(str_pad($request->lokasi_kelurahan_id, 2, '0', STR_PAD_LEFT), -2);
-    //         $prefix = $id_tahun . $id_kecamatan . $id_kelurahan;
-    //         $lastLaporan = Laporan::where('id_laporan', 'like', $prefix . '%')->orderBy('id_laporan', 'desc')->first();
-    //         $nextNumber = $lastLaporan ? ((int) substr($lastLaporan->id_laporan, -4)) + 1 : 1;
-    //         $id_laporan = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            // 5. Buat ID Laporan unik
+            $id_tahun = Carbon::now()->format('y');
+            $id_kecamatan = substr(str_pad($request->lokasi_kecamatan_id, 2, '0', STR_PAD_LEFT), -2);
+            $id_kelurahan = substr(str_pad($request->lokasi_kelurahan_id, 2, '0', STR_PAD_LEFT), -2);
+            $prefix = $id_tahun . $id_kecamatan . $id_kelurahan;
+            $lastLaporan = JalanPeduliLaporan::where('id_laporan', 'like', $prefix . '%')->orderBy('id_laporan', 'desc')->first();
+            $nextNumber = $lastLaporan ? ((int) substr($lastLaporan->id_laporan, -4)) + 1 : 1;
+            $id_laporan = $prefix . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
 
-    //         // 6. Buat entri Laporan baru
-    //         Laporan::create([
-    //             'id_laporan'               => $id_laporan,
-    //             'nomor_ponsel'             => $pelapor->nomor_ponsel,
-    //             'alamat_lengkap_kerusakan' => $alamat_lengkap_kerusakan,
-    //             'deskripsi_laporan'        => $deskripsi_laporan,
-    //             'link_koordinat'           => "https://www.google.com/maps?q={$request->latitude},{$request->longitude}",
-    //             'latitude'                 => $request->latitude,
-    //             'longitude'                => $request->longitude,
-    //             'foto_kerusakan'           => json_encode($foto_filenames),
-    //             'jenis_kerusakan'          => $request->jenis_kerusakan,
-    //             'tingkat_kerusakan'        => $request->tingkat_kerusakan,
-    //             'dokumen_pendukung'        => $dokumenFilename,
-    //             'kecamatan_id'             => $request->lokasi_kecamatan_id,
-    //             'kelurahan_id'             => $request->lokasi_kelurahan_id,
-    //             'feedback'                 => $feedback,
-    //             'rating_kepuasan'          => $request->rating_kepuasan,
-    //             'status_id'                => 1, // Status default "pending" atau "masuk"
-    //         ]);
+            // 6. Buat entri Laporan baru
+            JalanPeduliLaporan::create([
+                'id_laporan'               => $id_laporan,
+                'nomor_ponsel'             => $pelapor->nomor_ponsel,
+                'alamat_lengkap_kerusakan' => $alamat_lengkap_kerusakan,
+                'deskripsi_laporan'        => $deskripsi_laporan,
+                'link_koordinat'           => "https://www.google.com/maps?q={$request->latitude},{$request->longitude}",
+                'latitude'                 => $request->latitude,
+                'longitude'                => $request->longitude,
+                'foto_kerusakan'           => json_encode($foto_filenames),
+                'jenis_kerusakan'          => $request->jenis_kerusakan,
+                'tingkat_kerusakan'        => $request->tingkat_kerusakan,
+                'dokumen_pendukung'        => $dokumenFilename,
+                'kecamatan_id'             => $request->lokasi_kecamatan_id,
+                'kelurahan_id'             => $request->lokasi_kelurahan_id,
+                'feedback'                 => $feedback,
+                'rating_kepuasan'          => $request->rating_kepuasan,
+                'status_id'                => 1, // Status default "pending" atau "masuk"
+            ]);
 
-    //         $ipInfo = IpInfoService::getIpInfo();
-    //         if ($ipInfo && isset($ipInfo['ipAddress'])) {
-    //             IpLog::create([
-    //                 'pelapor_id' => $pelapor->id,
-    //                 'laporan_id' => $id_laporan, // Tambahkan ini
-    //                 'ip_address' => $ipInfo['ipAddress'],
-    //                 'latitude'   => $ipInfo['latitude'] ?? null,
-    //                 'longitude'  => $ipInfo['longitude'] ?? null,
-    //                 'kota'       => $ipInfo['cityName'] ?? null,
-    //                 'provinsi'   => $ipInfo['regionName'] ?? null,
-    //             ]);
-    //         }
+            $ipInfo = IpInfoService::getIpInfo();
+            if ($ipInfo && isset($ipInfo['ipAddress'])) {
+                JalanPeduliIPLog::create([
+                    'pelapor_id' => $pelapor->id,
+                    'laporan_id' => $id_laporan, // Tambahkan ini
+                    'ip_address' => $ipInfo['ipAddress'],
+                    'latitude'   => $ipInfo['latitude'] ?? null,
+                    'longitude'  => $ipInfo['longitude'] ?? null,
+                    'kota'       => $ipInfo['cityName'] ?? null,
+                    'provinsi'   => $ipInfo['regionName'] ?? null,
+                ]);
+            }
 
-    //         // 7. Siapkan data untuk notifikasi sukses
-    //         $successData = [
-    //             'message' => "Laporan Anda dengan ID: {$id_laporan} telah berhasil dikirim. Terima kasih!",
-    //             'id_laporan' => $id_laporan,
-    //             'download_url'  => route('laporan.download', ['id_laporan' => $id_laporan])
-    //         ];
+            // 7. Siapkan data untuk notifikasi sukses
+            $successData = [
+                'message' => "Laporan Anda dengan ID: {$id_laporan} telah berhasil dikirim. Terima kasih!",
+                'id_laporan' => $id_laporan,
+                'download_url'  => route('laporan.download', ['id_laporan' => $id_laporan])
+            ];
 
-    //         // 8. Hapus input lama dari session SETELAH berhasil
-    //         $request->session()->forget('errors');
-    //         $request->session()->flash('_old_input', []);
+            // 8. Hapus input lama dari session SETELAH berhasil
+            $request->session()->forget('errors');
+            $request->session()->flash('_old_input', []);
 
-    //         // 9. Redirect kembali dengan notifikasi sukses di session
-    //         return redirect()->route('laporan.create')->with('success_data', $successData);
+            // 9. Redirect kembali dengan notifikasi sukses di session
+            return redirect()->route('guest.jalan-peduli.laporan.store')->with('success_data', $successData);
 
-    //     } catch (\Exception $e) {
-    //         Log::error('Gagal menyimpan laporan: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
-    //         // Jika ada error server, redirect kembali dengan pesan error umum
-    //         return back()->with('error_server', 'Terjadi kesalahan di server saat mencoba menyimpan laporan.')->withInput();
-    //     }
-    // }
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan laporan: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+            // Jika ada error server, redirect kembali dengan pesan error umum
+            return back()->with('error_server', 'Terjadi kesalahan di server saat mencoba menyimpan laporan.')->withInput();
+        }
+    }
 
     public function downloadInvoice($id_laporan)
     {
@@ -308,9 +316,9 @@ class JalanPeduliLaporanGuestController extends Controller
         $laporans = $query->paginate(5)->appends($request->query());
 
         return view('guest.pages.jalan-peduli.laporan.data',[
-			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
-			'page_title' => 'Buat Laporan Jalan Peduli'
-		], compact('laporans'));
+            'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+            'page_title' => 'Buat Laporan Jalan Peduli'
+        ], compact('laporans'));
     }
     
     // public function getPublicMapStats(Request $request)
@@ -534,52 +542,72 @@ class JalanPeduliLaporanGuestController extends Controller
     //     return view('admin.dashboard', compact('laporans'));
     // }
 
-    // public function edit($id)
-    // {
-    //     $laporan = Laporan::with(['kecamatan', 'kelurahan'])->where('id_laporan', $id)->firstOrFail();
-    //     return view('admin.edit', compact('laporan'));
-    // }
+    public function edit($id)
+    {
+        $laporan = Laporan::with(['kecamatan', 'kelurahan'])->where('id_laporan', $id)->firstOrFail();
+        return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.edit', compact('laporan'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $laporan = Laporan::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $laporan = Laporan::findOrFail($id);
 
-    //     // Validasi jika perlu
-    //     $request->validate([
-    //         'status_id'        => 'required|exists:status,status_id',
-    //         'keterangan'       => 'nullable|string',
-    //         'jenis_kerusakan'  => 'nullable|string|max:255',
-    //         'tingkat_kerusakan'=> 'nullable|string|max:255',
-    //         'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
-    //     ]);
+        // Validasi jika perlu
+        $request->validate([
+            'status_id'        => 'required|exists:status,status_id',
+            'keterangan'       => 'nullable|string',
+            'jenis_kerusakan'  => 'nullable|string|max:255',
+            'tingkat_kerusakan'=> 'nullable|string|max:255',
+            'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
+        ]);
 
-    //     if ($request->hasFile('foto_lanjutan')) {
-    //         $file = $request->file('foto_lanjutan');
-    //         $filename = \Str::uuid() . '.' . $file->getClientOriginalExtension();
-    //         $file->storeAs('foto_lanjutan', $filename, 'public');
-    //         $laporan->foto_lanjutan = $filename;
-    //     }
+        if ($request->hasFile('foto_lanjutan')) {
+            $file = $request->file('foto_lanjutan');
+            $filename = \Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('foto_lanjutan', $filename, 'public');
+            $laporan->foto_lanjutan = $filename;
+        }
 
-    //     // Update kolom lainnya
-    //     $laporan->status_id = $request->status_id;
-    //     $laporan->keterangan = $request->keterangan;
-    //     $laporan->jenis_kerusakan = $request->jenis_kerusakan;
-    //     $laporan->tingkat_kerusakan = $request->tingkat_kerusakan;
+        // Update kolom lainnya
+        $laporan->status_id = $request->status_id;
+        $laporan->keterangan = $request->keterangan;
+        $laporan->jenis_kerusakan = $request->jenis_kerusakan;
+        $laporan->tingkat_kerusakan = $request->tingkat_kerusakan;
 
-    //     $laporan->save();
+        $laporan->save();
 
-    //     return redirect()->route('admin.dashboard')->with('success', 'Laporan berhasil diperbarui');
-    // }
+        return redirect()->route('admin.jalan-peduli.laporan-masuk.index')->with('success', 'Laporan berhasil diperbarui');
+    }
 
+    public function getKelurahans($kecamatan_id)
+    {
+        try {
+            $kelurahans = \App\Models\Kelurahan::where('kecamatan_id', $kecamatan_id)
+                ->orderBy('nama')
+                ->get(['id', 'nama'])
+                ->toArray(); // pastikan array
 
-    // public function destroy($id)
-    // {
-    //     $laporan = Laporan::findOrFail($id);
-    //     $photos = json_decode($laporan->foto_kerusakan, true) ?? [];
-    //     foreach ($photos as $photo) {
-    //         Storage::disk('public')->delete('foto_kerusakan/' . $photo);
-    //     }
-    //     $laporan->delete();
-    //     return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
-    // }
+            return response()->json([
+                'success' => true,
+                'data' => $kelurahans // selalu array
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'data' => [], // tetap array meski error
+                'message' => 'Gagal mengambil data kelurahan'
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $laporan = Laporan::findOrFail($id);
+        $photos = json_decode($laporan->foto_kerusakan, true) ?? [];
+        foreach ($photos as $photo) {
+            Storage::disk('public')->delete('foto_kerusakan/' . $photo);
+        }
+        $laporan->delete();
+        return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
+    }
 }

@@ -18,28 +18,22 @@ class JalanPeduliLaporanMasukAdminController extends Controller
         $page_title = "Jalan Peduli - Laporan Masuk";
         $page_description = "Verifikasi, lihat, atau unduh laporan yang masuk. Laporan yang telah disetujui dapat ditindaklanjuti pada halaman Tindaklanjuti Laporan.";
 
-        // Kategorisasi status
-        $pendingStatusId = 1;
-        $approvedStatusIds = [2, 3, 4, 5, 6];
 
-        $statusFilter = $request->input('status_id');
         $query = JalanPeduliLaporan::with(['pelapor', 'status', 'kecamatan', 'kelurahan']);
-
-        if ($statusFilter === 'pending') {
-            $query->where('status_id', $pendingStatusId);
-        } elseif ($statusFilter === 'disetujui') {
-            $query->whereIn('status_id', $approvedStatusIds);
-        } elseif ($statusFilter) {
-            $query->where('status_id', $statusFilter);
+        $statusFilter = $request->input('status_id');
+        if ($statusFilter === 'accept') {
+            $query->whereIn('status_id', [2,3,4,5,7]);
+        } elseif ($statusFilter === '1') {
+            $query->where('status_id', 1);
         }
 
         $laporans = $query->orderByDesc('created_at')->get();
 
-        // Statuses untuk filter dropdown
+        // Statuses untuk filter dropdown (hanya 3)
         $statuses = [
+            (object)['value' => 'accept', 'label' => 'Accept'],
+            (object)['value' => '1', 'label' => 'Pending'],
             (object)['value' => '', 'label' => 'Semua'],
-            (object)['value' => 'pending', 'label' => 'Pending'],
-            (object)['value' => 'disetujui', 'label' => 'Disetujui'],
         ];
 
         return view('admin.pages.jalan-peduli.laporan-masuk.index', [
@@ -111,7 +105,7 @@ class JalanPeduliLaporanMasukAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Setujui laporan: ubah status menjadi "belum_dikerjakan" (status_id = 2)
+        // Setujui laporan: ubah status menjadi "belum_dikerjakan" (ambil dari tabel status)
         $laporan = JalanPeduliLaporan::findOrFail($id);
 
         // Hanya proses jika status saat ini pending (status_id = 1)
@@ -119,7 +113,8 @@ class JalanPeduliLaporanMasukAdminController extends Controller
             return redirect()->back()->with('error', 'Laporan hanya bisa disetujui jika masih berstatus Pending.');
         }
 
-        $laporan->status_id = 2; // belum_dikerjakan
+        $belumDikerjakan = JalanPeduliStatus::where('nama_status', 'belum_dikerjakan')->first();
+        $laporan->status_id = $belumDikerjakan ? $belumDikerjakan->status_id : 2;
         $laporan->save();
 
         return redirect()->route('admin.jalan-peduli.laporan-masuk.index')
