@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JalanPeduliLaporan;
 use App\Models\JalanPeduliStatus;
 
-class JalanPeduliStatistikLaporanAdminController extends Controller
+class JalanPeduliStatistikLaporanGuestController extends Controller
 {
     /**
      * Menampilkan data Jalan Peduli yang ada di sistem.
@@ -76,7 +76,12 @@ class JalanPeduliStatistikLaporanAdminController extends Controller
             ]);
         }
 
-        return view('admin.pages.jalan-peduli.statistik-laporan.index', [
+        $view = $request->is('e-panel/jalan-peduli/*') 
+            ? 'admin.pages.jalan-peduli.statistik-laporan.index' 
+            : 'guest.pages.jalan-peduli.laporan.StatistikLaporan';
+
+        return view($view, [
+            'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
             'page_title' => $page_title,
             'page_description' => $page_description,
             'total' => $total,

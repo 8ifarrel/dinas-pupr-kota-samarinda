@@ -215,6 +215,7 @@ Route::prefix('drainase-irigasi')->group(function () {
  * Jalan Peduli Utama
  */
 use App\Http\Controllers\Guest\FaqController;
+use App\Http\Controllers\Guest\JalanPeduliStatistikLaporanGuestController;
 
 Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/', function () {
@@ -246,6 +247,8 @@ Route::prefix('jalan-peduli')->group(function () {
 	})->name('laporan.public.map');
 
 	Route::get('/laporan/faq', [FaqController::class, 'index'])->name('faq');
+
+	Route::get('/statistik', [JalanPeduliStatistikLaporanGuestController::class, 'index'])->name('guest.jalan-peduli.statistik-laporan');
 });
 
 
@@ -286,7 +289,6 @@ use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
-use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
@@ -369,7 +371,7 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 			});
 
 			Route::prefix('statistik-laporan')->group(function () {
-				Route::get('/', [JalanPeduliStatistikLaporanAdminController::class, 'index'])
+				Route::get('/', [JalanPeduliStatistikLaporanGuestController::class, 'index'])
 					->name('admin.jalan-peduli.statistik-laporan.index');
 			});
 
