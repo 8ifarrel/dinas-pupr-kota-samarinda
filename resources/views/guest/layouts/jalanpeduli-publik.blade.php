@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{-- Page-specific Styles (jika ada css custom yang tidak bisa di-tailwind-kan) --}}
-    @yield('styles')
+    @yield('styles')    
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
 
