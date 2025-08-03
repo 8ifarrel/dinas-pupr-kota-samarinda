@@ -153,6 +153,28 @@ class DrainaseIrigasiGuestController extends Controller
 			];
 		}
 
+		// Total laporan masuk
+		$total_laporan_masuk = DB::table('drainase_irigasi_laporan')->count();
+
+		// Total laporan diproses: hanya latest tindaklanjut tiap laporan dengan status proses
+		$total_laporan_diproses = DB::table('drainase_irigasi_laporan_tindak_lanjut')
+			->whereIn('id', $latestTindakLanjutIds)
+			->whereIn('status', [
+				'diterima', 'menunggu_survei', 'sudah_disurvei', 'menunggu_jadwal_pengerjaan', 'sedang_dikerjakan'
+			])
+			->count();
+
+		// Total jenis laporan (jumlah laporan, sama dengan total laporan masuk)
+		$total_jenis_laporan = $total_laporan_masuk;
+
+		// Ambil tanggal terakhir update dari laporan
+		$tanggal_terakhir_update = DB::table('drainase_irigasi_laporan')
+			->max('updated_at');
+
+		$tanggal_terakhir_update_formatted = $tanggal_terakhir_update
+			? Carbon::parse($tanggal_terakhir_update)->translatedFormat('d F Y')
+			: '-';
+
 		return view('guest.pages.drainase-irigasi.index', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
@@ -163,6 +185,10 @@ class DrainaseIrigasiGuestController extends Controller
 			'statistik_jenis_laporan' => $statistik_jenis_laporan,
 			'periode_bulan' => $periode_bulan,
 			'tahun_statistik' => $tahun,
+			'tanggal_terakhir_update' => $tanggal_terakhir_update_formatted,
+			'total_laporan_masuk' => $total_laporan_masuk,
+			'total_laporan_diproses' => $total_laporan_diproses,
+			'total_jenis_laporan' => $total_jenis_laporan,
 		]);
 	}
 

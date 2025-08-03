@@ -83,14 +83,19 @@
   <section class="py-8 lg:py-16 px-8 lg:px-16">
     <div class="text-center space-y-1.5 pb-5 lg:pb-10">
       <h2 class="text-3xl lg:text-4xl font-bold">Statistik Pengaduan</h2>
-      <p class="text-gray-600">Data terakhir diperbarui pada 31 Juli 2025</p>
+      <p class="text-gray-600">Data terakhir diperbarui pada {{ $tanggal_terakhir_update }}</p>
     </div>
 
     <div class="border rounded-xl shadow-lg p-5 xs:p-6 sm:p-8 space-y-5 mb-5">
       {{-- Laporan masuk --}}
       <div class="flex flex-col sm:flex-row justify-between items-center">
-        <div class="mb-1.5 sm:mb-0">
+        <div class="mb-1.5 sm:mb-0 space-y-0.5 text-center sm:text-start">
           <h3 class="text-xl lg:text-2xl font-semibold">Laporan Masuk</h3>
+          <p class="text-gray-600" id="totalLaporanMasukText">
+            Total <b>{{ $total_laporan_masuk }} data</b> pada
+            <span id="labelRentangMasuk"></span>
+            <span id="labelTahunMasuk">{{ $tahun_statistik }}</span>
+          </p>
         </div>
         <div class="flex gap-2">
           <!-- Dropdown Bulan (Rentang) -->
@@ -149,12 +154,16 @@
     </div>
 
     <div class="lg:flex space-y-5 lg:gap-x-5 lg:space-y-0">
-      {{-- Laporan diproses --}}
+      {{-- Laporan sedang diproses --}}
       <div class="border rounded-xl shadow-lg p-5 xs:p-6 sm:p-8 space-y-5 flex-1">
         <div class="flex flex-col sm:flex-row justify-between items-center">
-          <div class="mb-1.5 sm:mb-0">
-            <h3 class="text-xl sm:text-2xl font-semibold">Laporan Diproses</h3>
-            <p>Total</p>
+          <div class="mb-1.5 sm:mb-0 space-y-0.5 text-center sm:text-start">
+            <h3 class="text-xl sm:text-2xl font-semibold">Laporan sedang Diproses</h3>
+            <p class="text-gray-600" id="totalLaporanDiprosesText">
+              Total <b>{{ $total_laporan_diproses }} data</b> pada
+              <span id="labelBulanDiproses"></span>
+              <span id="labelTahunDiproses">{{ $tahun_statistik }}</span>
+            </p>
           </div>
           <div class="flex gap-2">
             <button id="dropdownLaporanDiprosesBulan" data-dropdown-toggle="dropdownLaporanDiprosesBulanMenu"
@@ -207,8 +216,13 @@
       {{-- Jenis Laporan --}}
       <div class="border rounded-xl shadow-lg p-5 xs:p-6 sm:p-8 space-y-5 flex-1">
         <div class="flex flex-col sm:flex-row justify-between items-center">
-          <div class="mb-1.5 sm:mb-0">
+          <div class="mb-1.5 sm:mb-0 space-y-0.5 text-center sm:text-start">
             <h3 class="text-xl lg:text-2xl font-semibold">Jenis Laporan</h3>
+            <p class="text-gray-600" id="totalJenisLaporanText">
+              Total <b>{{ $total_jenis_laporan }} data</b> pada
+              <span id="labelBulanJenis"></span>
+              <span id="labelTahunJenis">{{ $tahun_statistik }}</span>
+            </p>
           </div>
           <div class="flex gap-2">
             <button id="dropdownJenisLaporanBulan" data-dropdown-toggle="dropdownJenisLaporanBulanMenu"
@@ -465,12 +479,14 @@
         statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
         statistikChart.update();
         updateNoDataStatistikChart(statistikChart.data);
+        updateTotalLabels();
       });
       setupDropdownBulanTahun('dropdownLaporanMasukTahunMenu', 'dropdownLaporanMasukTahun', (idx, tahun) => {
         tahunMasuk = tahun;
         statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
         statistikChart.update();
         updateNoDataStatistikChart(statistikChart.data);
+        updateTotalLabels();
       });
 
       setupDropdownBulanTahun('dropdownLaporanDiprosesBulanMenu', 'dropdownLaporanDiprosesBulan', (idx) => {
@@ -478,12 +494,14 @@
         laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
         laporanDiprosesChart.update();
         updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+        updateTotalLabels();
       });
       setupDropdownBulanTahun('dropdownLaporanDiprosesTahunMenu', 'dropdownLaporanDiprosesTahun', (idx, tahun) => {
         tahunDiproses = tahun;
         laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
         laporanDiprosesChart.update();
         updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+        updateTotalLabels();
       });
 
       setupDropdownBulanTahun('dropdownJenisLaporanBulanMenu', 'dropdownJenisLaporanBulan', (idx) => {
@@ -491,12 +509,14 @@
         jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
         jenisLaporanChart.update();
         updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+        updateTotalLabels();
       });
       setupDropdownBulanTahun('dropdownJenisLaporanTahunMenu', 'dropdownJenisLaporanTahun', (idx, tahun) => {
         tahunJenis = tahun;
         jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
         jenisLaporanChart.update();
         updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+        updateTotalLabels();
       });
 
       // Set default label pada button dropdown sesuai waktu sekarang
@@ -654,5 +674,347 @@
         jenisLaporanChart.update();
       }
     });
+
+    // Helper untuk label rentang bulan
+    const rentangLabels = ['Januari-April', 'Mei-Agustus', 'September-Desember'];
+
+    // Set label total pada load awal sesuai waktu sekarang
+    function setInitialTotalLabels() {
+      // Laporan Masuk
+      document.getElementById('labelRentangMasuk').textContent = rentangLabels[rentangMasukIdx];
+      document.getElementById('labelTahunMasuk').textContent = tahunMasuk;
+
+      // Laporan Diproses
+      document.getElementById('labelBulanDiproses').textContent = periodeBulan[bulanDiprosesIdx].label;
+      document.getElementById('labelTahunDiproses').textContent = tahunDiproses;
+
+      // Jenis Laporan
+      document.getElementById('labelBulanJenis').textContent = periodeBulan[bulanJenisIdx].label;
+      document.getElementById('labelTahunJenis').textContent = tahunJenis;
+    }
+
+    // Update label total sesuai dropdown
+    function updateTotalLabels() {
+      document.getElementById('labelRentangMasuk').textContent = rentangLabels[rentangMasukIdx];
+      document.getElementById('labelTahunMasuk').textContent = tahunMasuk;
+      document.getElementById('labelBulanDiproses').textContent = periodeBulan[bulanDiprosesIdx].label;
+      document.getElementById('labelTahunDiproses').textContent = tahunDiproses;
+      document.getElementById('labelBulanJenis').textContent = periodeBulan[bulanJenisIdx].label;
+      document.getElementById('labelTahunJenis').textContent = tahunJenis;
+    }
+
+    window.onload = function() {
+      // Set default label dropdown
+      setDefaultDropdownLabel('dropdownLaporanMasukBulan', 'dropdownLaporanMasukBulanMenu', rentangMasukIdx);
+      setDefaultDropdownLabel('dropdownLaporanMasukTahun', 'dropdownLaporanMasukTahunMenu', 0);
+      setDefaultDropdownLabel('dropdownLaporanDiprosesBulan', 'dropdownLaporanDiprosesBulanMenu', bulanDiprosesIdx);
+      setDefaultDropdownLabel('dropdownLaporanDiprosesTahun', 'dropdownLaporanDiprosesTahunMenu', 0);
+      setDefaultDropdownLabel('dropdownJenisLaporanBulan', 'dropdownJenisLaporanBulanMenu', bulanJenisIdx);
+      setDefaultDropdownLabel('dropdownJenisLaporanTahun', 'dropdownJenisLaporanTahunMenu', 0);
+
+      // Bar Chart Laporan Masuk
+      const ctx = document.getElementById('statistikChart').getContext('2d');
+      statistikChart = new Chart(ctx, {
+        type: 'bar',
+        data: getBarChartDataRentang(rentangMasukIdx, tahunMasuk),
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            title: {
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              stacked: true
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      updateNoDataStatistikChart(statistikChart.data);
+
+      // Doughnut chart for Laporan Diproses
+      const ctxDiproses = document.getElementById('laporanDiprosesChart').getContext('2d');
+      laporanDiprosesChart = new Chart(ctxDiproses, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            'Laporan diterima',
+            'Menunggu survei',
+            'Sudah disurvei',
+            'Menunggu jadwal',
+            'Sedang dikerjakan'
+          ],
+          datasets: [{
+            data: getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses),
+            backgroundColor: [
+              '#9EDE73',
+              '#F9A11A',
+              '#009CE4',
+              '#E63846',
+              '#E4C900'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: getLegendPosition(),
+              align: 'center',
+              labels: {
+                boxWidth: 20,
+                padding: 16
+              }
+            },
+            title: {
+              display: false
+            }
+          }
+        }
+      });
+      updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+
+      // Doughnut chart for Jenis Laporan
+      const ctxJenis = document.getElementById('jenisLaporanChart').getContext('2d');
+      jenisLaporanChart = new Chart(ctxJenis, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            'Belum Diklasifikasikan',
+            'Penanganan Darurat',
+            'Penanganan Biasa',
+            'Pemeliharaan Rutin'
+          ],
+          datasets: [{
+            data: getJenisData(bulanJenisIdx + 1, tahunJenis),
+            backgroundColor: [
+              '#6B7280', // abu-abu untuk belum diklasifikasikan
+              '#E63846',
+              '#f59e42',
+              '#3b82f6'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: getLegendPosition(),
+              align: 'center',
+              labels: {
+                boxWidth: 20,
+                padding: 16
+              }
+            },
+            title: {
+              display: false
+            }
+          }
+        }
+      });
+      updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+
+      setInitialTotalLabels();
+      // Handler dropdown bulan/tahun laporan masuk (khusus rentang)
+      setupDropdownRentang('dropdownLaporanMasukBulanMenu', 'dropdownLaporanMasukBulan', (idx) => {
+        rentangMasukIdx = idx;
+        statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
+        statistikChart.update();
+        updateNoDataStatistikChart(statistikChart.data);
+        updateTotalLabels();
+      });
+      setupDropdownBulanTahun('dropdownLaporanMasukTahunMenu', 'dropdownLaporanMasukTahun', (idx, tahun) => {
+        tahunMasuk = tahun;
+        statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
+        statistikChart.update();
+        updateNoDataStatistikChart(statistikChart.data);
+        updateTotalLabels();
+      });
+
+      setupDropdownBulanTahun('dropdownLaporanDiprosesBulanMenu', 'dropdownLaporanDiprosesBulan', (idx) => {
+        bulanDiprosesIdx = idx;
+        laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
+        laporanDiprosesChart.update();
+        updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+        updateTotalLabels();
+      });
+      setupDropdownBulanTahun('dropdownLaporanDiprosesTahunMenu', 'dropdownLaporanDiprosesTahun', (idx, tahun) => {
+        tahunDiproses = tahun;
+        laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
+        laporanDiprosesChart.update();
+        updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+        updateTotalLabels();
+      });
+
+      setupDropdownBulanTahun('dropdownJenisLaporanBulanMenu', 'dropdownJenisLaporanBulan', (idx) => {
+        bulanJenisIdx = idx;
+        jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
+        jenisLaporanChart.update();
+        updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+        updateTotalLabels();
+      });
+      setupDropdownBulanTahun('dropdownJenisLaporanTahunMenu', 'dropdownJenisLaporanTahun', (idx, tahun) => {
+        tahunJenis = tahun;
+        jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
+        jenisLaporanChart.update();
+        updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+        updateTotalLabels();
+      });
+
+      // Set default label pada button dropdown sesuai waktu sekarang
+      setDefaultDropdownLabel('dropdownLaporanMasuk', 'dropdownLaporanMasukMenu', bulanMasukIdx);
+      setDefaultDropdownLabel('dropdownLaporanDiproses', 'dropdownLaporanDiprosesMenu', bulanDiprosesIdx);
+      setDefaultDropdownLabel('dropdownJenisLaporan', 'dropdownJenisLaporanMenu', bulanJenisIdx);
+    };
+
+    // Fungsi untuk set label button dropdown sesuai default index
+    function setDefaultDropdownLabel(buttonId, menuId, idx) {
+      const button = document.getElementById(buttonId);
+      const menu = document.getElementById(menuId);
+      if (button && menu) {
+        const items = menu.querySelectorAll('a');
+        if (items[idx]) {
+          button.innerHTML = items[idx].innerHTML +
+            '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+        }
+      }
+    }
+
+    // Fungsi handler dropdown bulan/tahun
+    function setupDropdownBulanTahun(menuId, buttonId, callback) {
+      const menu = document.getElementById(menuId);
+      const button = document.getElementById(buttonId);
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach((item, idx) => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (item.dataset.tahun) {
+            callback(idx, parseInt(item.dataset.tahun));
+          } else {
+            callback(idx);
+          }
+          // Update button text
+          if (button) {
+            button.innerHTML = item.innerHTML +
+              '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+          }
+          menu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Fungsi handler dropdown rentang bulan
+    function setupDropdownRentang(menuId, buttonId, callback) {
+      const menu = document.getElementById(menuId);
+      const button = document.getElementById(buttonId);
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach((item, idx) => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          callback(idx);
+          // Update button text
+          if (button) {
+            button.innerHTML = item.innerHTML +
+              '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+          }
+          menu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Update data chart sesuai bulan/tahun
+    function getBarChartData(bulanIdx, tahun) {
+      // Ambil data hanya untuk bulanIdx dan tahun
+      const label = periodeBulan[bulanIdx].label;
+      const data = statistikLaporanMasuk[bulanIdx] || { pending: 0, diproses: 0, selesai: 0 };
+      return {
+        labels: [label],
+        datasets: [
+          { label: 'Belum ditindaklanjuti', data: [data.pending ?? 0], backgroundColor: '#E63846' },
+          { label: 'Sedang diproses', data: [data.diproses ?? 0], backgroundColor: '#F9A11A' },
+          { label: 'Selesai', data: [data.selesai ?? 0], backgroundColor: '#9EDE73' }
+        ]
+      };
+    }
+
+    // Fungsi untuk bar chart laporan masuk berdasarkan rentang bulan
+    function getBarChartDataRentang(rentangIdx, tahun) {
+      // rentangIdx: 0=Jan-Apr, 1=Mei-Ags, 2=Sep-Des
+      let startIdx = 0, endIdx = 3;
+      if (rentangIdx === 1) { startIdx = 4; endIdx = 7; }
+      if (rentangIdx === 2) { startIdx = 8; endIdx = 11; }
+      const labels = periodeBulan.slice(startIdx, endIdx + 1).map(x => x.label);
+      const pending = [];
+      const diproses = [];
+      const selesai = [];
+      for (let i = startIdx; i <= endIdx; i++) {
+        const data = statistikLaporanMasuk[i] || { pending: 0, diproses: 0, selesai: 0 };
+        pending.push(data.pending ?? 0);
+        diproses.push(data.diproses ?? 0);
+        selesai.push(data.selesai ?? 0);
+      }
+      return {
+        labels: labels,
+        datasets: [
+          { label: 'Belum ditindaklanjuti', data: pending, backgroundColor: '#E63846' },
+          { label: 'Sedang diproses', data: diproses, backgroundColor: '#F9A11A' },
+          { label: 'Selesai', data: selesai, backgroundColor: '#9EDE73' }
+        ]
+      };
+    }
+
+    function getDiprosesData(bulan, tahun) {
+      const data = statistikLaporanDiproses[bulan];
+      return [
+        data ? data.diterima : 0,
+        data ? data.menunggu_survei : 0,
+        data ? data.sudah_disurvei : 0,
+        data ? data.menunggu_jadwal_pengerjaan : 0,
+        data ? data.sedang_dikerjakan : 0
+      ];
+    }
+
+    function getJenisData(bulan, tahun) {
+      const data = statistikJenisLaporan[bulan];
+      return [
+        data ? data.belum_diklasifikasikan : 0,
+        data ? data.darurat : 0,
+        data ? data.biasa : 0,
+        data ? data.rutin : 0
+      ];
+    }
+
+    // Fungsi cek apakah semua data chart nol
+    function isAllZero(arr) {
+      return arr.every(x => x === 0);
+    }
+
+    // Fungsi show/hide "Tidak ada data" untuk masing-masing chart
+    function updateNoDataStatistikChart(data) {
+      const el = document.getElementById('nodataStatistikChart');
+      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2].data);
+      el.style.display = allZero ? 'flex' : 'none';
+    }
+    function updateNoDataLaporanDiprosesChart(data) {
+      const el = document.getElementById('nodataLaporanDiprosesChart');
+      el.style.display = isAllZero(data) ? 'flex' : 'none';
+    }
+    function updateNoDataJenisLaporanChart(data) {
+      const el = document.getElementById('nodataJenisLaporanChart');
+      el.style.display = isAllZero(data) ? 'flex' : 'none';
+    }
   </script>
 @endsection
