@@ -146,6 +146,13 @@
                                     <i class="fas fa-search mr-2"></i> Cari
                                 </button>
                             </div>
+
+                            <div class="md:col-span-6 lg:col-span-2">
+                                <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
+                                class="w-full inline-flex justify-center items-center px-6 py-3 border border-primary-navy text-primary-navy rounded-xl shadow-lg text-base font-semibold bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300 text-center">
+                                    <i class="fas fa-chart-bar mr-2"></i> Statistik
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </form>
