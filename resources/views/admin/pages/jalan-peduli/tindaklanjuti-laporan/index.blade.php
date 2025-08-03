@@ -228,10 +228,10 @@
           {{-- Page Numbers --}}
           @foreach ($laporans->links()->elements[0] as $page => $url)
             @if ($page == $laporans->currentPage())
-              <span class="px-4 py-2 bg-primary-navy text-black font-bold shadow-inner">{{ $page }}</span>
+              <span class="px-4 py-2 bg-primary-navy text-white font-bold shadow-inner">{{ $page }}</span>
             @else
               <a href="{{ $url }}"
-                class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-medium transition-colors text-gray-600">{{ $page }}</a>
+                class="px-4 py-2 text-primary-navy hover:bg-primary-navy/10 font-medium transition-colors">{{ $page }}</a>
             @endif
           @endforeach
 
