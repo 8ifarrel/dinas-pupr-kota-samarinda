@@ -1,5 +1,5 @@
-<div class="hidden my-4 mx-16 lg:flex justify-between items-center">
-  <figure class="flex gap-2">
+<div class="hidden my-4 px-6 py-4 lg:flex justify-between items-center">
+  <figure class="flex flex-col py-2 gap-y-2 gap-x-4 lg:flex-row">
     <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     <figcaption class="my-auto text-lg text-brand-blue font-bold w-[365px] uppercase">

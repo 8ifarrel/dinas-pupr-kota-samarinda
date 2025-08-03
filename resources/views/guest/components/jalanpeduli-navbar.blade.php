@@ -97,7 +97,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="hidden my-2 mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
+    <div class="hidden mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
         <figure class="flex gap-2">
             <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
             <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
@@ -112,7 +112,7 @@
     </div>
     
     <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-nav-plain custom-shadow border-b border-gray-100">
+    <nav class="sticky top-0 z-50 bg-nav-plain custom-shadow border-b border-gray-100 mt-0">
         <div class="container mx-auto px-0">
             <!-- Bottom Bar - Navigation Menu -->
             <div class="z-50 border-t border-gray-200 py-2 backdrop-blur-md bg-white/30">
