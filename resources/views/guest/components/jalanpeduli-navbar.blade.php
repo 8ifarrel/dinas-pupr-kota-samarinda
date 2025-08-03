@@ -97,7 +97,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="hidden my-4 mx-16 lg:flex justify-between items-center relative z-[60] bg-white">
+    <div class="hidden my-2 mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
         <figure class="flex gap-2">
             <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
             <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
@@ -113,7 +113,7 @@
     
     <!-- Navigation Bar -->
     <nav class="sticky top-0 z-50 bg-nav-plain custom-shadow border-b border-gray-100">
-        <div class="container mx-auto px-4">
+        <div class="container mx-auto px-0">
             <!-- Bottom Bar - Navigation Menu -->
             <div class="z-50 border-t border-gray-200 py-2 backdrop-blur-md bg-white/30">
                 <div class="flex flex-col items-end">
@@ -154,7 +154,7 @@
                     </div>
 
                     <!-- Mobile Menu Button - Centered -->
-                    <div class="lg:hidden flex justify-center">
+                    <div class="lg:hidden flex justify-end w-full pr-4 pl-2">
                         <button id="mobile-menu-button" aria-label="Buka menu navigasi" class="touch-target flex items-center justify-center p-2 rounded-full shadow-md bg-white border border-gray-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-200 flex-shrink-0">
                             <i id="menu-icon" class="fas fa-bars text-xl"></i>
                         </button>
@@ -164,20 +164,27 @@
 
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="lg:hidden hidden fixed top-[120px] left-0 w-full z-40 pb-2 px-4">
+            <div id="mobile-menu" class="lg:hidden hidden fixed top-19 left-0 w-full z-40 pb-2 px-4">
                 <div class="bg-white rounded-xl custom-shadow p-2 slide-in-from-right">
                     <div class="grid grid-cols-2 gap-2">
                         <!-- Menu Jalan Peduli -->
-                        <a href="{{ route('guest.jalan-peduli.index') }}" class="{{ Route::currentRouteName() == 'home' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600' }} transition-all duration-300">
+                        <a href="{{ route('guest.jalan-peduli.index') }}" class="{{ Route::currentRouteName() == 'guest.jalan-peduli.index' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600' }} transition-all duration-300">
                             <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center mb-2">
                                 <i class="fas fa-home text-white"></i>
                             </div>
                             <span class="text-sm font-medium text-center">Menu Jalan Peduli</span>
                         </a>
 
+                        <!-- Buat Laporan -->
+                        <a href="{{ route('guest.jalan-peduli.laporan.create') }}" class="{{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-green-50 hover:text-green-600' }} transition-all duration-300">
+                            <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center mb-2">
+                                <i class="fas fa-plus text-white"></i>
+                            </div>
+                            <span class="text-sm font-medium text-center">Buat Laporan</span>
+                        </a>
+
                         <!-- Cek Status -->
-                        <a href="#" class="{{ Route::currentRouteName() == 'laporan.data' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600' }} transition-all duration-300">
-                        {{-- <a href="{{ route('laporan.data') }}" class="{{ Route::currentRouteName() == 'laporan.data' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600' }} transition-all duration-300"> --}}
+                        <a href="{{ route('laporan.data') }}" class="{{ Route::currentRouteName() == 'laporan.data' ? 'flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 text-blue-600 active-indicator' : 'flex flex-col items-center justify-center p-4 rounded-lg text-gray-700 hover:bg-orange-50 hover:text-orange-600' }} transition-all duration-300">
                             <div class="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center mb-2">
                                 <i class="fas fa-search text-white"></i>
                             </div>
