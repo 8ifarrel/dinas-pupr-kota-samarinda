@@ -9,7 +9,7 @@
     <div class="relative overflow-x-auto">
       <div class="flex items-center justify-center flex-col md:flex-row md:justify-between gap-2.5">
         {{-- Tombol Unduh --}}
-        <a href="#"
+        <a href="{{ route("admin.laporan.downloadAll") }}"
           class="flex items-center justify-center gap-1.5 text-black bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap font-semibold">
           <i class="fa-solid fa-download"></i> <span>Unduh Semua Laporan</span>
         </a>
@@ -113,7 +113,7 @@
                     <i class="fa-solid fa-eye"></i> <span>Lihat</span>
                   </a>
                   {{-- Tombol Unduh --}}
-                  <a href="#"
+                  <a href="{{ route('admin.laporan.download', ['id_laporan' => $item->id_laporan]) }}"
                     class="flex items-center justify-center gap-1.5 text-black bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
                     <i class="fa-solid fa-download"></i> <span>Unduh</span>
                   </a>
