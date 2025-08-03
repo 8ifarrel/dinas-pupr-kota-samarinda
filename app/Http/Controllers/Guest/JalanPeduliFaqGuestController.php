@@ -8,7 +8,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Controller;
 
-class FaqController extends Controller
+class JalanPeduliFaqGuestController extends Controller
 {
     public function index(Request $request)
     {
