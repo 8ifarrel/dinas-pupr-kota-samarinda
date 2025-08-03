@@ -92,43 +92,58 @@
         <div class="mb-1.5 sm:mb-0">
           <h3 class="text-xl lg:text-2xl font-semibold">Laporan Masuk</h3>
         </div>
-
-        <div>
-          <button id="dropdownLaporanMasuk" data-dropdown-toggle="dropdownLaporanMasukMenu"
+        <div class="flex gap-2">
+          <!-- Dropdown Bulan (Rentang) -->
+          <button id="dropdownLaporanMasukBulan" data-dropdown-toggle="dropdownLaporanMasukBulanMenu"
             class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
-            type="button">Januari-April 2025 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+            type="button">Januari-April <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m1 1 4 4 4-4" />
             </svg>
           </button>
-
-          <div id="dropdownLaporanMasukMenu"
+          <div id="dropdownLaporanMasukBulanMenu"
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLaporanMasuk">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
               <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Januari-April
-                  2025</a>
+                <a href="#" data-rentang="0"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Januari-April</a>
               </li>
               <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mei-Agustus
-                  2025</a>
+                <a href="#" data-rentang="1"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mei-Agustus</a>
               </li>
               <li>
-                <a href="#"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">September-Desember
-                  2025
-                </a>
+                <a href="#" data-rentang="2"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">September-Desember</a>
               </li>
+            </ul>
+          </div>
+          <!-- Dropdown Tahun -->
+          <button id="dropdownLaporanMasukTahun" data-dropdown-toggle="dropdownLaporanMasukTahunMenu"
+            class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
+            type="button">{{ $tahun_statistik }} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <div id="dropdownLaporanMasukTahunMenu"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+              <li><a href="#" data-tahun="{{ $tahun_statistik }}"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
+              <!-- Tambahkan tahun lain jika perlu -->
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="w-full h-[250px] md:h-[350px]">
+      <div class="w-full h-[250px] md:h-[350px] relative">
         <canvas id="statistikChart" class="w-full h-full"></canvas>
+        <div id="nodataStatistikChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+          Tidak ada data
+        </div>
       </div>
 
     </div>
@@ -139,84 +154,52 @@
         <div class="flex flex-col sm:flex-row justify-between items-center">
           <div class="mb-1.5 sm:mb-0">
             <h3 class="text-xl sm:text-2xl font-semibold">Laporan Diproses</h3>
+            <p>Total</p>
           </div>
-
-          <div>
-            <button id="dropdownLaporanDiproses" data-dropdown-toggle="dropdownLaporanDiprosesMenu"
+          <div class="flex gap-2">
+            <button id="dropdownLaporanDiprosesBulan" data-dropdown-toggle="dropdownLaporanDiprosesBulanMenu"
               class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
-              type="button">Januari 2025 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+              type="button">Januari <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 4 4 4-4" />
               </svg>
             </button>
-
-            <div id="dropdownLaporanDiprosesMenu"
+            <div id="dropdownLaporanDiprosesBulanMenu"
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLaporanDiproses">
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Januari
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Februari
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Maret 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">April 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mei 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Juni 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Juli 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agustus
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">September
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Oktober
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">November
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Desember
-                    2025</a>
-                </li>
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                @foreach($periode_bulan as $idx => $b)
+                  <li>
+                    <a href="#" data-bulan="{{ $b['bulan'] }}" data-idx="{{ $idx }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $b['label'] }}</a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+            <button id="dropdownLaporanDiprosesTahun" data-dropdown-toggle="dropdownLaporanDiprosesTahunMenu"
+              class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
+              type="button">{{ $tahun_statistik }} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 4 4 4-4" />
+              </svg>
+            </button>
+            <div id="dropdownLaporanDiprosesTahunMenu"
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                <li><a href="#" data-tahun="{{ $tahun_statistik }}"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
               </ul>
             </div>
           </div>
         </div>
 
         <div>
-          <div class="lg:max-w-full lg:max-h-[250px]">
+          <div class="lg:max-w-full lg:max-h-[250px] relative">
             <canvas id="laporanDiprosesChart" class="lg:max-w-full lg:h-auto"></canvas>
+            <div id="nodataLaporanDiprosesChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+              Tidak ada data
+            </div>
           </div>
         </div>
       </div>
@@ -227,83 +210,50 @@
           <div class="mb-1.5 sm:mb-0">
             <h3 class="text-xl lg:text-2xl font-semibold">Jenis Laporan</h3>
           </div>
-
-          <div>
-            <button id="dropdownJenisLaporan" data-dropdown-toggle="dropdownJenisLaporanMenu"
+          <div class="flex gap-2">
+            <button id="dropdownJenisLaporanBulan" data-dropdown-toggle="dropdownJenisLaporanBulanMenu"
               class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
-              type="button">Januari 2025 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+              type="button">Januari <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 4 4 4-4" />
               </svg>
             </button>
-
-            <div id="dropdownJenisLaporanMenu"
+            <div id="dropdownJenisLaporanBulanMenu"
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
-              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownJenisLaporan">
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Januari
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Februari
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Maret 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">April 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mei 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Juni 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Juli 2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Agustus
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">September
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Oktober
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">November
-                    2025</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Desember
-                    2025</a>
-                </li>
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                @foreach($periode_bulan as $idx => $b)
+                  <li>
+                    <a href="#" data-bulan="{{ $b['bulan'] }}" data-idx="{{ $idx }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $b['label'] }}</a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+            <button id="dropdownJenisLaporanTahun" data-dropdown-toggle="dropdownJenisLaporanTahunMenu"
+              class="text-black font-medium text-xs sm:text-sm px-3 py-1 sm:py-1.5 text-center inline-flex items-center border border-black rounded-xl"
+              type="button">{{ $tahun_statistik }} <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 4 4 4-4" />
+              </svg>
+            </button>
+            <div id="dropdownJenisLaporanTahunMenu"
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                <li><a href="#" data-tahun="{{ $tahun_statistik }}"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
               </ul>
             </div>
           </div>
         </div>
 
         <div>
-          <div class="lg:max-w-full lg:max-h-[250px]">
+          <div class="lg:max-w-full lg:max-h-[250px] relative">
             <canvas id="jenisLaporanChart" class="lg:max-w-full lg:h-auto"></canvas>
+            <div id="nodataJenisLaporanChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+              Tidak ada data
+            </div>
           </div>
         </div>
       </div>
@@ -314,35 +264,91 @@
 @section('document.end')
   @vite('resources/js/chartjs.js')
   <script>
+    // Dropdown toggle logic
+    function setupDropdownToggle(buttonId, menuId) {
+      const btn = document.getElementById(buttonId);
+      const menu = document.getElementById(menuId);
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+
+      // Hide dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && !btn.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    }
+
+    // Call for each dropdown
+    setupDropdownToggle('dropdownLaporanMasuk', 'dropdownLaporanMasukMenu');
+    setupDropdownToggle('dropdownLaporanDiproses', 'dropdownLaporanDiprosesMenu');
+    setupDropdownToggle('dropdownJenisLaporan', 'dropdownJenisLaporanMenu');
+
+    // Data statistik dari backend
+    const statistikLaporanMasuk = @json($statistik_laporan_masuk);
+    const statistikLaporanDiproses = @json($statistik_laporan_diproses);
+    const statistikJenisLaporan = @json($statistik_jenis_laporan);
+    const periodeBulan = @json($periode_bulan);
+
     function getLegendPosition() {
       return window.innerWidth < 768 ? 'bottom' : 'right';
     }
 
-    let laporanDiprosesChart, jenisLaporanChart;
+    // Fungsi untuk menentukan index default berdasarkan bulan sekarang
+    function getDefaultLaporanMasukIdx() {
+      const now = new Date();
+      const bulan = now.getMonth() + 1; // 1-12
+      if (bulan >= 1 && bulan <= 4) return 0; // Jan-Apr
+      if (bulan >= 5 && bulan <= 8) return 1; // Mei-Ags
+      return 2; // Sep-Des
+    }
+    // Default bulan dan tahun
+    function getDefaultBulanIdx() {
+      const now = new Date();
+      return now.getMonth(); // 0-based index
+    }
+    function getDefaultTahun() {
+      const now = new Date();
+      return now.getFullYear();
+    }
+
+    // Default rentang bulan untuk laporan masuk
+    function getDefaultLaporanMasukRentangIdx() {
+      const now = new Date();
+      const bulan = now.getMonth() + 1;
+      if (bulan >= 1 && bulan <= 4) return 0;
+      if (bulan >= 5 && bulan <= 8) return 1;
+      return 2;
+    }
+
+    // State bulan/tahun untuk masing-masing chart
+    let bulanMasukIdx = getDefaultBulanIdx();
+    let tahunMasuk = getDefaultTahun();
+    let bulanDiprosesIdx = getDefaultBulanIdx();
+    let tahunDiproses = getDefaultTahun();
+    let bulanJenisIdx = getDefaultBulanIdx();
+    let tahunJenis = getDefaultTahun();
+    let laporanDiprosesChart, jenisLaporanChart, statistikChart;
+    let rentangMasukIdx = getDefaultLaporanMasukRentangIdx();
 
     window.onload = function() {
+      // Set default label dropdown
+      setDefaultDropdownLabel('dropdownLaporanMasukBulan', 'dropdownLaporanMasukBulanMenu', rentangMasukIdx);
+      setDefaultDropdownLabel('dropdownLaporanMasukTahun', 'dropdownLaporanMasukTahunMenu', 0);
+      setDefaultDropdownLabel('dropdownLaporanDiprosesBulan', 'dropdownLaporanDiprosesBulanMenu', bulanDiprosesIdx);
+      setDefaultDropdownLabel('dropdownLaporanDiprosesTahun', 'dropdownLaporanDiprosesTahunMenu', 0);
+      setDefaultDropdownLabel('dropdownJenisLaporanBulan', 'dropdownJenisLaporanBulanMenu', bulanJenisIdx);
+      setDefaultDropdownLabel('dropdownJenisLaporanTahun', 'dropdownJenisLaporanTahunMenu', 0);
+
+      // Bar Chart Laporan Masuk
       const ctx = document.getElementById('statistikChart').getContext('2d');
-      new Chart(ctx, {
+      statistikChart = new Chart(ctx, {
         type: 'bar',
-        data: {
-          labels: ['Januari', 'Februari', 'Maret', 'April'],
-          datasets: [{
-              label: 'Belum ditindaklanjuti',
-              data: [12, 9, 7, 10],
-              backgroundColor: '#E63846'
-            },
-            {
-              label: 'Sedang diproses',
-              data: [5, 7, 6, 8],
-              backgroundColor: '#F9A11A'
-            },
-            {
-              label: 'Selesai',
-              data: [8, 12, 15, 13],
-              backgroundColor: '#9EDE73'
-            }
-          ]
-        },
+        data: getBarChartDataRentang(rentangMasukIdx, tahunMasuk),
         options: {
           responsive: true,
           maintainAspectRatio: false,
@@ -365,6 +371,7 @@
           }
         }
       });
+      updateNoDataStatistikChart(statistikChart.data);
 
       // Doughnut chart for Laporan Diproses
       const ctxDiproses = document.getElementById('laporanDiprosesChart').getContext('2d');
@@ -379,7 +386,7 @@
             'Sedang dikerjakan'
           ],
           datasets: [{
-            data: [10, 7, 5, 4, 3],
+            data: getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses),
             backgroundColor: [
               '#9EDE73',
               '#F9A11A',
@@ -408,6 +415,7 @@
           }
         }
       });
+      updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
 
       // Doughnut chart for Jenis Laporan
       const ctxJenis = document.getElementById('jenisLaporanChart').getContext('2d');
@@ -415,13 +423,15 @@
         type: 'doughnut',
         data: {
           labels: [
+            'Belum Diklasifikasikan',
             'Penanganan Darurat',
             'Penanganan Biasa',
             'Pemeliharaan Rutin'
           ],
           datasets: [{
-            data: [6, 14, 9],
+            data: getJenisData(bulanJenisIdx + 1, tahunJenis),
             backgroundColor: [
+              '#6B7280', // abu-abu untuk belum diklasifikasikan
               '#E63846',
               '#f59e42',
               '#3b82f6'
@@ -447,7 +457,190 @@
           }
         }
       });
+      updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+
+      // Handler dropdown bulan/tahun laporan masuk (khusus rentang)
+      setupDropdownRentang('dropdownLaporanMasukBulanMenu', 'dropdownLaporanMasukBulan', (idx) => {
+        rentangMasukIdx = idx;
+        statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
+        statistikChart.update();
+        updateNoDataStatistikChart(statistikChart.data);
+      });
+      setupDropdownBulanTahun('dropdownLaporanMasukTahunMenu', 'dropdownLaporanMasukTahun', (idx, tahun) => {
+        tahunMasuk = tahun;
+        statistikChart.data = getBarChartDataRentang(rentangMasukIdx, tahunMasuk);
+        statistikChart.update();
+        updateNoDataStatistikChart(statistikChart.data);
+      });
+
+      setupDropdownBulanTahun('dropdownLaporanDiprosesBulanMenu', 'dropdownLaporanDiprosesBulan', (idx) => {
+        bulanDiprosesIdx = idx;
+        laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
+        laporanDiprosesChart.update();
+        updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+      });
+      setupDropdownBulanTahun('dropdownLaporanDiprosesTahunMenu', 'dropdownLaporanDiprosesTahun', (idx, tahun) => {
+        tahunDiproses = tahun;
+        laporanDiprosesChart.data.datasets[0].data = getDiprosesData(bulanDiprosesIdx + 1, tahunDiproses);
+        laporanDiprosesChart.update();
+        updateNoDataLaporanDiprosesChart(laporanDiprosesChart.data.datasets[0].data);
+      });
+
+      setupDropdownBulanTahun('dropdownJenisLaporanBulanMenu', 'dropdownJenisLaporanBulan', (idx) => {
+        bulanJenisIdx = idx;
+        jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
+        jenisLaporanChart.update();
+        updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+      });
+      setupDropdownBulanTahun('dropdownJenisLaporanTahunMenu', 'dropdownJenisLaporanTahun', (idx, tahun) => {
+        tahunJenis = tahun;
+        jenisLaporanChart.data.datasets[0].data = getJenisData(bulanJenisIdx + 1, tahunJenis);
+        jenisLaporanChart.update();
+        updateNoDataJenisLaporanChart(jenisLaporanChart.data.datasets[0].data);
+      });
+
+      // Set default label pada button dropdown sesuai waktu sekarang
+      setDefaultDropdownLabel('dropdownLaporanMasuk', 'dropdownLaporanMasukMenu', bulanMasukIdx);
+      setDefaultDropdownLabel('dropdownLaporanDiproses', 'dropdownLaporanDiprosesMenu', bulanDiprosesIdx);
+      setDefaultDropdownLabel('dropdownJenisLaporan', 'dropdownJenisLaporanMenu', bulanJenisIdx);
     };
+
+    // Fungsi untuk set label button dropdown sesuai default index
+    function setDefaultDropdownLabel(buttonId, menuId, idx) {
+      const button = document.getElementById(buttonId);
+      const menu = document.getElementById(menuId);
+      if (button && menu) {
+        const items = menu.querySelectorAll('a');
+        if (items[idx]) {
+          button.innerHTML = items[idx].innerHTML +
+            '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+        }
+      }
+    }
+
+    // Fungsi handler dropdown bulan/tahun
+    function setupDropdownBulanTahun(menuId, buttonId, callback) {
+      const menu = document.getElementById(menuId);
+      const button = document.getElementById(buttonId);
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach((item, idx) => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (item.dataset.tahun) {
+            callback(idx, parseInt(item.dataset.tahun));
+          } else {
+            callback(idx);
+          }
+          // Update button text
+          if (button) {
+            button.innerHTML = item.innerHTML +
+              '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+          }
+          menu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Fungsi handler dropdown rentang bulan
+    function setupDropdownRentang(menuId, buttonId, callback) {
+      const menu = document.getElementById(menuId);
+      const button = document.getElementById(buttonId);
+      if (!menu) return;
+      menu.querySelectorAll('a').forEach((item, idx) => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          callback(idx);
+          // Update button text
+          if (button) {
+            button.innerHTML = item.innerHTML +
+              '<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" /></svg>';
+          }
+          menu.classList.add('hidden');
+        });
+      });
+    }
+
+    // Update data chart sesuai bulan/tahun
+    function getBarChartData(bulanIdx, tahun) {
+      // Ambil data hanya untuk bulanIdx dan tahun
+      const label = periodeBulan[bulanIdx].label;
+      const data = statistikLaporanMasuk[bulanIdx] || { pending: 0, diproses: 0, selesai: 0 };
+      return {
+        labels: [label],
+        datasets: [
+          { label: 'Belum ditindaklanjuti', data: [data.pending ?? 0], backgroundColor: '#E63846' },
+          { label: 'Sedang diproses', data: [data.diproses ?? 0], backgroundColor: '#F9A11A' },
+          { label: 'Selesai', data: [data.selesai ?? 0], backgroundColor: '#9EDE73' }
+        ]
+      };
+    }
+
+    // Fungsi untuk bar chart laporan masuk berdasarkan rentang bulan
+    function getBarChartDataRentang(rentangIdx, tahun) {
+      // rentangIdx: 0=Jan-Apr, 1=Mei-Ags, 2=Sep-Des
+      let startIdx = 0, endIdx = 3;
+      if (rentangIdx === 1) { startIdx = 4; endIdx = 7; }
+      if (rentangIdx === 2) { startIdx = 8; endIdx = 11; }
+      const labels = periodeBulan.slice(startIdx, endIdx + 1).map(x => x.label);
+      const pending = [];
+      const diproses = [];
+      const selesai = [];
+      for (let i = startIdx; i <= endIdx; i++) {
+        const data = statistikLaporanMasuk[i] || { pending: 0, diproses: 0, selesai: 0 };
+        pending.push(data.pending ?? 0);
+        diproses.push(data.diproses ?? 0);
+        selesai.push(data.selesai ?? 0);
+      }
+      return {
+        labels: labels,
+        datasets: [
+          { label: 'Belum ditindaklanjuti', data: pending, backgroundColor: '#E63846' },
+          { label: 'Sedang diproses', data: diproses, backgroundColor: '#F9A11A' },
+          { label: 'Selesai', data: selesai, backgroundColor: '#9EDE73' }
+        ]
+      };
+    }
+
+    function getDiprosesData(bulan, tahun) {
+      const data = statistikLaporanDiproses[bulan];
+      return [
+        data ? data.diterima : 0,
+        data ? data.menunggu_survei : 0,
+        data ? data.sudah_disurvei : 0,
+        data ? data.menunggu_jadwal_pengerjaan : 0,
+        data ? data.sedang_dikerjakan : 0
+      ];
+    }
+
+    function getJenisData(bulan, tahun) {
+      const data = statistikJenisLaporan[bulan];
+      return [
+        data ? data.belum_diklasifikasikan : 0,
+        data ? data.darurat : 0,
+        data ? data.biasa : 0,
+        data ? data.rutin : 0
+      ];
+    }
+
+    // Fungsi cek apakah semua data chart nol
+    function isAllZero(arr) {
+      return arr.every(x => x === 0);
+    }
+
+    // Fungsi show/hide "Tidak ada data" untuk masing-masing chart
+    function updateNoDataStatistikChart(data) {
+      const el = document.getElementById('nodataStatistikChart');
+      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2].data);
+      el.style.display = allZero ? 'flex' : 'none';
+    }
+    function updateNoDataLaporanDiprosesChart(data) {
+      const el = document.getElementById('nodataLaporanDiprosesChart');
+      el.style.display = isAllZero(data) ? 'flex' : 'none';
+    }
+    function updateNoDataJenisLaporanChart(data) {
+      const el = document.getElementById('nodataJenisLaporanChart');
+      el.style.display = isAllZero(data) ? 'flex' : 'none';
+    }
 
     // Update legend position on resize
     window.addEventListener('resize', function() {
