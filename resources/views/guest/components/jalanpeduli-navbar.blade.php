@@ -97,7 +97,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="hidden mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
+    <div class="hidden py-2 mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
         <figure class="flex gap-2">
             <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
             <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
