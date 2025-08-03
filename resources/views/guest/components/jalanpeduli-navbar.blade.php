@@ -94,6 +94,34 @@
                 gap: 0.5rem;
             }
         }
+        
+        /* Smooth floating navbar animation */
+        #liquid-navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Enhanced glassmorphism effect */
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.6) 30%, rgba(240,248,255,0.4) 70%);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        /* Floating navbar specific styles */
+        .floating-navbar {
+            border-radius: 1.5rem !important;
+            max-width: 64rem;
+            width: 95vw;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-navbar {
+                width: 98vw;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -112,51 +140,66 @@
     </div>
     
     <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-nav-plain custom-shadow border-b border-gray-100 mt-0">
+    <nav id="liquid-navbar" class="sticky top-0 z-50 bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl mt-0" style="background: linear-gradient(120deg, rgba(255,255,255,0.45) 60%, rgba(230,245,255,0.25) 100%); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);">
         <div class="container mx-auto px-0">
             <!-- Bottom Bar - Navigation Menu -->
-            <div class="z-50 border-t border-gray-200 py-2 backdrop-blur-md bg-white/30">
-                <div class="flex flex-col items-end">
+            <div class="z-50 border-t border-white/30 py-3 bg-transparent">
+                <div class="flex flex-col items-center">
                     <!-- Desktop Menu - Right aligned -->
-                    <div class="hidden lg:flex desktop-menu-container justify-end space-x-1">
-                        <a href="{{ route('guest.jalan-peduli.index') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
-                            <i class="fas fa-home text-sm"></i>
-                            <span class="text-sm">Menu Jalan Peduli</span>
-                        </a>
+                    <div class="hidden lg:flex desktop-menu-container justify-between items-center w-full px-4">
+                        <!-- Logo and Title Section -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center justify-center">
+                                <img src="{{ asset('image/logo/jalan-peduli.png') }}" alt="Logo Jalan Peduli" class="h-8 w-auto max-w-[32px]" style="object-fit: contain;" />
+                            </div>
+                            <span class="text-gray-700 font-semibold text-base">Jalan Peduli</span>
+                        </div>
+                        
+                        <!-- Menu Navigation -->
+                        <div class="flex space-x-2">
+                            <a href="{{ route('guest.jalan-peduli.index') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                                <i class="fas fa-home text-sm"></i>
+                                <span class="text-sm font-medium">Menu Jalan Peduli</span>
+                            </a>
 
-                        <a href="{{ route('guest.jalan-peduli.laporan.create') }}"
-                            class="desktop-menu-item flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg transition-all duration-300
-                            {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create' ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' }}
-                            group">
-                             <span class="w-5 h-5 flex items-center justify-center border rounded-full transition-all duration-300
-                                  {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create'
-                                        ? 'border-blue-600 text-blue-600'
-                                        : 'border-gray-600 text-gray-600 group-hover:border-blue-600 group-hover:text-blue-600' }}">
-                                  <i class="fas fa-plus text-sm"></i>
-                             </span>
-                             <span class="text-sm">Buat Laporan</span>
-                        </a>
+                            <a href="{{ route('guest.jalan-peduli.laporan.create') }}"
+                                class="desktop-menu-item flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-300
+                                {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create' ? 'text-blue-600 bg-white/70 font-semibold shadow-sm' : 'text-gray-700 hover:text-blue-600 hover:bg-white/50' }}
+                                group">
+                                 <span class="w-5 h-5 flex items-center justify-center border rounded-full transition-all duration-300
+                                      {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create'
+                                            ? 'border-blue-600 text-blue-600'
+                                            : 'border-gray-600 text-gray-600 group-hover:border-blue-600 group-hover:text-blue-600' }}">
+                                      <i class="fas fa-plus text-xs"></i>
+                                 </span>
+                                 <span class="text-sm font-medium">Buat Laporan</span>
+                            </a>
 
-                        <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
-                            <i class="fas fa-search text-sm"></i>
-                            <span class="text-sm">Cek Status</span>
-                        </a>
+                            <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                                <i class="fas fa-search text-sm"></i>
+                                <span class="text-sm font-medium">Cek Status</span>
+                            </a>
 
-                        <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
-                            <i class="fas fa-map-marked-alt text-sm"></i>
-                            <span class="text-sm">Peta Laporan</span>
-                        </a>
+                            <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                                <i class="fas fa-map-marked-alt text-sm"></i>
+                                <span class="text-sm font-medium">Peta Laporan</span>
+                            </a>
 
-                        <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-blue-600 bg-blue-50 font-semibold' : 'flex items-center space-x-2 px-3 xl:px-4 py-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50' }} transition-all duration-300">
-                            <i class="fas fa-question-circle text-sm"></i>
-                            <span class="text-sm">FAQ</span>
-                        </a>
+                            <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                                <i class="fas fa-question-circle text-sm"></i>
+                                <span class="text-sm font-medium">FAQ</span>
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- Mobile Menu Button - Centered -->
-                    <div class="lg:hidden flex justify-end w-full pr-4 pl-2">
-                        <button id="mobile-menu-button" aria-label="Buka menu navigasi" class="touch-target flex items-center justify-center p-2 rounded-full shadow-md bg-white border border-gray-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-200 flex-shrink-0">
-                            <i id="menu-icon" class="fas fa-bars text-xl"></i>
+                    <!-- Mobile Menu Button with Title -->
+                    <div class="lg:hidden flex justify-end items-center w-full pr-4 pl-2 gap-3">
+                        <div class="flex items-center justify-center mr-2">
+                            <img src="{{ asset('image/logo/jalan-peduli.png') }}" alt="Logo Jalan Peduli" class="h-7 w-auto max-w-[28px]" style="object-fit: contain;" />
+                        </div>
+                        <span class="text-gray-700 font-semibold text-sm mr-auto">Jalan Peduli</span>
+                        <button id="mobile-menu-button" aria-label="Buka menu navigasi" class="touch-target flex items-center justify-center p-3 rounded-full shadow-lg bg-white/80 border border-white/60 text-blue-600 hover:bg-white hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-200 flex-shrink-0 backdrop-blur-sm">
+                            <i id="menu-icon" class="fas fa-bars text-lg"></i>
                         </button>
                     </div>
                 </div>
@@ -222,16 +265,75 @@
             const menuIcon = document.getElementById('menu-icon');
             let isMenuOpen = false;
 
+            // Navbar floating animation on scroll
+            const navbar = document.getElementById('liquid-navbar');
+            let lastScrollY = window.scrollY;
+            let isScrolled = false;
+            
+            function handleNavbarScroll() {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 100 && !isScrolled) {
+                    // Floating state
+                    isScrolled = true;
+                    navbar.style.transform = 'translateX(-50%) scale(0.95)';
+                    navbar.classList.add('fixed', 'left-1/2', 'top-6', 'rounded-3xl', 'w-[95vw]', 'max-w-4xl', 'shadow-xl');
+                    navbar.classList.remove('sticky', 'top-0', 'w-full', 'mt-0');
+                    navbar.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.6) 30%, rgba(240,248,255,0.4) 70%)';
+                    navbar.style.backdropFilter = 'blur(20px)';
+                    navbar.style.border = '1px solid rgba(255,255,255,0.8)';
+                    
+                    // Add separator to logo section
+                    const logoSection = navbar.querySelector('.flex.items-center.gap-3');
+                    if (logoSection && !logoSection.querySelector('.separator')) {
+                        const separator = document.createElement('span');
+                        separator.className = 'separator text-gray-400 text-lg font-light mx-2';
+                        separator.textContent = '|';
+                        logoSection.appendChild(separator);
+                    }
+                    
+                    // Animate container padding for better mobile spacing
+                    const container = navbar.querySelector('.container');
+                    if (container) {
+                        container.style.padding = '0 1rem';
+                    }
+                    
+                } else if (currentScrollY <= 50 && isScrolled) {
+                    // Normal state
+                    isScrolled = false;
+                    navbar.style.transform = 'translateX(0) scale(1)';
+                    navbar.classList.remove('fixed', 'left-1/2', 'top-6', 'rounded-3xl', 'w-[95vw]', 'max-w-4xl', 'shadow-xl');
+                    navbar.classList.add('sticky', 'top-0', 'w-full', 'mt-0');
+                    navbar.style.background = 'linear-gradient(120deg, rgba(255,255,255,0.45) 60%, rgba(230,245,255,0.25) 100%)';
+                    navbar.style.backdropFilter = 'blur(16px)';
+                    navbar.style.border = '1px solid rgba(255,255,255,0.6)';
+                    
+                    // Remove separator from logo section
+                    const separator = navbar.querySelector('.separator');
+                    if (separator) {
+                        separator.remove();
+                    }
+                    
+                    // Reset container padding
+                    const container = navbar.querySelector('.container');
+                    if (container) {
+                        container.style.padding = '0';
+                    }
+                }
+                
+                lastScrollY = currentScrollY;
+            }
+            window.addEventListener('scroll', handleNavbarScroll);
+            handleNavbarScroll();
+
+            // Mobile menu logic (unchanged)
             mobileMenuButton.addEventListener('click', function(event) {
                 event.stopPropagation();
-
                 isMenuOpen = !isMenuOpen;
-                
                 if (isMenuOpen) {
                     mobileMenu.classList.remove('hidden');
                     menuIcon.classList.remove('fa-bars');
                     menuIcon.classList.add('fa-times');
-                    
                     setTimeout(() => {
                         const menuContent = mobileMenu.querySelector('.slide-in-from-right');
                         if (menuContent) {
@@ -273,7 +375,6 @@
             links.forEach(link => {
                 link.addEventListener('click', function(e) {
                     if (this.id === 'mobile-menu-button' || this.closest('#mobile-menu')) return;
-
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = 'scale(1)';
