@@ -245,9 +245,7 @@
             id="publicMap"
             class="h-96 w-full rounded-xl border-2 border-gray-200 shadow-2xl bg-gradient-to-tr from-gray-50 via-white to-blue-100"
             data-maptiler-token="{{ config('services.maptiler.token', 'YOUR_FALLBACK_MAPTILER_KEY') }}"
-            
-            {{-- nanti di uncomment kalau sudah ada backendnya --}}
-            {{-- data-map-data-url="{{ route('laporan.public.map.coordinates') }}" --}}
+            data-map-data-url="{{ route('laporan.public.map.coordinates') }}"
             data-storage-base-url="{{ rtrim(Storage::url(''), '/') }}"
             >
             <div class="flex items-center justify-center h-full text-gray-500 animate-pulse">
