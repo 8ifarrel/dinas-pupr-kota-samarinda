@@ -40,6 +40,7 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
+use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -214,7 +215,7 @@ Route::prefix('drainase-irigasi')->group(function () {
 /**
  * Jalan Peduli Utama
  */
-use App\Http\Controllers\Guest\FaqController;
+use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
 use App\Http\Controllers\Guest\JalanPeduliStatistikLaporanGuestController;
 
 Route::prefix('jalan-peduli')->group(function () {
@@ -232,13 +233,6 @@ Route::prefix('jalan-peduli')->group(function () {
 		]);
 	})->name('guest.jalan-peduli.laporan.create');
 
-	Route::get('/laporan/data', function () {
-		return view('guest.pages.jalan-peduli.laporan.data',[
-			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
-			'page_title' => 'Buat Laporan Jalan Peduli'
-		]);
-	})->name('laporan.data');
-
 	Route::get('/laporan/map', function () {
 		return view('guest.pages.jalan-peduli.laporan.peta-sebaran',[
 			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
@@ -246,7 +240,11 @@ Route::prefix('jalan-peduli')->group(function () {
 		]);
 	})->name('laporan.public.map');
 
-	Route::get('/laporan/faq', [FaqController::class, 'index'])->name('faq');
+	Route::get('/laporan/download/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoice'])->name('laporan.download');
+	
+	Route::get('/laporan/data', [JalanPeduliLaporanGuestController::class, 'index'])->name('laporan.data');
+
+	Route::get('/laporan/faq', [JalanPeduliFaqGuestController::class, 'index'])->name('faq');
 
 	Route::get('/statistik', [JalanPeduliStatistikLaporanGuestController::class, 'index'])->name('guest.jalan-peduli.statistik-laporan');
 });
