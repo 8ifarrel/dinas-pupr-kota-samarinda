@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinas PUPR Samarinda - Mobile Friendly</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Animasi slide-in dari kanan */
@@ -138,6 +138,10 @@
             <p class="text-lg font-semibold current-time"></p>
         </div>
     </div>
+
+    <div class="bg-brand-blue px-4 py-2 lg:hidden">
+        <p class="text-center text-white font-semibold text-sm current-time"></p>
+    </div>
     
     <!-- Navigation Bar -->
     <nav id="liquid-navbar" class="sticky top-0 z-50 bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl mt-0" style="background: linear-gradient(120deg, rgba(255,255,255,0.45) 60%, rgba(230,245,255,0.25) 100%); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);">
@@ -146,7 +150,7 @@
             <div class="z-50 border-t border-white/30 py-3 bg-transparent">
                 <div class="flex flex-col items-center">
                     <!-- Desktop Menu - Right aligned -->
-                    <div class="hidden lg:flex desktop-menu-container justify-between items-center w-full px-4">
+                    <div class="hidden lg:inline-flex desktop-menu-container justify-between items-center px-4">
                         <!-- Logo and Title Section -->
                         <div class="flex items-center gap-3 ml-4">
                             <div class="flex items-center justify-center">

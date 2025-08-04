@@ -8,9 +8,9 @@
 <div class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl py-12 sm:py-20">
 
-        <div class="text-center mb-12 sm:mb-16">
+        <div class="text-center mb-12 sm:mb-16 relative">
             {{-- Background tambahan di belakang judul --}}
-            <div class="absolute inset-0 top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-56 sm:h-72 mx-auto z-0 pointer-events-none" aria-hidden="true">
+            <div class="absolute inset-0 top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-56 sm:h-72 mx-auto z-[-1] pointer-events-none" aria-hidden="true">
             <div class="w-full h-full bg-gradient-to-tr from-blue-100 via-primary-yellow/30 to-blue-50 opacity-60 rounded-3xl blur-2xl"></div>
             </div>
             <div class="relative inline-flex items-center justify-center w-20 h-20 mb-6 z-10">
