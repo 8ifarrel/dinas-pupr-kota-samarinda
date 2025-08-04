@@ -148,9 +148,9 @@
         <div class="container mx-auto px-0">
             <!-- Bottom Bar - Navigation Menu -->
             <div class="z-50 border-t border-white/30 py-3 bg-transparent">
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col w-full">
                     <!-- Desktop Menu - Right aligned -->
-                    <div class="hidden lg:inline-flex desktop-menu-container justify-between items-center px-4">
+                    <div class="hidden lg:flex justify-between items-center w-full px-4">
                         <!-- Logo and Title Section -->
                         <div class="flex items-center gap-3 ml-4">
                             <div class="flex items-center justify-center">
@@ -167,7 +167,7 @@
                             </a>
 
                             <a href="{{ route('guest.jalan-peduli.laporan.create') }}"
-                                class="desktop-menu-item flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-300
+                                class="desktop-menu-item flex items-center space-x-1 px-4 py-2.5 rounded-xl transition-all duration-300
                                 {{ Route::currentRouteName() == 'guest.jalan-peduli.laporan.create' ? 'text-blue-600 bg-white/70 font-semibold shadow-sm' : 'text-gray-700 hover:text-blue-600 hover:bg-white/50' }}
                                 group">
                                  <span class="w-5 h-5 flex items-center justify-center border rounded-full transition-all duration-300
@@ -179,17 +179,17 @@
                                  <span class="text-sm font-medium">Buat Laporan</span>
                             </a>
 
-                            <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-search text-sm"></i>
                                 <span class="text-sm font-medium">Cek Status</span>
                             </a>
 
-                            <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-map-marked-alt text-sm"></i>
                                 <span class="text-sm font-medium">Peta Laporan</span>
                             </a>
 
-                            <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-question-circle text-sm"></i>
                                 <span class="text-sm font-medium">FAQ</span>
                             </a>
