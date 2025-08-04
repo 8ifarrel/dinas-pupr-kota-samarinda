@@ -251,7 +251,8 @@
                 <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
                     <div class="flex-shrink-0">
                         <div class="w-20 h-20 bg-primary-navy rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-hourglass-half text-3xl text-white pulse-soft"></i>
+                            <i class="fas fa-hourglass-half text-3xl text-white pulse-soft animate-spin"></i>
+
                         </div>
                     </div>
                     <div class="flex-grow text-center lg:text-left">
@@ -443,7 +444,7 @@
                                                 <i class="fas fa-file-pdf text-red-500 text-3xl mr-4"></i>
                                                 <div>
                                                     <p class="text-sm text-gray-600 mb-1">Dokumen Pendukung Laporan</p>
-                                                    <a href="{{ Storage::url('dokumen_pendukung/' . $laporan->dokumen_pendukung) }}" 
+                                                    <a href="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $laporan->dokumen_pendukung) }}" 
                                                     target="_blank" 
                                                     class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                         <i class="fas fa-download mr-2"></i> Lihat Dokumen
@@ -460,9 +461,12 @@
                                         <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center"><i class="fas fa-camera text-purple-500 mr-3"></i>Dokumentasi Kerusakan ({{ count($fotoArray) }} Foto)</h4>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                                             @foreach ($fotoArray as $index => $foto)
-                                                <a href="{{ Storage::url('foto_kerusakan/' . $foto) }}" data-fancybox="gallery-{{$laporan->id_laporan}}" data-caption="Foto Kerusakan {{ $index + 1 }}"
-                                                class="group relative aspect-square rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 image-overlay">
-                                                    <img data-src="{{ Storage::url('foto_kerusakan/' . $foto) }}" alt="Foto Kerusakan {{ $index + 1 }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                                <a href="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" 
+                                                   data-fancybox="gallery-{{$laporan->id_laporan}}" 
+                                                   data-caption="Foto Kerusakan {{ $index + 1 }} - {{ $laporan->id_laporan }}"
+                                                   title="Klik untuk memperbesar"
+                                                   class="group relative aspect-square rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 image-overlay">
+                                                    <img data-src="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}" alt="Foto Kerusakan {{ $index + 1 }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 cursor-pointer">
                                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
                                                         <i class="fas fa-expand text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-125"></i>
                                                     </div>
