@@ -24,8 +24,8 @@ class JalanPeduliApiLaporanUserGuest extends Controller
             'jenis_kerusakan' => 'required|string|max:255',
             'deskripsi_kerusakan' => 'required|string',
             'alamat_lengkap_kerusakan' => 'required|string',
-            'kecamatan_id' => 'required|integer|exists:kecamatans,id',
-            'kelurahan_id' => 'required|integer|exists:kelurahans,id',
+            'kecamatan_id' => 'required|integer|exists:kecamatan,id',
+            'kelurahan_id' => 'required|integer|exists:kelurahan,id',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'foto_kerusakan' => 'required|array',
@@ -54,29 +54,34 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                 ]
             );
 
-            $fotoPaths = [];
-            if ($request->hasFile('foto_kerusakan')) {
-                foreach ($request->file('foto_kerusakan') as $file) {
-                    $fileName = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-                    $file->storeAs('public/foto_kerusakan', $fileName);
-                    $fotoPaths[] = $fileName;
-                }
-            }
-
-            $dokumenFilename = null;
-            if ($request->hasFile('dokumen_pendukung')) {
-                $pdfFile = $request->file('dokumen_pendukung');
-                $dokumenFilename = time() . '_' . Str::random(10) . '.' . $pdfFile->getClientOriginalExtension();
-                $pdfFile->storeAs('public/dokumen_pendukung', $dokumenFilename);
-            }
-            
-            $latitude = $request->input('latitude');
-            $longitude = $request->input('longitude');
-
+            // Generate ID laporan terlebih dahulu
             $id_laporan = $this->generateIdLaporan(
                 $request->input('kecamatan_id'),
                 $request->input('kelurahan_id')
             );
+
+            // Proses dan Simpan Foto dengan ID Laporan
+            $fotoPaths = [];
+            if ($request->hasFile('foto_kerusakan')) {
+                foreach ($request->file('foto_kerusakan') as $file) {
+                    $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+                    // Simpan ke folder berdasarkan ID laporan
+                    $file->storeAs("jalan_peduli/{$id_laporan}", $fileName, 'public');
+                    $fotoPaths[] = $fileName;
+                }
+            }
+
+            // Proses dokumen pendukung
+            $dokumenFilename = null;
+            if ($request->hasFile('dokumen_pendukung')) {
+                $pdfFile = $request->file('dokumen_pendukung');
+                $dokumenFilename = Str::uuid() . '.' . $pdfFile->getClientOriginalExtension();
+                // Simpan dokumen ke folder berdasarkan ID laporan
+                $pdfFile->storeAs("jalan_peduli/{$id_laporan}", $dokumenFilename, 'public');
+            }
+            
+            $latitude = $request->input('latitude');
+            $longitude = $request->input('longitude');
 
             $laporan = JalanPeduliLaporan::create([
                 'id_laporan' => $id_laporan,
@@ -139,13 +144,21 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                     foreach ($fotoFiles as $fotoFileName) {
                         $fotoUrls[] = [
                             'file_name' => $fotoFileName,
-                            'url' => asset('storage/foto_kerusakan/' . $fotoFileName)
+                            'url' => asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $fotoFileName)
                         ];
                     }
                 }
             }
             $formattedLaporan['foto_kerusakan_urls'] = $fotoUrls;
             unset($formattedLaporan['foto_kerusakan']);
+            
+            // Tambahkan URL dokumen pendukung jika ada
+            if ($laporan->dokumen_pendukung) {
+                $formattedLaporan['dokumen_pendukung_url'] = asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $laporan->dokumen_pendukung);
+            } else {
+                $formattedLaporan['dokumen_pendukung_url'] = null;
+            }
+            
             $formattedLaporan['created_at_formatted'] = $laporan->created_at ? $laporan->created_at->isoFormat('DD MMMM YYYY, HH:mm') . ' WITA' : null;
             $formattedLaporan['updated_at_formatted'] = $laporan->updated_at ? $laporan->updated_at->isoFormat('DD MMMM YYYY, HH:mm') . ' WITA' : null;
 
@@ -204,10 +217,10 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                 ];
             });
             $totalSemuaLaporan = JalanPeduliLaporan::count();
-            $totalPerStatus = JalanPeduliLaporan::join('status', 'laporans.status_id', '=', 'status.status_id')
-                                     ->select('status.nama_status', DB::raw('count(laporans.id_laporan) as jumlah'))
-                                     ->groupBy('status.nama_status')
-                                     ->orderBy('status.nama_status')
+            $totalPerStatus = JalanPeduliLaporan::join('jalan_peduli_status', 'jalan_peduli_laporan.status_id', '=', 'jalan_peduli_status.status_id')
+                                     ->select('jalan_peduli_status.nama_status', DB::raw('count(jalan_peduli_laporan.id_laporan) as jumlah'))
+                                     ->groupBy('jalan_peduli_status.nama_status')
+                                     ->orderBy('jalan_peduli_status.nama_status')
                                      ->get()
                                      ->pluck('jumlah', 'nama_status');
 
