@@ -125,8 +125,8 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <div class="hidden py-2 mx-2 lg:flex justify-between items-center relative z-[60] bg-white">
-        <figure class="flex gap-2">
+    <div class="hidden my-4 px-6 py-4 lg:flex justify-between items-center">
+        <figure class="flex flex-col py-2 gap-y-2 gap-x-4 lg:flex-row">
             <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
             <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
             <figcaption class="my-auto text-lg text-brand-blue font-bold w-[365px] uppercase">
@@ -148,7 +148,7 @@
                     <!-- Desktop Menu - Right aligned -->
                     <div class="hidden lg:flex desktop-menu-container justify-between items-center w-full px-4">
                         <!-- Logo and Title Section -->
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 ml-4">
                             <div class="flex items-center justify-center">
                                 <img src="{{ asset('image/logo/jalan-peduli.png') }}" alt="Logo Jalan Peduli" class="h-8 w-auto max-w-[32px]" style="object-fit: contain;" />
                             </div>

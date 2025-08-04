@@ -37,7 +37,7 @@
         }
 
         .btn-primary {
-            background: #2563eb;
+            background: #1d3d9a;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -51,7 +51,7 @@
         }
 
         .btn-primary:hover {
-            background: #1d4ed8;
+            background: rgba(29, 61, 154, 0.9);
             transform: scale(1.05);
         }
 
@@ -208,7 +208,7 @@
     </div>
 
     <div class="max-w-7xl mx-auto mt-12 bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div class="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-6">
+        <div class="bg-gradient-to-r from-blue-900 bg-brand-blue text-white p-6">
             <div class="text-center">
                 <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-globe-asia text-3xl"></i>

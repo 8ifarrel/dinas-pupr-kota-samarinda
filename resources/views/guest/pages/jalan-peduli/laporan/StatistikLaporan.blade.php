@@ -312,7 +312,7 @@
         document.getElementById('periodInfoText').textContent = infoText;
 
         // AJAX ke backend
-        let url = `{{ route('admin.jalan-peduli.statistik-laporan.index') }}?ajax=1&type=${filterType}`;
+        let url = `{{ route('guest.jalan-peduli.statistik-laporan') }}?ajax=1&type=${filterType}`;
         if (filterType === 'bulan') {
           url += `&month=${month}&year=${year}`;
         } else if (filterType === 'tahun') {
