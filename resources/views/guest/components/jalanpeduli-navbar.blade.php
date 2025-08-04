@@ -148,7 +148,7 @@
                     <!-- Desktop Menu - Right aligned -->
                     <div class="hidden lg:flex desktop-menu-container justify-between items-center w-full px-4">
                         <!-- Logo and Title Section -->
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 ml-4">
                             <div class="flex items-center justify-center">
                                 <img src="{{ asset('image/logo/jalan-peduli.png') }}" alt="Logo Jalan Peduli" class="h-8 w-auto max-w-[32px]" style="object-fit: contain;" />
                             </div>
