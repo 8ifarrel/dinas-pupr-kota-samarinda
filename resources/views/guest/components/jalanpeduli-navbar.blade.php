@@ -160,8 +160,8 @@
                         </div>
                         
                         <!-- Menu Navigation -->
-                        <div class="flex space-x-2">
-                            <a href="{{ route('guest.jalan-peduli.index') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                        <div class="flex space-x-1">
+                            <a href="{{ route('guest.jalan-peduli.index') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'home' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-home text-sm"></i>
                                 <span class="text-sm font-medium">Menu Jalan Peduli</span>
                             </a>
@@ -179,17 +179,17 @@
                                  <span class="text-sm font-medium">Buat Laporan</span>
                             </a>
 
-                            <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('laporan.data') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.data' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-search text-sm"></i>
                                 <span class="text-sm font-medium">Cek Status</span>
                             </a>
 
-                            <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('laporan.public.map') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'laporan.public.map' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-map-marked-alt text-sm"></i>
                                 <span class="text-sm font-medium">Peta Laporan</span>
                             </a>
 
-                            <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-2 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
+                            <a href="{{ route('faq') }}" class="desktop-menu-item {{ Route::currentRouteName() == 'faq' ? 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-blue-600 bg-white/70 font-semibold shadow-sm' : 'flex items-center space-x-1 px-4 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-white/50' }} transition-all duration-300">
                                 <i class="fas fa-question-circle text-sm"></i>
                                 <span class="text-sm font-medium">FAQ</span>
                             </a>
