@@ -32,12 +32,13 @@ class DrainaseIrigasiSeeder extends Seeder
         foreach ($pelaporIds as $i => $pelaporId) {
             $laporanIds[] = DB::table('drainase_irigasi_laporan')->insertGetId([
                 'pelapor_id' => $pelaporId,
-                'alamat' => 'Alamat Laporan ' . ($i + 1),
+                'nama_jalan' => 'Jalan Laporan ' . ($i + 1), // sebelumnya 'alamat'
                 'kecamatan_id' => $kecamatanIds[array_rand($kecamatanIds)],
                 'kelurahan_id' => $kelurahanIds[array_rand($kelurahanIds)],
                 'longitude' => mt_rand(1170000000, 1172000000) / 10000000,
                 'latitude' => mt_rand(-1000000, 1000000) / 100000,
-                'deskripsi' => 'Deskripsi laporan ke-' . ($i + 1),
+                'detail_lokasi' => 'Detail lokasi laporan ' . ($i + 1), // field baru
+                'deskripsi_kerusakan' => 'Deskripsi kerusakan laporan ke-' . ($i + 1), // sebelumnya 'deskripsi'
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
