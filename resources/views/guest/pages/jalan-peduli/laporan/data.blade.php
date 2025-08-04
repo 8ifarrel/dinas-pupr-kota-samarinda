@@ -262,7 +262,7 @@
                                 <span>ID Laporan: <strong class="text-gray-800">{{ $laporan->id_laporan }}</strong></span>
                             </div>
                             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-primary-navy text-white shadow-md status-badge">
-                                <i class="fas fa-hourglass-half mr-2"></i>
+                                <i class="fas fa-hourglass-half mr-2 animate-spin"></i>
                                 Menunggu Verifikasi
                             </span>
                         </div>

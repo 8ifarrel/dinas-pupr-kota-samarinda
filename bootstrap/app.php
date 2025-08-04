@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 use App\Http\Middleware\VerifyApiKey;
+use App\Http\Middleware\ApiSuperAdminAuth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
