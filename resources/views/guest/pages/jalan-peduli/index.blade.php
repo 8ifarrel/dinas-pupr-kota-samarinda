@@ -212,7 +212,7 @@ body.privacy-notice-visible .tg-dialog.tg-dialog--bottom {
                         </div>
                     </a>
 
-                    <a href="#" class="bg-white border-2 border-purple-200 hover:border-purple-400 p-5 sm:p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 faq-button group">
+                    <a href="{{ route('faq') }}" class="bg-white border-2 border-purple-200 hover:border-purple-400 p-5 sm:p-6 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 faq-button group">
                         <div class="text-center">
                             <div class="bg-purple-100 group-hover:bg-purple-200 p-3 sm:p-4 rounded-full w-14 sm:w-16 h-14 sm:h-16 mx-auto mb-4 flex items-center justify-center transition-colors duration-300">
                                 <i class="fa-solid fa-question-circle text-purple-600 text-xl sm:text-2xl group-hover:text-purple-700"></i>
