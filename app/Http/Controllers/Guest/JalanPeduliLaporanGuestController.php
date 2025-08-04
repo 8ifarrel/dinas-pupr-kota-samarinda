@@ -475,101 +475,6 @@ class JalanPeduliLaporanGuestController extends Controller
             });
         return response()->json($laporans);
     }
-    
-    //     public function adminDashboard(Request $request)
-    // {
-    //     // Memulai query builder dengan eager loading relasi yang dibutuhkan
-    //     $query = Laporan::with(['kecamatan', 'kelurahan', 'status', 'pelapor'])
-    //         ->orderBy('created_at', 'desc'); // Urutkan dari yang terbaru
-
-    //     // --- Logika Filter ---
-
-    //     // 1. Filter default: Abaikan 'reject' dan 'pending' dari tampilan utama
-    //     // Kita menggunakan whereHas agar bisa memeriksa relasi status
-    //     $query->whereHas('status', function ($q) {
-    //         $q->whereNotIn('nama_status', ['reject', 'pending']);
-    //     });
-
-    //     // 2. Filter Pencarian (ID Laporan atau Nomor Ponsel)
-    //     // Menggunakan 'like' untuk fleksibilitas, cocokkan sebagian teks
-    //     if ($request->filled('search')) {
-    //         $searchTerm = $request->input('search');
-    //         $query->where(function ($q) use ($searchTerm) {
-    //             $q->where('id_laporan', 'like', '%' . $searchTerm . '%')
-    //               ->orWhere('nomor_ponsel', 'like', '%' . $searchTerm . '%');
-    //         });
-    //     }
-
-    //     // 3. Filter Tingkat Kerusakan
-    //     // Memastikan nilai yang dikirim sama persis dengan yang ada di database (case-insensitive)
-    //     if ($request->filled('tingkat_kerusakan_filter')) {
-    //         $tingkat = $request->input('tingkat_kerusakan_filter');
-    //         // Menggunakan whereRaw untuk perbandingan case-insensitive dan menghilangkan spasi
-    //         // Ini adalah solusi jika database Anda memiliki inkonsistensi 'case' atau spasi
-    //         // Jika data Anda sudah benar-benar bersih (semua lowercase, tanpa spasi), Anda bisa gunakan:
-    //         // $query->where('tingkat_kerusakan', $tingkat);
-    //         $query->whereRaw('LOWER(REPLACE(tingkat_kerusakan, " ", "")) = LOWER(REPLACE(?, "", ""))', [$tingkat]);
-    //     }
-
-    //     // 4. Filter Jenis Kerusakan
-    //     // Memastikan nilai yang dikirim sama persis dengan yang ada di database
-    //     if ($request->filled('jenis_kerusakan_filter')) {
-    //         $query->where('jenis_kerusakan', $request->input('jenis_kerusakan_filter'));
-    //     }
-
-    //     // 5. Filter Status Kerusakan
-    //     // Memastikan nama_status di database benar-benar cocok dengan yang dikirim
-    //     if ($request->filled('status_kerusakan_filter')) {
-    //         $query->whereHas('status', function ($q) use ($request) {
-    //             $q->where('nama_status', $request->input('status_kerusakan_filter'));
-    //         });
-    //     }
-    //     // --- Akhir Logika Filter ---
-
-    //     // Pagination
-    //     $perPage = 6; // Jumlah item per halaman
-    //     $laporans = $query->paginate($perPage)->appends($request->query()); // appends() agar parameter filter tetap ada saat navigasi halaman
-
-    //     // Handle redirect jika nomor halaman yang diminta melebihi halaman terakhir yang ada
-    //     if ($laporans->currentPage() > $laporans->lastPage() && $laporans->total() > 0) {
-    //         // Buat ulang URL dengan halaman terakhir yang valid
-    //         return redirect()->route('admin.dashboard', array_merge($request->except('page'), ['page' => $laporans->lastPage()]));
-    //     }
-
-    //     // Tampilkan view dashboard dengan data laporan yang sudah difilter
-    //     return view('admin.dashboard', compact('laporans'));
-    // }
-
-    // public function edit($id)
-    // {
-    //     $laporan = Laporan::with(['kecamatan', 'kelurahan'])->where('id_laporan', $id)->firstOrFail();
-    //     return view('admin.pages.jalan-peduli.tindaklanjuti-laporan.edit', compact('laporan'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $laporan = Laporan::findOrFail($id);
-
-    //     // Validasi jika perlu
-    //     $request->validate([
-    //         'status_id'        => 'required|exists:status,status_id',
-    //         'keterangan'       => 'nullable|string',
-    //         'jenis_kerusakan'  => 'nullable|string|max:255',
-    //         'tingkat_kerusakan'=> 'nullable|string|max:255',
-    //         'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
-    //     ]);
-
-    //     if ($request->hasFile('foto_lanjutan')) {
-    //         $file = $request->file('foto_lanjutan');
-    //         $filename = \Str::uuid() . '.' . $file->getClientOriginalExtension();
-    //         $file->storeAs('foto_lanjutan', $filename, 'public');
-    //         $laporan->foto_lanjutan = $filename;
-    //     }
-
-    //     // Update kolom lainnya
-    //     $laporan->status_id = $request->status_id;
-    //     $laporan->keterangan = $request->keterangan;
-    //     $laporan->jenis_kerusakan = $request->jenis_kerusakan;
     public function getKelurahans($kecamatan_id)
     {
         try {
@@ -590,15 +495,4 @@ class JalanPeduliLaporanGuestController extends Controller
             ], 500);
         }
     }
-
-    // public function destroy($id)
-    // {
-    //     $laporan = Laporan::findOrFail($id);
-    //     $photos = json_decode($laporan->foto_kerusakan, true) ?? [];
-    //     foreach ($photos as $photo) {
-    //         Storage::disk('public')->delete('foto_kerusakan/' . $photo);
-    //     }
-    //     $laporan->delete();
-    //     return redirect()->back()->with('success', 'Laporan berhasil dihapus.');
-    // }
 }
