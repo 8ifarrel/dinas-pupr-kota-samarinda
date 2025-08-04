@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
+use App\Http\Middleware\VerifyApiKey;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->prepend(RecordStatistikPengunjung::class);
+        $middleware->alias([
+            'auth.apikey' => VerifyApiKey::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
