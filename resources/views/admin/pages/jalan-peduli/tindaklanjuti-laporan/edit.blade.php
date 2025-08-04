@@ -126,7 +126,7 @@
                   <i class="fas fa-file-pdf text-red-500 text-3xl mr-4"></i>
                   <div>
                     <p class="text-sm text-gray-600 mb-1">Dokumen Pendukung Laporan</p>
-                    <a href="{{ Storage::url('dokumen_pendukung/' . $laporan->dokumen_pendukung) }}" 
+                    <a href="{{ Storage::url('jalan_peduli/' . $laporan->id_laporan . '/' . $laporan->dokumen_pendukung) }}" 
                     target="_blank" 
                     class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                       <i class="fas fa-download mr-2"></i> Lihat Dokumen
@@ -395,10 +395,10 @@
       const keteranganGroup = document.getElementById('keterangan-group');
       const fotoGroup = document.getElementById('foto-group');
       function toggleFields() {
-        const allowedStatuses = ['2', '3', '4', '5', '6'];
+        const allowedStatuses = ['2', '3', '4', '5', '6', '7'];
         const isAllowed = allowedStatuses.includes(statusSelect.value);
         keteranganGroup.style.display = isAllowed ? 'block' : 'none';
-        const photoRequiredStatuses = ['4', '5', '6'];
+        const photoRequiredStatuses = ['3', '4', '5', '6'];
         const photoFieldIsVisible = photoRequiredStatuses.includes(statusSelect.value);
         fotoGroup.style.display = photoFieldIsVisible ? 'block' : 'none';
         if (!isAllowed) {
