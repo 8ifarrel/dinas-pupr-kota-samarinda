@@ -236,7 +236,7 @@
                 class="legend-filter-btn {{ $filter['active'] ?? false ? 'active' : 'inactive' }} shadow-md hover:scale-105"
                 title="Filter {{ $filter['label'] }}"
                 >
-                <img src="{{ asset('images/map/' . $filter['icon']) }}" alt="{{ $filter['label'] }}" class="drop-shadow" />
+                <img src="{{ asset('image/map/' . $filter['icon']) }}" alt="{{ $filter['label'] }}" class="drop-shadow" />
                 <span class="font-semibold">{{ $filter['label'] }}</span>
                 </button>
             @endforeach
