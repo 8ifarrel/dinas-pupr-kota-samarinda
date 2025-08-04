@@ -208,7 +208,7 @@ class JalanPeduliLaporanMasukAdminController extends Controller
             $fotoArray = $laporan->foto_kerusakan ? json_decode($laporan->foto_kerusakan, true) : [];
             if (is_array($fotoArray) && !empty($fotoArray)) {
                 foreach ($fotoArray as $index => $foto) {
-                    $fotoPath = storage_path('app/public/foto_kerusakan/' . $foto); 
+                    $fotoPath = storage_path('app/public/jalan_peduli/'. $laporan->id_laporan . '/' . $foto); 
                     \Log::info('Checking photo path: ' . $fotoPath);
                     if (file_exists($fotoPath)) {
                         $destination = $photoDir . '/gambar_' . $id_laporan . '_' . ($index + 1) . '_' . basename($foto);
@@ -229,7 +229,7 @@ class JalanPeduliLaporanMasukAdminController extends Controller
                 $files = glob($photoDir . '/*');
                 foreach ($files as $file) {
                     $zipEntryName = $id_laporan . '/folder_foto/' . basename($file);
-                    $zip->addFile($file, $zipEntryName);
+                    $zip->addFile($file, entryname: $zipEntryName);
                     \Log::info('Added photo to ZIP: ' . $zipEntryName);
                 }
                 $zip->close();
@@ -327,7 +327,7 @@ class JalanPeduliLaporanMasukAdminController extends Controller
                 $fotoArray = $laporan->foto_kerusakan ? json_decode($laporan->foto_kerusakan, true) : [];
                 if (is_array($fotoArray) && !empty($fotoArray)) {
                     foreach ($fotoArray as $index => $foto) {
-                        $fotoPath = storage_path('app/public/foto_kerusakan/' . $foto);
+                        $fotoPath = storage_path('app/public/jalan_peduli/'. $laporan->id_laporan . '/' . $foto);
                         \Log::info('Checking photo path for laporan ' . $laporan->id_laporan . ': ' . $fotoPath);
                         if (file_exists($fotoPath)) {
                             $destination = $photoDir . '/gambar_' . $laporan->id_laporan . '_' . ($index + 1) . '_' . basename($foto);

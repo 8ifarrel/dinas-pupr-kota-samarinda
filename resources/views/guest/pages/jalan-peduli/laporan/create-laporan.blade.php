@@ -319,8 +319,7 @@
                     <p class="font-semibold text-gray-700 text-xs sm:text-sm">
                         UNDUH BUKTI LAPORAN ANDA:
                     </p>
-                    {{-- <a href="{{ route('laporan.download', ['id_laporan' => session('success_data.id_laporan')]) }}" target="_blank" class="btn btn-primary shrink-0 w-full sm:w-auto"> --}}
-                    <a href="#" class="btn btn-primary shrink-0 w-full sm:w-auto">
+                    <a href="{{ route('laporan.download', ['id_laporan' => session('success_data.id_laporan')]) }}" target="_blank" class="btn btn-primary shrink-0 w-full sm:w-auto">
                         <i class="fas fa-download mr-2"></i> Download Tanda Terima
                     </a>
                 </div>
@@ -563,7 +562,7 @@
         @else
             {{-- "Create New Report" button if successful --}}
             <div class="text-center mt-8">
-                <a href="#" id="buatLaporanBaruBtn" class="btn btn-primary">
+                <a href="{{ route('guest.jalan-peduli.laporan.create') }}" id="buatLaporanBaruBtn" class="btn btn-primary">
                     <i class="fas fa-plus mr-2"></i> Buat Laporan Baru
                 </a>
             </div>

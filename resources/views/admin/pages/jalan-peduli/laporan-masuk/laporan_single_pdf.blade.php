@@ -261,7 +261,7 @@
                             @foreach($fotoChunk as $foto)
                                 <div class="photo-cell">
                                     @php
-                                        $imagePath = storage_path('app/public/foto_kerusakan/' . $foto);
+                                        $imagePath = storage_path('app/public/jalan_peduli/'. $laporan->id_laporan . '/' . $foto);
                                     @endphp
                                     @if(file_exists($imagePath))
                                         <div class="photo-item">

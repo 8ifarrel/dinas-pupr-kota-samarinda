@@ -244,7 +244,7 @@
                     <div class="section-title" style="font-size:9pt; margin-bottom:3px;">Foto Kerusakan</div>
                     @foreach($fotoArray as $foto)
                         @php
-                            $imagePath = storage_path('app/public/foto_kerusakan/' . $foto);
+                            $imagePath = storage_path('app/public/jalan_peduli/'. $laporan->id_laporan . '/' . $foto);
                         @endphp
                         @if(file_exists($imagePath))
                             <img src="{{ $imagePath }}" alt="Foto">
