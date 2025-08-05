@@ -206,8 +206,10 @@
               <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status Pengerjaan</label>
               <select name="status_id" id="status" required
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                @foreach(\App\Models\JalanPeduliStatus::all() as $status)
-                  <option value="{{ $status->status_id }}" {{ $laporan->status_id == $status->status_id ? 'selected' : '' }}>{{ ucwords(str_replace('_', ' ', $status->nama_status)) }}</option>
+                @foreach(\App\Models\JalanPeduliStatus::where('nama_status', '!=', 'reject')->get() as $status)
+                  <option value="{{ $status->status_id }}" {{ $laporan->status_id == $status->status_id ? 'selected' : '' }}>
+                    {{ ucwords(str_replace('_', ' ', $status->nama_status)) }}
+                  </option>
                 @endforeach
               </select>
             </div>
@@ -395,10 +397,10 @@
       const keteranganGroup = document.getElementById('keterangan-group');
       const fotoGroup = document.getElementById('foto-group');
       function toggleFields() {
-        const allowedStatuses = ['2', '3', '4', '5', '6', '7'];
+        const allowedStatuses = ['2', '3', '4', '5', '7'];
         const isAllowed = allowedStatuses.includes(statusSelect.value);
         keteranganGroup.style.display = isAllowed ? 'block' : 'none';
-        const photoRequiredStatuses = ['3', '4', '5', '6'];
+        const photoRequiredStatuses = ['3', '4', '5'];
         const photoFieldIsVisible = photoRequiredStatuses.includes(statusSelect.value);
         fotoGroup.style.display = photoFieldIsVisible ? 'block' : 'none';
         if (!isAllowed) {
