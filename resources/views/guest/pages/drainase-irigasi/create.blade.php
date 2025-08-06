@@ -58,8 +58,38 @@
       </div>
 
       <form id="stepper-form" method="POST" action="{{ route('guest.drainase-irigasi.store') }}"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data" novalidate>
         @csrf
+        
+        @if ($errors->any())
+          <div id="alert-2"
+            class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ms-3 text-sm font-medium">
+              <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+            <button type="button"
+              class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+              data-dismiss-target="#alert-2" aria-label="Close">
+              <span class="sr-only">Close</span>
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+            </button>
+          </div>
+        @endif
+        
         {{-- Langkah 1: Data Diri Pelapor --}}
         <div class="stepper-content" data-step="0">
           <div class="space-y-6">
@@ -516,7 +546,7 @@
               <label for="skm__kritik" class="block text-sm font-medium text-gray-900 required">
                 Kritik
               </label>
-              <textarea id="skm__kritik"
+              <textarea id="skm__kritik" name="skm__kritik"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Contoh: Tampilan aplikasi masih membingungkan" rows="2" required></textarea>
               <p id="skm__kritik" class="text-sm text-gray-500 dark:text-gray-400">
@@ -528,7 +558,7 @@
               <label for="skm__saran" class="block text-sm font-medium text-gray-900 required">
                 Saran
               </label>
-              <textarea id="skm__saran"
+              <textarea id="skm__saran" name="skm__saran"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Contoh: Sediakan buku panduan untuk mengisi formulir ini" rows="2" required></textarea>
               <p id="skm__saran" class="text-sm text-gray-500 dark:text-gray-400">
@@ -539,7 +569,7 @@
             <div class="space-y-1.5">
               <p class="block text-sm font-medium text-gray-900 required">Silakan centang kotak di bawah ini</p>
               <div class="flex items-center ps-4 border border-gray-200 rounded-lg">
-                <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
+                <input id="bordered-checkbox-2" type="checkbox" value="1" name="bordered-checkbox"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 focus:ring-2">
                 <label for="bordered-checkbox-2" class="w-full py-4 ms-2 text-gray-900 text-sm">Saya menyatakan bahwa
                   informasi yang saya berikan benar dan dapat dipertanggungjawabkan.</label>
@@ -602,6 +632,20 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Enable/disable submit button based on checkbox
+      const agreementCheckbox = document.getElementById('bordered-checkbox-2');
+      const submitButton = document.querySelector('.stepper-submit');
+      
+      if (agreementCheckbox && submitButton) {
+        // Initial state - check if checkbox is already checked when page loads
+        submitButton.disabled = !agreementCheckbox.checked;
+        
+        // Listen for changes to checkbox
+        agreementCheckbox.addEventListener('change', function() {
+          submitButton.disabled = !this.checked;
+        });
+      }
+
       // Filter kelurahan sesuai kecamatan (tanpa API)
       const kecSelect = document.getElementById('laporan__kecamatan');
       const kelSelect = document.getElementById('laporan__kelurahan');
@@ -1146,18 +1190,69 @@
           const saran = document.getElementById('skm__saran');
           const cek = document.getElementById('bordered-checkbox-2');
           let valid2 = true;
-          if (!rating) valid2 = false;
-          if (!kritik.value.trim()) valid2 = false;
-          if (!saran.value.trim()) valid2 = false;
-          if (!cek.checked) valid2 = false;
-          if (!valid2) {
-            // Tampilkan error di bawah masing-masing input jika ingin, atau alert
-            showAlert('alert-2', 'Mohon isi semua data pada langkah ini.');
+          
+          // Rating validation - show specific error
+          const ratingError = document.getElementById('error_skm__rating');
+          if (!rating) {
+            if (ratingError) {
+              ratingError.textContent = 'Silakan pilih salah satu rating.';
+              ratingError.classList.remove('hidden');
+              // Add red border to rating options container
+              const ratingContainer = document.querySelector('.flex.items-center.me-4').parentNode;
+              ratingContainer.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2');
+            }
+            valid2 = false;
             valid = false;
+          } else if (ratingError) {
+            ratingError.classList.add('hidden');
+            const ratingContainer = document.querySelector('.flex.items-center.me-4').parentNode;
+            ratingContainer.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2');
+          }
+          
+          // Kritik validation - use existing showError/clearError functions
+          if (!kritik.value.trim()) {
+            showError(kritik, 'Kritik wajib diisi.');
+            valid2 = false;
+            valid = false;
+          } else {
+            clearError(kritik);
+          }
+          
+          // Saran validation - use existing showError/clearError functions
+          if (!saran.value.trim()) {
+            showError(saran, 'Saran wajib diisi.');
+            valid2 = false;
+            valid = false;
+          } else {
+            clearError(saran);
+          }
+          
+          // Checkbox validation
+          const checkboxError = document.getElementById('error_bordered-checkbox');
+          if (!cek.checked) {
+            if (checkboxError) {
+              checkboxError.textContent = 'Anda harus menyetujui pernyataan ini.';
+              checkboxError.classList.remove('hidden');
+              // Add red border to checkbox container
+              const checkboxContainer = cek.closest('.flex.items-center');
+              checkboxContainer.classList.add('border-red-500');
+            }
+            valid2 = false;
+            valid = false;
+          } else if (checkboxError) {
+            checkboxError.classList.add('hidden');
+            const checkboxContainer = cek.closest('.flex.items-center');
+            checkboxContainer.classList.remove('border-red-500');
+          }
+          
+          // Still show general alert if any validation fails
+          if (!valid2) {
+            showAlert('alert-2', 'Mohon isi semua data pada langkah ini.');
           }
         }
         return valid;
       }
+      
       // Stepper next/prev logic override
       const stepperContents = Array.from(document.querySelectorAll('.stepper-content'));
       let currentStep = 0;
@@ -1196,6 +1291,7 @@
         const stepperLineLeft = document.getElementById('stepper-line-left');
         const stepperLineRight = document.getElementById('stepper-line-right');
         if (stepperLineLeft && stepperLineRight) {
+
           if (idx === 0) {
             stepperLineLeft.classList.remove('bg-brand-blue');
             stepperLineLeft.classList.add('bg-gray-200');
@@ -1237,13 +1333,28 @@
       });
       // Submit: validasi semua step
       document.getElementById('stepper-form').addEventListener('submit', function(e) {
-        if (!validateStep(0) || !validateStep(1) || !validateStep(2)) {
-          e.preventDefault();
-          showAlert('alert-2', 'Mohon lengkapi seluruh data sebelum mengirim.');
+        // Always prevent the default submission first to use our custom validation
+        e.preventDefault();
+        
+        // Validate the current step (likely step 2)
+        if (validateStep(currentStep)) {
+          // If we're not on the final step, move to it
+          if (currentStep < 2) {
+            currentStep = 2;
+            showStepperStep(currentStep);
+            return;
+          }
+          
+          // If all steps validate, submit the form
+          if (validateStep(0) && validateStep(1) && validateStep(2)) {
+            this.submit();
+          } else {
+            showAlert('alert-2', 'Mohon lengkapi seluruh data sebelum mengirim.');
+          }
         }
       });
     });
-
+    
     // Implementasi Foto Kerusakan
     document.addEventListener('DOMContentLoaded', function() {
       // Global variables
@@ -1491,7 +1602,6 @@
             cropperFoto = new Cropper(imageToCropFoto, {
               viewMode: 1,
               autoCropArea: 1,
-              aspectRatio: 16/9
             });
           };
           reader.readAsDataURL(fileInput.files[0]);
