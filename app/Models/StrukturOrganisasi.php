@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SusunanOrganisasi;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StrukturOrganisasi extends Model
 {
@@ -30,6 +31,11 @@ class StrukturOrganisasi extends Model
     public function strukturOrganisasiDiagram()
     {
         return $this->hasOne(StrukturOrganisasiDiagram::class, 'id_struktur_organisasi', 'id_struktur_organisasi');
+    }
+
+    public function layanan(): HasMany
+    {
+        return $this->hasMany(Layanan::class, 'struktur_organisasi_id', 'id_struktur_organisasi');
     }
 }
 

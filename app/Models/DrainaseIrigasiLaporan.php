@@ -13,12 +13,13 @@ class DrainaseIrigasiLaporan extends Model
 
     protected $fillable = [
         'pelapor_id',
-        'alamat',
+        'nama_jalan',
+        'detail_lokasi',
         'kecamatan_id',
         'kelurahan_id',
         'longitude',
         'latitude',
-        'deskripsi',
+        'deskripsi_kerusakan',
     ];
 
     public function pelapor()
