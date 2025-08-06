@@ -10,7 +10,8 @@
     "dependencies": {
       "@tensorflow/tfjs": "^4.22.0",
       "@tensorflow/tfjs-backend-cpu": "^4.22.0",
-      "canvas": "^2.11.2",
+      "canvas": "^3.1.2",
+      
       "node-fetch": "^2.7.0"
     },
     "keywords": [
