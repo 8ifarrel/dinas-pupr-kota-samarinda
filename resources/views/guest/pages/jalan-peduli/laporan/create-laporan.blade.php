@@ -540,7 +540,7 @@
                     </div>
                     <div class="flex justify-center py-4">
                         <div class="cf-turnstile" 
-                            data-sitekey="{{ env('TURNSTILE_SITEKEY') }}" 
+                            data-sitekey="{{ config('app.turnstile_sitekey') }}" 
                             data-callback="onCaptchaSuccess"
                             data-expired-callback="onCaptchaExpired"
                             data-error-callback="onCaptchaError"
