@@ -40,6 +40,7 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
+use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -111,6 +112,7 @@ Route::prefix('pengumuman')->group(function () {
 	Route::get('/download/{slug}', [PengumumanGuestController::class, 'download'])
 		->name('guest.pengumuman.download');
 });
+
 
 /**
  * PPID Pelaksana
@@ -210,6 +212,54 @@ Route::prefix('drainase-irigasi')->group(function () {
 		->name('guest.drainase-irigasis.how');
 });
 
+/**
+ * Jalan Peduli Utama
+ */
+use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
+use App\Http\Controllers\Guest\JalanPeduliStatistikLaporanGuestController;
+
+Route::prefix('jalan-peduli')->group(function () {
+	Route::get('/', function () {
+		return view('guest.pages.jalan-peduli.index', [
+			'meta_description' => 'Website Jalan Peduli - Layanan pelaporan kerusakan jalan dan informasi tindak lanjut laporan di Kota Samarinda.',
+			'page_title' => 'Jalan Peduli'
+		]);
+	})->name('guest.jalan-peduli.index');
+
+	Route::get('/buat-laporan', [JalanPeduliLaporanGuestController::class, 'create'])
+		->name('guest.jalan-peduli.laporan.create');
+
+	Route::post('/buat-laporan', [JalanPeduliLaporanGuestController::class, 'store'])
+		->name('guest.jalan-peduli.laporan.store');
+
+	Route::get('/laporan/map', function () {
+		return view('guest.pages.jalan-peduli.laporan.peta-sebaran',[
+			'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
+			'page_title' => 'Buat Laporan Jalan Peduli'
+		]);
+	})->name('laporan.public.map');
+
+	Route::get('/get-public-map-data', [JalanPeduliLaporanGuestController::class, 'getPublicMapCoordinates'])->name('laporan.public.map.coordinates');
+
+	Route::get('/laporan/download/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoice'])->name('laporan.download');
+	
+	Route::get('/laporan/data', [JalanPeduliLaporanGuestController::class, 'index'])->name('laporan.data');
+
+	Route::get('/laporan/faq', [JalanPeduliFaqGuestController::class, 'index'])->name('faq');
+
+	Route::get('/statistik', [JalanPeduliStatistikLaporanGuestController::class, 'index'])->name('guest.jalan-peduli.statistik-laporan');
+});
+
+/**
+ * API Routes untuk Jalan Peduli
+ */
+Route::prefix('api')->group(function () {
+	Route::get('/kelurahans/by-kecamatan/{kecamatan_id}', [JalanPeduliLaporanGuestController::class, 'getKelurahans'])
+		->name('api.kelurahans.by-kecamatan');
+});
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Halaman Admin (E-Panel)
@@ -246,11 +296,10 @@ use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
-use App\Http\Controllers\Admin\JalanPeduliStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
+use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
-use App\Http\Controllers\Admin\APIKeySuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -329,7 +378,7 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 			});
 
 			Route::prefix('statistik-laporan')->group(function () {
-				Route::get('/', [JalanPeduliStatistikLaporanAdminController::class, 'index'])
+				Route::get('/', [JalanPeduliStatistikLaporanGuestController::class, 'index'])
 					->name('admin.jalan-peduli.statistik-laporan.index');
 			});
 
@@ -342,6 +391,10 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.update');
 				Route::delete('/delete/{id}', [JalanPeduliTindaklanjutiLaporanAdminController::class, 'destroy'])
 					->name('admin.jalan-peduli.tindaklanjuti-laporan.destroy');
+				// UPDATED: Route for downloading individual report (now a ZIP with CSV and photos)
+				Route::get('/laporan/{id_laporan}/download', [JalanPeduliLaporanMasukAdminController::class, 'download'])->name('admin.laporan.download');
+				// UPDATED: Route for downloading ALL filtered reports (now a ZIP with PDF summary and photos)
+				Route::get('/laporan/download-all', [JalanPeduliLaporanMasukAdminController::class, 'downloadAll'])->name('admin.laporan.downloadAll');
 			});
 		});
 

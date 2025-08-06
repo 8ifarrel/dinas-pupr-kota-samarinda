@@ -7,16 +7,39 @@
 @section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
     <div class="relative overflow-x-auto">
-      {{-- Filter Status --}} {{-- TODO: Sesuaikan --}}
-      <div class="flex items-center justify-center md:justify-normal gap-1.5">
-        <label for="filter-status">Filter Status:</label>
-        <select id="filter-status" name="filter-status" class="border rounded px-2 py-1 border-gray-400">
-          <option value="">Semua</option>
-          <option value="disetujui">Disetujui</option>
-          <option value="ditolak">Ditolak</option>
-          <option value="pending">Pending</option>
-          <option value="lainnya">Lainnya</option>
-        </select>
+      <div class="flex items-center justify-center flex-col md:flex-row md:justify-between gap-2.5">
+        {{-- Tombol Unduh --}}
+        <a href="{{ route("admin.laporan.downloadAll") }}"
+          class="flex items-center justify-center gap-1.5 text-black bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap font-semibold">
+          <i class="fa-solid fa-download"></i> <span>Unduh Semua Laporan</span>
+        </a>
+
+        {{-- Filter Status --}}
+        <div>
+          <label for="filter-status">Filter Status:</label>
+          <form method="GET" class="inline">
+            <select id="filter-status" name="status_id" class="border rounded px-2 py-1 border-gray-400"
+              onchange="this.form.submit()">
+              <option value="" {{ request('status_id') === null || request('status_id') === '' ? 'selected' : '' }}>Semua Status</option>
+              <option value="accept" {{ request('status_id') === 'accept' ? 'selected' : '' }}>Accept</option>
+              <option value="1" {{ request('status_id') === '1' ? 'selected' : '' }}>Pending</option>
+            </select>
+          </form>
+{{--
+// === INSTRUKSI CONTROLLER ===
+// Pada controller index():
+// if ($request->filled('status_id')) {
+//   if ($request->status_id === 'accept') {
+//     $query->whereIn('status_id', [2,3,4,5,7]);
+//   } elseif (in_array($request->status_id, ['1','6'])) {
+//     $query->where('status_id', $request->status_id);
+//   } else {
+//     $query->where('status_id', $request->status_id);
+//   }
+// }
+// ============================
+--}}
+        </div>
       </div>
       <table id="jalan-peduli" class="stripe hover row-border table-auto" style="width:100%">
         <thead>
@@ -33,144 +56,161 @@
           </tr>
         </thead>
         <tbody>
-          {{-- @foreach ($data as $item) --}} {{-- TODO: Sesuaikan --}}
-          <tr>
-            <td>1 {{-- $loop->iteration --}}</td> {{-- TODO: Uncomment ini --}}
-            <td>Ini ID</td> {{-- TODO: Sesuaikan --}}
-            <td>Ini nama</td> {{-- TODO: Sesuaikan --}}
-            <td>0869696969</td> {{-- TODO: Sesuaikan --}}
-            <td>Ini lokasi</td> {{-- TODO: Sesuaikan --}}
-            <td> {{-- TODO: Sesuaikan --}}
-              <span
-                class="bg-green-100 text-green-800 text-xs me-2 px-1.5 py-0.5 rounded border border-green-400">Disetujui</span>
-              <span class="bg-red-100 text-red-800 text-xs me-2 px-1.5 py-0.5 rounded border border-red-400">Ditolak</span>
-              <span
-                class="bg-yellow-100 text-yellow-800 text-xs me-2 px-1.5 py-0.5 rounded border border-yellow-500">Pending</span>
-              <span
-                class="bg-gray-100 text-gray-800 text-xs me-2 px-1.5 py-0.5 rounded border border-gray-500">Others?</span>
-            </td>
-            <td>Ini tanggal masuk</td> {{-- TODO: Sesuaikan --}}
-            <td>Ini deskripsi</td> {{-- TODO: Sesuaikan --}}
-            <td class="min-w-[200px]">
-              <div class="grid grid-cols-2 gap-2">
-                {{-- Tombol Setuju --}}
-                <button data-modal-target="acceptModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-                  data-modal-toggle="acceptModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-                  class="flex items-center justify-center gap-1.5 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
-                  <i class="fa-solid fa-check"></i> <span>Setuju</span>
-                </button>
-
-                {{-- Tombol Hapus --}}
-                <button data-modal-target="deleteModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-                  data-modal-toggle="deleteModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-                  class="flex items-center justify-center gap-1.5 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
-                  <i class="fa-solid fa-trash-can"></i> <span>Hapus</span>
-                </button>
-
-                {{-- Tombol Lihat --}}
-                {{-- <a href="{{ route('admin.jalan-peduli.laporan-masuk.show', $item->id) }}" --}} {{-- TODO: Uncomment ini --}}
-                <a href="{{ route('admin.jalan-peduli.laporan-masuk.show', 1) }}" {{-- TODO: Hapus ini --}}
-                  class="flex items-center justify-center gap-1.5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
-                  <i class="fa-solid fa-eye"></i> <span>Lihat</span>
-                </a>
-
-                {{-- Tombol Unduh --}}
-                <a href="{{-- --}}" {{-- TODO: Sesuaikan --}}
-                  class="flex items-center justify-center gap-1.5 text-black bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
-                  <i class="fa-solid fa-download"></i> <span>Unduh</span>
-                </a>
-              </div>
-            </td>
-          </tr>
-
-          {{-- Modal konfirmasi hapus --}}
-          <div id="deleteModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-            data-modal-target="deleteModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}} data-modal-backdrop="static"
-            tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-2xl max-h-full">
-              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Konfirmasi Penghapusan
-                  </h3>
-                  <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="deleteModal-{{-- $item->id --}}"> {{-- TODO: Uncomment ini --}}
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
+          @foreach ($laporans as $index => $item)
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ $item->id_laporan }}</td>
+              <td>{{ $item->pelapor->nama_lengkap ?? '-' }}</td>
+              <td>{{ $item->pelapor->nomor_ponsel ?? '-' }}</td>
+              <td>{{ $item->alamat_lengkap_kerusakan }}</td>
+              <td>
+                @php
+                  $status = $item->status;
+                  $statusId = $item->status_id;
+                  if ($statusId == 1) {
+                      $statusClass = 'bg-yellow-100 text-yellow-800';
+                      $statusLabel = 'Pending';
+                  } elseif (in_array($statusId, [2,3,4,5,7])) {
+                      $statusClass = 'bg-green-100 text-green-800';
+                      $statusLabel = 'Accept';
+                  } elseif ($statusId == 6) {
+                      $statusClass = 'bg-red-100 text-red-800';
+                      $statusLabel = 'Reject';
+                  } else {
+                      $statusClass = 'bg-gray-100 text-gray-800';
+                      $statusLabel = $status ? ucwords(str_replace('_', ' ', $status->nama_status)) : '-';
+                  }
+                @endphp
+                <span class="{{ $statusClass }} text-xs me-2 px-1.5 py-0.5 rounded border border-gray-400">
+                  {{ $statusLabel }}
+                </span>
+              </td>
+              <td>
+                {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y (H:i)') : '-' }}
+              </td>
+              <td>{{ \Illuminate\Support\Str::limit($item->deskripsi_laporan, 40) }}</td>
+              <td class="min-w-[200px]">
+                <div class="grid grid-cols-2 gap-2">
+                  {{-- Tombol Setuju --}}
+                  @php
+                    $isApproved = in_array($item->status_id, [2, 3, 4, 5, 7]);
+                  @endphp
+                  <button data-modal-target="acceptModal-{{ $item->id_laporan }}"
+                    data-modal-toggle="acceptModal-{{ $item->id_laporan }}"
+                    class="flex items-center justify-center gap-1.5 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap {{ $isApproved ? 'opacity-60 cursor-not-allowed pointer-events-none' : '' }}"
+                    @if($isApproved) disabled aria-disabled="true" @endif>
+                    <i class="fa-solid fa-check"></i> <span>Setuju</span>
                   </button>
-                </div>
-                <div class="p-4 md:p-5 space-y-4">
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Apakah Anda yakin ingin menghapus laporan dengan ID
-                    <strong>{{-- $item->id --}}324ini_id324</strong>? {{-- TODO: Uncomment ini --}} Laporan yang telah dihapus <strong>tidak dapat dipulihkan</strong>.
-                  </p>
-                </div>
-                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                  <form action="{{-- route('admin.jalan-peduli.laporan-masuk.destroy', $item->id) --}}" method="POST"> {{-- TODO: Uncomment ini --}}
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                      class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
-                  </form>
-                  <button type="button"
-                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    data-modal-hide="deleteModal-{{-- $item->id --}}"> {{-- TODO: Uncomment ini --}}
-                    Tidak
+                  {{-- Tombol Hapus --}}
+                  <button data-modal-target="deleteModal-{{ $item->id_laporan }}"
+                    data-modal-toggle="deleteModal-{{ $item->id_laporan }}"
+                    class="flex items-center justify-center gap-1.5 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
+                    <i class="fa-solid fa-trash-can"></i> <span>Hapus</span>
                   </button>
+                  {{-- Tombol Lihat --}}
+                  <a href="{{ route('admin.jalan-peduli.laporan-masuk.show', $item->id_laporan) }}"
+                    class="flex items-center justify-center gap-1.5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
+                    <i class="fa-solid fa-eye"></i> <span>Lihat</span>
+                  </a>
+                  {{-- Tombol Unduh --}}
+                  <a href="{{ route('admin.laporan.download', ['id_laporan' => $item->id_laporan]) }}"
+                    class="flex items-center justify-center gap-1.5 text-black bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 rounded-lg text-sm py-2 px-3 focus:outline-none whitespace-nowrap">
+                    <i class="fa-solid fa-download"></i> <span>Unduh</span>
+                  </a>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {{-- Modal konfirmasi setuju --}}
-          <div id="acceptModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}}
-            data-modal-target="acceptModal-{{-- $item->id --}}" {{-- TODO: Uncomment ini --}} data-modal-backdrop="static"
-            tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-3xl max-h-full">
-              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Konfirmasi Persetujuan
-                  </h3>
-                  <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="acceptModal-{{-- $item->id --}}"> {{-- TODO: Uncomment ini --}}
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                  </button>
+                {{-- Modal konfirmasi hapus --}}
+                <div id="deleteModal-{{ $item->id_laporan }}" data-modal-target="deleteModal-{{ $item->id_laporan }}"
+                  data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                  <div class="relative p-4 w-full max-w-2xl max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                          Konfirmasi Penghapusan
+                        </h3>
+                        <button type="button"
+                          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-hide="deleteModal-{{ $item->id_laporan }}">
+                          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                          </svg>
+                          <span class="sr-only">Close modal</span>
+                        </button>
+                      </div>
+                      <div class="p-4 md:p-5 space-y-4">
+                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                          Apakah Anda yakin ingin <strong>menghapus</strong> laporan dengan ID
+                          <strong>{{ $item->id_laporan }}</strong>? Laporan yang telah dihapus <strong>tidak dapat
+                            dipulihkan</strong>.
+                        </p>
+                      </div>
+                      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <form action="{{ route('admin.jalan-peduli.laporan-masuk.destroy', $item->id_laporan) }}" method="POST">
+                          @csrf
+                          @method('POST')
+                          <button type="submit"
+                            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+                        </form>
+                        <button type="button"
+                          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          data-modal-hide="deleteModal-{{ $item->id_laporan }}">
+                          Tidak
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="p-4 md:p-5 space-y-4">
-                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    Apakah Anda ingin menyetujui laporan dengan ID <strong>{{-- $item->id --}}324ini_id324</strong>? {{-- TODO: Uncomment ini --}} Laporan yang telah setujui dapat diproses lebih lanjut melalui halaman <strong>Tindaklanjuti Laporan</strong>.
-                  </p>
+                {{-- Modal konfirmasi setuju --}}
+                <div id="acceptModal-{{ $item->id_laporan }}" data-modal-target="acceptModal-{{ $item->id_laporan }}"
+                  data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                  <div class="relative p-4 w-full max-w-3xl max-h-full">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                          Konfirmasi Persetujuan
+                        </h3>
+                        <button type="button"
+                          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-hide="acceptModal-{{ $item->id_laporan }}">
+                          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                          </svg>
+                          <span class="sr-only">Close modal</span>
+                        </button>
+                      </div>
+                      <div class="p-4 md:p-5 space-y-4">
+                        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                          Apakah Anda ingin <strong>menyetujui</strong> laporan dengan ID <strong>{{ $item->id_laporan }}</strong>?
+                          Laporan yang telah setujui dapat diproses lebih lanjut melalui halaman <strong>Tindaklanjuti
+                            Laporan</strong>.
+                        </p>
+                      </div>
+                      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <form action="{{ route('admin.jalan-peduli.laporan-masuk.update', $item->id_laporan) }}"
+                          method="POST" class="m-0">
+                          @csrf
+                          @method('POST')
+                          <button type="submit"
+                            class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                            @if($isApproved) disabled aria-disabled="true" @endif
+                          >Setuju</button>
+                        </form>
+                        <button type="button"
+                          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                          data-modal-hide="acceptModal-{{ $item->id_laporan }}"> Tidak
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                  <form action="{{-- route('admin.jalan-peduli.laporan-masuk.update', $item->id) --}}" method="POST"> {{-- TODO: Uncomment ini --}}
-                    @csrf
-                    @method('PUT')
-                    <button type="submit"
-                      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Setuju</button>
-                  </form>
-                  <button type="button"
-                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                    data-modal-hide="acceptModal-{{-- $item->id --}}"> {{-- TODO: Uncomment ini --}} Tidak
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{-- @endforeach --}} {{-- TODO: Uncomment ini --}}
+              </td>
+            </tr>
+          @endforeach
         </tbody>
         <tfoot>
           <tr>

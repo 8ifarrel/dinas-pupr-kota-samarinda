@@ -10,5 +10,23 @@ body {
   @apply font-sans;
 }
 
+/* resources/css/app.css atau di dalam <style> */
+.prose a[href*="{{ route('laporan.data') }}"] {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #1e3a8a; /* primary-navy */
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.prose a[href*="{{ route('laporan.data') }}"]:hover {
+    background-color: #1e3a8a/90;
+    transform: translateY(-1px);
+}
+
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
