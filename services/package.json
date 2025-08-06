@@ -1,0 +1,24 @@
+{
+    "name": "server-tensorflow-service",
+    "version": "1.0.0",
+    "description": "Server-side TensorFlow.js prediction service for road damage detection",
+    "main": "predict.js",
+    "scripts": {
+      "predict": "node predict.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "@tensorflow/tfjs": "^4.22.0",
+      "@tensorflow/tfjs-backend-cpu": "^4.22.0",
+      "canvas": "^2.11.2",
+      "node-fetch": "^2.7.0"
+    },
+    "keywords": [
+      "tensorflow",
+      "machine-learning",
+      "road-damage",
+      "prediction"
+    ],
+    "author": "Laravel API Team",
+    "license": "MIT"
+  }
