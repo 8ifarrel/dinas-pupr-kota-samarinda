@@ -110,7 +110,7 @@
           </div>
           <h3 class="text-lg font-semibold text-slate-800">Laporan Masuk</h3>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-start gap-6">
           <div class="relative w-full md:w-60 h-60"><canvas id="laporanMasukChart"></canvas></div>
           <div class="flex flex-col gap-3">
             <div class="flex items-center gap-3 text-sm">
@@ -136,9 +136,9 @@
           </div>
           <h3 class="text-lg font-semibold text-slate-800">Detail Status Laporan Diproses</h3>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-start gap-6">
           <div class="relative w-full md:w-60 h-60"><canvas id="laporanChart"></canvas></div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+          <div class="flex flex-col gap-3">
             <div class="flex items-center gap-3 text-sm">
               <div class="w-4 h-4 rounded-full" style="background-color:#f97316"></div><span
                 class="font-medium text-slate-600">Belum Dikerjakan</span>
@@ -155,7 +155,7 @@
               <div class="w-4 h-4 rounded-full" style="background-color:#a855f7"></div><span
                 class="font-medium text-slate-600">Disposisi</span>
             </div>
-            <div class="flex items-center gap-3 text-sm col-span-full">
+            <div class="flex items-center gap-3 text-sm">
               <div class="w-4 h-4 rounded-full" style="background-color:#22c55e"></div><span
                 class="font-medium text-slate-600">Telah Dikerjakan</span>
             </div>
@@ -174,9 +174,9 @@
           </div>
           <h3 class="text-lg font-semibold text-slate-800">Jenis Kerusakan Dilaporkan</h3>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-start gap-6">
           <div class="relative w-full md:w-60 h-60"><canvas id="jenisKerusakanChart"></canvas></div>
-          <div id="jenisKerusakanLegend" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3"></div>
+          <div id="jenisKerusakanLegend" class="flex flex-col gap-3"></div>
         </div>
       </div>
 
@@ -191,9 +191,9 @@
           </div>
           <h3 class="text-lg font-semibold text-slate-800">Tingkat Kerusakan Dilaporkan</h3>
         </div>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-start gap-6">
           <div class="relative w-full md:w-60 h-60"><canvas id="tingkatKerusakanChart"></canvas></div>
-          <div id="tingkatKerusakanLegend" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3"></div>
+          <div id="tingkatKerusakanLegend" class="flex flex-col gap-3"></div>
         </div>
       </div>
     </div>

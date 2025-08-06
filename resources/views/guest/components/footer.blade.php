@@ -41,10 +41,10 @@
         </a>
       </li>
       <li>
-        <span>
+        <a href="{{ route('guest.jalan-peduli.index') }}">
           <i class="fa-solid fa-thumbtack me-1" style="color: #080808;"></i>
-          Jalan Peduli (soon)
-        </span>
+          Jalan Peduli
+        </a>
       </li>
     </ul>
     <ul
