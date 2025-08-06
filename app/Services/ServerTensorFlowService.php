@@ -16,8 +16,22 @@ class ServerTensorFlowService
 
     public function __construct()
     {
-        $this->nodeScriptPath = base_path('services/predict.js');
-        $this->modelPath = public_path('model/model.json');
+        // Use absolute paths untuk kompatibilitas testing
+        $basePath = 'C:\\Users\\PC-GK\\Documents\\UPTD Programming\\uptdjb';
+        $publicPath = $basePath . '\\public';
+        
+        // Fallback ke Laravel helpers jika tersedia
+        if (function_exists('base_path')) {
+            try {
+                $basePath = base_path();
+                $publicPath = public_path();
+            } catch (\Exception $e) {
+                // Use absolute paths sebagai fallback
+            }
+        }
+        
+        $this->nodeScriptPath = $basePath . '\\services\\predict.js';
+        $this->modelPath = $publicPath . '\\model\\model.json';
     }
 
     /**
@@ -92,9 +106,11 @@ class ServerTensorFlowService
      */
     private function runNodePrediction($imagePath)
     {
-        // Build command untuk execute Node.js script
+        // Build command untuk execute Node.js script dengan path absolut
+        $nodePath = 'C:\\Program Files\\nodejs\\node.exe';
         $command = sprintf(
-            'node %s %s 2>&1',
+            '"%s" %s %s 2>&1',
+            $nodePath,
             escapeshellarg($this->nodeScriptPath),
             escapeshellarg($imagePath)
         );
@@ -143,10 +159,11 @@ class ServerTensorFlowService
     public function isAvailable()
     {
         try {
-            // Check if Node.js is available
+            // Check if Node.js is available dengan path absolut
+            $nodePath = 'C:\\Program Files\\nodejs\\node.exe';
             $output = [];
             $returnCode = 0;
-            exec('node --version 2>&1', $output, $returnCode);
+            exec('"' . $nodePath . '" --version 2>&1', $output, $returnCode);
 
             if ($returnCode !== 0) {
                 return false;
@@ -176,9 +193,10 @@ class ServerTensorFlowService
     private function isNodeAvailable()
     {
         try {
+            $nodePath = 'C:\\Program Files\\nodejs\\node.exe';
             $output = [];
             $returnCode = 0;
-            exec('node --version 2>&1', $output, $returnCode);
+            exec('"' . $nodePath . '" --version 2>&1', $output, $returnCode);
             return $returnCode === 0;
         } catch (\Exception $e) {
             return false;
