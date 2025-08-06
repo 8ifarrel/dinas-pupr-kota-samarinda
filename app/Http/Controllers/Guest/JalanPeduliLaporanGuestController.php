@@ -79,41 +79,46 @@ class JalanPeduliLaporanGuestController extends Controller
     {
         // 1. Verifikasi Captcha di Backend
         $captchaResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret'   => env('TURNSTILE_SECRET'),
+            'secret' => env('TURNSTILE_SECRET'),
             'response' => $request->input('cf-turnstile-response'),
             'remoteip' => $request->ip(),
         ]);
 
         if (!$captchaResponse->json('success')) {
+            Log::error('Captcha verification failed', [
+                'ip' => $request->ip(),
+                'response' => $request->input('cf-turnstile-response'),
+                'captcha_api_response' => $captchaResponse->json(),
+            ]);
             return back()->withErrors(['captcha' => 'Verifikasi keamanan gagal. Silakan coba lagi.'])->withInput();
         }
 
         // 2. Validasi data yang masuk
         $validator = Validator::make($request->all(), [
-            'nama_lengkap'             => 'required|string|max:255',
-            'nomor_ponsel'             => 'required|regex:/^08[0-9]{8,11}$/',
-            'email'                    => 'nullable|email|max:255',
-            'latitude'                 => 'required|numeric',
-            'longitude'                => 'required|numeric',
-            'foto_kerusakan'           => 'required|array|min:1',
-            'foto_kerusakan.*'         => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'kecamatan_id'             => 'required|exists:kecamatan,id',
-            'kelurahan_id'             => 'required|exists:kelurahan,id',
-            'lokasi_kecamatan_id'      => 'required|exists:kecamatan,id',
-            'lokasi_kelurahan_id'      => 'required|exists:kelurahan,id',
-            'rt_pelapor'               => 'nullable|digits_between:1,3',
-            'rw_pelapor'               => 'nullable|digits_between:1,3',
-            'dokumen_pendukung'        => 'nullable|mimes:pdf|max:10240',
-            'rating_kepuasan'          => 'required|integer|min:1|max:5',
-            'jenis_kerusakan'          => 'nullable|string',
-            'tingkat_kerusakan'        => 'nullable|string',
+            'nama_lengkap' => 'required|string|max:255',
+            'nomor_ponsel' => 'required|regex:/^08[0-9]{8,11}$/',
+            'email' => 'nullable|email|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'foto_kerusakan' => 'required|array|min:1',
+            'foto_kerusakan.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'kecamatan_id' => 'required|exists:kecamatan,id',
+            'kelurahan_id' => 'required|exists:kelurahan,id',
+            'lokasi_kecamatan_id' => 'required|exists:kecamatan,id',
+            'lokasi_kelurahan_id' => 'required|exists:kelurahan,id',
+            'rt_pelapor' => 'nullable|digits_between:1,3',
+            'rw_pelapor' => 'nullable|digits_between:1,3',
+            'dokumen_pendukung' => 'nullable|mimes:pdf|max:10240',
+            'rating_kepuasan' => 'required|integer|min:1|max:5',
+            'jenis_kerusakan' => 'nullable|string',
+            'tingkat_kerusakan' => 'nullable|string',
         ], [
             'foto_kerusakan.required' => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
-            'foto_kerusakan.min'      => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
-            'foto_kerusakan.*.image'  => 'File yang diunggah harus berupa gambar.',
-            'foto_kerusakan.*.mimes'  => 'Format gambar harus jpeg, png, jpg, atau webp.',
-            'foto_kerusakan.*.max'    => 'Ukuran setiap foto tidak boleh lebih dari 10MB.',
-            'nomor_ponsel.regex'      => 'Format nomor ponsel tidak valid. Contoh: 081234567890.',
+            'foto_kerusakan.min' => 'Anda wajib mengunggah setidaknya satu foto kerusakan.',
+            'foto_kerusakan.*.image' => 'File yang diunggah harus berupa gambar.',
+            'foto_kerusakan.*.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'foto_kerusakan.*.max' => 'Ukuran setiap foto tidak boleh lebih dari 10MB.',
+            'nomor_ponsel.regex' => 'Format nomor ponsel tidak valid. Contoh: 081234567890.',
         ]);
 
         if ($validator->fails()) {
@@ -151,12 +156,12 @@ class JalanPeduliLaporanGuestController extends Controller
             if ($duplicateLaporan) {
                 $statusName = optional($duplicateLaporan->status)->nama_status ?? 'sedang diproses';
                 $statusMap = [
-                    'pending'            => 'Pending',
-                    'disposisi'          => 'Disposisi',
-                    'telah_disurvei'     => 'Telah Disurvei',
-                    'sedang_dikerjakan'  => 'Sedang Dikerjakan',
-                    'belum_dikerjakan'   => 'Belum Dikerjakan',
-                    'telah_dikerjakan'   => 'Telah Dikerjakan',
+                    'pending' => 'Pending',
+                    'disposisi' => 'Disposisi',
+                    'telah_disurvei' => 'Telah Disurvei',
+                    'sedang_dikerjakan' => 'Sedang Dikerjakan',
+                    'belum_dikerjakan' => 'Belum Dikerjakan',
+                    'telah_dikerjakan' => 'Telah Dikerjakan',
                 ];
                 $statusName = $statusMap[$statusName] ?? ucwords(str_replace('_', ' ', $statusName));
                 $message = "Gagal mengirim laporan. Sudah ada laporan aktif lain (ID: <b>{$duplicateLaporan->id_laporan}</b>) yang dilaporkan pada lokasi dengan koordinat persis sama (status: '<b>{$statusName}</b>'). Mohon pilih lokasi yang berbeda.";
@@ -169,7 +174,7 @@ class JalanPeduliLaporanGuestController extends Controller
 
             // 3. Simpan data Pelapor
             $pelapor = JalanPeduliPelaporController::simpanAtauAmbilPelapor(
-            [
+                [
                     'nama_lengkap' => $request->nama_lengkap,
                     'nomor_ponsel' => $request->nomor_ponsel,
                     'email' => $request->email,
@@ -212,22 +217,22 @@ class JalanPeduliLaporanGuestController extends Controller
 
             // 6. Buat entri Laporan baru
             JalanPeduliLaporan::create([
-                'id_laporan'               => $id_laporan,
-                'nomor_ponsel'             => $pelapor->nomor_ponsel,
+                'id_laporan' => $id_laporan,
+                'nomor_ponsel' => $pelapor->nomor_ponsel,
                 'alamat_lengkap_kerusakan' => $alamat_lengkap_kerusakan,
-                'deskripsi_laporan'        => $deskripsi_laporan,
-                'link_koordinat'           => "https://www.google.com/maps?q={$request->latitude},{$request->longitude}",
-                'latitude'                 => $request->latitude,
-                'longitude'                => $request->longitude,
-                'foto_kerusakan'           => json_encode($foto_filenames),
-                'jenis_kerusakan'          => $request->jenis_kerusakan,
-                'tingkat_kerusakan'        => $request->tingkat_kerusakan,
-                'dokumen_pendukung'        => $dokumenFilename,
-                'kecamatan_id'             => $request->lokasi_kecamatan_id,
-                'kelurahan_id'             => $request->lokasi_kelurahan_id,
-                'feedback'                 => $feedback,
-                'rating_kepuasan'          => $request->rating_kepuasan,
-                'status_id'                => 1, // Status default "pending" atau "masuk"
+                'deskripsi_laporan' => $deskripsi_laporan,
+                'link_koordinat' => "https://www.google.com/maps?q={$request->latitude},{$request->longitude}",
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'foto_kerusakan' => json_encode($foto_filenames),
+                'jenis_kerusakan' => $request->jenis_kerusakan,
+                'tingkat_kerusakan' => $request->tingkat_kerusakan,
+                'dokumen_pendukung' => $dokumenFilename,
+                'kecamatan_id' => $request->lokasi_kecamatan_id,
+                'kelurahan_id' => $request->lokasi_kelurahan_id,
+                'feedback' => $feedback,
+                'rating_kepuasan' => $request->rating_kepuasan,
+                'status_id' => 1, // Status default "pending" atau "masuk"
             ]);
 
             $ipInfo = IpInfoService::getIpInfo();
@@ -236,10 +241,10 @@ class JalanPeduliLaporanGuestController extends Controller
                     'pelapor_id' => $pelapor->id,
                     'laporan_id' => $id_laporan, // Tambahkan ini
                     'ip_address' => $ipInfo['ipAddress'],
-                    'latitude'   => $ipInfo['latitude'] ?? null,
-                    'longitude'  => $ipInfo['longitude'] ?? null,
-                    'kota'       => $ipInfo['cityName'] ?? null,
-                    'provinsi'   => $ipInfo['regionName'] ?? null,
+                    'latitude' => $ipInfo['latitude'] ?? null,
+                    'longitude' => $ipInfo['longitude'] ?? null,
+                    'kota' => $ipInfo['cityName'] ?? null,
+                    'provinsi' => $ipInfo['regionName'] ?? null,
                 ]);
             }
 
@@ -247,7 +252,7 @@ class JalanPeduliLaporanGuestController extends Controller
             $successData = [
                 'message' => "Laporan Anda dengan ID: {$id_laporan} telah berhasil dikirim. Terima kasih!",
                 'id_laporan' => $id_laporan,
-                'download_url'  => route('laporan.download', ['id_laporan' => $id_laporan])
+                'download_url' => route('laporan.download', ['id_laporan' => $id_laporan])
             ];
 
             // 8. Hapus input lama dari session SETELAH berhasil
@@ -280,21 +285,21 @@ class JalanPeduliLaporanGuestController extends Controller
     public function index(Request $request)
     {
         $query = JalanPeduliLaporan::with(['kecamatan', 'kelurahan', 'pelapor', 'status'])
-                ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc');
 
         // [MODIFIKASI] Logika pencarian diperbarui untuk 3 kriteria
         if ($request->filled('search')) {
             $searchTerm = $request->input('search');
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('id_laporan', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%'); // Mencari di alamat kerusakan
+                    ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%'); // Mencari di alamat kerusakan
             });
         }
 
         if ($request->filled('tingkat_kerusakan_filter')) {
             $query->where('tingkat_kerusakan', $request->tingkat_kerusakan_filter);
         }
-        
+
         // Sisa logika filter status tidak berubah
         if ($request->filled('status_filter')) {
             $query->whereHas('status', function ($q) use ($request) {
@@ -313,12 +318,12 @@ class JalanPeduliLaporanGuestController extends Controller
 
         $laporans = $query->paginate(5)->appends($request->query());
 
-        return view('guest.pages.jalan-peduli.laporan.data',[
+        return view('guest.pages.jalan-peduli.laporan.data', [
             'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
             'page_title' => 'Buat Laporan Jalan Peduli'
         ], compact('laporans'));
     }
-    
+
     public function getPublicMapStats(Request $request)
     {
         try {
@@ -377,7 +382,7 @@ class JalanPeduliLaporanGuestController extends Controller
             ], 500);
         }
     }
-    
+
     public function getPublicMapCoordinates(Request $request)
     {
         try {
@@ -389,9 +394,11 @@ class JalanPeduliLaporanGuestController extends Controller
                 return response()->json([]);
             }
 
-            $query = JalanPeduliLaporan::with(['status' => function ($query) {
-                $query->select('status_id', 'nama_status');
-            }])
+            $query = JalanPeduliLaporan::with([
+                'status' => function ($query) {
+                    $query->select('status_id', 'nama_status');
+                }
+            ])
                 ->whereIn('status_id', $statusIds)
                 ->whereNotNull('latitude')->whereNotNull('longitude')
                 ->where('latitude', '!=', '')->where('longitude', '!=', '')
@@ -402,8 +409,8 @@ class JalanPeduliLaporanGuestController extends Controller
                 $searchTerm = $request->input('search');
                 $query->where(function ($q) use ($searchTerm) {
                     $q->where('id_laporan', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('nomor_ponsel', 'like', '%' . $searchTerm . '%')
-                    ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%');
+                        ->orWhere('nomor_ponsel', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('alamat_lengkap_kerusakan', 'like', '%' . $searchTerm . '%');
                 });
             }
 
@@ -434,14 +441,14 @@ class JalanPeduliLaporanGuestController extends Controller
                 }
 
                 return [
-                    'id_laporan'        => $laporan->id_laporan,
-                    'latitude'          => (float) $latitude,
-                    'longitude'         => (float) $longitude,
+                    'id_laporan' => $laporan->id_laporan,
+                    'latitude' => (float) $latitude,
+                    'longitude' => (float) $longitude,
                     'deskripsi_laporan' => $laporan->deskripsi_laporan,
-                    'foto_kerusakan'    => $fotoKerusakanArray,
-                    'status'            => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
+                    'foto_kerusakan' => $fotoKerusakanArray,
+                    'status' => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
                     'tingkat_kerusakan' => $laporan->tingkat_kerusakan,
-                    'created_at'        => $laporan->created_at->toIso8601String(),
+                    'created_at' => $laporan->created_at->toIso8601String(),
                 ];
             });
 
@@ -461,12 +468,14 @@ class JalanPeduliLaporanGuestController extends Controller
             ->get()
             ->map(function ($laporan) {
                 $fotoKerusakanArray = is_string($laporan->foto_kerusakan) ? json_decode($laporan->foto_kerusakan, true) : $laporan->foto_kerusakan;
-                if (!is_array($fotoKerusakanArray)) { $fotoKerusakanArray = []; }
+                if (!is_array($fotoKerusakanArray)) {
+                    $fotoKerusakanArray = [];
+                }
                 return [
                     'id_laporan' => $laporan->id_laporan,
                     'deskripsi_laporan' => $laporan->deskripsi_laporan,
-                    'latitude' => (float)$laporan->latitude,
-                    'longitude' => (float)$laporan->longitude,
+                    'latitude' => (float) $laporan->latitude,
+                    'longitude' => (float) $laporan->longitude,
                     'created_at' => $laporan->created_at->toIso8601String(),
                     'foto_kerusakan' => $fotoKerusakanArray,
                     'status' => $laporan->status ? ['nama_status' => $laporan->status->nama_status] : ['nama_status' => 'Tidak Diketahui'],
