@@ -244,7 +244,7 @@
             <div
             id="publicMap"
             class="h-96 w-full rounded-xl border-2 border-gray-200 shadow-2xl bg-gradient-to-tr from-gray-50 via-white to-blue-100"
-            data-maptiler-token="{{ config('services.maptiler.token', 'YOUR_FALLBACK_MAPTILER_KEY') }}"
+            data-maptiler-token="{{ config('app.maptiler_token', 'YOUR_FALLBACK_MAPTILER_KEY') }}"
             data-map-data-url="{{ route('laporan.public.map.coordinates') }}"
             data-storage-base-url="{{ rtrim(Storage::url(''), '/') }}"
             >

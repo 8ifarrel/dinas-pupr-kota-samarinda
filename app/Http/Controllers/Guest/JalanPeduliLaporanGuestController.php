@@ -79,7 +79,7 @@ class JalanPeduliLaporanGuestController extends Controller
     {
         // 1. Verifikasi Captcha di Backend
         $captchaResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret' => config('app.turnstile_sitekey'),
+            'secret' => config('app.turnstile_secret'),
             'response' => $request->input('cf-turnstile-response'),
             'remoteip' => $request->ip(),
         ]);
