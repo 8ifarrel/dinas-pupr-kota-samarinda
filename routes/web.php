@@ -177,40 +177,40 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
  * Buku Tamu
  */
 
-Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
-	Route::get('/', [BukuTamuGuestController::class, 'index'])
-		->name('guest.buku-tamu.index');
+// Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
+// 	Route::get('/', [BukuTamuGuestController::class, 'index'])
+// 		->name('guest.buku-tamu.index');
 
-	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
-		->name('guest.buku-tamu.create');
+// 	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
+// 		->name('guest.buku-tamu.create');
 
-	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
-		->name('guest.buku-tamu.store');
+// 	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
+// 		->name('guest.buku-tamu.store');
 
-	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
-		->name('guest.buku-tamu.result');
+// 	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
+// 		->name('guest.buku-tamu.result');
 
-	Route::get('/status', [BukuTamuGuestController::class, 'show'])
-		->name('guest.buku-tamu.show');
-});
+// 	Route::get('/status', [BukuTamuGuestController::class, 'show'])
+// 		->name('guest.buku-tamu.show');
+// });
 
 /**
  * Drainase Irigasi
  */
 
-Route::prefix('drainase-irigasi')->group(function () {
-	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
-		->name('guest.drainase-irigasi.index');
+// Route::prefix('drainase-irigasi')->group(function () {
+// 	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
+// 		->name('guest.drainase-irigasi.index');
 
-	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
-		->name('guest.drainase-irigasi.create');
+// 	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
+// 		->name('guest.drainase-irigasi.create');
 
-	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
-		->name('guest.drainase-irigasi.store');
+// 	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
+// 		->name('guest.drainase-irigasi.store');
 
-	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-		->name('guest.drainase-irigasis.how');
-});
+// 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+// 		->name('guest.drainase-irigasis.how');
+// });
 
 /**
  * Jalan Peduli Utama

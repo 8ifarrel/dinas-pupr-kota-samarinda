@@ -1,4 +1,4 @@
-<div class="hidden my-4 px-6 py-4 lg:flex justify-between items-center">
+<div class="hidden px-6 py-2 lg:flex justify-between items-center">
   <figure class="flex flex-col py-2 gap-y-2 gap-x-4 lg:flex-row">
     <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
@@ -218,7 +218,7 @@
                   </li>
                   <li>
                     <a href="{{-- route('guest.sedot-tinja.index') --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja</a>
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja (soon)</a>
                   </li>
                 </div>
               </div>
