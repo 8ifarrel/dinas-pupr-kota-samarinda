@@ -48,7 +48,8 @@
   @endif
 
   {{-- HERO SECTION: Interactive Map + Step Timeline --}}
-  <section class="relative min-h-[calc(100vh-148px)] flex flex-col items-center justify-center overflow-hidden py-8 md:py-12">
+  <section
+    class="relative min-h-[calc(100vh-148px)] flex flex-col items-center justify-center overflow-hidden py-8 md:py-12">
     {{-- Map BG --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
       <img src="{{ asset('image/hero/drainase-irigasi.jpeg') }}" alt="Peta Samarinda"
@@ -56,17 +57,19 @@
       <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/70 via-white/10 to-white"></div>
     </div>
     {{-- Main Card --}}
-    <div class="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
+    <div class="relative z-10 flex flex-col items-center w-full px-6 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
       <div class="text-center">
         <div class="flex justify-center gap-2 mb-2 lg:mb-2 3xl:mb-4">
           <span
             class="inline-block bg-brand-yellow text-brand-blue font-bold text-xs sm:text-sm 2xl:text-base 3xl:text-lg px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow">Layanan</span>
         </div>
-        <h1 class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-4xl 2xl:text-5xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
-          Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> dan Irigasi <br class="hidden lg:inline 2xl:hidden"> di Kota Samarinda
+        <h1
+          class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-4xl 2xl:text-5xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
+          Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> & Irigasi <br
+            class="hidden lg:inline 2xl:hidden"> di Kota Samarinda
         </h1>
         <p
-          class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-xl font-medium text-gray-700 px-1 sm:px-4 md:px-8 lg:max-w-4xl 3xl:max-w-7xl mx-auto">
+          class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-xl font-medium text-gray-700 sm:px-4 md:px-8 lg:max-w-4xl 3xl:max-w-7xl mx-auto">
           Partisipasi Anda membantu mencegah banjir dan kerusakan saluran! Laporkan permasalahan melalui aplikasi
           pengaduan <b>UPTD Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda.
         </p>
@@ -93,8 +96,12 @@
               class="bg-brand-blue text-brand-yellow rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
               <i class="fa-solid fa-users"></i>
             </div>
-            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Siapa yang bisa Melapor?</span>
-            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Seluruh warga Kota Samarinda</span>
+            <span
+              class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Siapa
+              yang bisa Melapor?</span>
+            <span
+              class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Seluruh
+              warga Kota Samarinda</span>
           </div>
           <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
           {{-- Jadwal Petugas Lapangan --}}
@@ -103,8 +110,11 @@
               class="bg-brand-yellow text-brand-blue rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
               <i class="fa-solid fa-helmet-safety"></i>
             </div>
-            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal Petugas Lapangan</span>
-            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur setiap hari Jumat
+            <span
+              class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal
+              Petugas Lapangan</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur
+              setiap hari Jumat
               hari Sabtu & Minggu</span>
           </div>
           <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
@@ -114,8 +124,11 @@
               class="bg-brand-yellow text-brand-blue rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
               <i class="fa-solid fa-briefcase"></i>
             </div>
-            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal Petugas Kantor</span>
-            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur setiap hari Sabtu dan
+            <span
+              class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal
+              Petugas Kantor</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur
+              setiap hari Sabtu dan
               Minggu</span>
           </div>
           <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
@@ -125,8 +138,12 @@
               class="bg-brand-blue text-brand-yellow rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
               <i class="fa-solid fa-list-check"></i>
             </div>
-            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Proses Laporan</span>
-            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Diurutkan berdasarkan waktu laporan
+            <span
+              class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Proses
+              Laporan</span>
+            <span
+              class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Diurutkan
+              berdasarkan waktu laporan
               masuk dan tingkat
               prioritas</span>
           </div>
