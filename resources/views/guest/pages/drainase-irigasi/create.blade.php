@@ -5,7 +5,95 @@
 
 @section('document.body')
   <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
-    <div class="max-w-[940px] mx-auto border shadow-lg p-4 sm:p-8 rounded-xl space-y-8">
+    <!-- Mobile-friendly breadcrumbs with responsive design -->
+    <nav aria-label="Breadcrumb" class="max-w-[940px] mx-auto mb-2.5">
+      <!-- Small/XS Mobile: Back link + Current page only -->
+      <div class="md:hidden flex items-center">
+        <a href="{{ route('guest.drainase-irigasi.index') }}"
+          class="inline-flex items-center text-blue-600 hover:underline">
+          <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
+          <div class="underline">Kembali</div>
+        </a>
+        <span class="mx-2 text-gray-400">|</span>
+        <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
+          Lihat jalur lengkap
+          <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Small Mobile: Truncated breadcrumbs -->
+      <ol class="hidden md:inline-flex items-center text-sm">
+        <li class="inline-flex items-center">
+          <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
+            Beranda
+          </a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 9 4-4-4-4" />
+            </svg>
+            <a href="#" class="text-blue-600 underline">
+              Layanan
+            </a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 9 4-4-4-4" />
+            </svg>
+            <a href="{{ route('guest.drainase-irigasi.index') }}" class="text-blue-600 underline">
+              Pengaduan Drainase dan Irigasi
+            </a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 9 4-4-4-4" />
+            </svg>
+            <span class="text-gray-500 font-medium">
+              <span>Form Pengaduan Drainase dan Irigasi</span>
+            </span>
+          </div>
+        </li>
+      </ol>
+
+      <!-- Mobile breadcrumb dots menu (optional) -->
+      <div class="md:hidden mt-1">
+        <div id="breadcrumb-dropdown"
+          class="hidden z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
+          <ol class="py-2 text-sm text-gray-700">
+            <li>
+              <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
+            </li>
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
+            </li>
+            <li>
+              <a href="{{ route('guest.drainase-irigasi.index') }}" class="block px-4 py-2 hover:bg-gray-100">Pengaduan
+                Drainase dan Irigasi</a>
+            </li>
+            <li>
+              <span class="block px-4 py-2 font-semibold text-gray-600">Form Pengaduan Drainase dan Irigasi</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-[940px] mx-auto border shadow-lg p-4 sm:p-8 rounded-lg space-y-8">
       {{-- Header --}}
       <div class="text-center space-y-2.5">
         <h1 class="text-2xl md:text-3xl font-bold">
@@ -60,7 +148,7 @@
       <form id="stepper-form" method="POST" action="{{ route('guest.drainase-irigasi.store') }}"
         enctype="multipart/form-data" novalidate>
         @csrf
-        
+
         @if ($errors->any())
           <div id="alert-2"
             class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -82,14 +170,15 @@
               class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
               data-dismiss-target="#alert-2" aria-label="Close">
               <span class="sr-only">Close</span>
-              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
               </svg>
             </button>
           </div>
         @endif
-        
+
         {{-- Langkah 1: Data Diri Pelapor --}}
         <div class="stepper-content" data-step="0">
           <div class="space-y-6">
@@ -101,36 +190,44 @@
             </div>
             <div class="space-y-4">
               <div class="space-y-1.5">
-                <label for="pelapor__nama_lengkap" class="block text-sm font-medium text-gray-900 required">Nama Lengkap</label>
+                <label for="pelapor__nama_lengkap" class="block text-sm font-medium text-gray-900 required">Nama
+                  Lengkap</label>
                 <input type="text" id="pelapor__nama_lengkap" name="nama_lengkap"
                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Contoh: Muhammad Farrel Sirah" required>
-                <p id="pelapor__nama_lengkap-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan nama lengkap Anda</p>
+                <p id="pelapor__nama_lengkap-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan nama
+                  lengkap Anda</p>
                 <p class="text-xs text-red-600 mt-1 hidden" id="error_nama_lengkap"></p>
               </div>
               <div class="space-y-1.5">
-                <label for="pelapor__pekerjaan" class="block text-sm font-medium text-gray-900 required">Pekerjaan</label>
+                <label for="pelapor__pekerjaan"
+                  class="block text-sm font-medium text-gray-900 required">Pekerjaan</label>
                 <input type="text" id="pelapor__pekerjaan" name="pekerjaan"
                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Contoh: Pelajar/Mahasiswa" required>
-                <p id="pelapor__pekerjaan-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan pekerjaan Anda</p>
+                <p id="pelapor__pekerjaan-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan
+                  pekerjaan Anda</p>
                 <p class="text-xs text-red-600 mt-1 hidden" id="error_pekerjaan"></p>
               </div>
               <div class="space-y-1.5">
-                <label for="pelapor__alamat" class="block text-sm font-medium text-gray-900 required">Alamat Tempat Tinggal</label>
+                <label for="pelapor__alamat" class="block text-sm font-medium text-gray-900 required">Alamat Tempat
+                  Tinggal</label>
                 <input type="text" id="pelapor__alamat" name="alamat"
                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Contoh: Jalan Haji Achmad Amins, no. 123, RT 18, Kelurahan Gunung Lingai, Kecamatan Sungai Pinang"
                   required>
-                <p id="pelapor__alamat-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan alamat tempat tinggal Anda</p>
+                <p id="pelapor__alamat-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan alamat
+                  tempat tinggal Anda</p>
                 <p class="text-xs text-red-600 mt-1 hidden" id="error_alamat"></p>
               </div>
               <div class="space-y-1.5">
-                <label for="pelapor__nomor_telepon" class="block text-sm font-medium text-gray-900 required">Nomor Telepon</label>
+                <label for="pelapor__nomor_telepon" class="block text-sm font-medium text-gray-900 required">Nomor
+                  Telepon</label>
                 <input type="text" id="pelapor__nomor_telepon" name="nomor_telepon"
                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Contoh: 08123456789" required>
-                <p id="pelapor__nomor_telepon-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan nomor telepon Anda yang dapat dihubungi</p>
+                <p id="pelapor__nomor_telepon-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan
+                  nomor telepon Anda yang dapat dihubungi</p>
                 <p class="text-xs text-red-600 mt-1 hidden" id="error_nomor_telepon"></p>
               </div>
             </div>
@@ -158,8 +255,8 @@
                 <div id="alert-2"
                   class="hidden flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                   role="alert">
-                  <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    viewBox="0 0 20 20">
+                  <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
                     <path
                       d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                   </svg>
@@ -303,34 +400,20 @@
                     <p class="text-xs text-red-600 mt-1 hidden" id="error_nama_jalan"></p>
                   </div>
 
-                  <div class="flex flex-col md:flex-row gap-4">
-                    <div class="space-y-1 flex-1">
-                      <label for="laporan__longitude"
-                        class="block text-sm font-medium text-gray-900 required">Longitude</label>
-                      <input type="text" id="laporan__longitude" name="longitude"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Contoh: 117.123456" required>
-                      <p id="laporan__longitude-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan
-                        longitude lokasi kerusakan</p>
-                      <p class="text-xs text-red-600 mt-1 hidden" id="error_longitude"></p>
-                    </div>
-                    <div class="space-y-1 flex-1">
-                      <label for="laporan__latitude"
-                        class="block text-sm font-medium text-gray-900 required">Latitude</label>
-                      <input type="text" id="laporan__latitude" name="latitude"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Contoh: -0.123456" required>
-                      <p id="laporan__latitude-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan
-                        latitude lokasi kerusakan</p>
-                      <p class="text-xs text-red-600 mt-1 hidden" id="error_latitude"></p>
-                    </div>
-                  </div>
-
-                  <div class="flex gap-1.5 flex-row text-sm sm:text-base">
-                    <i class="fa-solid fa-circle-question text-gray-600 mt-1"></i>
-                    <p class="text-gray-600">
-                      <b>Data yang dipilih secara otomatis tidak akurat?</b> Silakan isi data tersebut secara manual.
+                  <div class="space-y-1.5">
+                    <label for="laporan__koordinat" class="block text-sm font-medium text-gray-900 required">Link Titik
+                      Koordinat Google Maps</label>
+                    <input type="text" id="laporan__koordinat" name="koordinat"
+                      class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Contoh: https://maps.google.com/maps?q=-0.1234567,117.1234567" required>
+                    <p id="laporan__koordinat-explanation" class="text-sm text-gray-500 dark:text-gray-400">
+                      Masukkan link Google Maps yang mengarahkan ke titik lokasi kerusakan.
                     </p>
+                    <p class="text-xs text-red-600 mt-1 hidden" id="error_koordinat"></p>
+
+                    <!-- Hidden fields for longitude and latitude to be submitted to backend -->
+                    <input type="hidden" id="laporan__longitude" name="longitude">
+                    <input type="hidden" id="laporan__latitude" name="latitude">
                   </div>
                 </div>
               </div>
@@ -363,20 +446,12 @@
                       </div>
                       <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
-                          <label for="modal-latitude" class="block text-sm font-medium text-gray-900 required">
-                            Latitude
+                          <label for="modal-koordinat" class="block text-sm font-medium text-gray-900 required">
+                            Link Titik Koordinat Google Maps
                           </label>
-                          <input type="text" id="modal-latitude" name="modal_latitude"
+                          <input type="text" id="modal-koordinat" name="modal_koordinat"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Contoh: -0.123456" required>
-                        </div>
-                        <div class="flex-1">
-                          <label for="modal-longitude" class="block text-sm font-medium text-gray-900 required">
-                            Longitude
-                          </label>
-                          <input type="text" id="modal-longitude" name="modal_longitude"
-                            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Contoh: 117.123456" required>
+                            placeholder="Akan diisi otomatis saat memilih titik pada peta" readonly>
                         </div>
                       </div>
                     </div>
@@ -470,13 +545,13 @@
 
               <div class="space-y-1.5">
                 <label for="laporan__deskripsi" class="block text-sm font-medium text-gray-900 required">Deskripsi
-                  Kerusakan</label>
-                <textarea id="laporan__deskripsi" name="deskripsi_kerusakan"
+                  Pengaduan</label>
+                <textarea id="laporan__deskripsi" name="deskripsi_pengaduan"
                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Contoh: Parit tersumbat sampah, air tidak mengalir dengan baik" rows="3" required></textarea>
                 <p id="laporan__deskripsi-explanation" class="text-sm text-gray-500 dark:text-gray-400">Jelaskan kondisi
-                  kerusakan.</p>
-                <p class="text-xs text-red-600 mt-1 hidden" id="error_deskripsi_kerusakan"></p>
+                  pengaduan.</p>
+                <p class="text-xs text-red-600 mt-1 hidden" id="error_deskripsi_pengaduan"></p>
               </div>
             </div>
             <div class="flex justify-between">
@@ -629,17 +704,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.js"></script>
-  
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Enable/disable submit button based on checkbox
       const agreementCheckbox = document.getElementById('bordered-checkbox-2');
       const submitButton = document.querySelector('.stepper-submit');
-      
+
       if (agreementCheckbox && submitButton) {
         // Initial state - check if checkbox is already checked when page loads
         submitButton.disabled = !agreementCheckbox.checked;
-        
+
         // Listen for changes to checkbox
         agreementCheckbox.addEventListener('change', function() {
           submitButton.disabled = !this.checked;
@@ -802,10 +877,16 @@
         showAlert('alert-4'); // tampilkan loading
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(pos) {
-            const lon = pos.coords.longitude;
-            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude.toFixed(7); // Format to 7 decimal places
+            const lat = pos.coords.latitude.toFixed(7); // Format to 7 decimal places
+
+            // Set hidden fields
             document.getElementById('laporan__longitude').value = lon;
             document.getElementById('laporan__latitude').value = lat;
+
+            // Generate and set Google Maps URL
+            const mapsUrl = generateGoogleMapsUrl(lat, lon);
+            document.getElementById('laporan__koordinat').value = mapsUrl;
 
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
               .then(res => res.json())
@@ -860,9 +941,15 @@
           map.on('click', function(e) {
             if (marker) map.removeLayer(marker);
             marker = L.marker(e.latlng).addTo(map);
-            document.getElementById('modal-longitude').value = e.latlng.lng;
-            document.getElementById('modal-latitude').value = e.latlng.lat;
+            const lat = e.latlng.lat.toFixed(7);
+            const lng = e.latlng.lng.toFixed(7);
+
+            // Generate Google Maps URL for modal
+            const mapsUrl = generateGoogleMapsUrl(lat, lng);
+            document.getElementById('modal-koordinat').value = mapsUrl;
+
             mapSelectedLatLng = e.latlng; // simpan latlng, belum fetch reverse
+            document.getElementById('btn-set-location-from-map').disabled = false;
           });
         }
         setTimeout(() => map.invalidateSize(), 300);
@@ -874,16 +961,24 @@
           showMapModal();
         });
       }
+
       const btnSetLocationFromMap = document.getElementById('btn-set-location-from-map');
       if (btnSetLocationFromMap) {
         btnSetLocationFromMap.addEventListener('click', function() {
-          document.getElementById('laporan__longitude').value = document.getElementById('modal-longitude').value;
-          document.getElementById('laporan__latitude').value = document.getElementById('modal-latitude').value;
+          // Set the main form Google Maps URL field
+          document.getElementById('laporan__koordinat').value = document.getElementById('modal-koordinat').value;
+
+          // Set the hidden longitude/latitude fields
+          const lat = mapSelectedLatLng.lat.toFixed(7);
+          const lng = mapSelectedLatLng.lng.toFixed(7);
+          document.getElementById('laporan__longitude').value = lng;
+          document.getElementById('laporan__latitude').value = lat;
+
           // Mulai proses reverse geocoding setelah tombol ditekan
           if (mapSelectedLatLng) {
             showAlert('alert-4'); // tampilkan loading
             fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${mapSelectedLatLng.lat}&lon=${mapSelectedLatLng.lng}`
+                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
               )
               .then(res => res.json())
               .then(data => {
@@ -945,63 +1040,60 @@
       // === STEPPER VALIDATION LOGIC ===
       function showError(input, message) {
         if (!input) return;
-        
+
         // Add only a simple red border - no rings or backgrounds
         input.classList.add('border-red-500');
-        
+
         // No special styling for selects and textareas anymore
         // Remove any existing ring classes to ensure consistency
         input.classList.remove('ring', 'ring-1', 'ring-2', 'ring-red-300', 'ring-red-400');
-        
+
         if (input.type === 'file') {
           const label = input.closest('label');
           if (label) label.classList.add('border-red-500');
         }
-        
+
         // Find the error message element - handle special cases first
         let errorElement = null;
-        
+
         // Special cases
         if (input.id === 'laporan__kecamatan' || input.name === 'kecamatan_id') {
           errorElement = document.getElementById('error_kecamatan_id');
-        } 
-        else if (input.id === 'laporan__kelurahan' || input.name === 'kelurahan_id') {
+        } else if (input.id === 'laporan__kelurahan' || input.name === 'kelurahan_id') {
           errorElement = document.getElementById('error_kelurahan_id');
-        }
-        else if (input.id === 'laporan__detail_lokasi') {
+        } else if (input.id === 'laporan__detail_lokasi') {
           errorElement = document.getElementById('error_detail_lokasi');
+        } else if (input.id === 'laporan__deskripsi') {
+          errorElement = document.getElementById('error_deskripsi_pengaduan');
         }
-        else if (input.id === 'laporan__deskripsi') {
-          errorElement = document.getElementById('error_deskripsi_kerusakan');
-        }
+
         // Standard cases
         else if (input.name && document.getElementById('error_' + input.name)) {
           errorElement = document.getElementById('error_' + input.name);
-        }
-        else if (input.id && document.getElementById('error_' + input.id)) {
+        } else if (input.id && document.getElementById('error_' + input.id)) {
           errorElement = document.getElementById('error_' + input.id);
         }
-        
+
         // Display the error message
         if (errorElement) {
           errorElement.textContent = message;
           errorElement.classList.remove('hidden');
         }
       }
-      
+
       function clearError(input) {
         if (!input) return;
-        
+
         // Remove all error styling completely
         input.classList.remove('border-red-500', 'bg-red-50');
-        
+
         // Remove any ring classes that might be present
         input.classList.remove('ring', 'ring-1', 'ring-2', 'ring-red-300', 'ring-red-400');
-        
+
         // Restore default border color
         input.classList.remove('border-red-500');
         input.classList.add('border-gray-300');
-        
+
         if (input.type === 'file') {
           const label = input.closest('label');
           if (label) {
@@ -1009,31 +1101,28 @@
             label.classList.add('border-gray-300');
           }
         }
-        
+
         // Find the error message element - handle special cases first
         let errorElement = null;
-        
+
         // Special cases
         if (input.id === 'laporan__kecamatan' || input.name === 'kecamatan_id') {
           errorElement = document.getElementById('error_kecamatan_id');
-        } 
-        else if (input.id === 'laporan__kelurahan' || input.name === 'kelurahan_id') {
+        } else if (input.id === 'laporan__kelurahan' || input.name === 'kelurahan_id') {
           errorElement = document.getElementById('error_kelurahan_id');
-        }
-        else if (input.id === 'laporan__detail_lokasi') {
+        } else if (input.id === 'laporan__detail_lokasi') {
           errorElement = document.getElementById('error_detail_lokasi');
+        } else if (input.id === 'laporan__deskripsi') {
+          errorElement = document.getElementById('error_deskripsi_pengaduan');
         }
-        else if (input.id === 'laporan__deskripsi') {
-          errorElement = document.getElementById('error_deskripsi_kerusakan');
-        }
+
         // Standard cases
         else if (input.name && document.getElementById('error_' + input.name)) {
           errorElement = document.getElementById('error_' + input.name);
-        }
-        else if (input.id && document.getElementById('error_' + input.id)) {
+        } else if (input.id && document.getElementById('error_' + input.id)) {
           errorElement = document.getElementById('error_' + input.id);
         }
-        
+
         // Hide the error message
         if (errorElement) {
           errorElement.textContent = '';
@@ -1086,11 +1175,10 @@
           const kec = document.getElementById('laporan__kecamatan');
           const kel = document.getElementById('laporan__kelurahan');
           const jalan = document.getElementById('laporan__nama_jalan');
-          const long = document.getElementById('laporan__longitude');
-          const lat = document.getElementById('laporan__latitude');
+          const koordinat = document.getElementById('laporan__koordinat');
           const detail = document.getElementById('laporan__detail_lokasi');
           const desk = document.getElementById('laporan__deskripsi');
-          
+
           // Kecamatan validation - improved messaging
           if (!kec.value || kec.selectedIndex === 0) {
             showError(kec, 'Kecamatan wajib dipilih.');
@@ -1098,7 +1186,7 @@
           } else {
             clearError(kec);
           }
-          
+
           // Kelurahan validation - improved messaging
           if (!kel.value || kel.selectedIndex === 0) {
             showError(kel, 'Kelurahan wajib dipilih.');
@@ -1106,7 +1194,7 @@
           } else {
             clearError(kel);
           }
-          
+
           // Nama jalan
           if (!jalan.value.trim()) {
             showError(jalan, 'Nama jalan wajib diisi.');
@@ -1114,29 +1202,26 @@
           } else {
             clearError(jalan);
           }
-          
-          // Longitude
-          if (!long.value.trim()) {
-            showError(long, 'Longitude wajib diisi.');
-            valid = false;
-          } else if (!/^[-+]?\d{1,3}\.\d{1,10}$/.test(long.value.trim())) {
-            showError(long, 'Format longitude tidak valid. Contoh: 117.123456');
+
+          // Koordinat validation - validate Google Maps link and extract coordinates
+          if (!koordinat.value.trim()) {
+            showError(koordinat, 'Link titik koordinat wajib diisi.');
             valid = false;
           } else {
-            clearError(long);
+            const coords = parseGoogleMapsUrl(koordinat.value.trim());
+            if (!coords) {
+              showError(koordinat,
+                'Format link Google Maps tidak valid. Contoh: https://maps.google.com/maps?q=-0.1234567,117.1234567'
+              );
+              valid = false;
+            } else {
+              // Set hidden fields when valid
+              document.getElementById('laporan__longitude').value = coords.longitude.toFixed(7);
+              document.getElementById('laporan__latitude').value = coords.latitude.toFixed(7);
+              clearError(koordinat);
+            }
           }
-          
-          // Latitude
-          if (!lat.value.trim()) {
-            showError(lat, 'Latitude wajib diisi.');
-            valid = false;
-          } else if (!/^[-+]?\d{1,3}\.\d{1,10}$/.test(lat.value.trim())) {
-            showError(lat, 'Format latitude tidak valid. Contoh: -0.123456');
-            valid = false;
-          } else {
-            clearError(lat);
-          }
-          
+
           // Detail lokasi - explicit validation
           if (!detail.value.trim()) {
             showError(detail, 'Detail lokasi wajib diisi.');
@@ -1144,15 +1229,15 @@
           } else {
             clearError(detail);
           }
-          
-          // Deskripsi kerusakan - explicit validation
+
+          // Deskripsi pengaduan - explicit validation
           if (!desk.value.trim()) {
-            showError(desk, 'Deskripsi kerusakan wajib diisi.');
+            showError(desk, 'Deskripsi pengaduan wajib diisi.');
             valid = false;
           } else {
             clearError(desk);
           }
-          
+
           // Foto (minimal 1)
           const fotoInputs = document.querySelectorAll('input[name="laporan__foto_input[]"]');
           let fotoValid = false;
@@ -1190,7 +1275,7 @@
           const saran = document.getElementById('skm__saran');
           const cek = document.getElementById('bordered-checkbox-2');
           let valid2 = true;
-          
+
           // Rating validation - show specific error
           const ratingError = document.getElementById('error_skm__rating');
           if (!rating) {
@@ -1208,7 +1293,7 @@
             const ratingContainer = document.querySelector('.flex.items-center.me-4').parentNode;
             ratingContainer.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2');
           }
-          
+
           // Kritik validation - use existing showError/clearError functions
           if (!kritik.value.trim()) {
             showError(kritik, 'Kritik wajib diisi.');
@@ -1217,7 +1302,7 @@
           } else {
             clearError(kritik);
           }
-          
+
           // Saran validation - use existing showError/clearError functions
           if (!saran.value.trim()) {
             showError(saran, 'Saran wajib diisi.');
@@ -1226,7 +1311,7 @@
           } else {
             clearError(saran);
           }
-          
+
           // Checkbox validation
           const checkboxError = document.getElementById('error_bordered-checkbox');
           if (!cek.checked) {
@@ -1244,7 +1329,7 @@
             const checkboxContainer = cek.closest('.flex.items-center');
             checkboxContainer.classList.remove('border-red-500');
           }
-          
+
           // Still show general alert if any validation fails
           if (!valid2) {
             showAlert('alert-2', 'Mohon isi semua data pada langkah ini.');
@@ -1252,7 +1337,7 @@
         }
         return valid;
       }
-      
+
       // Stepper next/prev logic override
       const stepperContents = Array.from(document.querySelectorAll('.stepper-content'));
       let currentStep = 0;
@@ -1335,7 +1420,7 @@
       document.getElementById('stepper-form').addEventListener('submit', function(e) {
         // Always prevent the default submission first to use our custom validation
         e.preventDefault();
-        
+
         // Validate the current step (likely step 2)
         if (validateStep(currentStep)) {
           // If we're not on the final step, move to it
@@ -1344,7 +1429,7 @@
             showStepperStep(currentStep);
             return;
           }
-          
+
           // If all steps validate, submit the form
           if (validateStep(0) && validateStep(1) && validateStep(2)) {
             this.submit();
@@ -1354,7 +1439,7 @@
         }
       });
     });
-    
+
     // Implementasi Foto Kerusakan
     document.addEventListener('DOMContentLoaded', function() {
       // Global variables
@@ -1375,7 +1460,7 @@
             wrapper._fotoViewer.destroy();
             wrapper._fotoViewer = null;
           }
-          
+
           wrapper._fotoViewer = new Viewer(wrapper, {
             navbar: false,
             toolbar: true,
@@ -1387,10 +1472,10 @@
             transition: true,
             fullscreen: false,
             filter(image) {
-              return image.classList.contains('laporan__foto_preview') && 
-                    !image.classList.contains('hidden') && 
-                    image.src && 
-                    image.src !== '#';
+              return image.classList.contains('laporan__foto_preview') &&
+                !image.classList.contains('hidden') &&
+                image.src &&
+                image.src !== '#';
             }
           });
         }
@@ -1446,9 +1531,9 @@
         placeholder.classList.add('hidden');
         removeBtn.classList.remove('hidden');
         editBtn.classList.remove('hidden');
-        
+
         pushFotoHistory(item, src);
-        
+
         // Update viewer
 
         if (item._fotoViewer) item._fotoViewer.update();
@@ -1461,13 +1546,13 @@
         const removeBtn = item.querySelector('.remove_laporan__foto_btn');
         const editBtn = item.querySelector('.edit_laporan__foto_btn');
         const fileInput = item.querySelector('.laporan__foto_file_input');
-        
+
         preview.src = '#';
         preview.classList.add('hidden');
         placeholder.classList.remove('hidden');
         removeBtn.classList.add('hidden');
         editBtn.classList.add('hidden');
-        
+
         // Clear file input
         fileInput.value = '';
       }
@@ -1475,21 +1560,21 @@
       // Create new photo input item
       function createFotoInputItem() {
         const template = document.querySelector('.laporan__foto_item_wrapper').cloneNode(true);
-        
+
         // Reset the cloned element
         const preview = template.querySelector('.laporan__foto_preview');
         const placeholder = template.querySelector('.laporan__foto_placeholder');
         const fileInput = template.querySelector('.laporan__foto_file_input');
         const removeBtn = template.querySelector('.remove_laporan__foto_btn');
         const editBtn = template.querySelector('.edit_laporan__foto_btn');
-        
+
         preview.src = '#';
         preview.classList.add('hidden');
         placeholder.classList.remove('hidden');
         removeBtn.classList.add('hidden');
         editBtn.classList.add('hidden');
         fileInput.value = '';
-        
+
         return template;
       }
 
@@ -1503,7 +1588,7 @@
           initFotoViewer(newItem);
           updateAddFotoBtnVisibility();
         }
-        
+
         // Remove photo button
         if (e.target.closest('.remove_laporan__foto_btn')) {
           e.preventDefault();
@@ -1523,22 +1608,22 @@
             }
           }
         }
-        
+
         // Revert photo button
         if (e.target.closest('.revert_laporan__foto_btn')) {
           e.preventDefault();
           const item = e.target.closest('.laporan__foto_item_wrapper');
           const store = getFotoHistoryStore(item);
-          
+
           if (store.pointer > 0) {
             store.pointer--;
             const prevSrc = store.history[store.pointer];
-            
+
             const preview = item.querySelector('.laporan__foto_preview');
             const placeholder = item.querySelector('.laporan__foto_placeholder');
             const removeBtn = item.querySelector('.remove_laporan__foto_btn');
             const editBtn = item.querySelector('.edit_laporan__foto_btn');
-            
+
             if (prevSrc && prevSrc !== '#') {
               preview.src = prevSrc;
               preview.classList.remove('hidden');
@@ -1548,22 +1633,22 @@
             } else {
               resetFotoPreview(item);
             }
-            
+
             updateRevertFotoBtn(item);
           }
         }
-        
+
         // Edit (crop) photo button
         if (e.target.closest('.edit_laporan__foto_btn')) {
           e.preventDefault();
           const item = e.target.closest('.laporan__foto_item_wrapper');
           const preview = item.querySelector('.laporan__foto_preview');
-          
+
           if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
             imageToCropFoto.src = preview.src;
             cropperModalFoto.classList.remove('hidden');
             currentFotoInput = item.querySelector('.laporan__foto_file_input');
-            
+
             if (cropperFoto) cropperFoto.destroy();
             cropperFoto = new Cropper(imageToCropFoto, {
               viewMode: 1,
@@ -1571,13 +1656,13 @@
             });
           }
         }
-        
+
         // When clicking on a preview image, open the viewer
         const preview = e.target.closest('.laporan__foto_preview');
         if (preview && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
           e.preventDefault();
           e.stopPropagation();
-          
+
           const item = preview.closest('.laporan__foto_item_wrapper');
           if (item && item._fotoViewer) {
             item._fotoViewer.show();
@@ -1592,12 +1677,12 @@
         if (fileInput && fileInput.files && fileInput.files[0]) {
           lastFotoFile = fileInput.files[0];
           currentFotoInput = fileInput;
-          
+
           const reader = new FileReader();
           reader.onload = function(ev) {
             imageToCropFoto.src = ev.target.result;
             cropperModalFoto.classList.remove('hidden');
-            
+
             if (cropperFoto) cropperFoto.destroy();
             cropperFoto = new Cropper(imageToCropFoto, {
               viewMode: 1,
@@ -1618,7 +1703,7 @@
           }
         });
       }
-      
+
       // Initialize visibility
       updateAddFotoBtnVisibility();
 
@@ -1629,12 +1714,12 @@
             const croppedFile = new File([blob], lastFotoFile ? lastFotoFile.name : 'cropped_foto.jpg', {
               type: blob.type
             });
-            
+
             // Update the file input with cropped file
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(croppedFile);
             currentFotoInput.files = dataTransfer.files;
-            
+
             // Update preview
             const item = currentFotoInput.closest('.laporan__foto_item_wrapper');
             const reader = new FileReader();
@@ -1642,7 +1727,7 @@
               setFotoPreviewAndHistory(item, ev.target.result);
             };
             reader.readAsDataURL(croppedFile);
-            
+
             // Close modal and cleanup
             cropperFoto.destroy();
             cropperFoto = null;
@@ -1663,6 +1748,99 @@
       });
     });
 
-    // ...existing code for stepper validation logic...
+    // Helper function to parse Google Maps URL and extract coordinates
+    function parseGoogleMapsUrl(url) {
+      try {
+        // Try to extract coordinates from various Google Maps URL formats
+        // Format 1: https://www.google.com/maps?q=-0.1234567,117.1234567
+        // Format 2: https://maps.google.com/?q=-0.1234567,117.1234567
+        // Format 3: https://maps.app.goo.gl/abc123 (shortened URL)
+        // Format 4: https://goo.gl/maps/abc123 (shortened URL)
+        // Format 5: https://www.google.com/maps/place/Samarinda/.../@-0.1234567,117.1234567,15z/...
+
+        // First, try the simple q parameter format
+        let qMatch = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+        if (qMatch) {
+          return {
+            latitude: parseFloat(qMatch[1]),
+            longitude: parseFloat(qMatch[2])
+          };
+        }
+
+        // Try the @lat,lon format used in place URLs
+        let atMatch = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+        if (atMatch) {
+          return {
+            latitude: parseFloat(atMatch[1]),
+            longitude: parseFloat(atMatch[2])
+          };
+        }
+
+        // If direct extraction failed, look for any pair of coordinates in the URL
+        let coordsMatch = url.match(/(-?\d+\.\d{7}),(-?\d+\.\d{7})/);
+        if (coordsMatch) {
+          return {
+            latitude: parseFloat(coordsMatch[1]),
+            longitude: parseFloat(coordsMatch[2])
+          };
+        }
+
+        // If URL doesn't contain coordinates, see if it's just raw coordinates
+        // Format: -0.1234567,117.1234567
+        let rawMatch = url.match(/^(-?\d+\.\d{7}),(-?\d+\.\d{7})$/);
+        if (rawMatch) {
+          return {
+            latitude: parseFloat(rawMatch[1]),
+            longitude: parseFloat(rawMatch[2])
+          };
+        }
+
+        return null;
+      } catch (error) {
+        console.error("Error parsing Google Maps URL:", error);
+        return null;
+      }
+    }
+
+    // Function to generate Google Maps URL from coordinates
+    function generateGoogleMapsUrl(lat, lon) {
+      return `https://maps.google.com/maps?q=${lat},${lon}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update hidden longitude/latitude when Google Maps URL changes
+      document.getElementById('laporan__koordinat').addEventListener('input', function() {
+        const url = this.value.trim();
+        const coords = parseGoogleMapsUrl(url);
+
+        if (coords) {
+          document.getElementById('laporan__longitude').value = coords.longitude.toFixed(7);
+          document.getElementById('laporan__latitude').value = coords.latitude.toFixed(7);
+          clearError(this);
+        } else {
+          // Don't clear values immediately to allow user to finish typing
+          // But we could add visual feedback that the URL isn't valid yet
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Breadcrumb dropdown functionality for mobile
+      const breadcrumbButton = document.getElementById('breadcrumb-menu-button');
+      const breadcrumbDropdown = document.getElementById('breadcrumb-dropdown');
+
+      if (breadcrumbButton && breadcrumbDropdown) {
+        breadcrumbButton.addEventListener('click', function() {
+          breadcrumbDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!breadcrumbButton.contains(e.target) && !breadcrumbDropdown.contains(e.target)) {
+            breadcrumbDropdown.classList.add('hidden');
+          }
+        });
+      }
+    });
   </script>
 @endsection

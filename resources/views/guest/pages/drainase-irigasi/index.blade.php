@@ -5,7 +5,9 @@
   <link rel="preconnect" href="https://lottie.host" crossorigin>
 
   @vite('resources/css/sweetalert2.css')
+@endsection
 
+@section('document.body')
   @if (session('success'))
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -45,90 +47,95 @@
     </script>
   @endif
 
-  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer>
-  </script>
-
-  @vite('resources/js/sweetalert2.js')
-@endsection
-
-@section('document.body')
-  <section class="lg:p-5">
-    <div
-      class="bg-center bg-no-repeat bg-cover bg-gray-600 bg-blend-multiply lg:rounded-2xl flex items-center h-[calc(100vh-100px)] lg:h-[calc(100vh-188px)] justify-center"
-      style="background-image: url('{{ asset('image/hero/drainase-irigasi.jpeg') }}')">
-      <div class="px-4 mx-auto max-w-screen-xl text-center">
-        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Laporkan
-          Masalah Drainase & Irigasi <br> di Samarinda</h1>
-        <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Bantu kami menjaga sistem drainase
-          dan irigasi agar tetap berfungsi. Laporkan kendala di lingkungan Anda melalui formulir ini.</p>
-        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-          <a href="#"
-            class="inline-flex justify-center items-center py-3 px-5 text-base font-semibold text-center text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-black">
-            Buat Pengaduan
-            <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9" />
-            </svg>
-          </a>
-          <a href="#"
-            class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-            Cek Status Pengaduan
-          </a>
+  {{-- HERO SECTION: Interactive Map + Step Timeline --}}
+  <section class="relative min-h-[calc(100vh-148px)] flex flex-col items-center justify-center overflow-hidden py-8 md:py-12">
+    {{-- Map BG --}}
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <img src="{{ asset('image/hero/drainase-irigasi.jpeg') }}" alt="Peta Samarinda"
+        class="w-full h-full object-cover opacity-25 blur-[2px]" />
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/70 via-white/10 to-white"></div>
+    </div>
+    {{-- Main Card --}}
+    <div class="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
+      <div class="text-center">
+        <div class="flex justify-center gap-2 mb-2 lg:mb-2 3xl:mb-4">
+          <span
+            class="inline-block bg-brand-yellow text-brand-blue font-bold text-xs sm:text-sm 2xl:text-base 3xl:text-lg px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow">Layanan</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-repeat bg-[#E5E0DC] bg-blend-color-dodge"
-      style="background-image: url('{{ asset('image/element/kesemutan.svg') }}');">
-    </div>
-
-    <div class="relative py-8 lg:py-16 space-y-4 lg:space-y-8 z-10">
-      <div class=" mx-auto max-w-screen-xl text-center space-y-4 lg:space-y-8 px-8 lg:px-0">
-        <h2 class="mb-4 text-3xl font-semibold tracking-tight leading-none md:text-4xl lg:text-5xl">
-          Tentang Aplikasi Pengaduan
-        </h2>
-        <p class="text-lg font-normal lg:text-xl sm:px-16 lg:px-48">
-          Aplikasi ini adalah layanan digital dari <strong>UPTD Pemeliharaan Saluran Drainase dan Irigasi</strong>, Dinas
-          PUPR Kota Samarinda. Masyarakat dapat melaporkan kerusakan atau gangguan drainase dan irigasi secara langsung
-          untuk ditindaklanjuti oleh petugas kami.
+        <h1 class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-4xl 2xl:text-5xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
+          Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> dan Irigasi <br class="hidden lg:inline 2xl:hidden"> di Kota Samarinda
+        </h1>
+        <p
+          class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-xl font-medium text-gray-700 px-1 sm:px-4 md:px-8 lg:max-w-4xl 3xl:max-w-7xl mx-auto">
+          Partisipasi Anda membantu mencegah banjir dan kerusakan saluran! Laporkan permasalahan melalui aplikasi
+          pengaduan <b>UPTD Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda.
         </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+          <a href="{{ route('guest.drainase-irigasi.create') }}"
+            class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-semibold text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue shadow-lg transition">
+            Buat Pengaduan
+            <i class="fa-solid fa-paper-plane ms-1.5"></i>
+          </a>
+          <a href="{{ route('guest.drainase-irigasi.show') }}"
+            class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-brand-blue rounded-lg border border-brand-blue hover:bg-brand-blue hover:text-white shadow-lg transition">
+            Lihat Semua Pengaduan
+          </a>
+        </div>
       </div>
 
-      <div
-        class="flex  flex-col lg:flex-row justify-center border-t border-black border-dashed font-semibold text-brand-blue text-lg lg:px-24 text-center lg:text-start">
-        <div class="flex-1 py-5 lg:pt-5 lg:pb-0 space-y-1.5 px-8 lg:px-0">
-          <i class="fa-solid fa-users text-6xl lg:w-[60px]"></i>
-          <h3>Siapa yang Bisa Melapor?</h3>
-          <p class="text-black text-base font-medium">
-            Seluruh warga Kota Samarinda
-          </p>
-        </div>
-
+      {{-- Step Timeline --}}
+      <div class="w-full flex flex-col items-center mt-8 sm:mt-10 md:mt-12 lg:mt-0">
         <div
-          class="flex-1 py-5 lg:pt-5 lg:pb-0 space-y-1.5 border-y lg:border-x lg:border-y-0 border-black border-dashed lg:mx-10 px-8 lg:px-10">
-          <i class="fa-solid fa-clock text-6xl lg:w-[60px]"></i>
-          <h3>Jadwal Pekerjaan</h3>
-          <ul class="lg:list-disc text-black text-base font-medium lg:pl-5">
-            <li>Petugas lapangan libur setiap <br class="block lg:hidden"> hari Jumat</li>
-            <li>Petugas kantor libur setiap <br class="block lg:hidden"> hari Sabtu & Minggu</li>
-          </ul>
-        </div>
-
-        <div class="flex-1 pt-5 space-y-1.5 px-8 lg:px-0">
-          <i class="fa-solid fa-list-check text-6xl lg:w-[60px]"></i>
-          <h3>Proses Laporan</h3>
-          <p class="text-black text-sm lg:text-base font-medium">
-            Diurutkan berdasarkan tanggal laporan masuk dan tingkat prioritas
-          </p>
+          class="flex flex-col sm:grid lg:flex sm:grid-cols-2 items-center justify-center sm:gap-x-4 sm:gap-y-6 lg:flex-row lg:gap-2 xl:gap-6 3xl:gap-8 w-full max-w-[240px] sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 3xl:max-w-6xl text-center">
+          {{-- Siapa yang bisa Melapor? --}}
+          <div class="flex flex-col items-center group flex-1 mb-5 sm:mb-0">
+            <div
+              class="bg-brand-blue text-brand-yellow rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Siapa yang bisa Melapor?</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Seluruh warga Kota Samarinda</span>
+          </div>
+          <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
+          {{-- Jadwal Petugas Lapangan --}}
+          <div class="flex flex-col items-center group flex-1 mb-5 sm:mb-0">
+            <div
+              class="bg-brand-yellow text-brand-blue rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
+              <i class="fa-solid fa-helmet-safety"></i>
+            </div>
+            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal Petugas Lapangan</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur setiap hari Jumat
+              hari Sabtu & Minggu</span>
+          </div>
+          <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
+          {{-- Jadwal Petugas Kantor --}}
+          <div class="flex flex-col items-center group flex-1 mb-5 sm:mb-0">
+            <div
+              class="bg-brand-yellow text-brand-blue rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Jadwal Petugas Kantor</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Libur setiap hari Sabtu dan
+              Minggu</span>
+          </div>
+          <div class="hidden lg:block h-1 w-8 lg:w-10 xl:w-12 bg-brand-yellow rounded-full"></div>
+          {{-- Proses Laporan --}}
+          <div class="flex flex-col items-center group flex-1">
+            <div
+              class="bg-brand-blue text-brand-yellow rounded-full w-10 h-10 sm:w-10 sm:h-10 lg:w-12 lg:h-12 2xl:w-16 2xl:h-16 flex items-center justify-center text-lg sm:text-lg lg:text-xl 2xl:text-3xl shadow-lg group-hover:scale-110 transition">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <span class="mt-1 sm:mt-2 2xl:mt-3 font-bold text-brand-blue text-sm sm:text-sm lg:text-base 2xl:text-lg">Proses Laporan</span>
+            <span class="text-gray-700 text-xs sm:text-xs lg:text-sm 2xl:text-base text-center mt-0.5 2xl:mt-1 px-2">Diurutkan berdasarkan waktu laporan
+              masuk dan tingkat
+              prioritas</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="py-8 lg:py-16 px-8 lg:px-16">
+  <section class="py-6 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-16">
     <div class="text-center space-y-1.5 pb-5 lg:pb-10">
       <h2 class="text-3xl lg:text-4xl font-bold">Statistik Pengaduan</h2>
       <p class="text-gray-600">Data terakhir diperbarui pada {{ $tanggal_terakhir_update }}</p>
@@ -185,7 +192,8 @@
             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
               <li><a href="#" data-tahun="{{ $tahun_statistik }}"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a>
+              </li>
               <!-- Tambahkan tahun lain jika perlu -->
             </ul>
           </div>
@@ -194,7 +202,8 @@
 
       <div class="w-full h-[250px] md:h-[350px] relative">
         <canvas id="statistikChart" class="w-full h-full"></canvas>
-        <div id="nodataStatistikChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+        <div id="nodataStatistikChart"
+          class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
           Tidak ada data
         </div>
       </div>
@@ -225,7 +234,7 @@
             <div id="dropdownLaporanDiprosesBulanMenu"
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                @foreach($periode_bulan as $idx => $b)
+                @foreach ($periode_bulan as $idx => $b)
                   <li>
                     <a href="#" data-bulan="{{ $b['bulan'] }}" data-idx="{{ $idx }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $b['label'] }}</a>
@@ -245,7 +254,8 @@
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                 <li><a href="#" data-tahun="{{ $tahun_statistik }}"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -254,7 +264,8 @@
         <div>
           <div class="lg:max-w-full lg:max-h-[250px] relative">
             <canvas id="laporanDiprosesChart" class="lg:max-w-full lg:h-auto"></canvas>
-            <div id="nodataLaporanDiprosesChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+            <div id="nodataLaporanDiprosesChart"
+              class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
               Tidak ada data
             </div>
           </div>
@@ -284,7 +295,7 @@
             <div id="dropdownJenisLaporanBulanMenu"
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                @foreach($periode_bulan as $idx => $b)
+                @foreach ($periode_bulan as $idx => $b)
                   <li>
                     <a href="#" data-bulan="{{ $b['bulan'] }}" data-idx="{{ $idx }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $b['label'] }}</a>
@@ -304,7 +315,8 @@
               class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border shadow dark:bg-gray-700">
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                 <li><a href="#" data-tahun="{{ $tahun_statistik }}"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a></li>
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $tahun_statistik }}</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -313,7 +325,8 @@
         <div>
           <div class="lg:max-w-full lg:max-h-[250px] relative">
             <canvas id="jenisLaporanChart" class="lg:max-w-full lg:h-auto"></canvas>
-            <div id="nodataJenisLaporanChart" class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
+            <div id="nodataJenisLaporanChart"
+              class="absolute inset-0 flex items-center justify-center text-gray-500 text-lg font-semibold bg-white bg-opacity-80 hidden">
               Tidak ada data
             </div>
           </div>
@@ -325,6 +338,11 @@
 
 @section('document.end')
   @vite('resources/js/chartjs.js')
+  @vite('resources/js/sweetalert2.js')
+
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer>
+  </script>
+
   <script>
     // Dropdown toggle logic
     function setupDropdownToggle(buttonId, menuId) {
@@ -373,6 +391,7 @@
       const now = new Date();
       return now.getMonth(); // 0-based index
     }
+
     function getDefaultTahun() {
       const now = new Date();
       return now.getFullYear();
@@ -632,13 +651,28 @@
     function getBarChartData(bulanIdx, tahun) {
       // Ambil data hanya untuk bulanIdx dan tahun
       const label = periodeBulan[bulanIdx].label;
-      const data = statistikLaporanMasuk[bulanIdx] || { pending: 0, diproses: 0, selesai: 0 };
+      const data = statistikLaporanMasuk[bulanIdx] || {
+        pending: 0,
+        diproses: 0,
+        selesai: 0
+      };
       return {
         labels: [label],
-        datasets: [
-          { label: 'Belum ditindaklanjuti', data: [data.pending ?? 0], backgroundColor: '#E63846' },
-          { label: 'Sedang diproses', data: [data.diproses ?? 0], backgroundColor: '#F9A11A' },
-          { label: 'Selesai', data: [data.selesai ?? 0], backgroundColor: '#9EDE73' }
+        datasets: [{
+            label: 'Belum diproses (pending)',
+            data: [data.pending ?? 0],
+            backgroundColor: '#E63846'
+          },
+          {
+            label: 'Sedang diproses',
+            data: [data.diproses ?? 0],
+            backgroundColor: '#F9A11A'
+          },
+          {
+            label: 'Selesai',
+            data: [data.selesai ?? 0],
+            backgroundColor: '#9EDE73'
+          }
         ]
       };
     }
@@ -646,25 +680,47 @@
     // Fungsi untuk bar chart laporan masuk berdasarkan rentang bulan
     function getBarChartDataRentang(rentangIdx, tahun) {
       // rentangIdx: 0=Jan-Apr, 1=Mei-Ags, 2=Sep-Des
-      let startIdx = 0, endIdx = 3;
-      if (rentangIdx === 1) { startIdx = 4; endIdx = 7; }
-      if (rentangIdx === 2) { startIdx = 8; endIdx = 11; }
+      let startIdx = 0,
+        endIdx = 3;
+      if (rentangIdx === 1) {
+        startIdx = 4;
+        endIdx = 7;
+      }
+      if (rentangIdx === 2) {
+        startIdx = 8;
+        endIdx = 11;
+      }
       const labels = periodeBulan.slice(startIdx, endIdx + 1).map(x => x.label);
       const pending = [];
       const diproses = [];
       const selesai = [];
       for (let i = startIdx; i <= endIdx; i++) {
-        const data = statistikLaporanMasuk[i] || { pending: 0, diproses: 0, selesai: 0 };
+        const data = statistikLaporanMasuk[i] || {
+          pending: 0,
+          diproses: 0,
+          selesai: 0
+        };
         pending.push(data.pending ?? 0);
         diproses.push(data.diproses ?? 0);
         selesai.push(data.selesai ?? 0);
       }
       return {
         labels: labels,
-        datasets: [
-          { label: 'Belum ditindaklanjuti', data: pending, backgroundColor: '#E63846' },
-          { label: 'Sedang diproses', data: diproses, backgroundColor: '#F9A11A' },
-          { label: 'Selesai', data: selesai, backgroundColor: '#9EDE73' }
+        datasets: [{
+            label: 'Belum diproses (pending)',
+            data: pending,
+            backgroundColor: '#E63846'
+          },
+          {
+            label: 'Sedang diproses',
+            data: diproses,
+            backgroundColor: '#F9A11A'
+          },
+          {
+            label: 'Selesai',
+            data: selesai,
+            backgroundColor: '#9EDE73'
+          }
         ]
       };
     }
@@ -698,13 +754,16 @@
     // Fungsi show/hide "Tidak ada data" untuk masing-masing chart
     function updateNoDataStatistikChart(data) {
       const el = document.getElementById('nodataStatistikChart');
-      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2].data);
+      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2]
+        .data);
       el.style.display = allZero ? 'flex' : 'none';
     }
+
     function updateNoDataLaporanDiprosesChart(data) {
       const el = document.getElementById('nodataLaporanDiprosesChart');
       el.style.display = isAllZero(data) ? 'flex' : 'none';
     }
+
     function updateNoDataJenisLaporanChart(data) {
       const el = document.getElementById('nodataJenisLaporanChart');
       el.style.display = isAllZero(data) ? 'flex' : 'none';
@@ -987,13 +1046,28 @@
     function getBarChartData(bulanIdx, tahun) {
       // Ambil data hanya untuk bulanIdx dan tahun
       const label = periodeBulan[bulanIdx].label;
-      const data = statistikLaporanMasuk[bulanIdx] || { pending: 0, diproses: 0, selesai: 0 };
+      const data = statistikLaporanMasuk[bulanIdx] || {
+        pending: 0,
+        diproses: 0,
+        selesai: 0
+      };
       return {
         labels: [label],
-        datasets: [
-          { label: 'Belum ditindaklanjuti', data: [data.pending ?? 0], backgroundColor: '#E63846' },
-          { label: 'Sedang diproses', data: [data.diproses ?? 0], backgroundColor: '#F9A11A' },
-          { label: 'Selesai', data: [data.selesai ?? 0], backgroundColor: '#9EDE73' }
+        datasets: [{
+            label: 'Belum diproses (pending)',
+            data: [data.pending ?? 0],
+            backgroundColor: '#E63846'
+          },
+          {
+            label: 'Sedang diproses',
+            data: [data.diproses ?? 0],
+            backgroundColor: '#F9A11A'
+          },
+          {
+            label: 'Selesai',
+            data: [data.selesai ?? 0],
+            backgroundColor: '#9EDE73'
+          }
         ]
       };
     }
@@ -1001,25 +1075,47 @@
     // Fungsi untuk bar chart laporan masuk berdasarkan rentang bulan
     function getBarChartDataRentang(rentangIdx, tahun) {
       // rentangIdx: 0=Jan-Apr, 1=Mei-Ags, 2=Sep-Des
-      let startIdx = 0, endIdx = 3;
-      if (rentangIdx === 1) { startIdx = 4; endIdx = 7; }
-      if (rentangIdx === 2) { startIdx = 8; endIdx = 11; }
+      let startIdx = 0,
+        endIdx = 3;
+      if (rentangIdx === 1) {
+        startIdx = 4;
+        endIdx = 7;
+      }
+      if (rentangIdx === 2) {
+        startIdx = 8;
+        endIdx = 11;
+      }
       const labels = periodeBulan.slice(startIdx, endIdx + 1).map(x => x.label);
       const pending = [];
       const diproses = [];
       const selesai = [];
       for (let i = startIdx; i <= endIdx; i++) {
-        const data = statistikLaporanMasuk[i] || { pending: 0, diproses: 0, selesai: 0 };
+        const data = statistikLaporanMasuk[i] || {
+          pending: 0,
+          diproses: 0,
+          selesai: 0
+        };
         pending.push(data.pending ?? 0);
         diproses.push(data.diproses ?? 0);
         selesai.push(data.selesai ?? 0);
       }
       return {
         labels: labels,
-        datasets: [
-          { label: 'Belum ditindaklanjuti', data: pending, backgroundColor: '#E63846' },
-          { label: 'Sedang diproses', data: diproses, backgroundColor: '#F9A11A' },
-          { label: 'Selesai', data: selesai, backgroundColor: '#9EDE73' }
+        datasets: [{
+            label: 'Belum diproses (pending)',
+            data: pending,
+            backgroundColor: '#E63846'
+          },
+          {
+            label: 'Sedang diproses',
+            data: diproses,
+            backgroundColor: '#F9A11A'
+          },
+          {
+            label: 'Selesai',
+            data: selesai,
+            backgroundColor: '#9EDE73'
+          }
         ]
       };
     }
@@ -1053,13 +1149,16 @@
     // Fungsi show/hide "Tidak ada data" untuk masing-masing chart
     function updateNoDataStatistikChart(data) {
       const el = document.getElementById('nodataStatistikChart');
-      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2].data);
+      const allZero = isAllZero(data.datasets[0].data) && isAllZero(data.datasets[1].data) && isAllZero(data.datasets[2]
+        .data);
       el.style.display = allZero ? 'flex' : 'none';
     }
+
     function updateNoDataLaporanDiprosesChart(data) {
       const el = document.getElementById('nodataLaporanDiprosesChart');
       el.style.display = isAllZero(data) ? 'flex' : 'none';
     }
+
     function updateNoDataJenisLaporanChart(data) {
       const el = document.getElementById('nodataJenisLaporanChart');
       el.style.display = isAllZero(data) ? 'flex' : 'none';

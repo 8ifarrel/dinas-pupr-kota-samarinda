@@ -23,9 +23,9 @@ return new class extends Migration
             $table->unsignedSmallInteger('kelurahan_id')->index();
             $table->foreign('kelurahan_id')->references('id')->on('kelurahan');
             $table->decimal('longitude', 10, 7);
-            $table->decimal('latitude', 9, 2);
+            $table->decimal('latitude', 9, 7);
             $table->text('detail_lokasi');
-            $table->text('deskripsi_kerusakan');
+            $table->text('deskripsi_pengaduan');
             $table->timestamps();
             $table->softDeletes();
         });

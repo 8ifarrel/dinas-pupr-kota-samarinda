@@ -13,6 +13,7 @@ use App\Models\Kelurahan;
 use App\Models\DrainaseIrigasiPelapor;
 use App\Models\DrainaseIrigasiLaporan;
 use App\Models\DrainaseIrigasiLaporanFoto;
+use App\Models\DrainaseIrigasiLaporanTindakLanjut;
 use App\Models\SKM;
 
 class DrainaseIrigasiGuestController extends Controller
@@ -237,7 +238,7 @@ class DrainaseIrigasiGuestController extends Controller
 			'latitude.required' => 'Latitude wajib diisi.',
 			'latitude.regex' => 'Format latitude tidak valid.',
 			'detail_lokasi.required' => 'Detail lokasi wajib diisi.',
-			'deskripsi_kerusakan.required' => 'Deskripsi kerusakan wajib diisi.',
+			'deskripsi_pengaduan.required' => 'Deskripsi pengaduan wajib diisi.',
 			'laporan__foto_input.*.required' => 'Minimal 1 foto kerusakan harus diunggah.',
 			'laporan__foto_input.*.image' => 'File harus berupa gambar JPG, JPEG, atau PNG.',
 			'laporan__foto_input.*.mimes' => 'Format foto harus JPG, JPEG, atau PNG.',
@@ -256,10 +257,10 @@ class DrainaseIrigasiGuestController extends Controller
 			'kecamatan_id' => 'required|exists:kecamatan,id',
 			'kelurahan_id' => 'required|exists:kelurahan,id',
 			'nama_jalan' => 'required|string|max:150',
-			'longitude' => ['required', 'regex:/^[-+]?\d{1,3}\.\d{1,10}$/'],
-			'latitude' => ['required', 'regex:/^[-+]?\d{1,3}\.\d{1,10}$/'],
+			'longitude' => ['required', 'regex:/^[-+]?\d{1,3}\.\d{7}$/'],
+			'latitude' => ['required', 'regex:/^[-+]?\d{1,3}\.\d{7}$/'],
 			'detail_lokasi' => 'required|string',
-			'deskripsi_kerusakan' => 'required|string',
+			'deskripsi_pengaduan' => 'required|string',
 			'laporan__foto_input' => 'required',
 			'laporan__foto_input.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
 			'skm__rating' => 'required|integer|min:1|max:4',
@@ -285,7 +286,15 @@ class DrainaseIrigasiGuestController extends Controller
 			'longitude' => $validated['longitude'],
 			'latitude' => $validated['latitude'],
 			'detail_lokasi' => $validated['detail_lokasi'],
-			'deskripsi_kerusakan' => $validated['deskripsi_kerusakan'],
+			'deskripsi_pengaduan' => $validated['deskripsi_pengaduan'],
+		]);
+
+		// Buat tindak lanjut otomatis dengan status pending
+		DrainaseIrigasiLaporanTindakLanjut::create([
+			'laporan_id' => $laporan->id,
+			'status' => 'pending',
+			'deskripsi' => 'Laporan telah masuk. Mohon menunggu proses lebih lanjut',
+			'jenis' => 'belum_diklasifikasikan',
 		]);
 
 		// Simpan foto laporan (multi)
@@ -319,6 +328,100 @@ class DrainaseIrigasiGuestController extends Controller
 		$pelapor->skm_id = $skm->id;
 		$pelapor->save();
 
-		return redirect()->route('guest.drainase-irigasi.index')->with('success', 'Laporan berhasil dikirim.');
+		return redirect()->route('guest.drainase-irigasi.index')->with('success', 'Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut.');
+	}
+
+	public function show(Request $request)
+	{
+		$meta_description = "Detail laporan saluran drainase dan irigasi.";
+		$page_subtitle = "Detail Laporan";
+		$page_title = "Laporan Saluran Drainase dan Irigasi";
+
+		// Get latest status for each laporan
+		$latestTindakLanjutIds = DB::table('drainase_irigasi_laporan_tindak_lanjut')
+			->select(DB::raw('MAX(id) as id'))
+			->groupBy('laporan_id');
+
+		// Query to get all reports with their latest status
+		$query = DrainaseIrigasiLaporan::with(['pelapor', 'kecamatan', 'kelurahan'])
+			->withTrashed()
+			->leftJoin('drainase_irigasi_laporan_tindak_lanjut as tl', function ($join) use ($latestTindakLanjutIds) {
+				$join->on('tl.laporan_id', '=', 'drainase_irigasi_laporan.id')
+					->whereIn('tl.id', $latestTindakLanjutIds);
+			})
+			->select('drainase_irigasi_laporan.*', 'tl.status', 'tl.deskripsi', 'tl.jenis');
+
+		// Apply search filters if provided
+		if ($request->filled('search_query')) {
+			$searchQuery = $request->input('search_query');
+			$query->where(function ($q) use ($searchQuery) {
+				$q->where('drainase_irigasi_laporan.id', 'LIKE', "%$searchQuery%")
+				  ->orWhere('nama_jalan', 'LIKE', "%$searchQuery%");
+			});
+		}
+
+		if ($request->filled('status_filter')) {
+			$statusFilter = $request->input('status_filter');
+			$query->where('tl.status', $statusFilter);
+		}
+
+		if ($request->filled('jenis_filter')) {
+			$jenisFilter = $request->input('jenis_filter');
+			$query->where('tl.jenis', $jenisFilter);
+		}
+
+		// Sort options (default to latest)
+		$sortOption = $request->input('sort', 'latest');
+		if ($sortOption === 'oldest') {
+			$query->orderBy('drainase_irigasi_laporan.created_at', 'asc');
+		} elseif ($sortOption === 'az') {
+			$query->orderBy('nama_jalan', 'asc');
+		} else { // default: latest
+			$query->orderBy('drainase_irigasi_laporan.created_at', 'desc');
+		}
+
+		// Paginate results
+		$laporan = $query->paginate(10);
+		
+		// Generate pagination links with query parameters
+		$laporan->appends($request->query());
+
+		return view('guest.pages.drainase-irigasi.show', [
+			'meta_description' => $meta_description,
+			'page_title' => $page_title,
+			'page_subtitle' => $page_subtitle,
+			'page_context' => $this->page_context,
+			'laporan' => $laporan,
+			'search_query' => $request->input('search_query', ''),
+			'status_filter' => $request->input('status_filter', ''),
+			'jenis_filter' => $request->input('jenis_filter', ''),
+			'sort_option' => $sortOption,
+		]);
+	}
+	
+	public function detail($id)
+	{
+		$meta_description = "Detail pengaduan saluran drainase dan irigasi.";
+		$page_subtitle = "Detail Pengaduan";
+		$page_title = "Detail Pengaduan Drainase dan Irigasi";
+		
+		// Get the laporan by ID
+		$laporan = DrainaseIrigasiLaporan::with(['pelapor', 'kecamatan', 'kelurahan', 'foto'])->findOrFail($id);
+		
+		// Get all tindak lanjut for this laporan
+		$tindakLanjut = DB::table('drainase_irigasi_laporan_tindak_lanjut')
+			->where('laporan_id', $id)
+			->orderBy('created_at', 'desc')
+			->get();
+			
+		return view('guest.pages.drainase-irigasi.detail', [
+			'meta_description' => $meta_description,
+			'page_title' => $page_title,
+			'page_subtitle' => $page_subtitle,
+			'page_context' => $this->page_context,
+			'laporan' => $laporan,
+			'tindak_lanjut' => $tindakLanjut
+		]);
 	}
 }
+

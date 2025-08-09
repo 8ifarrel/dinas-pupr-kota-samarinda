@@ -207,7 +207,10 @@ Route::prefix('drainase-irigasi')->group(function () {
 		->name('guest.drainase-irigasi.store');
 
 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-		->name('guest.drainase-irigasis.how');
+		->name('guest.drainase-irigasi.show');
+		
+	Route::get('/detail-laporan/{id}', [DrainaseIrigasiGuestController::class, 'detail'])
+		->name('guest.drainase-irigasi.detail');
 });
 
 /*

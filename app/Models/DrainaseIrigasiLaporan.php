@@ -19,7 +19,7 @@ class DrainaseIrigasiLaporan extends Model
         'kelurahan_id',
         'longitude',
         'latitude',
-        'deskripsi_kerusakan',
+        'deskripsi_pengaduan',
     ];
 
     public function pelapor()
