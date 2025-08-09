@@ -888,7 +888,12 @@
             const mapsUrl = generateGoogleMapsUrl(lat, lon);
             document.getElementById('laporan__koordinat').value = mapsUrl;
 
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+            // Tambahkan header User-Agent pada fetch ke Nominatim
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`, {
+              headers: {
+                'User-Agent': 'dinas-pupr-kota-samarinda/1.0 (https://dinas-pupr-kota-samarinda)'
+              }
+            })
               .then(res => res.json())
               .then(data => {
                 hideAlert('alert-4'); // hide loading
@@ -977,8 +982,14 @@
           // Mulai proses reverse geocoding setelah tombol ditekan
           if (mapSelectedLatLng) {
             showAlert('alert-4'); // tampilkan loading
+            // Tambahkan header User-Agent pada fetch ke Nominatim
             fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`,
+                {
+                  headers: {
+                    'User-Agent': 'dinas-pupr-kota-samarinda/1.0 (https://dinas-pupr-kota-samarinda)'
+                  }
+                }
               )
               .then(res => res.json())
               .then(data => {
