@@ -734,5 +734,58 @@
                 });
             }
         });
+
+        // Frontend validation for foto_kerusakan max 2MB per file
+        document.addEventListener('DOMContentLoaded', function() {
+            const fotoInput = document.getElementById('foto_kerusakan');
+            const previewContainer = document.getElementById('preview_container');
+            // Tambahkan elemen error jika belum ada
+            let fotoError = document.getElementById('foto_kerusakan_error');
+            if (!fotoError) {
+                fotoError = document.createElement('div');
+                fotoError.id = 'foto_kerusakan_error';
+                fotoError.className = 'text-red-500 text-xs mt-2';
+                fotoInput.parentNode.insertBefore(fotoError, fotoInput.nextSibling);
+            }
+
+            fotoInput.addEventListener('change', function(e) {
+                fotoError.textContent = '';
+                const files = Array.from(e.target.files);
+                let valid = true;
+                files.forEach((file, idx) => {
+                    if (file.size > 2 * 1024 * 1024) { // 2MB
+                        valid = false;
+                    }
+                });
+                if (!valid) {
+                    fotoError.textContent = 'Ukuran setiap foto tidak boleh lebih dari 2MB.';
+                    fotoInput.value = '';
+                    // Kosongkan preview jika ada
+                    if (typeof window.clearFotoPreview === 'function') window.clearFotoPreview();
+                }
+            });
+        });
+
+        // Frontend validation for dokumen_pendukung max 2MB
+        document.addEventListener('DOMContentLoaded', function() {
+            const dokumenInput = document.getElementById('dokumen_pendukung');
+            if (dokumenInput) {
+                let dokumenError = document.getElementById('dokumen_pendukung_error');
+                if (!dokumenError) {
+                    dokumenError = document.createElement('div');
+                    dokumenError.id = 'dokumen_pendukung_error';
+                    dokumenError.className = 'text-red-500 text-xs mt-2';
+                    dokumenInput.parentNode.insertBefore(dokumenError, dokumenInput.nextSibling);
+                }
+                dokumenInput.addEventListener('change', function(e) {
+                    dokumenError.textContent = '';
+                    const file = e.target.files && e.target.files[0];
+                    if (file && file.size > 2 * 1024 * 1024) {
+                        dokumenError.textContent = 'Ukuran dokumen pendukung tidak boleh lebih dari 2MB.';
+                        dokumenInput.value = '';
+                    }
+                });
+            }
+        });
     </script>
 @endsection
