@@ -504,7 +504,7 @@
                             </div>
                         </div>
                         <input type="file" name="foto_kerusakan[]" id="foto_kerusakan" accept="image/jpeg,image/png,image/jpg" multiple class="sr-only">
-                        <p class="mt-2 text-xs text-gray-500">*Format: JPG/PNG, maks. 10MB/foto.</p>
+                        <p class="mt-2 text-xs text-gray-500">*Format: JPG/PNG, maks. 2MB/foto.</p>
                         <input type="hidden" name="jenis_kerusakan" id="jenis_kerusakan">
                         <input type="hidden" name="tingkat_kerusakan" id="tingkat_kerusakan">
                     </div>
