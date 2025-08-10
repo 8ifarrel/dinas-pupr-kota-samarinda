@@ -291,7 +291,7 @@
             </div>
 
             <!-- Table for larger screens (hidden on mobile) -->
-            <div class="hidden md:block overflow-x-auto">
+            <div class="hidden md:block overflow-x-scroll">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
