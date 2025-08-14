@@ -55,7 +55,7 @@
                     d="m1 9 4-4-4-4" />
                 </svg>
                 <a href="{{ route('guest.drainase-irigasi.index') }}" class="text-blue-600 underline">
-                  Pengaduan Drainase dan Irigasi
+                  Hantu Banyu
                 </a>
               </div>
             </li>
@@ -67,7 +67,7 @@
                     d="m1 9 4-4-4-4" />
                 </svg>
                 <span class="text-gray-500 font-medium">
-                  <span>Lihat Pengaduan Drainase dan Irigasi</span>
+                  <span>Lihat Pengaduan Hantu Banyu</span>
                 </span>
               </div>
             </li>
@@ -86,16 +86,16 @@
                 </li>
                 <li>
                   <a href="{{ route('guest.drainase-irigasi.index') }}"
-                    class="block px-4 py-2 hover:bg-gray-100">Pengaduan Drainase dan Irigasi</a>
+                    class="block px-4 py-2 hover:bg-gray-100">Hantu Banyu</a>
                 </li>
                 <li>
-                  <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Drainase dan Irigasi</span>
+                  <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Hantu Banyu</span>
                 </li>
               </ol>
             </div>
           </div>
         </nav>
-        <h1 class="text-2xl xs:text-3xl font-bold text-gray-900">Lihat Pengaduan Drainase dan Irigasi</h1>
+        <h1 class="text-2xl xs:text-3xl font-bold text-gray-900">Lihat Pengaduan Hantu Banyu</h1>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
               </div>
             </div>
             <div class="mobile-accordion-content p-6">
-              <form id="search-form" class="space-y-5" method="GET" action="{{ route('guest.drainase-irigasi.show') }}">
+              <form id="search-form" class="space-y-5" method="GET" action="{{ route('guest.drainase-irigasi.pengaduan.index') }}">
                 <div class="space-y-4">
                   <div>
                     <label for="search_query" class="block font-medium text-gray-700 mb-1">
@@ -291,7 +291,7 @@
             </div>
 
             <!-- Table for larger screens (hidden on mobile) -->
-            <div class="hidden md:block overflow-x-scroll">
+            <div class="hidden md:block">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -376,7 +376,7 @@
                         </span>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('guest.drainase-irigasi.detail', $item->id) }}"
+                        <a href="{{ route('guest.drainase-irigasi.pengaduan.show', $item->id) }}"
                           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition">
                           <span>Detail</span>
                           <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -481,7 +481,7 @@
                         </dl>
 
                         <div class="flex justify-end items-center mt-3">
-                          <a href="{{ route('guest.drainase-irigasi.detail', $item->id) }}"
+                          <a href="{{ route('guest.drainase-irigasi.pengaduan.show', $item->id) }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition text-sm">
                             <span>Detail</span>
                             <svg class="ml-1 w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -653,25 +653,31 @@
         });
       });
 
-      // Mobile accordion functionality (unchanged)
+      // Mobile accordion functionality - FIXED
       const mobileAccordionHeaders = document.querySelectorAll('.mobile-accordion-header');
+      let mobileAccordionsInitialized = false;
 
       function setupMobileAccordions() {
         // If we're on mobile size (under lg breakpoint)
         if (window.innerWidth < 1024) {
-          // Initially collapse ALL accordions on mobile
-          document.querySelectorAll('.mobile-accordion-content').forEach((content) => {
-            content.classList.add('hidden');
-          });
+          // Only collapse accordions on first initialization
+          if (!mobileAccordionsInitialized) {
+            document.querySelectorAll('.mobile-accordion-content').forEach((content) => {
+              content.classList.add('hidden');
+            });
 
-          // Initially rotate ALL icons for hidden sections
-          document.querySelectorAll('.mobile-accordion-icon').forEach((icon) => {
-            icon.style.transform = 'rotate(0deg)';
-          });
+            document.querySelectorAll('.mobile-accordion-icon').forEach((icon) => {
+              icon.style.transform = 'rotate(0deg)';
+            });
+            
+            mobileAccordionsInitialized = true;
+          }
 
-          // Add click handlers for mobile
+          // Add click handlers for mobile (safe to call multiple times)
           mobileAccordionHeaders.forEach(header => {
+            header.removeEventListener('click', toggleMobileAccordion); // Remove first to avoid duplicates
             header.addEventListener('click', toggleMobileAccordion);
+            header.style.cursor = 'pointer';
           });
         } else {
           // On desktop, ensure all are visible and remove click handlers
@@ -681,6 +687,7 @@
 
           mobileAccordionHeaders.forEach(header => {
             header.removeEventListener('click', toggleMobileAccordion);
+            header.style.cursor = 'default';
           });
         }
       }
@@ -701,7 +708,7 @@
       // Initialize accordions
       setupMobileAccordions();
 
-      // Update accordions state when resizing
+      // Update accordions state when resizing - but don't force collapse
       window.addEventListener('resize', setupMobileAccordions);
 
       // Breadcrumb dropdown functionality for mobile

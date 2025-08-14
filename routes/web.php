@@ -10,6 +10,7 @@
 |
 */
 
+
 use App\Http\Controllers\Guest\DrainaseIrigasiGuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockSearchEngines;
@@ -40,6 +41,8 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
+use App\Http\Controllers\Guest\DrainaseIrigasiPengaduanGuestController;
+use App\Http\Controllers\Guest\DrainaseIrigasiPetaSebaranGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -200,17 +203,27 @@ Route::prefix('drainase-irigasi')->group(function () {
 	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
 		->name('guest.drainase-irigasi.index');
 
-	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
-		->name('guest.drainase-irigasi.create');
+	Route::get('/pengaduan/buat', [DrainaseIrigasiPengaduanGuestController::class, 'create'])
+		->name('guest.drainase-irigasi.pengaduan.create');
+	Route::post('/pengaduan/kirim', [DrainaseIrigasiPengaduanGuestController::class, 'store'])
+		->name('guest.drainase-irigasi.pengaduan.store');
 
-	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
-		->name('guest.drainase-irigasi.store');
+	Route::get('/pengaduan/bukti-pengaduan/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'pdf'])
+		->middleware('validate.signed.access')
+		->name('guest.drainase-irigasi.pengaduan.pdf');
 
-	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-		->name('guest.drainase-irigasi.show');
-		
-	Route::get('/detail-laporan/{id}', [DrainaseIrigasiGuestController::class, 'detail'])
-		->name('guest.drainase-irigasi.detail');
+	Route::get('/pengaduan/hasil/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'result'])
+		->middleware('validate.signed.access')
+		->name('guest.drainase-irigasi.pengaduan.result');
+
+	Route::get('/pengaduan/lihat', [DrainaseIrigasiPengaduanGuestController::class, 'index'])
+		->name('guest.drainase-irigasi.pengaduan.index');
+
+	Route::get('/pengaduan/lihat/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'show'])
+		->name('guest.drainase-irigasi.pengaduan.show');
+
+	Route::get('/peta-sebaran', [DrainaseIrigasiPetaSebaranGuestController::class, 'index'])
+		->name('guest.drainase-irigasi.peta-sebaran.index');
 });
 
 /*

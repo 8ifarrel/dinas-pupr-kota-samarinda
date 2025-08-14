@@ -65,23 +65,29 @@
         </div>
         <h1
           class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-4xl 2xl:text-5xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
-          Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> & Irigasi <br
-            class="hidden lg:inline 2xl:hidden"> di Kota Samarinda
+          Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> dan Irigasi <br
+            class="hidden lg:inline 2xl:hidden"> di Aplikasi Hantu Banyu
         </h1>
         <p
           class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-xl font-medium text-gray-700 sm:px-4 md:px-8 lg:max-w-4xl 3xl:max-w-7xl mx-auto">
-          Partisipasi Anda membantu mencegah banjir dan kerusakan saluran! Laporkan permasalahan melalui aplikasi
-          pengaduan <b>UPTD Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda.
+          Partisipasi Anda membantu <b>mencegah banjir dan kerusakan saluran</b> Kota Samarinda. Laporkan permasalahan melalui aplikasi
+          <b>Hantu Banyu</b> dari <b>UPTD Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda!
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-          <a href="{{ route('guest.drainase-irigasi.create') }}"
+          <a href="{{ route('guest.drainase-irigasi.pengaduan.create') }}"
             class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-semibold text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue shadow-lg transition">
             Buat Pengaduan
             <i class="fa-solid fa-paper-plane ms-1.5"></i>
           </a>
-          <a href="{{ route('guest.drainase-irigasi.show') }}"
+          <a href="{{ route('guest.drainase-irigasi.pengaduan.index') }}"
             class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-brand-blue rounded-lg border border-brand-blue hover:bg-brand-blue hover:text-white shadow-lg transition">
             Lihat Semua Pengaduan
+            <i class="fa-solid fa-list-ol ms-1.5"></i>
+          </a>
+          <a href="{{ route('guest.drainase-irigasi.peta-sebaran.index') }}"
+            class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-brand-blue rounded-lg border border-brand-blue hover:bg-brand-blue hover:text-white shadow-lg transition">
+            Lihat Peta Sebaran
+            <i class="fa-solid fa-map-location-dot ms-1.5"></i>
           </a>
         </div>
       </div>

@@ -26,6 +26,7 @@
         "flowbite": "^3.1.2",
         "jquery": "^3.7.1",
         "lightbox2": "^2.11.5",
+        "puppeteer": "^24.16.1",
         "quill": "^2.0.3",
         "quill-resize-module": "^2.0.4",
         "sweetalert2": "^11.4.8",

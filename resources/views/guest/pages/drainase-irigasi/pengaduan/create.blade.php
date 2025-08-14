@@ -1,6 +1,7 @@
 @extends('guest.layouts.main')
 
 @section('document.start')
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 @endsection
 
 @section('document.body')
@@ -52,7 +53,7 @@
                 d="m1 9 4-4-4-4" />
             </svg>
             <a href="{{ route('guest.drainase-irigasi.index') }}" class="text-blue-600 underline">
-              Pengaduan Drainase dan Irigasi
+              Hantu Banyu
             </a>
           </div>
         </li>
@@ -64,7 +65,7 @@
                 d="m1 9 4-4-4-4" />
             </svg>
             <span class="text-gray-500 font-medium">
-              <span>Form Pengaduan Drainase dan Irigasi</span>
+              <span>Formulir Pengaduan Hantu Banyu</span>
             </span>
           </div>
         </li>
@@ -82,11 +83,11 @@
               <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
             </li>
             <li>
-              <a href="{{ route('guest.drainase-irigasi.index') }}" class="block px-4 py-2 hover:bg-gray-100">Pengaduan
-                Drainase dan Irigasi</a>
+              <a href="{{ route('guest.drainase-irigasi.index') }}" class="block px-4 py-2 hover:bg-gray-100">Hantu
+                Banyu</a>
             </li>
             <li>
-              <span class="block px-4 py-2 font-semibold text-gray-600">Form Pengaduan Drainase dan Irigasi</span>
+              <span class="block px-4 py-2 font-semibold text-gray-600">Formulir Pengaduan Hantu Banyu</span>
             </li>
           </ol>
         </div>
@@ -97,10 +98,10 @@
       {{-- Header --}}
       <div class="text-center space-y-2.5">
         <h1 class="text-2xl md:text-3xl font-bold">
-          Form Pengaduan Drainase dan Irigasi
+          Formulir Pengaduan Drainase dan Irigasi
         </h1>
         <p class="text-gray-700 text-base md:text-lg">
-          Silakan isi formulir di bawah ini untuk melaporkan masalah drainase dan irigasi di Kota Samarinda.
+          Silakan isi formulir di bawah ini untuk melaporkan masalah Hantu Banyu di Kota Samarinda.
         </p>
       </div>
 
@@ -145,7 +146,7 @@
         </div>
       </div>
 
-      <form id="stepper-form" method="POST" action="{{ route('guest.drainase-irigasi.store') }}"
+      <form id="stepper-form" method="POST" action="{{ route('guest.drainase-irigasi.pengaduan.store') }}"
         enctype="multipart/form-data" novalidate>
         @csrf
 
@@ -169,6 +170,26 @@
             <button type="button"
               class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
               data-dismiss-target="#alert-2" aria-label="Close">
+              <span class="sr-only">Close</span>
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="alert-5"
+            class="hidden flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+            role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span class="sr-only">Warning</span>
+            <div class="ms-3 text-sm font-medium">
+              Lokasi dari GPS masih tidak akurat? Silakan pilih lokasi dari peta atau isi lokasi secara manual
+            </div>
+            <button type="button"
+              class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700"
+              data-dismiss-target="#alert-5" aria-label="Close">
               <span class="sr-only">Close</span>
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 14 14">
@@ -299,13 +320,33 @@
                   </button>
                 </div>
                 <div id="alert-4"
-                  class="hidden flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+                  class="hidden flex items-center p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-300"
                   role="alert">
                   <i class="fa-solid fa-spinner"></i>
                   <span class="sr-only">Info</span>
                   <div class="ms-3 text-sm font-medium">
                     Pengambilan data sedang diproses
                   </div>
+                </div>
+
+                <div id="alert-5"
+                  class="hidden flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+                  role="alert">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span class="sr-only">Warning</span>
+                  <div class="ms-3 text-sm font-medium">
+                    Lokasi dari GPS masih tidak akurat? Silakan pilih lokasi dari peta atau isi lokasi secara manual
+                  </div>
+                  <button type="button"
+                    class="ms-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700"
+                    data-dismiss-target="#alert-5" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                  </button>
                 </div>
 
                 <div class="space-y-4">
@@ -415,6 +456,13 @@
                     <input type="hidden" id="laporan__longitude" name="longitude">
                     <input type="hidden" id="laporan__latitude" name="latitude">
                   </div>
+
+                  <div class="flex gap-1.5 flex-row text-sm sm:text-base">
+                    <i class="fa-solid fa-circle-question text-gray-600 mt-1"></i>
+                    <p class="text-gray-600">
+                      <b>Data yang dipilih secara otomatis tidak akurat?</b> Silakan isi data tersebut secara manual.
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -446,7 +494,7 @@
                       </div>
                       <div class="flex flex-col sm:flex-row gap-4">
                         <div class="flex-1">
-                          <label for="modal-koordinat" class="block text-sm font-medium text-gray-900 required">
+                          <label for="modal-koordinat" class="block text-sm font-medium text-gray-900 required mb-1">
                             Link Titik Koordinat Google Maps
                           </label>
                           <input type="text" id="modal-koordinat" name="modal_koordinat"
@@ -456,16 +504,16 @@
                       </div>
                     </div>
                     <!-- Modal footer -->
-                    <div class="flex flex-col-reverse sm:flex-row gap-4 p-4 border-t">
-                      <button type="button"
-                        class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 disabled:opacity-50"
-                        data-modal-hide="modal-pilih-lokasi-peta">
-                        Tutup
-                      </button>
+                    <div class="flex justify-start gap-3 p-4 md:p-5 border-t border-gray-200 rounded-b flex-col sm:flex-row">
                       <button type="button" id="btn-set-location-from-map"
-                        class="w-full sm:w-auto inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-brand-blue rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
+                        class="text-white bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 disabled:opacity-80 flex items-center"
                         disabled>
-                        Pilih Lokasi Ini
+                        <i class="fa-solid fa-location-dot mr-1"></i>Pilih Lokasi Ini
+                      </button>
+                      <button type="button"
+                        class="text-gray-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-4 py-2.5 inline-flex items-center"
+                        data-modal-hide="modal-pilih-lokasi-peta">
+                        <i class="fa-solid fa-xmark mr-1"></i>Tutup
                       </button>
                     </div>
                   </div>
@@ -698,8 +746,7 @@
 
 @section('document.end')
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Tambahkan CropperJS dan ViewerJS libraries -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -841,6 +888,7 @@
         if (id === 'alert-4') {
           hideAlert('alert-2');
           hideAlert('alert-3');
+          hideAlert('alert-5');
         }
         el.classList.replace('hidden', 'flex');
         // Clear previous timeout if exists
@@ -876,7 +924,21 @@
       document.getElementById('detect-location-gps-btn').addEventListener('click', function() {
         showAlert('alert-4'); // tampilkan loading
         if (navigator.geolocation) {
+          const positionOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          };
+
           navigator.geolocation.getCurrentPosition(function(pos) {
+            // Check if accuracy is acceptable (less than 100 meters is considered accurate enough)
+            if (pos.coords.accuracy > 100) {
+              hideAlert('alert-4');
+              showAlert('alert-2', 'GPS gagal mendapatkan lokasi akurat. Periksa pengaturan lokasi Anda.');
+              showAlert('alert-5'); // Show the yellow suggestion alert
+              return; // Stop processing if location isn't accurate enough
+            }
+
             const lon = pos.coords.longitude.toFixed(7); // Format to 7 decimal places
             const lat = pos.coords.latitude.toFixed(7); // Format to 7 decimal places
 
@@ -888,12 +950,8 @@
             const mapsUrl = generateGoogleMapsUrl(lat, lon);
             document.getElementById('laporan__koordinat').value = mapsUrl;
 
-            // Tambahkan header User-Agent pada fetch ke Nominatim
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`, {
-              headers: {
-                'User-Agent': 'dinas-pupr-kota-samarinda/1.0 (https://dinas-pupr-kota-samarinda)'
-              }
-            })
+            // Call our backend endpoint instead of Nominatim directly
+            fetch(`/api/reverse-geocode?lat=${lat}&lon=${lon}`)
               .then(res => res.json())
               .then(data => {
                 hideAlert('alert-4'); // hide loading
@@ -923,10 +981,21 @@
                 hideAlert('alert-4');
                 showAlert('alert-2', 'Gagal mengambil data otomatis dari GPS. Silakan isi manual.');
               });
-          }, function() {
+          }, function(error) {
             hideAlert('alert-4');
-            showAlert('alert-2', 'Gagal mendeteksi lokasi GPS. Silakan isi manual.');
-          });
+            // More detailed error message based on the error code
+            let errorMessage = 'Gagal mendeteksi lokasi GPS. Silakan isi manual.';
+
+            if (error.code === 1) {
+              errorMessage = 'Akses lokasi ditolak. Mohon berikan izin lokasi dan coba lagi.';
+            } else if (error.code === 2) {
+              errorMessage = 'Posisi tidak tersedia. Silakan isi manual.';
+            } else if (error.code === 3) {
+              errorMessage = 'Waktu deteksi lokasi habis. Silakan coba lagi.';
+            }
+
+            showAlert('alert-2', errorMessage);
+          }, positionOptions);
         } else {
           hideAlert('alert-4');
           showAlert('alert-2', 'Browser tidak mendukung geolokasi. Silakan isi manual.');
@@ -982,15 +1051,9 @@
           // Mulai proses reverse geocoding setelah tombol ditekan
           if (mapSelectedLatLng) {
             showAlert('alert-4'); // tampilkan loading
-            // Tambahkan header User-Agent pada fetch ke Nominatim
-            fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`,
-                {
-                  headers: {
-                    'User-Agent': 'dinas-pupr-kota-samarinda/1.0 (https://dinas-pupr-kota-samarinda)'
-                  }
-                }
-              )
+
+            // Call our backend endpoint instead of Nominatim directly
+            fetch(`/api/reverse-geocode?lat=${lat}&lon=${lng}`)
               .then(res => res.json())
               .then(data => {
                 hideAlert('alert-4');
@@ -1182,6 +1245,7 @@
           }
         }
         // Step 1: Detail Laporan
+
         if (stepIdx === 1) {
           const kec = document.getElementById('laporan__kecamatan');
           const kel = document.getElementById('laporan__kelurahan');

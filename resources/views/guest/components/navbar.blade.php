@@ -16,7 +16,7 @@
   <p class="text-center text-white font-semibold text-sm current-time"></p>
 </div>
 
-<nav class="bg-white lg:bg-brand-blue border-gray-200 shadow-lg" id="navbar">
+<nav class="bg-white lg:bg-brand-blue border-gray-200 shadow" id="navbar">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-3">
 
     <div class="lg:hidden flex gap-2">
