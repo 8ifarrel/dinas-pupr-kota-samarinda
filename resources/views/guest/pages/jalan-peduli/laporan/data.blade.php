@@ -719,6 +719,16 @@
                                       class="ml-2 text-sm font-semibold text-gray-700">({{ $laporan->rating_kepuasan }}/5)</span>
                                   </div>
                                 </div>
+                              @else
+                                <div
+                                  class="bg-green-50 rounded-xl p-6 border-2 border-dashed border-green-300 text-center">
+                                  <div
+                                    class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-comment-dots text-green-600 text-xl"></i>
+                                  </div>
+                                  <h5 class="font-semibold text-gray-800 mb-2">Pekerjaan Telah Selesai</h5>
+                                  <p class="text-sm text-gray-600 mb-4">Bagaimana penilaian Anda terhadap hasilnya?</p>
+                                </div>
                               @endif
                             </div>
                           @endif
