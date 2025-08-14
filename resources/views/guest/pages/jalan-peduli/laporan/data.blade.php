@@ -571,8 +571,7 @@
                             <div class="mb-8">
                               <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center"><i
                                   class="fas fa-camera text-purple-500 mr-3"></i>Dokumentasi Kerusakan
-                                ({{ count($fotoArray) }} Foto)
-                              </h4>
+                                ({{ count($fotoArray) }} Foto)</h4>
                               <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                                 @foreach ($fotoArray as $index => $foto)
                                   <a href="{{ asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $foto) }}"
@@ -707,8 +706,7 @@
                                 <div class="bg-green-50 rounded-xl p-6 border border-green-200 text-center xl:text-left">
                                   <h5
                                     class="font-bold text-green-800 mb-3 flex items-center justify-center xl:justify-start">
-                                    <i class="fas fa-heart text-red-500 mr-2"></i>Terima Kasih atas Ulasan Anda!
-                                  </h5>
+                                    <i class="fas fa-heart text-red-500 mr-2"></i>Terima Kasih atas Ulasan Anda!</h5>
                                   <p class="text-green-700 italic mb-4">"{{ $laporan->feedback }}"</p>
                                   <div class="flex items-center justify-center xl:justify-start">
                                     @for ($i = 1; $i <= 5; $i++)
@@ -718,6 +716,15 @@
                                     <span
                                       class="ml-2 text-sm font-semibold text-gray-700">({{ $laporan->rating_kepuasan }}/5)</span>
                                   </div>
+                                </div>
+                              @else
+                                <div
+                                  class="bg-green-50 rounded-xl p-6 border-2 border-dashed border-green-300 text-center">
+                                  <div
+                                    class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-comment-dots text-green-600 text-xl"></i></div>
+                                  <h5 class="font-semibold text-gray-800 mb-2">Pekerjaan Telah Selesai</h5>
+                                  <p class="text-sm text-gray-600 mb-4">Bagaimana penilaian Anda terhadap hasilnya?</p>
                                 </div>
                               @endif
                             </div>
@@ -830,3 +837,4 @@
     });
   </script>
 @endsection
+  
