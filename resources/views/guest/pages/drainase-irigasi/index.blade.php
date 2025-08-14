@@ -3,50 +3,9 @@
 @section('document.start')
   <link rel="dns-prefetch" href="https://lottie.host">
   <link rel="preconnect" href="https://lottie.host" crossorigin>
-
-  @vite('resources/css/sweetalert2.css')
 @endsection
 
 @section('document.body')
-  @if (session('success'))
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-          html: `
-        <div class="flex flex-col items-center">
-          <!-- ICON ATAS -->
-          <dotlottie-player
-            src="https://lottie.host/1e9820b7-84fe-45d5-ad40-14004aa784a9/N2PtNg9vHv.lottie"
-            background="transparent"  
-            speed="1"
-            class="w-[100px] h-[100px] tv-vertical:w-[250px] tv-vertical:h-[250px]"
-            loop autoplay>
-          </dotlottie-player>
-
-          <!-- TITLE -->
-          <h2 class="text-brand-blue font-bold text-xl sm:text-2xl tv-vertical:text-5xl tv-vertical:mt-2 mb-4 text-center">
-            Berhasil!
-          </h2>
-
-          <!-- TEXT SESSION -->
-          <p class="tv-vertical:mt-4 text-gray-700 text-base sm:text-lg tv-vertical:text-3xl font-medium text-center">
-            {{ session('success') }}
-          </p>
-        </div>
-      `,
-          icon: null,
-          showConfirmButton: true,
-          confirmButtonText: 'Oke',
-          customClass: {
-            popup: 'tv-vertical:w-full tv-vertical:max-w-2xl tv-vertical:pb-10 rounded-2xl',
-            confirmButton: 'rounded-full bg-brand-blue text-brand-yellow px-4 py-2 text-lg font-bold transition-all duration-200 hover:bg-brand-yellow hover:text-brand-blue active:scale-95 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed tv-vertical:text-2xl tv-vertical:px-10 tv-vertical:py-4'
-          },
-          buttonsStyling: false
-        });
-      });
-    </script>
-  @endif
-
   {{-- HERO SECTION: Interactive Map + Step Timeline --}}
   <section
     class="relative min-h-[calc(100vh-148px)] flex flex-col items-center justify-center overflow-hidden py-8 md:py-12">
@@ -57,23 +16,35 @@
       <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/70 via-white/10 to-white"></div>
     </div>
     {{-- Main Card --}}
-    <div class="relative z-10 flex flex-col items-center w-full px-6 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
+    <div class="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
       <div class="text-center">
         <div class="flex justify-center gap-2 mb-2 lg:mb-2 3xl:mb-4">
           <span
-            class="inline-block bg-brand-yellow text-brand-blue font-bold text-xs sm:text-sm 2xl:text-base 3xl:text-lg px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow">Layanan</span>
+            class="inline-block bg-brand-yellow text-brand-blue font-bold text-xs sm:text-sm 2xl:text-base 3xl:text-lg px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow">{{ $page_subtitle }}</span>
         </div>
-        <h1
+        {{-- <h1
           class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-2xl sm:text-3xl md:text-4xl lg:text-4xl 2xl:text-5xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
           Laporkan Masalah Drainase <br class="hidden sm:inline lg:hidden 2xl:inline"> dan Irigasi <br
             class="hidden lg:inline 2xl:hidden"> di Aplikasi Hantu Banyu
+        </h1> --}}
+        <h1
+          class="mb-2 sm:mb-3 lg:mb-3 3xl:mb-5 text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl font-semibold text-brand-blue px-0 sm:px-8 md:px-12 lg:px-24 max-w-[286px] xs:max-w-full mx-auto">
+          Hantu Banyu
         </h1>
         <p
-          class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-xl font-medium text-gray-700 sm:px-4 md:px-8 lg:max-w-4xl 3xl:max-w-7xl mx-auto">
-          Partisipasi Anda membantu <b>mencegah banjir dan kerusakan saluran</b> Kota Samarinda. Laporkan permasalahan melalui aplikasi
-          <b>Hantu Banyu</b> dari <b>UPTD Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda!
+          class="mb-4 sm:mb-5 lg:mb-6 3xl:mb-10 text-sm sm:text-base lg:text-base 3xl:text-2xl font-medium text-gray-700 sm:px-4 md:px-8 lg:px-0 lg:max-w-4xl 3xl:max-w-6xl mx-auto">
+          Laporkan masalah <b>banjir dan kerusakan saluran drainase dan irigasi</b> melalui layanan <b>Hantu Banyu</b> dari <b>UPTD
+            Pemeliharaan Saluran Drainase dan Irigasi</b> Dinas PUPR Kota Samarinda!
         </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+        <div 
+          class="
+            flex flex-col 
+            sm:grid sm:grid-cols-2 sm:gap-4 sm:w-full 
+            md:grid md:grid-cols-2 md:gap-4 md:w-full
+            lg:flex lg:flex-row lg:justify-center lg:gap-4
+            justify-center gap-3
+          "
+        >
           <a href="{{ route('guest.drainase-irigasi.pengaduan.create') }}"
             class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-semibold text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue shadow-lg transition">
             Buat Pengaduan
@@ -88,6 +59,11 @@
             class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-brand-blue rounded-lg border border-brand-blue hover:bg-brand-blue hover:text-white shadow-lg transition">
             Lihat Peta Sebaran
             <i class="fa-solid fa-map-location-dot ms-1.5"></i>
+          </a>
+          <a href="https://wa.me/6281234567890" target="_blank"
+            class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-white rounded-lg bg-green-600 hover:bg-green-700 shadow-lg transition">
+            Hubungi Kami di WhatsApp
+            <i class="fa-brands fa-whatsapp fa-lg ms-1.5"></i>
           </a>
         </div>
       </div>
@@ -361,7 +337,6 @@
 
 @section('document.end')
   @vite('resources/js/chartjs.js')
-  @vite('resources/js/sweetalert2.js')
 
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer>
   </script>

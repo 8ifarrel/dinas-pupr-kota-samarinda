@@ -43,7 +43,7 @@
                     d="m1 9 4-4-4-4" />
                 </svg>
                 <a href="#" class="text-blue-600 underline">
-                  Layanan
+                  Layanan Umum
                 </a>
               </div>
             </li>
@@ -85,8 +85,8 @@
                   <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
                 </li>
                 <li>
-                  <a href="{{ route('guest.drainase-irigasi.index') }}"
-                    class="block px-4 py-2 hover:bg-gray-100">Hantu Banyu</a>
+                  <a href="{{ route('guest.drainase-irigasi.index') }}" class="block px-4 py-2 hover:bg-gray-100">Hantu
+                    Banyu</a>
                 </li>
                 <li>
                   <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Hantu Banyu</span>
@@ -107,102 +107,110 @@
         <!-- Left Panel: Search Form -->
         <div class="w-full lg:w-96 flex-shrink-0 space-y-6 lg:order-1">
           <!-- Search Form - Accordion style on mobile -->
-          <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
-            <div
-              class="px-6 py-4 border-b border-gray-200 flex items-center justify-between cursor-pointer lg:cursor-default mobile-accordion-header">
-              <h2 class="text-lg font-medium text-gray-900">Cari Pengaduan</h2>
-              <div class="lg:hidden">
-                <svg class="mobile-accordion-icon w-5 h-5 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-                </svg>
+          <div>
+            <p class="text-end text-sm text-gray-600 mr-1 mb-0.5 lg:hidden">Tekan untuk membuka</p>
+            <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+              <div
+                class="px-6 py-4 border-b border-gray-200 flex items-center justify-between cursor-pointer lg:cursor-default mobile-accordion-header">
+                <h2 class="text-lg font-medium text-gray-900">Cari Pengaduan</h2>
+                <div class="lg:hidden">
+                  <svg class="mobile-accordion-icon w-5 h-5 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div class="mobile-accordion-content p-6">
-              <form id="search-form" class="space-y-5" method="GET" action="{{ route('guest.drainase-irigasi.pengaduan.index') }}">
-                <div class="space-y-4">
-                  <div>
-                    <label for="search_query" class="block font-medium text-gray-700 mb-1">
-                      Nomor Pengaduan atau Nama Jalan
-                    </label>
-                    <div class="relative">
-                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+              <div class="mobile-accordion-content p-6">
+                <form id="search-form" class="space-y-5" method="GET"
+                  action="{{ route('guest.drainase-irigasi.pengaduan.index') }}">
+                  <div class="space-y-4">
+                    <div>
+                      <label for="search_query" class="block font-medium text-gray-700 mb-1">
+                        Nomor Pengaduan atau Nama Jalan
+                      </label>
+                      <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                              clip-rule="evenodd" />
+                          </svg>
+                        </div>
+                        <input type="search" name="search_query" id="search_query" value="{{ $search_query }}"
+                          class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base py-3"
+                          placeholder="Ketik di sini">
+                      </div>
+                    </div>
+
+                    <div>
+                      <label for="status_filter" class="block font-medium text-gray-700 mb-1">
+                        Status Pengaduan
+                      </label>
+                      <select id="status_filter" name="status_filter"
+                        class="block w-full pl-3 pr-10 py-3 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md shadow-sm text-base">
+                        <option value="" {{ $status_filter === '' ? 'selected' : '' }}>Semua Status</option>
+                        <option value="pending" {{ $status_filter === 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="diterima" {{ $status_filter === 'diterima' ? 'selected' : '' }}>Diterima</option>
+                        <option value="menunggu_survei" {{ $status_filter === 'menunggu_survei' ? 'selected' : '' }}>
+                          Menunggu Survei</option>
+                        <option value="sudah_disurvei" {{ $status_filter === 'sudah_disurvei' ? 'selected' : '' }}>Sudah
+                          Disurvei</option>
+                        <option value="menunggu_jadwal_pengerjaan"
+                          {{ $status_filter === 'menunggu_jadwal_pengerjaan' ? 'selected' : '' }}>Menunggu Jadwal
+                        </option>
+                        <option value="sedang_dikerjakan"
+                          {{ $status_filter === 'sedang_dikerjakan' ? 'selected' : '' }}>
+                          Sedang Dikerjakan</option>
+                        <option value="selesai" {{ $status_filter === 'selesai' ? 'selected' : '' }}>Selesai</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label for="jenis_filter" class="block font-medium text-gray-700 mb-1">
+                        Jenis Pengaduan
+                      </label>
+                      <select id="jenis_filter" name="jenis_filter"
+                        class="block w-full pl-3 pr-10 py-3 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md shadow-sm text-base">
+                        <option value="" {{ $jenis_filter === '' ? 'selected' : '' }}>Semua Jenis</option>
+                        <option value="belum_diklasifikasikan"
+                          {{ $jenis_filter === 'belum_diklasifikasikan' ? 'selected' : '' }}>Belum Diklasifikasikan
+                        </option>
+                        <option value="darurat" {{ $jenis_filter === 'darurat' ? 'selected' : '' }}>Darurat</option>
+                        <option value="biasa" {{ $jenis_filter === 'biasa' ? 'selected' : '' }}>Biasa</option>
+                        <option value="rutin" {{ $jenis_filter === 'rutin' ? 'selected' : '' }}>Rutin</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <input type="hidden" name="sort" value="{{ $sort_option }}">
+                      <button type="submit"
+                        class="w-full flex justify-center items-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-brand-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cari Pengaduan
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <!-- Help Tips -->
+                <div class="mt-6 pt-5 border-t border-gray-200">
+                  <div class="bg-blue-50 rounded-md p-3">
+                    <div class="flex">
+                      <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                           fill="currentColor">
                           <path fill-rule="evenodd"
-                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                             clip-rule="evenodd" />
                         </svg>
                       </div>
-                      <input type="search" name="search_query" id="search_query" value="{{ $search_query }}"
-                        class="pl-10 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base py-3"
-                        placeholder="Ketik di sini">
-                    </div>
-                  </div>
-
-                  <div>
-                    <label for="status_filter" class="block font-medium text-gray-700 mb-1">
-                      Status Pengaduan
-                    </label>
-                    <select id="status_filter" name="status_filter"
-                      class="block w-full pl-3 pr-10 py-3 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md shadow-sm text-base">
-                      <option value="" {{ $status_filter === '' ? 'selected' : '' }}>Semua Status</option>
-                      <option value="pending" {{ $status_filter === 'pending' ? 'selected' : '' }}>Pending</option>
-                      <option value="diterima" {{ $status_filter === 'diterima' ? 'selected' : '' }}>Diterima</option>
-                      <option value="menunggu_survei" {{ $status_filter === 'menunggu_survei' ? 'selected' : '' }}>
-                        Menunggu Survei</option>
-                      <option value="sudah_disurvei" {{ $status_filter === 'sudah_disurvei' ? 'selected' : '' }}>Sudah
-                        Disurvei</option>
-                      <option value="menunggu_jadwal_pengerjaan"
-                        {{ $status_filter === 'menunggu_jadwal_pengerjaan' ? 'selected' : '' }}>Menunggu Jadwal</option>
-                      <option value="sedang_dikerjakan" {{ $status_filter === 'sedang_dikerjakan' ? 'selected' : '' }}>
-                        Sedang Dikerjakan</option>
-                      <option value="selesai" {{ $status_filter === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label for="jenis_filter" class="block font-medium text-gray-700 mb-1">
-                      Jenis Pengaduan
-                    </label>
-                    <select id="jenis_filter" name="jenis_filter"
-                      class="block w-full pl-3 pr-10 py-3 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md shadow-sm text-base">
-                      <option value="" {{ $jenis_filter === '' ? 'selected' : '' }}>Semua Jenis</option>
-                      <option value="belum_diklasifikasikan" {{ $jenis_filter === 'belum_diklasifikasikan' ? 'selected' : '' }}>Belum Diklasifikasikan</option>
-                      <option value="darurat" {{ $jenis_filter === 'darurat' ? 'selected' : '' }}>Darurat</option>
-                      <option value="biasa" {{ $jenis_filter === 'biasa' ? 'selected' : '' }}>Biasa</option>
-                      <option value="rutin" {{ $jenis_filter === 'rutin' ? 'selected' : '' }}>Rutin</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <input type="hidden" name="sort" value="{{ $sort_option }}">
-                    <button type="submit"
-                      class="w-full flex justify-center items-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-brand-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                      Cari Pengaduan
-                    </button>
-                  </div>
-                </div>
-              </form>
-
-              <!-- Help Tips -->
-              <div class="mt-6 pt-5 border-t border-gray-200">
-                <div class="bg-blue-50 rounded-md p-3">
-                  <div class="flex">
-                    <div class="flex-shrink-0">
-                      <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                          clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                    <div class="ml-3 text-blue-700">
-                      <p>
-                        Masukkan nomor pengaduan untuk melihat proses laporan Anda. Jika Anda lupa nomor pengaduan, coba
-                        cari dengan nama jalan.
-                      </p>
+                      <div class="ml-3 text-blue-700">
+                        <p>
+                          Masukkan nomor pengaduan untuk melihat proses laporan Anda. Jika Anda lupa nomor pengaduan, coba
+                          cari dengan nama jalan.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -211,26 +219,29 @@
           </div>
 
           <!-- Map Distribution - Accordion style on mobile -->
-          <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
-            <div
-              class="px-6 py-4 border-b border-gray-200 flex items-center justify-between cursor-pointer lg:cursor-default mobile-accordion-header">
-              <h2 class="text-lg text-gray-900">Peta Sebaran</h2>
-              <div class="lg:hidden">
-                <svg class="mobile-accordion-icon w-5 h-5 transition-transform" fill="currentColor"
-                  viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-                </svg>
+          <div>
+            <p class="text-end text-sm text-gray-600 mr-1 mb-0.5 lg:hidden">Tekan untuk membuka</p>
+            <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+              <div
+                class="px-6 py-4 border-b border-gray-200 flex items-center justify-between cursor-pointer lg:cursor-default mobile-accordion-header">
+                <h2 class="text-lg text-gray-900">Peta Sebaran</h2>
+                <div class="lg:hidden">
+                  <svg class="mobile-accordion-icon w-5 h-5 transition-transform" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div class="mobile-accordion-content p-6">
-              <p>
-                Ingin melihat lokasi kerusakan dalam bentuk peta? Silakan kunjungi halaman<a href="/peta-sebaran"
-                  target="_blank" rel="noopener noreferrer"
-                  class="text-blue-600 underline inline-flex items-center gap-1 align-middle ml-1"><span>Peta
-                    Sebaran</span><i class="fa-solid fa-arrow-up-right-from-square fa-sm"></i></a>
-              </p>
+              <div class="mobile-accordion-content p-6">
+                <p>
+                  Ingin melihat lokasi kerusakan dalam bentuk peta? Silakan kunjungi halaman<a href="/peta-sebaran"
+                    target="_blank" rel="noopener noreferrer"
+                    class="text-blue-600 underline inline-flex items-center gap-1 align-middle ml-1"><span>Peta
+                      Sebaran</span><i class="fa-solid fa-arrow-up-right-from-square fa-sm"></i></a>
+                </p>
+              </div>
             </div>
           </div>
 
@@ -267,7 +278,8 @@
               <div class="flex items-center">
                 <div class="ml-2">
                   <button id="sort-dropdown" data-dropdown-toggle="dropdown-sort"
-                    class="text-gray-500 hover:bg-gray-100 focus:outline-none rounded-lg text-sm p-1.5 flex items-center gap-1.5" type="button">
+                    class="text-gray-500 hover:bg-gray-100 focus:outline-none rounded-lg text-sm p-1.5 flex items-center gap-1.5"
+                    type="button">
                     <span class="text-gray-500 text-sm">Urutkan</span>
                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg">
@@ -378,7 +390,7 @@
                       <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a href="{{ route('guest.drainase-irigasi.pengaduan.show', $item->id) }}"
                           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition">
-                          <span>Detail</span>
+                          <span>Lihat Detail & Foto</span>
                           <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -483,7 +495,7 @@
                         <div class="flex justify-end items-center mt-3">
                           <a href="{{ route('guest.drainase-irigasi.pengaduan.show', $item->id) }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition text-sm">
-                            <span>Detail</span>
+                            <span>Lihat Detail & Foto</span>
                             <svg class="ml-1 w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                               <path fill-rule="evenodd"
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
@@ -669,7 +681,7 @@
             document.querySelectorAll('.mobile-accordion-icon').forEach((icon) => {
               icon.style.transform = 'rotate(0deg)';
             });
-            
+
             mobileAccordionsInitialized = true;
           }
 

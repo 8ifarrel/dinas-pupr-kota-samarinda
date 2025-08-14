@@ -523,7 +523,7 @@
             <i class="fa-solid fa-info-circle mr-1"></i>Lihat Foto & Detail
           </a>
           <a id="modal-gmaps-link" href="#" target="_blank"
-            class="text-gray-600 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-4 py-2.5 inline-flex items-center">
+            class="text-gray-600 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 rounded-lg text-sm px-4 py-2.5 inline-flex items-center">
             <i class="fa-solid fa-map-location-dot mr-1"></i>Lihat di Google Maps
           </a>
         </div>
