@@ -727,7 +727,6 @@
                                     <i class="fas fa-comment-dots text-green-600 text-xl"></i>
                                   </div>
                                   <h5 class="font-semibold text-gray-800 mb-2">Pekerjaan Telah Selesai</h5>
-                                  <p class="text-sm text-gray-600 mb-4">Bagaimana penilaian Anda terhadap hasilnya?</p>
                                 </div>
                               @endif
                             </div>
