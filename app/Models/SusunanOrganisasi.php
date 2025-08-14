@@ -45,5 +45,10 @@ class SusunanOrganisasi extends Model
     {
         return $this->hasMany(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
     }
+
+    public function bukuTamu()
+    {
+        return $this->hasMany(BukuTamu::class, 'jabatan_yang_dikunjungi', 'id_susunan_organisasi');
+    }
 }
 

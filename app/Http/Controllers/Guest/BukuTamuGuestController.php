@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BukuTamu;
 use App\Models\SusunanOrganisasi;
-use App\Mail\BukuTamuEmail;
+// use App\Mail\BukuTamuEmail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BukuTamuGuestController extends Controller
@@ -19,10 +19,12 @@ class BukuTamuGuestController extends Controller
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
 		$page_title = "Buku Tamu";
+		$page_subtitle = "Layanan Umum";
 
 		return view('guest.pages.buku-tamu.index', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
+			'page_subtitle' => $page_subtitle,
 		]);
 	}
 
@@ -51,7 +53,7 @@ class BukuTamuGuestController extends Controller
 		$request->validate([
 			'nama_pengunjung' => 'required|string',
 			'nomor_telepon' => 'required|string',
-			'email' => 'required|email',
+			// 'email' => 'required|email',
 			'alamat' => 'required|string',
 			'jabatan_yang_dikunjungi' => 'required|exists:susunan_organisasi,id_susunan_organisasi',
 			'maksud_dan_tujuan' => 'required|string',
@@ -63,14 +65,14 @@ class BukuTamuGuestController extends Controller
 		$bukuTamu->id_buku_tamu = $idBukuTamu;
 		$bukuTamu->nama_pengunjung = $request->nama_pengunjung;
 		$bukuTamu->nomor_telepon = $request->nomor_telepon;
-		$bukuTamu->email = $request->email;
+		// $bukuTamu->email = $request->email;
 		$bukuTamu->alamat = $request->alamat;
 		$bukuTamu->jabatan_yang_dikunjungi = $request->jabatan_yang_dikunjungi;
 		$bukuTamu->maksud_dan_tujuan = $request->maksud_dan_tujuan;
 		$bukuTamu->status = 'Pending';
 		$bukuTamu->save();		
 
-		Mail::to($request->email)->send(new BukuTamuEmail($idBukuTamu, $request->all()));
+		// Mail::to($request->email)->send(new BukuTamuEmail($idBukuTamu, $request->all()));
 
 		return redirect()->route('guest.buku-tamu.result', [
 			'id' => $idBukuTamu
@@ -112,6 +114,16 @@ class BukuTamuGuestController extends Controller
 		$page_title = "Buku Tamu";
 
 		$buku_tamu = BukuTamu::with('susunanOrganisasi')->where('id_buku_tamu', $idBukuTamu)->first();
+
+		if ($request->has('ajax')) {
+			if (!$buku_tamu) {
+				return response()->json(['status' => null], 404);
+			}
+			return response()->json([
+				'status' => $buku_tamu->status,
+				'deskripsi_status' => $buku_tamu->deskripsi_status ?? "Permintaan kunjungan sedang diproses"
+			]);
+		}
 
 		return view('guest.pages.buku-tamu.show', [
 			'meta_description' => $meta_description,

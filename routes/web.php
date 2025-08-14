@@ -41,6 +41,7 @@ use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
+use App\Http\Controllers\Guest\BukuTamuDisplayGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -177,22 +178,28 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
  * Buku Tamu
  */
 
-// Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
-// 	Route::get('/', [BukuTamuGuestController::class, 'index'])
-// 		->name('guest.buku-tamu.index');
+Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
+	Route::get('/', [BukuTamuGuestController::class, 'index'])
+		->name('guest.buku-tamu.index');
 
-// 	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
-// 		->name('guest.buku-tamu.create');
+	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
+		->name('guest.buku-tamu.create');
 
-// 	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
-// 		->name('guest.buku-tamu.store');
+	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
+		->name('guest.buku-tamu.store');
 
-// 	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
-// 		->name('guest.buku-tamu.result');
+	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
+		->name('guest.buku-tamu.result');
 
-// 	Route::get('/status', [BukuTamuGuestController::class, 'show'])
-// 		->name('guest.buku-tamu.show');
-// });
+	Route::get('/status', [BukuTamuGuestController::class, 'show'])
+		->name('guest.buku-tamu.show');
+
+	Route::get('/display', [BukuTamuDisplayGuestController::class, 'index'])
+		->name('guest.buku-tamu.display.index');
+	// Tambahkan endpoint AJAX untuk display antrean
+	Route::get('/display/queue-data', [BukuTamuDisplayGuestController::class, 'queueData'])
+		->name('guest.buku-tamu.display.queue-data');
+});
 
 /**
  * Drainase Irigasi

@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->string('id_buku_tamu', 255)->primary();
             $table->string('nama_pengunjung', 255);
             $table->string('nomor_telepon', 255);
-            $table->string('email', 255);
+            $table->string('email', 255)->nullable();
             $table->text('alamat');
             $table->unsignedBigInteger('jabatan_yang_dikunjungi');
             $table->text('maksud_dan_tujuan');

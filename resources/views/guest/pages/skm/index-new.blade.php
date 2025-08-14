@@ -155,7 +155,7 @@
       </form>
 
     </div>
-    <div class="bg-white p-14 w-fullS">
+    <div class="bg-white p-14 w-full">
       <div class="text-center">
         <span
           class="bg-brand-blue font-bold text-brand-yellow text-base me-2 px-4 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300 tv-vertical:text-2xl tv-vertical:px-8 tv-vertical:py-2">
@@ -169,8 +169,6 @@
       <img src="{{ asset('image/others/spi.png') }}" alt="">
     </div>
   </div>
-
-
 
   <footer class="bg-[#D9D9D9D9] flex flex-col items-center">
     <div
