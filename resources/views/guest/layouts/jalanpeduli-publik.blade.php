@@ -43,7 +43,7 @@
     @include('guest.components.jalanpeduli-navbar')
 
     <!-- 2. Konten Utama (akan mengisi ruang yang tersedia) -->
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow pt-4" style="padding-top: var(--nav-offset-static, 6rem)">
         @yield('content')
     </main>
 
@@ -57,6 +57,41 @@
     @include('guest.components.privacy-policy-notification')
 
     @vite('resources/js/app.js')
+    <script>
+        // Compute navbar offsets to avoid overlaps. Use two vars:
+        // --nav-offset-static for layout padding (set on load/resize only)
+        // --nav-offset for sticky elements (updated on scroll as navbar floats)
+        (function () {
+            function calculateOffset() {
+                var nav = document.getElementById('liquid-navbar');
+                if (!nav) return { staticOffset: 96, dynamicOffset: 96 };
+                var rect = nav.getBoundingClientRect();
+                var gap = 12; // breathing room
+                var dynamic = Math.max(0, Math.round((rect.top || 0) + rect.height + gap));
+                var staticOff = Math.max(0, Math.round(rect.height + gap));
+                return { staticOffset: staticOff, dynamicOffset: dynamic };
+            }
+
+            function setStaticOffset() {
+                try {
+                    var off = calculateOffset().staticOffset;
+                    document.documentElement.style.setProperty('--nav-offset-static', off + 'px');
+                } catch (e) { /* noop */ }
+            }
+
+            function setDynamicOffset() {
+                try {
+                    var off = calculateOffset().dynamicOffset;
+                    document.documentElement.style.setProperty('--nav-offset', off + 'px');
+                } catch (e) { /* noop */ }
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){ setStaticOffset(); setDynamicOffset(); });
+            window.addEventListener('load', function(){ setStaticOffset(); setDynamicOffset(); }, { once: true });
+            window.addEventListener('resize', function(){ setStaticOffset(); setDynamicOffset(); });
+            window.addEventListener('scroll', function(){ requestAnimationFrame(setDynamicOffset); }, { passive: true });
+        })();
+    </script>
     @vite('resources/js/clock.js')
     @vite('resources/js/navbar-guest.js')
 

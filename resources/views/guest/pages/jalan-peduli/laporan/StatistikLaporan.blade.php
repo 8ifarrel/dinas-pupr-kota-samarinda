@@ -1,10 +1,13 @@
 @extends('guest.layouts.jalanpeduli-publik')
 
 @section('content')
-    <div class="sticky top-[80px] z-30 w-full">
-        <div class="container mx-auto">
+    <!-- Small spacer below navbar for visual breathing room -->
+    <div class="h-2 md:h-3"></div>
+
+    <div class="sticky z-40 w-full mb-6" style="top: calc(var(--nav-offset, 6rem) + 1.25rem)">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="backdrop-blur-sm rounded-xl">
-                <div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-lg border ">
+                <div class="flex justify-between items-center bg-white px-4 py-3 rounded-xl shadow-lg border ">
                     <div class="flex items-center gap-2 flex-wrap">
                         <button id="toggleFilterBtn" type="button"
                             class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 transition-all duration-200 transform hover:scale-105">
