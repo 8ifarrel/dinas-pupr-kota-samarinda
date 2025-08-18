@@ -1,8 +1,8 @@
-<div class="hidden my-4 mx-16 lg:flex justify-between items-center">
-  <figure class="flex gap-2">
+<div class="hidden px-6 py-2 lg:flex justify-between items-center">
+  <figure class="flex flex-col py-2 gap-y-2 gap-x-4 lg:flex-row">
     <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
-    <figcaption class="my-auto text-lg text-brand-blue font-bold w-[340px] uppercase">
+    <figcaption class="my-auto text-lg text-brand-blue font-bold w-[365px] uppercase">
       {{ config('app.nama_dinas') }}
     </figcaption>
   </figure>
@@ -205,8 +205,8 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
+                    <a href="{{ route('guest.jalan-peduli.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli</a>
                   </li>
                   <li>
                     <a href="{{ url('https://sijakon.samarindakota.go.id') }}"
@@ -217,8 +217,8 @@
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
                   </li>
                   <li>
-                    <a href="{{ route('guest.sedot-tinja.index') }}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja</a>
+                    <a href="{{-- route('guest.sedot-tinja.index') --}}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja (soon)</a>
                   </li>
                 </div>
               </div>
