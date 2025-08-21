@@ -138,5 +138,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other Application Configuration
+    |--------------------------------------------------------------------------
+    | This section can be used to define additional configuration options
+    | for your application. You can add any custom settings
+    | that you need for your application here.
+    | */
+
+    'turnstile_secret' => env('TURNSTILE_SECRET', ''),
+    'turnstile_sitekey' => env('TURNSTILE_SITEKEY', ''),
+    'maptiler_token' => env('MAPTILER_TOKEN', ''),
+
 ];
 
