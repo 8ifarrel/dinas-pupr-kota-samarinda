@@ -205,13 +205,8 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-<<<<<<< HEAD
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
-=======
                     <a href="{{ route('guest.jalan-peduli.index') }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli</a>
->>>>>>> origin/main
                   </li>
                   <li>
                     <a href="{{ url('https://sijakon.samarindakota.go.id') }}"
@@ -222,13 +217,8 @@
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
                   </li>
                   <li>
-<<<<<<< HEAD
                     <a href="{{ route('guest.sedot-tinja.index') }}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja</a>
-=======
-                    <a href="{{-- route('guest.sedot-tinja.index') --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja (soon)</a>
->>>>>>> origin/main
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SILALAD</a>
                   </li>
                 </div>
               </div>

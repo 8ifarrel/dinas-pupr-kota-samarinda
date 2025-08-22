@@ -12,6 +12,7 @@
         "laravel/framework": "11.44.1",
         "laravel/tinker": "^2.9",
         "league/commonmark": "2.7",
+        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "yajra/laravel-datatables": "11.0"
     },
