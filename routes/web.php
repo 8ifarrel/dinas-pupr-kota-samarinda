@@ -287,6 +287,30 @@ Route::prefix('api')->group(function () {
 		->name('api.kelurahans.by-kecamatan');
 });
 
+/**
+ * Sedot Tinja
+ */
+Route::prefix('sedot-tinja')->group(function () {
+	Route::get('/', [SedotTinjaGuestController::class, 'index'])
+		->name('guest.sedot-tinja.index');
+
+	Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+		->name('guest.sedot-tinja.create');
+
+	Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+		->name('guest.sedot-tinja.store');
+
+	Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
+		->name('guest.sedot-tinja.show');
+
+	Route::get('/success', [SedotTinjaGuestController::class, 'success'])
+		->name('guest.sedot-tinja.success');
+
+    Route::get('/status', [SedotTinjaGuestController::class, 'status'])
+		->name('guest.sedot-tinja.status');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Halaman Admin (E-Panel)
