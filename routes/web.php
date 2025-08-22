@@ -276,6 +276,12 @@ Route::prefix('sedot-tinja')->group(function () {
 
 	Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
 		->name('guest.sedot-tinja.show');
+
+	Route::get('/success', [SedotTinjaGuestController::class, 'success'])
+		->name('guest.sedot-tinja.success');
+
+    Route::get('/status', [SedotTinjaGuestController::class, 'status'])
+		->name('guest.sedot-tinja.status');
 });
 
 

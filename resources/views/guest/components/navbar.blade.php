@@ -217,8 +217,8 @@
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
                   </li>
                   <li>
-                    <a href="{{-- route('guest.sedot-tinja.index') --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja (soon)</a>
+                    <a href="{{ route('guest.sedot-tinja.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SILALAD</a>
                   </li>
                 </div>
               </div>

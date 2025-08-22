@@ -69,7 +69,20 @@ class JalanPeduliLaporanSeeder extends Seeder
                         $id_laporan = $this->generateIdLaporan($lokasi['kecamatan_id'], $lokasi['kelurahan_id']);
                         $fotoPath = "jalan_peduli/{$id_laporan}/{$filename}";
 
-                        $imageContents = file_get_contents($url);
+                        // --- FIX bagian ini ---
+                        $imageContents = @file_get_contents($url);
+
+                        if ($imageContents === false) {
+                            // fallback ke gambar lokal jika gagal ambil dari internet
+                            $localImagePath = database_path('seeders/images/default.jpg');
+                            if (file_exists($localImagePath)) {
+                                $imageContents = file_get_contents($localImagePath);
+                            } else {
+                                // kalau tidak ada file default, isi kosong biar tidak error
+                                $imageContents = '';
+                            }
+                        }
+
                         Storage::disk('public')->put($fotoPath, $imageContents);
 
                         $fotoFilenames[] = $filename;
