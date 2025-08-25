@@ -23,7 +23,6 @@
         </a>
       </li>
 
-<<<<<<< HEAD
       {{-- Sijakon --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
@@ -34,15 +33,6 @@
         </a>
       </li>
 
-      {{-- Jalan Peduli --}}
-      <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
-          <i class="fa-regular fa-circle-question"></i>
-          <span class="ms-3">
-            Jalan Peduli
-          </span>
-        </a>
-=======
       {{-- Jalan Peduli --}}
       <li>
         <button type="button"
@@ -72,7 +62,6 @@
               Masuk</a>
           </li>
         </ul>
->>>>>>> origin/main
       </li>
 
       {{-- Drainase & Irigasi --}}
@@ -89,12 +78,8 @@
 
       {{-- Sedot Tinja --}}
       <li>
-<<<<<<< HEAD
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
           href="{{ route('admin.sedot-tinja.index') }}">
-=======
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
->>>>>>> origin/main
           <i class="fa-regular fa-circle-question"></i>
           </i>
 
@@ -104,8 +89,6 @@
         </a>
       </li>
 
-<<<<<<< HEAD
-=======
       {{-- Sijakon --}}
       <li>
         <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
@@ -116,7 +99,6 @@
         </a>
       </li>
 
->>>>>>> origin/main
       <div class="flex items-center mx-2 pt-1.5">
         <span class="font-medium text-sm text-gray-600 mr-3">
           Umum
