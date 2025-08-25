@@ -3,61 +3,138 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SedotTinja;
 use Illuminate\Http\Request;
 
 class SedotTinjaAdminController extends Controller
 {
-  /**
-   * Menampilkan data laporan Sedot Tinja dalam bentuk table dan statistik
-   */
-  public function index()
-  {
-    $page_title = "Sedot Tinja";
-    $page_description = "Lihat dan kelola laporan Sedot Tinja yang diadakan oleh Dinas PUPR Kota Samarinda.";
+    /**
+     * Pesanan masuk (Belum dikerjakan)
+     */
+    public function dataPesanan()
+    {
+        $pesananPending = SedotTinja::where('status_pengerjaan', 'Belum dikerjakan')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    // TODO: Ambil semua data Sedot Tinja dari database dan kirimkan ke view
-  }
+        $page_title = 'Data Pesanan';
 
-  /**
-   * Menampilkan form untuk mengedit (memproses) laporan Sedot Tinja
-   *
-   * @param  int  $id
-   */
-  public function edit($id)
-  {
-    $page_title = "Edit Sedot Tinja";
-    $page_description = "Proses laporan Sedot Tinja yang diajukan oleh warga.";
+        return view('admin.pages.sedot-tinja.data-pesanan', compact('pesananPending', 'page_title'));
+    }
 
-    // TODO: Cari data Sedot Tinja berdasarkan ID
-    // TODO: Tampilkan form dengan data yang ingin diedit
-  }
+    /**
+     * Pesanan terkonfirmasi (Sedang dikerjakan atau Sudah dikerjakan)
+     */
+    public function dataTerkonfirmasi()
+    {
+        $pesananConfirmed = SedotTinja::whereIn('status_pengerjaan', ['Sedang dikerjakan', 'Sudah dikerjakan'])
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-  /**
-   * Memperbarui laporan Sedot Tinja
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   */
-  public function update(Request $request, $id)
-  {
-    // TODO: Validasi data yang dikirim dari form
-    // TODO: Update data Sedot Tinja berdasarkan ID
-    // TODO: Redirect atau berikan response setelah update
-  }
+        $page_title = 'Data Terkonfirmasi';
 
-  /**
-   * Menampilkan detail laporan Sedot Tinja
-   *
-   * @param  int  $id
-   */
-  public function show($id)
-  {
-    $page_title = "Detail Laporan Sedot Tinja";
-    $page_description = "Lihat detail dari laporan Sedot Tinja yang diajukan oleh warga.";
+        return view('admin.pages.sedot-tinja.data-terkonfirmasi', compact('pesananConfirmed', 'page_title'));
+    }
 
-    // TODO: Cari data laporan Sedot Tinja berdasarkan ID
-    // TODO: Handle jika data tidak ditemukan
-    // TODO: Kirim data ke view untuk ditampilkan
-  }
+    /**
+     * Riwayat semua pesanan
+     */
+    public function riwayatPesanan()
+    {
+        $riwayat = SedotTinja::orderBy('updated_at', 'desc')->get();
 
+        $page_title = 'Riwayat Pesanan';
+        
+        return view('admin.pages.sedot-tinja.riwayat-pesanan', compact('riwayat', 'page_title'));
+    }
+
+    /**
+     * Tampilkan form buat pesanan baru.
+     */
+    public function create()
+    {
+        return view('admin.pages.sedot-tinja.create');
+    }
+
+    /**
+     * Simpan pesanan baru ke database.
+     */
+    public function store(Request $request)
+    {
+        $validated = $this->validateRequest($request);
+
+        SedotTinja::create($validated);
+
+        return redirect()->route('admin.sedot-tinja.data-pesanan')
+            ->with('success', 'Pesanan berhasil dibuat.');
+    }
+
+    /**
+     * Tampilkan detail pesanan.
+     */
+    public function show(SedotTinja $sedotTinja)
+    {
+        return view('admin.pages.sedot-tinja.show', compact('sedotTinja', 'page_title'));
+    }
+
+    /**
+     * Tampilkan form edit pesanan.
+     */
+    public function edit(SedotTinja $sedotTinja)
+    {
+        return view('admin.pages.sedot-tinja.edit', compact('sedotTinja', 'page_title'));
+    }
+
+    /**
+     * Update pesanan di database.
+     */
+    public function update(Request $request, SedotTinja $sedotTinja)
+    {
+        $validated = $this->validateRequest($request);
+
+        $sedotTinja->update($validated);
+
+        return redirect()->route('admin.sedot-tinja.data-pesanan')
+            ->with('success', 'Pesanan berhasil diperbarui.');
+    }
+
+    /**
+     * Hapus pesanan.
+     */
+    public function destroy(SedotTinja $sedotTinja)
+    {
+        $sedotTinja->delete();
+
+        return redirect()->route('admin.sedot-tinja.data-pesanan')
+            ->with('success', 'Pesanan berhasil dihapus.');
+    }
+
+    /**
+     * Validasi request untuk store/update
+     */
+    private function validateRequest(Request $request)
+    {
+        return $request->validate([
+            'nama_pelanggan' => 'required|string|max:150',
+            'nomor_telepon_pelanggan' => 'required|string|max:15',
+            'alamat' => 'required|string',
+            'layanan' => 'nullable|string|max:50',
+            'detail_laporan' => 'nullable|string',
+            'kabkota_id' => 'required|string|max:50',
+            'kecamatan_id' => 'required|string|max:50',
+            'kelurahan_id' => 'required|string|max:50',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'jenis_bangunan' => 'required|string|max:50',
+            'alamat_detail' => 'nullable|string',
+            'nomor_bangunan' => 'required|integer',
+            'rt' => 'required|integer',
+            'rating' => 'nullable|integer|min:1|max:5',
+            'kritik' => 'nullable|string',
+            'saran' => 'nullable|string',
+            'captcha' => 'nullable|string|max:50',
+            'status_pengerjaan' => 'required|in:Belum dikerjakan,Sedang dikerjakan,Sudah dikerjakan',
+            'setuju' => 'boolean',
+        ]);
+    }
 }
