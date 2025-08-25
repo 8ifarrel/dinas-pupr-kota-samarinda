@@ -300,7 +300,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotAuthenticated;
 use App\Http\Middleware\IsSuperAdmin;
 
-use App\Http\Controllers\Admin\LoginAdminController;
+use App\Http\Controllers\Admin\LoginAdminController;  
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\SliderAdminController;
 use App\Http\Controllers\Admin\PartnerAdminController;
