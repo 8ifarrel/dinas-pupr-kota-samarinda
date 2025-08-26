@@ -110,17 +110,33 @@
       <div class="step" data-step="1">
         <div class="mb-4">
           <label class="block mb-1 font-medium">Nama</label>
-          <input type="text" name="nama_pelanggan" value="{{ old('nama_pelanggan') }}" class="w-full border rounded-lg px-3 py-2" required>
+          <input type="text" 
+                name="nama_pelanggan" 
+                value="{{ old('nama_pelanggan') }}" 
+                class="w-full border rounded-lg px-3 py-2" 
+                placeholder="Masukkan nama anda"
+                required>
         </div>
         <div class="mb-4">
           <label class="block mb-1 font-medium">Nomor Telepon</label>
-          <input type="text" name="nomor_telepon_pelanggan" value="{{ old('nomor_telepon_pelanggan') }}" class="w-full border rounded-lg px-3 py-2" required>
+          <input type="text" 
+                name="nomor_telepon_pelanggan" 
+                value="{{ old('nomor_telepon_pelanggan') }}" 
+                class="w-full border rounded-lg px-3 py-2" 
+                placeholder="Contoh: 081234567890"
+                required>
         </div>
         <div class="mb-4">
           <label class="block mb-1 font-medium">Alamat</label>
-          <input type="text" name="alamat" value="{{ old('alamat') }}" class="w-full border rounded-lg px-3 py-2" required>
+          <input type="text" 
+                name="alamat" 
+                value="{{ old('alamat') }}" 
+                class="w-full border rounded-lg px-3 py-2" 
+                placeholder="Masukkan alamat lengkap anda"
+                required>
         </div>
       </div>
+
 
       <!-- STEP 2 -->
       <div class="step hidden" data-step="2">
@@ -164,23 +180,23 @@
           <label class="block mb-1 font-medium">Jenis Bangunan</label>
           <select id="jenis_bangunan" name="jenis_bangunan" class="w-full border rounded-lg px-3 py-2" required>
             <option value="">-- Pilih Bangunan --</option>
-            <option value="Rumah">Rumah (Rp120.000)</option>
-            <option value="Tempat ibadah">Tempat Ibadah (Rp120.000)</option>
-            <option value="Panti asuhan">Panti Asuhan (Rp120.000)</option>
-            <option value="Hotel">Hotel (Rp120.000)</option>
-            <option value="Sekolah">Sekolah (Rp120.000)</option>
-            <option value="Panti jompo">Panti Jompo (Rp120.000)</option>
-            <option value="Pabrik">Pabrik (Rp120.000)</option>
-            <option value="Madrasah">Madrasah (Rp120.000)</option>
-            <option value="Rumah sakit">Rumah Sakit (Rp120.000)</option>
-            <option value="Restoran">Restoran (Rp120.000)</option>
-            <option value="Kampus">Kampus (Rp120.000)</option>
-            <option value="Pondok pesantren">Pondok Pesantren (Rp120.000)</option>
-            <option value="Kantor">Kantor (Rp120.000)</option>
-            <option value="Puskesmas">Puskesmas (Rp120.000)</option>
-            <option value="Klinik">Klinik (Rp120.000)</option>
-            <option value="Apartemen">Apartemen (Rp120.000)</option>
-            <option value="Mall">Mall (Rp120.000)</option>
+            <option value="Rumah">Rumah (Rp600.000)</option>
+            <option value="Tempat ibadah">Tempat Ibadah (Rp300.000)</option>
+            <option value="Panti asuhan">Panti Asuhan (Rp300.000)</option>
+            <option value="Hotel">Hotel (Rp600.000)</option>
+            <option value="Sekolah">Sekolah (Rp300.000)</option>
+            <option value="Panti jompo">Panti Jompo (Rp300.000)</option>
+            <option value="Pabrik">Pabrik (Rp600.000)</option>
+            <option value="Madrasah">Madrasah (Rp300.000)</option>
+            <option value="Rumah sakit">Rumah Sakit (Rp600.000)</option>
+            <option value="Restoran">Restoran (Rp600.000)</option>
+            <option value="Kampus">Kampus (Rp300.000)</option>
+            <option value="Pondok pesantren">Pondok Pesantren (Rp300.000)</option>
+            <option value="Kantor">Kantor (Rp600.000)</option>
+            <option value="Puskesmas">Puskesmas (Rp300.000)</option>
+            <option value="Klinik">Klinik (Rp300.000)</option>
+            <option value="Apartemen">Apartemen (Rp600.000)</option>
+            <option value="Mall">Mall (Rp600.000)</option>
             <option value="Lainnya">Lainnya (Rp0)</option>
           </select>
         </div>
@@ -194,15 +210,25 @@
         </div>
 
         <div class="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="block mb-1 font-medium">RT</label>
-            <input type="text" name="rt" value="{{ old('rt') }}" class="w-full border rounded-lg px-3 py-2" required>
-          </div>
-          <div>
-            <label class="block mb-1 font-medium">Nomor Rumah</label>
-            <input type="text" name="nomor_bangunan" value="{{ old('nomor_bangunan') }}" class="w-full border rounded-lg px-3 py-2" required>
-          </div>
+        <div>
+          <label class="block mb-1 font-medium">RT</label>
+          <input type="number" 
+                name="rt" 
+                value="{{ old('rt') }}" 
+                class="w-full border rounded-lg px-3 py-2" 
+                placeholder="Masukkan nomor RT"
+                required>
         </div>
+        <div>
+          <label class="block mb-1 font-medium">Nomor Rumah</label>
+          <input type="number" 
+                name="nomor_bangunan" 
+                value="{{ old('nomor_bangunan') }}" 
+                class="w-full border rounded-lg px-3 py-2" 
+                placeholder="Masukkan nomor rumah"
+                required>
+        </div>
+      </div>
 
         <div class="mb-4">
           <label class="block mb-1 font-medium">Titik Lokasi</label>
@@ -213,8 +239,6 @@
           Titik lokasi: <span id="latText">-</span>, <span id="lngText">-</span></p>
         </div>
       </div>
-
-      
 
 
       <!-- STEP 3 -->

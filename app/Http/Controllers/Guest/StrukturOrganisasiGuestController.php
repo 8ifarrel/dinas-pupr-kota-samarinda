@@ -86,4 +86,3 @@ class StrukturOrganisasiGuestController extends Controller
 		]);
 	}
 }
-

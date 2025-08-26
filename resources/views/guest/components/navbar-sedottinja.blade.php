@@ -5,7 +5,7 @@
       {{-- Logo --}}
       <div class="flex-shrink-0">
         <a href="{{ route('guest.sedot-tinja.index') }}" class="flex items-center gap-2">
-          <img src="{{ asset('images/logo-pupr.png') }}" alt="Logo PUPR" class="h-8">
+          <img src="{{ asset('storage/asset/logo-SILALAD.jpg') }}" alt="Logo PUPR" class="h-20">
           <span class="font-bold text-lg">Sedot Tinja</span>
         </a>
       </div>
