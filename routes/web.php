@@ -701,32 +701,50 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 			});
 		});
 
-		/**
-		 * Sedot Tinja
-		 */
-		Route::prefix('sedot-tinja')->group(function () {
-			Route::get('/', [SedotTinjaAdminController::class, 'index'])
-				->name('admin.sedot-tinja.index');
+			/**
+			 * Sedot Tinja (Admin)
+			 */
 
-			Route::get('/kelola-laporan', [SedotTinjaAdminController::class, 'edit'])
-				->name('admin.sedot-tinja.create');
+			Route::prefix('admin/sedot-tinja')->middleware(['auth', 'is_admin'])->group(function () {
+				Route::get('/', [SedotTinjaAdminController::class, 'index'])
+					->name('admin.sedot-tinja.index');
+				Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
+					->name('admin.sedot-tinja.dataPesanan');
+				Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
+					->name('admin.sedot-tinja.terkonfirmasi');
+				Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
+					->name('admin.sedot-tinja.riwayat');
+				Route::get('/create', [SedotTinjaAdminController::class, 'create'])
+					->name('admin.sedot-tinja.create');
+				Route::post('/', [SedotTinjaAdminController::class, 'store'])
+					->name('admin.sedot-tinja.store');
+				Route::get('/{sedotTinja}/edit', [SedotTinjaAdminController::class, 'edit'])
+					->name('admin.sedot-tinja.edit');
+				Route::put('/{sedotTinja}', [SedotTinjaAdminController::class, 'update'])
+					->name('admin.sedot-tinja.update');
+				Route::get('/{sedotTinja}/print', [SedotTinjaAdminController::class, 'print'])
+					->name('admin.sedot-tinja.print');
+				Route::get('/{sedotTinja}', [SedotTinjaAdminController::class, 'show'])
+					->name('admin.sedot-tinja.show');
+				Route::delete('/{sedotTinja}', [SedotTinjaAdminController::class, 'destroy'])
+					->name('admin.sedot-tinja.destroy');
+			});
 
-			Route::post('/perbarui-laporan', [SedotTinjaAdminController::class, 'update'])
-				->name('admin.sedot-tinja.store');
-
-			Route::get('/lihat-laporan', [SedotTinjaAdminController::class, 'show'])
-				->name('admin.sedot-tinja.show');
-			
-			Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
-				->name('admin.data-pesanan.index');
-			
-			Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
-				->name('admin.data-terkonfirmasi.index');
-			
-			Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
-				->name('admin.riwayat-pesanan.index');
 		});
-	});
+
+			/**
+			 * Cetak Surat
+			 */
+			Route::prefix('admin/sedot-tinja')->middleware(['auth', 'is_admin'])->group(function () {
+				Route::get('/{sedotTinja}/print-surat-jalan', [SedotTinjaAdminController::class, 'printSuratJalan'])
+					->name('admin.sedot-tinja.print.surat-jalan');
+
+				Route::get('/{sedotTinja}/print-surat-pernyataan', [SedotTinjaAdminController::class, 'printSuratPernyataan'])
+					->name('admin.sedot-tinja.print.surat-pernyataan');
+
+				Route::get('/{sedotTinja}/print-surat-pesanan', [SedotTinjaAdminController::class, 'printSuratPesanan'])
+					->name('admin.sedot-tinja.print.surat-pesanan');
+			});
 
 	/**
 	 * Logout
