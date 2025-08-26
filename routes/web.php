@@ -300,7 +300,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotAuthenticated;
 use App\Http\Middleware\IsSuperAdmin;
 
-use App\Http\Controllers\Admin\LoginAdminController;
+use App\Http\Controllers\Admin\LoginAdminController;  
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\SliderAdminController;
 use App\Http\Controllers\Admin\PartnerAdminController;
@@ -358,6 +358,11 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 						->name('admin.super.akun-admin.update');
 					Route::delete('/delete/{id}', [AkunAdminSuperAdminController::class, 'destroy'])
 						->name('admin.super.akun-admin.destroy');
+				});
+
+				// Route untuk kelola Sedot Tinja (admin biasa)
+				Route::prefix('admin')->name('admin.')->group(function () {
+    				Route::resource('sedot-tinja', \App\Http\Controllers\Admin\SedotTinjaAdminController::class);
 				});
 
 				/**
@@ -711,6 +716,15 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 
 			Route::get('/lihat-laporan', [SedotTinjaAdminController::class, 'show'])
 				->name('admin.sedot-tinja.show');
+			
+			Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
+				->name('admin.data-pesanan.index');
+			
+			Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
+				->name('admin.data-terkonfirmasi.index');
+			
+			Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
+				->name('admin.riwayat-pesanan.index');
 		});
 	});
 
