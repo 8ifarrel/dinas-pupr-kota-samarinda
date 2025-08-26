@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             KepalaDinasJenjangKarirSeeder::class,
             KepalaDinasRiwayatPendidikanSeeder::class,
             
-            // Seeder visi dan misi
+            // Seeder visi, misi, sejarah
             VisiSeeder::class,
             MisiSeeder::class,
             SejarahDinasPuprKotaSamarindaSeeder::class,
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
             VisitorsSeeder::class,
             PageVisitsSeeder::class,
             
-            // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
+            // Seeder Jalan Peduli
             JalanPeduliStatusSeeder::class,
             JalanPeduliPelaporSeeder::class,
             JalanPeduliLaporanSeeder::class,

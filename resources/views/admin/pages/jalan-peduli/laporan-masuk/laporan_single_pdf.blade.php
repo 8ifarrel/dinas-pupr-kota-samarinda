@@ -47,8 +47,13 @@
         .status-right { display: table-cell; text-align: right; vertical-align: top; }
         .status-badge { padding: 4px 10px; border-radius: 15px; font-size: 8pt; font-weight: 500; display: inline-block; }
         .status-pending { background-color: #fef3c7; color: #92400e; }
-        .status-accept { background-color: #d1fae5; color: #065f46; }
+        .status-disposisi { background-color: #ede9fe; color: #5b21b6; }
+        .status-belum_dikerjakan { background-color: #f3e8ff; color: #6b21a8; }
+        .status-telah_disurvei { background-color: #e0f2fe; color: #0ea5e9; }
+        .status-sedang_dikerjakan { background-color: #dcfce7; color: #16a34a; }
+        .status-telah_dikerjakan { background-color: #d1fae5; color: #065f46; }
         .status-reject { background-color: #fee2e2; color: #991b1b; }
+        .status-default { background-color: #e9ecef; color: #495057; }
         .date-text { font-size: 8pt; color: #6b7280; margin: 0; }
         .date-value { font-weight: 600; color: #1f2937; }
 
@@ -139,9 +144,10 @@
                     @php
                         $statusName = $laporan->status ? $laporan->status->nama_status : 'tidak_diketahui';
                         $statusText = ucfirst(str_replace('_', ' ', $statusName));
-                        $statusBadgeClass = 'status-' . strtolower($statusName); // Membuat class CSS dinamis
+                        $statusBadgeClass = 'status-' . strtolower($statusName);
                         // Fallback jika class CSS tidak ada
-                        if (!in_array($statusBadgeClass, ['status-pending', 'status-disposisi', 'status-telah_disurvei', 'status-belum_dikerjakan', 'status-sedang_dikerjakan', 'status-telah_dikerjakan', 'status-reject'])) {
+                        if (!in_array($statusBadgeClass, ['status-pending', 'status-disposisi', 'status-telah_disurvei', 
+                              'status-belum_dikerjakan', 'status-sedang_dikerjakan', 'status-telah_dikerjakan', 'status-reject'])) {
                             $statusBadgeClass = 'status-default';
                         }
                     @endphp
