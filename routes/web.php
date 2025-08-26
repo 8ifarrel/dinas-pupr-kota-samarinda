@@ -702,14 +702,14 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		});
 
 			/**
-			 * Sedot Tinja (Admin)
+			 * Sedot Tinja 
 			 */
 
 			Route::prefix('admin/sedot-tinja')->middleware(['auth', 'is_admin'])->group(function () {
 				Route::get('/', [SedotTinjaAdminController::class, 'index'])
 					->name('admin.sedot-tinja.index');
-				Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
-					->name('admin.sedot-tinja.dataPesanan');
+				Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'data-pesanan'])
+					->name('admin.sedot-tinja.data-pesanan');
 				Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
 					->name('admin.sedot-tinja.terkonfirmasi');
 				Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
