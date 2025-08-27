@@ -99,19 +99,19 @@
     </button>
     <ul id="dropdown-sedot-tinja" class="hidden py-2 space-y-2">
         <li>
-            <a href="{{ route('admin.data-pesanan.index') }}"
+            <a href="{{ route('admin.sedot-tinja.data-pesanan') }}"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                 Data Pesanan
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.data-terkonfirmasi.index') }}"
+            <a href="{{ route('admin.sedot-tinja.dataTerkonfirmasi') }}"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                 Data Terkonfirmasi
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.riwayat-pesanan.index') }}"
+            <a href="{{ route('admin.sedot-tinja.riwayat-pesanan') }}"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                 Riwayat Pesanan
             </a>
