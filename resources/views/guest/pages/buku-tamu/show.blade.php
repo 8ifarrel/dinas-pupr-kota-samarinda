@@ -86,8 +86,8 @@
       <table class="border-separate border-spacing-1.5">
         {{-- ID --}}
         <tr>
-          <td class=" text-end max-w-[200px] pe-2 font-bold">Kode</td>
-          <td>{{ $buku_tamu->id_buku_tamu }}</td>
+          <td class=" text-end max-w-[200px] pe-2 font-bold">Nomor Urut</td>
+          <td>{{ $buku_tamu->nomor_urut }}</td>
         </tr>
         {{-- Nama --}}
         <tr>
@@ -115,7 +115,7 @@
 
   <hr class="w-full border-gray-700">
 
-  <footer class="flex flex-col items-center pt-5 px-5">
+  <footer class="flex flex-col items-center py-5 px-5">
     <p class="text-center text-sm">
       © 2024-2025 {{ config('app.nama_dinas') }}.
     </p>

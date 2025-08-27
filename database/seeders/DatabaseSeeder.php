@@ -13,64 +13,64 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // Seeder dasar organisasi dan struktur
-            SusunanOrganisasiSeeder::class,
-            StrukturOrganisasiSeeder::class,
-            StrukturOrganisasiDiagramSeeder::class,
-            StrukturOrganisasiSliderSeeder::class,
+            // SusunanOrganisasiSeeder::class,
+            // StrukturOrganisasiSeeder::class,
+            // StrukturOrganisasiDiagramSeeder::class,
+            // StrukturOrganisasiSliderSeeder::class,
             
             // Seeder kepala dinas
-            KepalaDinasSeeder::class,
-            KepalaDinasJenjangKarirSeeder::class,
-            KepalaDinasRiwayatPendidikanSeeder::class,
+            // KepalaDinasSeeder::class,
+            // KepalaDinasJenjangKarirSeeder::class,
+            // KepalaDinasRiwayatPendidikanSeeder::class,
             
             // Seeder visi dan misi
-            VisiSeeder::class,
-            MisiSeeder::class,
-            SejarahDinasPuprKotaSamarindaSeeder::class,
+            // VisiSeeder::class,
+            // MisiSeeder::class,
+            // SejarahDinasPuprKotaSamarindaSeeder::class,
             
             // Seeder lokasi (kecamatan dan kelurahan)
-            KecamatanSeeder::class,
-            KelurahanSeeder::class,
+            // KecamatanSeeder::class,
+            // KelurahanSeeder::class,
             
             // Seeder berita dan kategori
-            BeritaKategoriSeeder::class,
-            BeritaSeeder::class,
-            BeritaFotoTambahanSeeder::class,
+            // BeritaKategoriSeeder::class,
+            // BeritaSeeder::class,
+            // BeritaFotoTambahanSeeder::class,
             
             // Seeder pengumuman
-            PengumumanSeeder::class,
+            // PengumumanSeeder::class,
             
             // Seeder PPID
-            PpidPelaksanaKategoriSeeder::class,
-            PpidPelaksanaSeeder::class,
+            // PpidPelaksanaKategoriSeeder::class,
+            // PpidPelaksanaSeeder::class,
             
             // Seeder album dan foto kegiatan
-            AlbumKegiatanSeeder::class,
-            FotoKegiatanSeeder::class,
+            // AlbumKegiatanSeeder::class,
+            // FotoKegiatanSeeder::class,
             
             // Seeder slider
-            SliderSeeder::class,
+            // SliderSeeder::class,
             
             // Seeder partner
-            PartnerSeeder::class,
+            // PartnerSeeder::class,
             
             // Seeder buku tamu
             BukuTamuSeeder::class,
             
             // Seeder SKM (Survei Kepuasan Masyarakat)
-            SkmSeeder::class,
+            // SkmSeeder::class,
             
             // Seeder users dan admin
-            UsersSeeder::class,
+            // UsersSeeder::class,
             
             // Seeder statistik pengunjung
-            VisitorsSeeder::class,
-            PageVisitsSeeder::class,
+            // VisitorsSeeder::class,
+            // PageVisitsSeeder::class,
             
             // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
-            JalanPeduliStatusSeeder::class,
-            JalanPeduliPelaporSeeder::class,
-            JalanPeduliLaporanSeeder::class,
+            // JalanPeduliStatusSeeder::class,
+            // JalanPeduliPelaporSeeder::class,
+            // JalanPeduliLaporanSeeder::class,
         ]);
     }
 }

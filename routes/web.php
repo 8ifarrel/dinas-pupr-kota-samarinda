@@ -10,7 +10,6 @@
 |
 */
 
-use App\Http\Controllers\Guest\DrainaseIrigasiGuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockSearchEngines;
 
@@ -180,24 +179,30 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
 
 Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
 	Route::get('/', [BukuTamuGuestController::class, 'index'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.index');
 
 	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.create');
 
 	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.store');
 
 	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.result');
 
 	Route::get('/status', [BukuTamuGuestController::class, 'show'])
 		->name('guest.buku-tamu.show');
 
 	Route::get('/display', [BukuTamuDisplayGuestController::class, 'index'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.display.index');
-	// Tambahkan endpoint AJAX untuk display antrean
+
 	Route::get('/display/queue-data', [BukuTamuDisplayGuestController::class, 'queueData'])
+		->middleware('allow.certain.ip')
 		->name('guest.buku-tamu.display.queue-data');
 });
 
@@ -563,9 +568,9 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		Route::prefix('buku-tamu')->group(function () {
 			Route::get('/', [BukuTamuAdminController::class, 'index'])
 				->name('admin.buku-tamu.index');
-			Route::get('/edit/{id}', [BukuTamuAdminController::class, 'edit'])
-				->name('admin.buku-tamu.edit');
-			Route::post('/update/{id}', [BukuTamuAdminController::class, 'update'])
+			Route::get('/show/{slug_susunan_organisasi}', [BukuTamuAdminController::class, 'show'])
+				->name('admin.buku-tamu.show');
+			Route::post('/update/{slug_susunan_organisasi}/{id}', [BukuTamuAdminController::class, 'update'])
 				->name('admin.buku-tamu.update');
 		});
 

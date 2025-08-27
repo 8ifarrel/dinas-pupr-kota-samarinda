@@ -7,7 +7,7 @@ return [
     | Additional
     |--------------------------------------------------------------------------
     |
-    | This value berisikan apalah ga tau aku wkwkwk
+    | Additional configuration values used by the application.
     */
     'nama_dinas' => 'Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda',
     'nama_singkatan_dinas' => 'Dinas PUPR Kota Samarinda',
@@ -16,6 +16,9 @@ return [
     'nama_pemkot' => 'Pemerintah Kota Samarinda',
     'nama_singkatan_pemkot' => 'Pemkot Samarinda',
     'logo_pemkot' => '/image/logo/pemkot-samarinda.png',
+
+    'allowed_ips' => explode(',', env('ALLOWED_IPS', '127.0.0.1,::1')),
+
 
     /*
     |--------------------------------------------------------------------------

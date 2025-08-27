@@ -22,12 +22,6 @@ class BukuTamuDisplayGuestController extends Controller
     // Endpoint untuk AJAX polling antrean buku tamu
     public function queueData(Request $request)
     {
-        $bulanIndo = [
-            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
-            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
-            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-        ];
-
         $id_kepala_dinas = 1;
         $id_sekretariat = 2;
         $allBagian = SusunanOrganisasi::where('id_susunan_organisasi_parent', 1)
@@ -35,6 +29,8 @@ class BukuTamuDisplayGuestController extends Controller
             ->select('id_susunan_organisasi', 'nama_susunan_organisasi')
             ->orderBy('nama_susunan_organisasi')
             ->get();
+
+        $today = now()->format('Y-m-d');
 
         // Pisahkan Sekretariat dan bagian lain
         $sekretariat = $allBagian->firstWhere('id_susunan_organisasi', $id_sekretariat);
@@ -47,44 +43,32 @@ class BukuTamuDisplayGuestController extends Controller
         // Sekretariat di atas
         if ($sekretariat) {
             $antrean = $sekretariat->bukuTamu()
-                ->whereIn('status', ['Pending', 'Diterima'])
+                ->where('status', 'Diterima')
+                ->whereDate('created_at', $today)
                 ->orderBy('created_at', 'asc')
                 ->first();
 
-            $kode = $antrean ? substr($antrean->id_buku_tamu, -4) : null;
-            $created_at = '';
-            if ($antrean && $antrean->created_at) {
-                $dt = $antrean->created_at;
-                $bulan = $bulanIndo[(int)$dt->format('n')];
-                $created_at = $dt->format('j') . ' ' . $bulan . ' ' . $dt->format('Y') . ' (' . $dt->format('H.i') . ')';
-            }
+            $nomor_urut = $antrean ? $antrean->nomor_urut : null;
 
             $result[] = [
                 'bagian' => $sekretariat->nama_susunan_organisasi,
-                'kode' => $kode,
-                'created_at' => $created_at,
+                'nomor_urut' => $nomor_urut,
             ];
         }
 
         // Bagian lain
         foreach ($bagianLain as $bagian) {
             $antrean = $bagian->bukuTamu()
-                ->whereIn('status', ['Pending', 'Diterima'])
+                ->where('status', 'Diterima')
+                ->whereDate('created_at', $today)
                 ->orderBy('created_at', 'asc')
                 ->first();
 
-            $kode = $antrean ? substr($antrean->id_buku_tamu, -4) : null;
-            $created_at = '';
-            if ($antrean && $antrean->created_at) {
-                $dt = $antrean->created_at;
-                $bulan = $bulanIndo[(int)$dt->format('n')];
-                $created_at = $dt->format('j') . ' ' . $bulan . ' ' . $dt->format('Y') . ' (' . $dt->format('H.i') . ')';
-            }
+            $nomor_urut = $antrean ? $antrean->nomor_urut : null;
 
             $result[] = [
                 'bagian' => $bagian->nama_susunan_organisasi,
-                'kode' => $kode,
-                'created_at' => $created_at,
+                'nomor_urut' => $nomor_urut,
             ];
         }
 

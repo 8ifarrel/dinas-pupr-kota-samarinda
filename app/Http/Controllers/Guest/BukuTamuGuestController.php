@@ -59,10 +59,35 @@ class BukuTamuGuestController extends Controller
 			'maksud_dan_tujuan' => 'required|string',
 		]);
 
-		$idBukuTamu = now()->format('d-m-Y') . '-' . Str::lower(Str::random(4));
+		// Generate nomor_urut (format: [prefix][nomor], contoh: S-21)
+		$jabatan = SusunanOrganisasi::find($request->jabatan_yang_dikunjungi);
+		$prefixes = [
+			2 => 'S-',
+			6 => 'SDA-',
+			7 => 'BM-',
+			8 => 'CK-',
+			9 => 'BK-',
+			10 => 'PR-',
+			11 => 'P-',
+			12 => 'PALD-',
+			13 => 'PJJ-',
+			14 => 'PSDI-',
+		];
+		$prefix = $prefixes[$jabatan->id_susunan_organisasi] ?? 'X-';
+
+		$today = now()->toDateString();
+		$last = BukuTamu::where('jabatan_yang_dikunjungi', $jabatan->id_susunan_organisasi)
+			->whereDate('created_at', $today)
+			->orderByDesc('created_at')
+			->first();
+		$lastNumber = 0;
+		if ($last && preg_match('/(\d+)$/', $last->nomor_urut, $m)) {
+			$lastNumber = (int)$m[1];
+		}
+		$nomor_urut = $prefix . ($lastNumber + 1);
 
 		$bukuTamu = new BukuTamu;
-		$bukuTamu->id_buku_tamu = $idBukuTamu;
+		$bukuTamu->nomor_urut = $nomor_urut;
 		$bukuTamu->nama_pengunjung = $request->nama_pengunjung;
 		$bukuTamu->nomor_telepon = $request->nomor_telepon;
 		// $bukuTamu->email = $request->email;
@@ -70,12 +95,12 @@ class BukuTamuGuestController extends Controller
 		$bukuTamu->jabatan_yang_dikunjungi = $request->jabatan_yang_dikunjungi;
 		$bukuTamu->maksud_dan_tujuan = $request->maksud_dan_tujuan;
 		$bukuTamu->status = 'Pending';
-		$bukuTamu->save();		
+		$bukuTamu->save();
 
 		// Mail::to($request->email)->send(new BukuTamuEmail($idBukuTamu, $request->all()));
 
 		return redirect()->route('guest.buku-tamu.result', [
-			'id' => $idBukuTamu
+			'id' => $bukuTamu->id_buku_tamu
 		]);
 	}
 

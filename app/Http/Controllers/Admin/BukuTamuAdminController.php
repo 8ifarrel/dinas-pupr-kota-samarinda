@@ -4,65 +4,106 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\SusunanOrganisasi;
 use App\Models\BukuTamu;
+use Illuminate\Support\Facades\DB;
 
 class BukuTamuAdminController extends Controller
 {
-	public function index()
-	{
-		$user = auth()->user();
-		$susunanOrganisasi = $user->susunanOrganisasi ?? null;
-		$id_kepala_dinas = 1;
+    public function index()
+    {
+        $id_kepala_dinas = 1;
+        $jabatan = SusunanOrganisasi::where('id_susunan_organisasi_parent', 1)
+            ->where('id_susunan_organisasi', '!=', $id_kepala_dinas)
+            ->select('id_susunan_organisasi', 'nama_susunan_organisasi', 'slug_susunan_organisasi')
+            ->orderBy('nama_susunan_organisasi')
+            ->get();
 
-		if (
-			($user && $user->is_super_admin) ||
-			($susunanOrganisasi && in_array($susunanOrganisasi->id_susunan_organisasi, [$id_kepala_dinas]))
-		) {
-			$bukuTamu = BukuTamu::with('susunanOrganisasi')->orderBy('created_at', 'desc')->get();
-		} else {
-			$susunanOrganisasiId = $susunanOrganisasi ? $susunanOrganisasi->id_susunan_organisasi : null;
-			$bukuTamu = BukuTamu::with('susunanOrganisasi')
-				->where('jabatan_yang_dikunjungi', $susunanOrganisasiId)
-				->orderBy('created_at', 'desc')
-				->get();
-		}
+        $page_title = "Buku Tamu";
+        $page_description = "Daftar susunan organisasi untuk pengelolaan antrean buku tamu.";
 
-		$page_title = "Buku Tamu";
-		$page_description = "Lihat dan kelola tamu yang ingin berkunjung ke Dinas PUPR Kota Samarinda";
+        return view('admin.buku-tamu.index', [
+            'jabatan' => $jabatan,
+            'page_title' => $page_title,
+            'page_description' => $page_description,
+        ]);
+    }
 
-		return view('admin.pages.buku-tamu.index', [
-			'page_title' => $page_title,
-			'page_description' => $page_description,
-			'bukuTamu' => $bukuTamu,
-		]);
-	}
+    public function show(Request $request, $slug_susunan_organisasi)
+    {
+        $id_kepala_dinas = 1;
+        $susunan = SusunanOrganisasi::where('slug_susunan_organisasi', $slug_susunan_organisasi)
+            ->where('id_susunan_organisasi_parent', 1)
+            ->where('id_susunan_organisasi', '!=', $id_kepala_dinas)
+            ->firstOrFail();
 
-	public function edit($id)
-	{
-		$bukuTamu = BukuTamu::findOrFail($id);
-		$page_title = "Edit Buku Tamu";
-		$page_description = "Kelola status kunjungan secara berkala agar tamu dapat memantau proses pengajuan kunjungannya.";
+        $filter_hari = $request->query('filter_hari', 'today');
+        $query = BukuTamu::where('jabatan_yang_dikunjungi', $susunan->id_susunan_organisasi);
 
-		return view('admin.pages.buku-tamu.edit', [
-			'page_title' => $page_title,
-			'page_description' => $page_description,
-			'bukuTamu' => $bukuTamu,
-		]);
-	}
+        if ($filter_hari === 'today') {
+            $query->whereDate('created_at', now()->toDateString());
+        }
 
-	public function update(Request $request, $id)
-	{
-		$request->validate([
-			'status' => 'required|string',
-			'deskripsi_status' => 'nullable|string',
-		]);
+        $tamus = $query->orderBy('created_at', 'desc')->get();
 
-		$bukuTamu = BukuTamu::findOrFail($id);
-		$bukuTamu->status = $request->status;
-		$bukuTamu->deskripsi_status = $request->deskripsi_status;
-		$bukuTamu->save();
+        // Cari tamu yang statusnya diterima (hanya satu)
+        $tamu_diterima = $tamus->firstWhere('status', 'Diterima');
 
-		return redirect()->route('admin.buku-tamu.index')
-			->with('success', 'Status Buku Tamu berhasil diperbarui.');
-	}
+        $page_title = "Buku Tamu - " . $susunan->nama_susunan_organisasi;
+        $page_description = "Daftar antrean tamu untuk " . $susunan->nama_susunan_organisasi . ".";
+
+        return view('admin.buku-tamu.show', [
+            'susunan' => $susunan,
+            'tamus' => $tamus,
+            'filter_hari' => $filter_hari,
+            'tamu_diterima' => $tamu_diterima,
+            'page_title' => $page_title,
+            'page_description' => $page_description,
+        ]);
+    }
+
+    public function update(Request $request, $slug_susunan_organisasi, $id)
+    {
+        $request->validate([
+            'aksi' => 'required|in:terima,selesai',
+            'deskripsi_status' => 'nullable|string|max:255',
+        ]);
+
+        $susunan = SusunanOrganisasi::where('slug_susunan_organisasi', $slug_susunan_organisasi)->firstOrFail();
+        $tamu = BukuTamu::where('id_buku_tamu', $id)
+            ->where('jabatan_yang_dikunjungi', $susunan->id_susunan_organisasi)
+            ->firstOrFail();
+
+        if ($request->aksi === 'terima') {
+            // Cek apakah sudah ada tamu diterima
+            $tamu_diterima = BukuTamu::where('jabatan_yang_dikunjungi', $susunan->id_susunan_organisasi)
+                ->where('status', 'Diterima')
+                ->where('id_buku_tamu', '!=', $tamu->id_buku_tamu)
+                ->whereDate('created_at', now()->toDateString())
+                ->first();
+
+            if ($tamu_diterima) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Selesaikan tamu dengan nomor antrean ' . $tamu_diterima->nomor_urut . ' terlebih dahulu jika ingin menerima tamu baru.',
+                ], 422);
+            }
+
+            $tamu->status = 'Diterima';
+            $tamu->deskripsi_status = $request->deskripsi_status;
+            $tamu->save();
+
+            return response()->json(['success' => true, 'message' => 'Tamu berhasil diterima.']);
+        }
+
+        if ($request->aksi === 'selesai') {
+            $tamu->status = 'Selesai';
+            $tamu->deskripsi_status = $request->deskripsi_status;
+            $tamu->save();
+
+            return response()->json(['success' => true, 'message' => 'Tamu berhasil diselesaikan.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Aksi tidak valid.'], 400);
+    }
 }

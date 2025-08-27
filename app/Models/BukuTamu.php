@@ -11,10 +11,11 @@ class BukuTamu extends Model
 
 	protected $table = 'buku_tamu';
 	protected $primaryKey = 'id_buku_tamu';
-	public $incrementing = false;
+	public $incrementing = true;
+	protected $keyType = 'int';
 
 	protected $fillable = [
-		'id_buku_tamu',
+		'nomor_urut',
 		'nama_pengunjung',
 		'nomor_telepon',
 		'email',

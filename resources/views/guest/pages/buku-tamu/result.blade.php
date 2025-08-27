@@ -25,6 +25,11 @@
           Terima kasih telah mengajukan permohonan buku tamu. <br> Kami sangat menghargai perhatian dan waktu yang Anda
           luangkan.
         </p>
+        <div class="border-black border-2 p-4">
+          <p class="text-xl 3xl:text-3xl text-center">
+            Nomor antrean Anda adalah <strong>{{ $buku_tamu->nomor_urut }}</strong>
+          </p>
+        </div>
         <img src="data:image/svg+xml;base64,{{ base64_encode($qrcode) }}" alt="QR Code"
           class="flex-none w-[150px] 3xl:w-[250px]">
         <p class="text-xl 3xl:text-3xl text-center">

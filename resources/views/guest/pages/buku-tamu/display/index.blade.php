@@ -49,7 +49,7 @@
   </div>
 
   <div class="h-[calc(100vh-56px-16px-16px-3px-287px)] flex flex-col items-center justify-center">
-    <div class="flex flex-col items-center border-b-[2px] border-gray-400 pb-10 px-6">
+    <div class="flex flex-col items-center border-b-[2px] border-gray-300 pb-10 px-6">
       <div class="text-center mb-6 flex flex-col items-center">
         <div
           class="bg-brand-blue font-bold text-brand-yellow me-2 px-6 py-2 rounded-full text-xl w-fit">
@@ -58,8 +58,8 @@
         <h1 class="mb-2 font-bold text-5xl mt-6">
           Antrean Buku Tamu Digital
         </h1>
-        <p class=" text-gray-700 text-xl font-medium">
-          Kode antrean yang sedang dipanggil pada tanggal {{ now()->translatedFormat('d F Y') }}
+        <p class=" text-gray-700 text-2xl font-medium">
+          Nomor antrean yang <b>sedang dipanggil</b> pada tanggal {{ now()->translatedFormat('d F Y') }}
         </p>
       </div>
       <div class="w-full max-w-6xl">
@@ -164,11 +164,11 @@
   @vite('resources/js/sweetalert2.js')
 
   <script>
-    function renderSection(bagian, kode) {
+    function renderSection(bagian, nomor_urut) {
       return `
         <div class="border-4 border-brand-blue rounded-xl p-5 shadow bg-white flex flex-col items-center transition-all duration-300">
           <div class="text-xl font-semibold text-gray-700 mb-2 text-center">${bagian}</div>
-          <div class="text-3xl font-extrabold text-brand-blue mb-2 tracking-widest">${kode ? kode : '-'}</div>
+          <div class="text-3xl font-extrabold text-brand-blue mb-2 tracking-widest">${nomor_urut ? nomor_urut : '-'}</div>
         </div>
       `;
     }
@@ -185,7 +185,7 @@
             sections.innerHTML += `
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
                 <div></div>
-                <div>${renderSection(sekretariat.bagian, sekretariat.kode)}</div>
+                <div>${renderSection(sekretariat.bagian, sekretariat.nomor_urut)}</div>
                 <div></div>
               </div>
             `;
@@ -197,7 +197,7 @@
                 const idx = i + j;
                 if (res.data[idx]) {
                   rows +=
-                    `<div>${renderSection(res.data[idx].bagian, res.data[idx].kode)}</div>`;
+                    `<div>${renderSection(res.data[idx].bagian, res.data[idx].nomor_urut)}</div>`;
                 } else {
                   rows += `<div></div>`;
                 }
