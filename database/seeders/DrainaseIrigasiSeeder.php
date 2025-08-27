@@ -38,7 +38,7 @@ class DrainaseIrigasiSeeder extends Seeder
                 'longitude' => mt_rand(1170000000, 1172000000) / 10000000,
                 'latitude' => mt_rand(-1000000, 1000000) / 100000,
                 'detail_lokasi' => 'Detail lokasi laporan ' . ($i + 1), // field baru
-                'deskripsi_kerusakan' => 'Deskripsi kerusakan laporan ke-' . ($i + 1), // sebelumnya 'deskripsi'
+                'deskripsi_pengaduan' => 'Deskripsi pengaduan laporan ke-' . ($i + 1), // sebelumnya 'deskripsi'
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -52,15 +52,18 @@ class DrainaseIrigasiSeeder extends Seeder
                 $namaFoto = "foto{$j}_" . $now->format('HisdmY') . ".jpg";
                 $path = "drainase-irigasi/{$laporanId}/foto_laporan/{$namaFoto}";
                 $url = "https://picsum.photos/600/400?random=" . rand(1, 10000);
-                $image = file_get_contents($url);
-                Storage::put("public/{$path}", $image);
+                usleep(500000); // delay sebelum request
+                $image = @file_get_contents($url);
+                if ($image !== false) {
+                    Storage::put("public/{$path}", $image);
 
-                DB::table('drainasei_irigasi_laporan_foto')->insert([
-                    'laporan_id' => $laporanId,
-                    'foto' => $path,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+                    DB::table('drainasei_irigasi_laporan_foto')->insert([
+                        'laporan_id' => $laporanId,
+                        'foto' => $path,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
             }
         }
 
@@ -107,15 +110,18 @@ class DrainaseIrigasiSeeder extends Seeder
                         $namaFoto = "foto{$f}_" . $now->format('HisdmY') . ".jpg";
                         $path = "drainase-irigasi/{$laporanId}/foto_tindak_lanjut/{$status}/{$namaFoto}";
                         $url = "https://picsum.photos/600/400?random=" . rand(1, 10000);
-                        $image = file_get_contents($url);
-                        Storage::put("public/{$path}", $image);
+                        usleep(500000); // delay sebelum request
+                        $image = @file_get_contents($url);
+                        if ($image !== false) {
+                            Storage::put("public/{$path}", $image);
 
-                        DB::table('drainase_irigasi_laporan_tindak_lanjut_foto')->insert([
-                            'tindak_lanjut_id' => $tindakLanjutId,
-                            'foto' => $path,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]);
+                            DB::table('drainase_irigasi_laporan_tindak_lanjut_foto')->insert([
+                                'tindak_lanjut_id' => $tindakLanjutId,
+                                'foto' => $path,
+                                'created_at' => now(),
+                                'updated_at' => now(),
+                            ]);
+                        }
                     }
                 }
             }

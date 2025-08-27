@@ -44,8 +44,6 @@ use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 use App\Http\Controllers\Guest\DrainaseIrigasiPengaduanGuestController;
 use App\Http\Controllers\Guest\DrainaseIrigasiPetaSebaranGuestController;
 
-use App\Http\Middleware\RecordStatistikPengunjung;
-
 /**
  * Portal
  */
@@ -261,6 +259,7 @@ use App\Http\Controllers\Admin\FotoKegiatanAdminController;
 use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
+use App\Http\Controllers\Admin\HantuBanyuAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
@@ -308,6 +307,10 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 		 */
 		Route::get('/dashboard', [DashboardAdminController::class, 'index'])
 			->name('admin.dashboard.index');
+
+		Route::prefix('hantu-banyu')->group(function () {
+			Route::get('/', [HantuBanyuAdminController::class, 'index']);
+		});
 
 		/**
 		 * Slider
