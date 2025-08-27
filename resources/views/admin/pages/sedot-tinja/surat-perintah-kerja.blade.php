@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+<!-- @extends('admin.layout')
 
 @section('content')
 <div class="p-6 bg-white border rounded max-w-3xl mx-auto text-sm leading-relaxed">
 
     <!-- Tombol Print -->
-    <div class="text-right mb-4 no-print">
+    <!-- <div class="text-right mb-4 no-print">
         <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             🖨 Print Surat
         </button>
@@ -50,4 +50,4 @@
     .no-print { display: none; }
 }
 </style>
-@endsection
+@endsection --> -->

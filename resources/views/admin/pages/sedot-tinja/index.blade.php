@@ -1,5 +1,4 @@
-@extends('admin.layouts.app')
-
+<!-- @extends('admin.layout')
 @section('title', 'Riwayat Laporan Sedot Tinja')
 
 @section('content')
@@ -67,4 +66,4 @@
         </table>
     </div>
 </div>
-@endsection
+@endsection -->

@@ -1,18 +1,18 @@
-@extends('admin.layouts.app')
+<!-- @extends('admin.layout')
 
 @section('content')
 <div class="p-6 bg-white border rounded max-w-3xl mx-auto text-sm leading-relaxed">
 
     <!-- Tombol Print -->
-    <div class="text-right mb-4 no-print">
+    <!-- <div class="text-right mb-4 no-print">
         <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             🖨 Print Surat
         </button>
     </div>
 
     <h2 class="text-center text-lg font-bold mb-2">SURAT PESANAN</h2>
-    <p class="text-center mb-6">Perihal: Penyedotan Tangki Septik</p>
-
+    <p class="text-center mb-6">Perihal: Penyedotan Tangki Septik</p> --> -->
+<!-- 
     <p class="mb-4">Kepada Yth.<br>
     Kepala UPTD Pengelolaan Air Limbah Domestik<br>
     Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda</p>

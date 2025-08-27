@@ -1,11 +1,11 @@
-@extends('admin.layouts.app')
+<!-- @extends('admin.layout')
 
 @section('content')
 <div class="p-6 bg-white border rounded max-w-3xl mx-auto text-sm leading-relaxed">
 
     <!-- Tombol Print -->
-    <div class="text-right mb-4 no-print">
-        <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    <!-- <div class="text-right mb-4 no-print"> -->
+        <!-- <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
             🖨 Print Surat
         </button>
     </div>
@@ -21,8 +21,8 @@
             <br>NO: {{ $item->nomor_rumah ?? '......' }} &nbsp;&nbsp; RT: {{ $item->rt ?? '......' }}
         </div>
 
-        <div>
-            <strong>KELURAHAN:</strong> {{ $item->kelurahan }}  
+        <div> -->
+            <!-- <strong>KELURAHAN:</strong> {{ $item->kelurahan }}  
             <br><strong>KECAMATAN:</strong> {{ $item->kecamatan }}
         </div>
 
@@ -59,4 +59,4 @@
     }
 }
 </style>
-@endsection
+@endsection --> -->
