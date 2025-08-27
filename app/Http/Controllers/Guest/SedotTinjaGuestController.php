@@ -143,7 +143,7 @@ class SedotTinjaGuestController extends Controller
         }
 
         // === Buat link WA untuk user ===
-        $waAdmin = "6281528231245"; // ganti nomor admin
+        $waAdmin = "+6281528231245"; // ganti nomor admin
         $pesanWA = urlencode("Halo Admin, saya {$data->nama_pelanggan} sudah daftar layanan Sedot Tinja. Mohon info lebih lanjut.");
         $urlWA   = "https://wa.me/{$waAdmin}?text={$pesanWA}";
 
