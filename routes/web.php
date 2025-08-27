@@ -40,12 +40,15 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
+
 use App\Http\Controllers\Guest\SedotTinjaGuestController;
 use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
-use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
-use App\Http\Controllers\Guest\JalanPeduliStatistikLaporanGuestController;
-
 use App\Http\Middleware\RecordStatistikPengunjung;
+
+/**
+ * Portal
+ */
+
 /**
  * Portal
  */
@@ -155,7 +158,7 @@ Route::prefix('agenda-kegiatan')->middleware([BlockSearchEngines::class])->group
 	Route::get('/ajax-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaCount'])
 		->name('guest.agenda-kegiatan.ajax-count');
 	Route::get('/ajax-week-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaWeekCount'])
-		->name('guest.agenda-kegiatan.ajax-week-count');
+	->name('guest.agenda-kegiatan.ajax-week-count');
 });
 
 /**
@@ -200,18 +203,39 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
  * Drainase Irigasi
  */
 Route::prefix('drainase-irigasi')->group(function () {
-	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
-		->name('guest.drainase-irigasi.index');
-
-	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-		->name('guest.drainase-irigasi.show');
+    Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
+        ->name('guest.drainase-irigasi.index');
+    Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+        ->name('guest.drainase-irigasis.show');
 });
+
 
 // 	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
 // 		->name('guest.drainase-irigasi.create');
 
 // 	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
 // 		->name('guest.drainase-irigasi.store');
+
+Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+    ->name('guest.drainase-irigasis.show');
+
+
+/**
+ * Sedot Tinja
+ */
+Route::prefix('sedot-tinja')->group(function () {
+    Route::get('/', [SedotTinjaGuestController::class, 'index'])
+        ->name('guest.sedot-tinja.index');
+
+    Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+        ->name('guest.sedot-tinja.create');
+
+    Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+        ->name('guest.sedot-tinja.store');
+
+    Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
+        ->name('guest.sedot-tinja.show');
+});
 
 // 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
 // 		->name('guest.drainase-irigasis.how');
@@ -220,6 +244,8 @@ Route::prefix('drainase-irigasi')->group(function () {
 /**
  * Jalan Peduli Utama
  */
+use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
+use App\Http\Controllers\Guest\JalanPeduliStatistikLaporanGuestController;
 
 Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/', function () {
@@ -324,7 +350,6 @@ use App\Http\Controllers\Admin\SedotTinjaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
-
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
@@ -753,4 +778,3 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });
-
