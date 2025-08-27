@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->prepend(RecordStatistikPengunjung::class);
+        // $middleware->prepend(RecordStatistikPengunjung::class);
 
         // Register our middleware with a generic name
         $middleware->alias([
