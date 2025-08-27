@@ -4,108 +4,109 @@
 @endsection
 
 @section('document.body')
-  <!-- Header Banner -->
-  <div class="pt-6 px-6">
-    <div class="container mx-auto max-w-7xl">
-      <div class="space-y-4">
-        <!-- Mobile-friendly breadcrumbs with responsive design -->
-        <nav aria-label="Breadcrumb">
-          <!-- Small/XS Mobile: Back link + Current page only -->
-          <div class="md:hidden flex items-center">
-            <a href="{{ route('guest.drainase-irigasi.index') }}"
-              class="inline-flex items-center text-blue-600 hover:underline">
-              <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
-              <div class="underline">Kembali</div>
-            </a>
-            <span class="mx-2 text-gray-400">|</span>
-            <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
-              Lihat jalur lengkap
-              <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 1 4 4 4-4" />
-              </svg>
-            </button>
-          </div>
 
-          <!-- Small Mobile: Truncated breadcrumbs -->
-          <ol class="hidden md:inline-flex items-center text-sm">
-            <li class="inline-flex items-center">
-              <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
-                Beranda
-              </a>
-            </li>
-            <li>
-              <div class="flex items-center">
-                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 9 4-4-4-4" />
-                </svg>
-                <a href="#" class="text-blue-600 underline">
-                  Layanan Umum
-                </a>
-              </div>
-            </li>
-            <li>
-              <div class="flex items-center">
-                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 9 4-4-4-4" />
-                </svg>
-                <a href="{{ route('guest.drainase-irigasi.index') }}" class="text-blue-600 underline">
-                  Hantu Banyu
-                </a>
-              </div>
-            </li>
-            <li aria-current="page">
-              <div class="flex items-center">
-                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 9 4-4-4-4" />
-                </svg>
-                <span class="text-gray-500 font-medium">
-                  <span>Lihat Pengaduan Hantu Banyu</span>
-                </span>
-              </div>
-            </li>
-          </ol>
 
-          <!-- Mobile breadcrumb dots menu (optional) -->
-          <div class="md:hidden mt-1">
-            <div id="breadcrumb-dropdown"
-              class="hidden z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
-              <ol class="py-2 text-sm text-gray-700">
-                <li>
-                  <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
+  <div class="px-6 pb-10 md:pb-12 pt-6 flex justify-center">
+    <div>
+      <!-- Header Banner -->
+      <div class="pt-6 pb-6">
+        <div class="container mx-auto">
+          <div class="space-y-4">
+            <!-- Mobile-friendly breadcrumbs with responsive design -->
+            <nav aria-label="Breadcrumb">
+              <!-- Small/XS Mobile: Back link + Current page only -->
+              <div class="md:hidden flex items-center">
+                <a href="{{ route('guest.drainase-irigasi.index') }}"
+                  class="inline-flex items-center text-blue-600 hover:underline">
+                  <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
+                  <div class="underline">Kembali</div>
+                </a>
+                <span class="mx-2 text-gray-400">|</span>
+                <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
+                  Lihat jalur lengkap
+                  <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 4 4 4-4" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Small Mobile: Truncated breadcrumbs -->
+              <ol class="hidden md:inline-flex items-center text-sm">
+                <li class="inline-flex items-center">
+                  <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
+                    Beranda
+                  </a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
+                  <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                    </svg>
+                    <a href="#" class="text-blue-600 underline">
+                      Layanan Umum
+                    </a>
+                  </div>
                 </li>
                 <li>
-                  <a href="{{ route('guest.drainase-irigasi.index') }}" class="block px-4 py-2 hover:bg-gray-100">Hantu
-                    Banyu</a>
+                  <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                    </svg>
+                    <a href="{{ route('guest.drainase-irigasi.index') }}" class="text-blue-600 underline">
+                      Hantu Banyu
+                    </a>
+                  </div>
                 </li>
-                <li>
-                  <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Hantu Banyu</span>
+                <li aria-current="page">
+                  <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                    </svg>
+                    <span class="text-gray-500 font-medium">
+                      <span>Lihat Pengaduan Hantu Banyu</span>
+                    </span>
+                  </div>
                 </li>
               </ol>
-            </div>
-          </div>
-        </nav>
-        <h1 class="text-2xl xs:text-3xl font-bold text-gray-900">Lihat Pengaduan Hantu Banyu</h1>
-      </div>
-    </div>
-  </div>
 
-  <!-- Main Content with Split Panel -->
-  <div class="px-6 pb-10 md:pb-12 pt-6">
-    <div class="container mx-auto max-w-7xl">
+              <!-- Mobile breadcrumb dots menu (optional) -->
+              <div class="md:hidden mt-1">
+                <div id="breadcrumb-dropdown"
+                  class="hidden z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
+                  <ol class="py-2 text-sm text-gray-700">
+                    <li>
+                      <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
+                    </li>
+                    <li>
+                      <a href="{{ route('guest.drainase-irigasi.index') }}"
+                        class="block px-4 py-2 hover:bg-gray-100">Hantu
+                        Banyu</a>
+                    </li>
+                    <li>
+                      <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Hantu Banyu</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </nav>
+            <h1 class="text-2xl xs:text-3xl font-bold text-gray-900">Lihat Pengaduan Hantu Banyu</h1>
+          </div>
+        </div>
+      </div>
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- Left Panel: Search Form -->
-        <div class="w-full lg:w-96 flex-shrink-0 space-y-6 lg:order-1">
+        <div class="lg:w-96 flex-shrink-0 space-y-6 lg:order-1">
           <!-- Search Form - Accordion style on mobile -->
           <div>
             <p class="text-end text-sm text-gray-600 mr-1 mb-0.5 lg:hidden">Tekan untuk membuka</p>
@@ -271,9 +272,9 @@
         </div>
 
         <!-- Right Panel: Results -->
-        <div class="flex-1 flex flex-col gap-6 lg:order-2">
-          <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div class="flex-1 flex flex-col gap-6 lg:order-2 w-fit ">
+          <div class="bg-white rounded-lg shadow-lg border overflow-hidden w-fit">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between w-fit">
               <h2 class="text-lg font-medium text-gray-900">Daftar Pengaduan</h2>
               <div class="flex items-center">
                 <div class="ml-2">
