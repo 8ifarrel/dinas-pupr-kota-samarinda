@@ -180,24 +180,24 @@
           <label class="block mb-1 font-medium">Jenis Bangunan</label>
           <select id="jenis_bangunan" name="jenis_bangunan" class="w-full border rounded-lg px-3 py-2" required>
             <option value="">-- Pilih Bangunan --</option>
-            <option value="Rumah">Rumah (Rp600.000)</option>
-            <option value="Tempat ibadah">Tempat Ibadah (Rp300.000)</option>
-            <option value="Panti asuhan">Panti Asuhan (Rp300.000)</option>
-            <option value="Hotel">Hotel (Rp600.000)</option>
-            <option value="Sekolah">Sekolah (Rp300.000)</option>
-            <option value="Panti jompo">Panti Jompo (Rp300.000)</option>
-            <option value="Pabrik">Pabrik (Rp600.000)</option>
-            <option value="Madrasah">Madrasah (Rp300.000)</option>
-            <option value="Rumah sakit">Rumah Sakit (Rp600.000)</option>
-            <option value="Restoran">Restoran (Rp600.000)</option>
-            <option value="Kampus">Kampus (Rp300.000)</option>
-            <option value="Pondok pesantren">Pondok Pesantren (Rp300.000)</option>
-            <option value="Kantor">Kantor (Rp600.000)</option>
-            <option value="Puskesmas">Puskesmas (Rp300.000)</option>
-            <option value="Klinik">Klinik (Rp300.000)</option>
-            <option value="Apartemen">Apartemen (Rp600.000)</option>
-            <option value="Mall">Mall (Rp600.000)</option>
-            <option value="Lainnya">Lainnya (Rp0)</option>
+            <option value="Rumah">Rumah </option>
+            <option value="Tempat ibadah">Tempat Ibadah</option>
+            <option value="Panti asuhan">Panti Asuhan</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Sekolah">Sekolah</option>
+            <option value="Panti jompo">Panti Jompo</option>
+            <option value="Pabrik">Pabrik</option>
+            <option value="Madrasah">Madrasah</option>
+            <option value="Rumah sakit">Rumah Sakit</option>
+            <option value="Restoran">Restoran</option>
+            <option value="Kampus">Kampus</option>
+            <option value="Pondok pesantren">Pondok Pesantren</option>
+            <option value="Kantor">Kantor</option>
+            <option value="Puskesmas">Puskesmas</option>
+            <option value="Klinik">Klinik</option>
+            <option value="Apartemen">Apartemen</option>
+            <option value="Mall">Mall</option>
+            <option value="Lainnya">Lainnya </option>
           </select>
         </div>
 
@@ -245,7 +245,8 @@
       <div class="step hidden" data-step="3">
          <!-- Rating -->
         <div class="mb-4">
-          <label class="block mb-1 font-medium">Rating</label>
+          <label class="block mb-1 font-bold text-sm">Rating</label>
+          <p class="text-xs text-gray-600">Berikan pendapatmu mengenai website ini</p>
           <div id="rating-stars" class="flex space-x-2">
             <span data-value="1" class="star">&#9734;</span>
             <span data-value="2" class="star">&#9734;</span>
@@ -256,13 +257,13 @@
           <input type="hidden" name="rating" id="rating" value="{{ old('rating') }}">
         </div>
 
+        <!-- <div class="mb-4">
+          <label class="block mb-1 font-medium">Masukan</label>
+          <textarea name="Masukan" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('Masukan') }}</textarea>
+        </div> -->
         <div class="mb-4">
-          <label class="block mb-1 font-medium">Kritik</label>
-          <textarea name="kritik" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('kritik') }}</textarea>
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Saran</label>
-          <textarea name="saran" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('saran') }}</textarea>
+          <label class="block mb-1 font-medium">Saran & Masukan</label>
+          <textarea name="saran & masukan" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('saran & masukan') }}</textarea>
         </div>
         {{--  Captcha Turnstile --}}
         <div class="mb-4">
@@ -271,12 +272,12 @@
             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
           @enderror
         </div>
-        <div class="mb-4">
+        <!-- <div class="mb-4">
           <label class="inline-flex items-center">
             <input type="checkbox" name="setuju" value="1" required class="mr-2" {{ old('setuju') ? 'checked' : '' }}>
             <span>Saya menyetujui bila ada tambahan biaya pada saat di lokasi</span>
           </label>
-        </div>
+        </div> -->
       </div>
 
       <!-- Navigation -->
