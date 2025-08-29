@@ -32,7 +32,17 @@
                 <button class="submit-btn">Submit</button>
             </div>
         </div>
-        
+
+        {{-- Buat Pesanan Baru --}}
+       <div class="mb-3">
+    <a href="{{ route('admin.sedot-tinja.create') }}" 
+       class="btn btn-primary" 
+       style="width: auto; padding: 8px 16px; display: inline-flex; align-items: center;">
+        <i class="fas fa-plus mr-2"></i> Buat Pesanan
+    </a>
+</div>
+
+
         <!-- Table Section -->
         <div class="table-container">
             <table>
@@ -113,7 +123,13 @@
             cursor: pointer;
             border: none;
         }
-        .submit-btn:hover {
+        .btn-primary {
+            background: #ffc400ff;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary:hover {
             background: #0056b3;
         }
         .table-container table {

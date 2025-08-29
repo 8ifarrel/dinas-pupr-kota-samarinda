@@ -32,7 +32,7 @@ class SedotTinjaAdminController extends Controller
 
         $page_title = 'Data Pesanan Masuk';
 
-
+        
         return view('admin.pages.sedot-tinja.data-pesanan', compact('pesananPending', 'page_title'));
     }
 
