@@ -173,20 +173,38 @@ class SedotTinjaGuestController extends Controller
     /**
      * Cek status pendaftaran berdasarkan nomor telepon
      */
+    // public function status(Request $request)
+    // {
+    //     $page_title = "Cek Status Pendaftaran";
+    //     $meta_description = "Cek status pendaftaran layanan Sedot Tinja berdasarkan nomor telepon.";
+
+    //     $result = null;
+    //     if ($request->filled('nomor_telepon_pelanggan')) {
+    //         $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)->get();
+    //     }
+
+    //     return view('guest.pages.sedot-tinja.status', compact(
+    //         'page_title',
+    //         'meta_description',
+    //         'result'
+    //     ));
+    // }
+
     public function status(Request $request)
     {
-        $page_title = "Cek Status Pendaftaran";
-        $meta_description = "Cek status pendaftaran layanan Sedot Tinja berdasarkan nomor telepon.";
-
-        $result = null;
         if ($request->filled('nomor_telepon_pelanggan')) {
-            $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)->get();
+            $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
+                ->paginate(10);
+        } else {
+            // kalau kosong, ambil semua data dengan pagination
+            $result = SedotTinja::paginate(10);
         }
 
-        return view('guest.pages.sedot-tinja.status', compact(
-            'page_title',
-            'meta_description',
-            'result'
-        ));
+        return view('guest.pages.sedot-tinja.status', [
+            'result' => $result,
+            'page_title' => 'Cek Status Sedot Tinja',
+        ]);
+
     }
+
 }
