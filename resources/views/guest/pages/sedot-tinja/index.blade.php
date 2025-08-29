@@ -164,17 +164,17 @@
   </div>
 
   {{-- Tombol Mulai Pesanan --}}
-<div class="text-center mt-4 mb-6">
-  <a href="{{ route('guest.sedot-tinja.create') }}" 
-    class="inline-flex items-center gap-3 px-8 py-4 
-            bg-blue-600 text-white text-xl font-bold rounded-2xl 
-            shadow-lg hover:bg-blue-700 hover:shadow-xl 
-            transition duration-300 ease-in-out transform hover:-translate-y-1
-            mb-8">
-    Mulai Pesanan 
-    <span class="text-2xl">→</span>
-  </a>
-</div>
+  <div class="text-center mt-4 mb-6">
+    <a href="{{ route('guest.sedot-tinja.create') }}" 
+      class="inline-flex items-center gap-3 px-8 py-4 
+              bg-blue-600 text-white text-xl font-bold rounded-2xl 
+              shadow-lg hover:bg-blue-700 hover:shadow-xl 
+              transition duration-300 ease-in-out transform hover:-translate-y-1
+              mb-8">
+      Mulai Pesanan 
+      <span class="text-2xl">→</span>
+    </a>
+  </div>
 
   {{-- Galeri Armada --}}
   <section class="py-8 bg-gray-50">
