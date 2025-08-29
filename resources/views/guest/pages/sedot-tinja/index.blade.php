@@ -9,8 +9,9 @@
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="absolute inset-0 flex items-center justify-center">
       <div class="text-center text-white px-4">
-        <p class="uppercase tracking-wider text-sm mb-2">UPTD IPAL Domestik</p>
+        <p class="uppercase tracking-wider text-sm mb-2">UPTD PALD</p>
         <h1 class="text-2xl md:text-4xl font-bold mb-3">Layanan Sedot Tinja</h1>
+        <p class="uppercase tracking-wider font-bold mb-2">SILALAD (Sistem Informasi Layanan Limbah Domestik)</p>
         <p class="max-w-2xl mx-auto opacity-90">Layanan resmi PUPR untuk pengelolaan air limbah domestik yang aman & higienis.</p>
         <a href="{{ route('guest.sedot-tinja.create') }}" class="inline-block mt-5 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl shadow">
           Daftar Layanan Sekarang
@@ -73,7 +74,7 @@
           <thead class="bg-blue-900 text-white sticky top-0">
             <tr>
               <th class="px-3 py-3 text-center border border-gray-300">No</th>
-              <th class="px-6 py-3 text-center border border-gray-300">Wilayah</th>
+              <th class="px-6 py-3 text-center border border-gray-300">Bangunan</th>
               <th class="px-6 py-3 text-center border border-gray-300">Biaya</th>
             </tr>
           </thead>
@@ -117,7 +118,7 @@
       <table class="w-full text-sm text-center text-gray-600 border-collapse">
           <thead class="bg-blue-900 text-white sticky top-0">
               <tr>
-                  <th scope="col" class="px-6 py-3 border">Lokasi</th>
+                  <th scope="col" class="px-6 py-3 border">Wilayah</th>
                   <th scope="col" class="px-6 py-3 border">Normal</th>
                   <th scope="col" class="px-6 py-3 border">Pengecualian (Sekolah, Rumah Ibadah, dll)</th>
               </tr>
