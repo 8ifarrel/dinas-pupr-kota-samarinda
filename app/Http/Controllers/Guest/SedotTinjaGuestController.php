@@ -34,19 +34,58 @@ class SedotTinjaGuestController extends Controller
     /**
      * Menampilkan daftar laporan
      */
-    public function show()
+    public function show($id = null)
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
         $page_title = "Lihat Laporan Sedot Tinja";
 
-        $data = SedotTinja::all();
+        if ($id) {
+            // Kalau ada ID → tampilkan detail 1 data
+            $order = SedotTinja::findOrFail($id);
 
-        return view('guest.pages.sedot-tinja.show', compact(
-            'page_title',
-            'meta_description',
-            'data'
-        ));
+            return view('guest.pages.sedot-tinja.show', [
+                'order' => $order,
+                'page_title' => 'Detail Pemesanan Sedot Tinja',
+                'meta_description' => $meta_description,
+            ]);
+        } else {
+            // Kalau tidak ada ID → tampilkan semua data
+            $data = SedotTinja::all();
+
+            return view('guest.pages.sedot-tinja.show', [
+                'data' => $data,
+                'page_title' => $page_title,
+                'meta_description' => $meta_description,
+            ]);
+        }
     }
+
+
+    // public function show()
+    // {
+    //     $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+    //     $page_title = "Lihat Laporan Sedot Tinja";
+
+    //     $data = SedotTinja::all();
+
+    //     return view('guest.pages.sedot-tinja.show', compact(
+    //         'page_title',
+    //         'meta_description',
+    //         'data'
+    //     ));
+    // }
+
+    // public function show($id)
+    // {
+    //     // Ambil data berdasarkan ID
+    //     $order = SedotTinja::findOrFail($id);
+
+    //     return view('guest.pages.sedot-tinja.show', [
+    //         'order' => $order,
+    //         'page_title' => 'Detail Pemesanan Sedot Tinja'
+    //     ]);
+    // }
+
 
     /**
      * Form create laporan
@@ -122,6 +161,18 @@ class SedotTinjaGuestController extends Controller
             return back()->withErrors(['cf-turnstile-response' => 'Verifikasi captcha gagal.'])->withInput();
         }
 
+        // === Generate kode_booking otomatis ===
+        $lastOrder = SedotTinja::whereYear('created_at', now()->year)
+            ->orderByDesc('id')
+            ->first();
+
+        $lastNumber = $lastOrder ? intval(substr($lastOrder->kode_booking, -3)) : 0;
+        $newNumber  = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+
+        $kode_booking = 'STJ-' . now()->year . '-' . $newNumber;
+        $validated['kode_booking'] = $kode_booking; // tambahkan ke data validasi
+
+
         // Simpan ke database
         $data = SedotTinja::create($validated);
 
@@ -168,41 +219,44 @@ class SedotTinjaGuestController extends Controller
         ));
     }
 
-    /**
-     * Cek status pendaftaran berdasarkan nomor telepon
-     */
-    // public function status(Request $request)
-    // {
-    //     $page_title = "Cek Status Pendaftaran";
-    //     $meta_description = "Cek status pendaftaran layanan Sedot Tinja berdasarkan nomor telepon.";
-
-    //     $result = null;
-    //     if ($request->filled('nomor_telepon_pelanggan')) {
-    //         $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)->get();
-    //     }
-
-    //     return view('guest.pages.sedot-tinja.status', compact(
-    //         'page_title',
-    //         'meta_description',
-    //         'result'
-    //     ));
-    // }
-
     public function status(Request $request)
-    {
-        if ($request->filled('nomor_telepon_pelanggan')) {
-            $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
-                ->paginate(10);
-        } else {
-            // kalau kosong, ambil semua data dengan pagination
-            $result = SedotTinja::paginate(10);
+        {
+            // Ambil semua tahun dari data untuk filter
+            $years = SedotTinja::selectRaw('YEAR(created_at) as year')
+                ->distinct()
+                ->orderBy('year', 'desc')
+                ->pluck('year');
+
+            // Query dasar histori
+            $historyQuery = SedotTinja::query();
+
+            // Filter histori berdasarkan tahun
+            if ($request->filled('year')) {
+                $historyQuery->whereYear('created_at', $request->year);
+            }
+
+            // Filter histori berdasarkan bulan
+            if ($request->filled('month')) {
+                $historyQuery->whereMonth('created_at', $request->month);
+            }
+
+            $history = $historyQuery->orderBy('created_at', 'desc')->paginate(10, ['*'], 'history_page');
+
+            // Query hasil pencarian khusus
+            $result = collect(); // default kosong
+            if ($request->filled('nomor_telepon_pelanggan')) {
+                $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
+
+            return view('guest.pages.sedot-tinja.status', [
+                'result'      => $result,
+                'history'     => $history,
+                'years'       => $years,
+                'page_title'  => 'Cek Status Sedot Tinja',
+            ]);
         }
 
-        return view('guest.pages.sedot-tinja.status', [
-            'result' => $result,
-            'page_title' => 'Cek Status Sedot Tinja',
-        ]);
-
-    }
 
 }

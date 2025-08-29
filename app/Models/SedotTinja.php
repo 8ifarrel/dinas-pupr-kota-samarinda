@@ -12,6 +12,7 @@ class SedotTinja extends Model
     protected $table = 'sedot_tinja';
 
     protected $fillable = [
+        'kode_booking',
         'nama_pelanggan',
         'nomor_telepon_pelanggan',
         'alamat',
@@ -32,4 +33,21 @@ class SedotTinja extends Model
         'status_pengerjaan',
         'setuju',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            // ambil tahun sekarang
+            $tahun = date('Y');
+
+            // ambil nomor urut terakhir
+            $last = static::whereYear('created_at', $tahun)->orderBy('id', 'desc')->first();
+
+            $nextNumber = $last ? ((int) substr($last->kode_booking, -3)) + 1 : 1;
+
+            $model->kode_booking = 'STJ-' . $tahun . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        });
+    }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sedot_tinja', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_booking')->unique(); 
 
             // Data pelanggan
             $table->string('nama_pelanggan', 150);
@@ -40,8 +41,7 @@ return new class extends Migration
 
             // Feedback user
             $table->tinyInteger('rating')->nullable(); // 1–5
-            $table->text('kritik')->nullable();
-            $table->text('saran')->nullable();
+            $table->text('saran_masukan')->nullable();
 
             // Captcha (biasanya tidak perlu disimpan, tapi sesuai model kamu)
             $table->string('captcha', 50)->nullable();
