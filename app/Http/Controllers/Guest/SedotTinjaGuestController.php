@@ -65,7 +65,7 @@ class SedotTinjaGuestController extends Controller
     /**
      * Simpan data form laporan
      */
-    public function store(Request $request)
+  public function store(Request $request)
     {
         $validated = $request->validate([
             'nama_pelanggan'           => 'required|string|max:150',
@@ -81,13 +81,11 @@ class SedotTinjaGuestController extends Controller
             'latitude'                 => 'nullable|numeric',
             'jenis_bangunan'           => 'required|string|max:20',
             'jenis_bangunan_lainnya'   => 'nullable|string|max:100',
-            'rt'                       => 'required|integer',
-            'nomor_bangunan'           => 'required|integer',
+            'rt'                       => 'required|string',
+            'nomor_bangunan'           => 'required|string',
             'foto'                     => 'nullable|image|max:2048',
             'rating'                   => 'nullable|integer|min:1|max:5',
-            'kritik'                   => 'nullable|string',
-            'saran'                    => 'nullable|string',
-            'setuju'                   => 'accepted',
+            'saran_dan_masukan'        => 'nullable|string',
             'cf-turnstile-response'    => 'required',
         ],[
         'jenis_bangunan.required' => 'Jenis bangunan wajib dipilih.',
