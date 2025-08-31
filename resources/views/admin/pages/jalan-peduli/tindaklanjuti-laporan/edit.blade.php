@@ -213,6 +213,15 @@
                 @endforeach
               </select>
             </div>
+            
+            <div id="keterangan-group" style="display: none;">
+              <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
+              <textarea name="keterangan" id="keterangan" rows="4"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Masukkan keterangan...">{{ $laporan->keterangan }}</textarea>
+            </div>
+
+            {{-- Di dalam form edit, setelah bagian foto_lanjutan --}}
             <div id="dokumen-petugas-group" style="display: none;">
               <label for="dokumen_petugas" class="block text-sm font-medium text-gray-700 mb-2">Unggah Dokumen Petugas</label>
               <input type="file" name="dokumen_petugas" id="dokumen_petugas" accept=".pdf,.doc,.docx">
@@ -237,12 +246,7 @@
               </div>
               @endif
             </div>
-            <div id="keterangan-group" style="display: none;">
-              <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
-              <textarea name="keterangan" id="keterangan" rows="4"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Masukkan keterangan...">{{ $laporan->keterangan }}</textarea>
-            </div>
+
             <div id="foto-group" style="display: none;">
               <label for="foto" class="block text-sm font-medium text-gray-700 mb-2">Unggah Foto Bukti</label>
               <input type="file" name="foto_lanjutan" id="foto" accept="image/png, image/jpeg">
@@ -250,6 +254,7 @@
                 Anda dapat mengunggah foto bukti pengerjaan atau survei di sini (JPG, PNG maks 3MB).
               </p>
             </div>
+
             <div>
               <label for="tingkat_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Tingkat Kerusakan</label>
               <select name="tingkat_kerusakan" id="tingkat_kerusakan" required
@@ -259,6 +264,7 @@
                 <option value="berat" {{ strtolower($laporan->tingkat_kerusakan) == 'berat' ? 'selected' : '' }}>Berat</option>
               </select>
             </div>
+
             <div>
               <label for="jenis_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kerusakan</label>
               <select name="jenis_kerusakan" id="jenis_kerusakan" required
@@ -420,6 +426,10 @@
       const statusSelect = document.getElementById('status');
       const keteranganGroup = document.getElementById('keterangan-group');
       const fotoGroup = document.getElementById('foto-group');
+
+      const dokumenPetugasGroup = document.getElementById('dokumen-petugas-group');
+      const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5']; // Status yang memerlukan dokumen petugas
+
       function toggleFields() {
         const allowedStatuses = ['2', '3', '4', '5', '7'];
         const isAllowed = allowedStatuses.includes(statusSelect.value);
@@ -427,15 +437,45 @@
         const photoRequiredStatuses = ['3', '4', '5'];
         const photoFieldIsVisible = photoRequiredStatuses.includes(statusSelect.value);
         fotoGroup.style.display = photoFieldIsVisible ? 'block' : 'none';
+
+        // Tampilkan field dokumen petugas hanya untuk status tertentu
+        const dokumenPetugasFieldIsVisible = dokumenPetugasRequiredStatuses.includes(statusSelect.value);
+        dokumenPetugasGroup.style.display = dokumenPetugasFieldIsVisible ? 'block' : 'none';
+
         if (!isAllowed) {
           document.getElementById('keterangan').value = '';
         }
         if (!photoFieldIsVisible && window.FilePond && fotoInput && fotoInput._pond) {
           fotoInput._pond.removeFiles();
         }
+        if (!dokumenPetugasFieldIsVisible && window.FilePond && dokumenPetugasInput && dokumenPetugasInput._pond) {
+          dokumenPetugasInput._pond.removeFiles();
+        }
       }
       statusSelect.addEventListener('change', toggleFields);
       toggleFields();
+
+      const dokumenPetugasInput = document.getElementById('dokumen_petugas');
+      if (dokumenPetugasInput) {
+        FilePond.create(dokumenPetugasInput, {
+          labelIdle: `Seret & Lepas file atau <span class="filepond--label-action">Jelajahi</span>`,
+          labelFileProcessingComplete: 'Upload Selesai',
+          labelTapToUndo: 'ketuk untuk membatalkan',
+          labelTapToCancel: 'ketuk untuk membatalkan',
+          
+          allowFileTypeValidation: false,
+          acceptedFileTypes: ['application/pdf', '.pdf', 'application/msword', '.doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
+        
+          labelFileTypeNotAllowed: 'Jenis file tidak valid. Hanya file PDF, DOC, dan DOCX yang diperbolehkan.',
+          fileValidateTypeLabelExpectedTypes: 'Hanya menerima {allButLastType} atau {lastType}',
+          maxFileSize: '10MB',
+          labelMaxFileSizeExceeded: 'File terlalu besar',
+          labelMaxFileSize: 'Ukuran file maksimum adalah {filesize}',
+          name: 'dokumen_petugas',
+          server: null,
+          storeAsFile: true,
+        });
+      }
 
       // Modal (logic Anda sudah benar, tidak perlu diubah)
       document.querySelectorAll('[data-modal-toggle]').forEach(function (toggleBtn) {
