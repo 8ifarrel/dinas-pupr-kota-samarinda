@@ -151,10 +151,11 @@
                 </div>
 
                 {{-- Form Pencarian dengan Efek Glassmorphism --}}
-                <form method="GET" action="{{ route('laporan.data') }}" class="max-w-4xl mx-auto">
+                <form method="GET" action="{{ route('laporan.data') }}" class="max-w-6xl mx-auto">
                     <div class="glass-effect rounded-2xl p-6 sm:p-8 shadow-2xl">
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-                            <div class="md:col-span-12 lg:col-span-7">
+                            {{-- Search --}}
+                            <div class="md:col-span-12 lg:col-span-4">
                                 <label for="search" class="block text-sm font-semibold text-gray-700 mb-2">
                                     <i class="fas fa-search mr-2" style="color: #1e293b;"></i>
                                     Cari ID Laporan atau Nama Jalan
@@ -170,15 +171,40 @@
                                 </div>
                             </div>
 
+                            {{-- Kecamatan --}}
                             <div class="md:col-span-6 lg:col-span-3">
+                                <label for="kecamatan_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-city mr-2" style="color: #1a237e;"></i>
+                                    Kecamatan
+                                </label>
+                                <select name="kecamatan_id" id="kecamatan_id"
+                                    class="block w-full py-3 px-4 border-2 border-gray-200 bg-white/80 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 text-base">
+                                    <option value="">Semua Kecamatan</option>
+                                </select>
+                            </div>
+
+                            {{-- Kelurahan --}}
+                            <div class="md:col-span-6 lg:col-span-3">
+                                <label for="kelurahan_id" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <i class="fas fa-map-marker-alt mr-2" style="color: #1a237e;"></i>
+                                    Kelurahan
+                                </label>
+                                <select name="kelurahan_id" id="kelurahan_id"
+                                    class="block w-full py-3 px-4 border-2 border-gray-200 bg-white/80 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 text-base">
+                                    <option value="">Semua Kelurahan</option>
+                                </select>
+                            </div>
+
+                            {{-- Status --}}
+                            <div class="md:col-span-12 lg:col-span-2">
                                 <label for="status_filter" class="block text-sm font-semibold text-gray-700 mb-2">
                                     <i class="fas fa-filter mr-2" style="color: #1a237e;"></i>
                                     Filter Status
                                 </label>
                                 <select name="status_filter" id="status_filter"
                                     class="block w-full py-3 px-4 border-2 border-gray-200 bg-white/80 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300 text-base">
-                                    <option value="" {{ request('status_filter') == '' ? 'selected' : '' }}>Semua
-                                        Status</option>
+                                    <option value="" {{ request('status_filter') == '' ? 'selected' : '' }}>Semua Status
+                                    </option>
                                     <option value="belum_dikerjakan"
                                         {{ request('status_filter') == 'belum_dikerjakan' ? 'selected' : '' }}>
                                         Belum Dikerjakan</option>
@@ -197,18 +223,24 @@
                                 </select>
                             </div>
 
-                            <div class="md:col-span-6 lg:col-span-2">
+                            {{-- Actions Row --}}
+                            <div class="md:col-span-12 flex flex-col lg:flex-row items-center justify-between gap-4 mt-4">
+                              <div class="flex flex-1 gap-3 w-full lg:w-auto">
                                 <button id="btnFilterServer" type="submit"
-                                    class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-brand-blue hover:bg-brand-blue/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300">
-                                    <i class="fas fa-search mr-2"></i> Cari
+                                  class="flex-1 lg:flex-none inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-brand-blue hover:bg-brand-blue/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300">
+                                  <i class="fas fa-search mr-2"></i> Cari
                                 </button>
-                            </div>
-
-                            <div class="md:col-span-6 lg:col-span-2">
-                                <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
-                                    class="w-full inline-flex justify-center items-center px-6 py-3 border border-primary-navy text-primary-navy rounded-xl shadow-lg text-base font-semibold bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300 text-center">
-                                    <i class="fas fa-chart-bar mr-2"></i> Statistik
+                                <a href="{{ route('laporan.data') }}"
+                                  class="flex-1 lg:flex-none inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-xl shadow text-base font-semibold text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200">
+                                  <i class="fas fa-sync-alt mr-2"></i> Reset Pencarian
                                 </a>
+                              </div>
+                              <div class="w-full lg:w-auto flex justify-end">
+                                <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
+                                  class="inline-flex justify-center items-center px-6 py-3 border border-primary-navy text-primary-navy rounded-xl shadow-lg text-base font-semibold bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300 text-center">
+                                  <i class="fas fa-chart-bar mr-2"></i> Statistik
+                                </a>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -552,7 +584,8 @@
                                                         <h4
                                                             class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                                             <i class="fas fa-file-alt text-blue-500 mr-3"></i>Deskripsi
-                                                            Laporan</h4>
+                                                            Laporan
+                                                        </h4>
                                                         @php
                                                             $deskripsi = $laporan->deskripsi_laporan;
                                                             $limit = 150;
@@ -645,7 +678,8 @@
                                                                 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                                                                 <i
                                                                     class="fas fa-map-marked-alt text-green-500 mr-3"></i>Lokasi
-                                                                pada Peta</h4>
+                                                                pada Peta
+                                                            </h4>
                                                             <div
                                                                 class="w-full h-80 rounded-xl overflow-hidden shadow-lg border-2 border-gray-200">
                                                                 <iframe
@@ -915,6 +949,84 @@
     <script>
         Fancybox.bind("[data-fancybox]", {
             // Opsi kustom jika diperlukan
+        });
+
+        // Populate Kecamatan and Kelurahan filters from API endpoints
+        document.addEventListener('DOMContentLoaded', async () => {
+            const kecamatanSelect = document.getElementById('kecamatan_id');
+            const kelurahanSelect = document.getElementById('kelurahan_id');
+
+            const selectedKecamatan = '{{ request('kecamatan_id') }}';
+            const selectedKelurahan = '{{ request('kelurahan_id') }}';
+
+            const kecamatanUrl = '{{ route('api.kecamatans') }}';
+            const kelurahanBaseUrl =
+            '{{ route('api.kelurahans.by-kecamatan', ['kecamatan_id' => 'KEC_ID']) }}';
+
+            function setOptions(selectEl, items, placeholder, selectedId) {
+                selectEl.innerHTML = '';
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = placeholder;
+                selectEl.appendChild(opt);
+                items.forEach(item => {
+                    const o = document.createElement('option');
+                    o.value = item.id;
+                    o.textContent = item.nama;
+                    if (String(item.id) === String(selectedId)) o.selected = true;
+                    selectEl.appendChild(o);
+                });
+            }
+
+            async function fetchJSON(url) {
+                const res = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            }
+
+            // Load kecamatan list
+            try {
+                const kecRes = await fetchJSON(kecamatanUrl);
+                if (kecRes && kecRes.success) {
+                    setOptions(kecamatanSelect, kecRes.data, 'Semua Kecamatan', selectedKecamatan);
+                }
+            } catch (e) {
+                console.warn('Gagal memuat kecamatan', e);
+            }
+
+            async function loadKelurahans(kecamatanId, preselectId) {
+                kelurahanSelect.disabled = true;
+                setOptions(kelurahanSelect, [], 'Semua Kelurahan', '');
+                if (!kecamatanId) {
+                    kelurahanSelect.disabled = false;
+                    return;
+                }
+                try {
+                    const url = kelurahanBaseUrl.replace('KEC_ID', encodeURIComponent(kecamatanId));
+                    const kelRes = await fetchJSON(url);
+                    if (kelRes && kelRes.success) {
+                        setOptions(kelurahanSelect, kelRes.data, 'Semua Kelurahan', preselectId);
+                    }
+                } catch (e) {
+                    console.warn('Gagal memuat kelurahan', e);
+                } finally {
+                    kelurahanSelect.disabled = false;
+                }
+            }
+
+            // Initial load for kelurahan if kecamatan is preselected
+            await loadKelurahans(selectedKecamatan, selectedKelurahan);
+
+            // Change handler
+            kecamatanSelect.addEventListener('change', () => {
+                const val = kecamatanSelect.value;
+                // Reset kelurahan selection when kecamatan changes
+                loadKelurahans(val, '');
+            });
         });
     </script>
 @endsection

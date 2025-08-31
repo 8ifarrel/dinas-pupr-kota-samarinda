@@ -255,6 +255,8 @@ Route::prefix('jalan-peduli')->group(function () {
  * API Routes untuk Jalan Peduli
  */
 Route::prefix('api')->group(function () {
+	Route::get('/kecamatans', [JalanPeduliLaporanGuestController::class, 'getKecamatans'])
+		->name('api.kecamatans');
 	Route::get('/kelurahans/by-kecamatan/{kecamatan_id}', [JalanPeduliLaporanGuestController::class, 'getKelurahans'])
 		->name('api.kelurahans.by-kecamatan');
 });
