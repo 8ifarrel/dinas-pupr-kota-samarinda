@@ -422,15 +422,37 @@
         });
       }
 
+      const dokumenPetugasInput = document.getElementById('dokumen_petugas');
+      if (dokumenPetugasInput) {
+        FilePond.create(dokumenPetugasInput, {
+          labelIdle: `Seret & Lepas file atau <span class="filepond--label-action">Jelajahi</span>`,
+          labelFileProcessingComplete: 'Upload Selesai',
+          labelTapToUndo: 'ketuk untuk membatalkan',
+          labelTapToCancel: 'ketuk untuk membatalkan',
+          
+          allowFileTypeValidation: false,
+          acceptedFileTypes: ['application/pdf', '.pdf', 'application/msword', '.doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
+        
+          labelFileTypeNotAllowed: 'Jenis file tidak valid. Hanya file PDF, DOC, dan DOCX yang diperbolehkan.',
+          fileValidateTypeLabelExpectedTypes: 'Hanya menerima {allButLastType} atau {lastType}',
+          maxFileSize: '10MB',
+          labelMaxFileSizeExceeded: 'File terlalu besar',
+          labelMaxFileSize: 'Ukuran file maksimum adalah {filesize}',
+          name: 'dokumen_petugas',
+          server: null,
+          storeAsFile: true,
+        });
+      }
+
       // Conditional fields logic
       const statusSelect = document.getElementById('status');
       const keteranganGroup = document.getElementById('keterangan-group');
       const fotoGroup = document.getElementById('foto-group');
 
       const dokumenPetugasGroup = document.getElementById('dokumen-petugas-group');
-      const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5']; // Status yang memerlukan dokumen petugas
-
+      
       function toggleFields() {
+        const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5'];
         const allowedStatuses = ['2', '3', '4', '5', '7'];
         const isAllowed = allowedStatuses.includes(statusSelect.value);
         keteranganGroup.style.display = isAllowed ? 'block' : 'none';
@@ -454,28 +476,6 @@
       }
       statusSelect.addEventListener('change', toggleFields);
       toggleFields();
-
-      const dokumenPetugasInput = document.getElementById('dokumen_petugas');
-      if (dokumenPetugasInput) {
-        FilePond.create(dokumenPetugasInput, {
-          labelIdle: `Seret & Lepas file atau <span class="filepond--label-action">Jelajahi</span>`,
-          labelFileProcessingComplete: 'Upload Selesai',
-          labelTapToUndo: 'ketuk untuk membatalkan',
-          labelTapToCancel: 'ketuk untuk membatalkan',
-          
-          allowFileTypeValidation: false,
-          acceptedFileTypes: ['application/pdf', '.pdf', 'application/msword', '.doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
-        
-          labelFileTypeNotAllowed: 'Jenis file tidak valid. Hanya file PDF, DOC, dan DOCX yang diperbolehkan.',
-          fileValidateTypeLabelExpectedTypes: 'Hanya menerima {allButLastType} atau {lastType}',
-          maxFileSize: '10MB',
-          labelMaxFileSizeExceeded: 'File terlalu besar',
-          labelMaxFileSize: 'Ukuran file maksimum adalah {filesize}',
-          name: 'dokumen_petugas',
-          server: null,
-          storeAsFile: true,
-        });
-      }
 
       // Modal (logic Anda sudah benar, tidak perlu diubah)
       document.querySelectorAll('[data-modal-toggle]').forEach(function (toggleBtn) {
