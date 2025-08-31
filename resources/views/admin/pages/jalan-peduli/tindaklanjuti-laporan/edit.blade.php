@@ -213,6 +213,30 @@
                 @endforeach
               </select>
             </div>
+            <div id="dokumen-petugas-group" style="display: none;">
+              <label for="dokumen_petugas" class="block text-sm font-medium text-gray-700 mb-2">Unggah Dokumen Petugas</label>
+              <input type="file" name="dokumen_petugas" id="dokumen_petugas" accept=".pdf,.doc,.docx">
+              <p class="mt-2 text-xs text-gray-500">
+                Anda dapat mengunggah dokumen terkait penanganan laporan di sini (PDF, DOC, DOCX maks 10MB).
+              </p>
+              
+              {{-- Tampilkan dokumen yang sudah ada jika ada --}}
+              @if($laporan->dokumen_petugas)
+              <div class="mt-3 bg-gray-50 rounded-lg border border-gray-200 p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-file-pdf text-red-500 text-3xl mr-4"></i>
+                  <div>
+                    <p class="text-sm text-gray-600 mb-1">Dokumen Petugas Terlampir</p>
+                    <a href="{{ Storage::url('dokumen_petugas/' . $laporan->dokumen_petugas) }}" 
+                      target="_blank" 
+                      class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                      <i class="fas fa-download mr-2"></i> Lihat Dokumen
+                    </a>
+                  </div>
+                </div>
+              </div>
+              @endif
+            </div>
             <div id="keterangan-group" style="display: none;">
               <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
               <textarea name="keterangan" id="keterangan" rows="4"
