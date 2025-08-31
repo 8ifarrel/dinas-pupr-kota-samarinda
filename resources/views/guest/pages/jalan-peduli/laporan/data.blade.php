@@ -153,26 +153,27 @@
                 {{-- Form Pencarian dengan Efek Glassmorphism --}}
                 <form method="GET" action="{{ route('laporan.data') }}" class="max-w-6xl mx-auto">
                     <div class="glass-effect rounded-2xl p-6 sm:p-8 shadow-2xl">
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
-                            {{-- Search --}}
-                            <div class="md:col-span-12 lg:col-span-4">
-                                <label for="search" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    <i class="fas fa-search mr-2" style="color: #1e293b;"></i>
-                                    Cari ID Laporan atau Nama Jalan
-                                </label>
-                                <div class="relative group">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                                        <i class="fas fa-search text-gray-400 group-focus-within:text-blue-600"></i>
-                                    </span>
-                                    <input type="text" id="search" name="search"
-                                        class="block w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-base bg-white/80"
-                                        placeholder="e.g., LPRN-12345, Jl. Merdeka" value="{{ request('search') }}"
-                                        autocomplete="off">
-                                </div>
+                        {{-- Baris 1: Search Input (Full Width) --}}
+                        <div class="mb-6">
+                            <label for="search" class="block text-sm font-semibold text-gray-700 mb-2">
+                                <i class="fas fa-search mr-2" style="color: #1e293b;"></i>
+                                Cari ID Laporan atau Nama Jalan
+                            </label>
+                            <div class="relative group">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                    <i class="fas fa-search text-gray-400 group-focus-within:text-blue-600"></i>
+                                </span>
+                                <input type="text" id="search" name="search"
+                                    class="block w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-base bg-white/80"
+                                    placeholder="e.g., LPRN-12345, Jl. Merdeka" value="{{ request('search') }}"
+                                    autocomplete="off">
                             </div>
+                        </div>
 
+                        {{-- Baris 2: Filter (Kecamatan, Kelurahan, Status) --}}
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end mb-6">
                             {{-- Kecamatan --}}
-                            <div class="md:col-span-6 lg:col-span-3">
+                            <div class="md:col-span-4">
                                 <label for="kecamatan_id" class="block text-sm font-semibold text-gray-700 mb-2">
                                     <i class="fas fa-city mr-2" style="color: #1a237e;"></i>
                                     Kecamatan
@@ -184,7 +185,7 @@
                             </div>
 
                             {{-- Kelurahan --}}
-                            <div class="md:col-span-6 lg:col-span-3">
+                            <div class="md:col-span-4">
                                 <label for="kelurahan_id" class="block text-sm font-semibold text-gray-700 mb-2">
                                     <i class="fas fa-map-marker-alt mr-2" style="color: #1a237e;"></i>
                                     Kelurahan
@@ -196,7 +197,7 @@
                             </div>
 
                             {{-- Status --}}
-                            <div class="md:col-span-12 lg:col-span-2">
+                            <div class="md:col-span-4">
                                 <label for="status_filter" class="block text-sm font-semibold text-gray-700 mb-2">
                                     <i class="fas fa-filter mr-2" style="color: #1a237e;"></i>
                                     Filter Status
@@ -222,31 +223,39 @@
                                     </option>
                                 </select>
                             </div>
+                        </div>
 
-                            {{-- Actions Row --}}
-                            <div class="md:col-span-12 flex flex-col lg:flex-row items-center justify-between gap-4 mt-6">
-                              {{-- Tombol Statistik --}}
-                              <div class="w-full lg:w-auto flex justify-start">
-                              <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
-                                class="inline-flex items-center justify-center px-6 py-3 rounded-xl shadow-md text-base font-semibold text-primary-navy bg-white border border-primary-navy hover:bg-primary-navy hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
-                                <i class="fas fa-chart-bar mr-2"></i> Statistik
-                              </a>
-                              </div>
-                              {{-- Divider untuk mobile --}}
-                              <div class="w-full h-px bg-gray-200 my-2 lg:hidden"></div>
-                                                            {{-- Tombol Cari & Reset --}}
-                                                            <div class="w-full lg:w-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                                <button id="btnFilterServer" type="submit"
-                                                                    class="w-full sm:min-w-[160px] inline-flex items-center justify-center px-8 py-3 rounded-xl shadow-md text-base font-semibold text-white bg-brand-blue hover:bg-primary-navy focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
-                                                                    <i class="fas fa-search mr-2"></i>
-                                                                    <span>Cari</span>
-                                                                </button>
-                                                                <a href="{{ route('laporan.data') }}"
-                                                                    class="w-full sm:min-w-[160px] inline-flex items-center justify-center px-8 py-3 rounded-xl shadow-md text-base font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-navy/30 transition-all duration-200 sm:whitespace-nowrap">
-                                                                    <i class="fas fa-sync-alt mr-2"></i>
-                                                                    <span>Reset Pencarian</span>
-                                                                </a>
-                                                            </div>
+                        {{-- Baris 3: Semua Tombol dalam Satu Baris --}}
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                            {{-- Tombol Statistik (Kiri - Memenuhi 4 kolom) --}}
+                            <div class="md:col-span-4">
+                                <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
+                                    class="inline-flex items-center justify-center w-full h-full px-4 py-3 rounded-xl shadow-md text-base font-semibold text-primary-navy bg-white border-2 border-primary-navy hover:bg-primary-navy hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
+                                    <i class="fas fa-chart-bar mr-2"></i> Statistik Laporan
+                                </a>
+                            </div>
+
+                            {{-- Tombol Cari & Reset (Kanan - Memenuhi 8 kolom) --}}
+                            <div class="md:col-span-8">
+                                <div class="grid grid-rows-2 gap-3 h-full">
+                                    {{-- Tombol Cari (Atas) --}}
+                                    <button id="btnFilterServer" type="submit"
+                                        class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl shadow-md text-base font-semibold text-white bg-brand-blue hover:bg-primary-navy focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
+                                        <i class="fas fa-search mr-2"></i>
+                                        <span>Cari Laporan</span>
+                                    </button>
+                                    
+                                    {{-- Tombol Reset (Bawah) --}}
+                                    <a href="{{ route('laporan.data') }}"
+                                        class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl shadow-md text-base font-semibold 
+                                            text-white bg-red-700 border-2 border-red-800
+                                            hover:bg-red-800 hover:border-red-900
+                                            focus:outline-none focus:ring-2 focus:ring-red-500/50
+                                            transition-all duration-200">
+                                        <i class="fas fa-sync-alt mr-2"></i>
+                                        <span>Reset Filter Pencarian</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -727,6 +736,30 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    {{-- Dokumen Petugas --}}
+                                                    @if ($laporan->dokumen_petugas)
+                                                        <div class="mb-8">
+                                                            <h4 class="text-base font-semibold text-gray-500 mb-4 text-center xl:text-left">
+                                                                <i class="fas fa-file-contract text-indigo-500 mr-2"></i>
+                                                                DOKUMEN PETUGAS
+                                                            </h4>
+                                                            <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-200">
+                                                                <div class="flex items-center">
+                                                                    <i class="fas fa-file-pdf text-red-500 text-3xl mr-4"></i>
+                                                                    <div class="flex-grow">
+                                                                        <p class="text-sm text-gray-600 mb-1">Dokumen Petugas</p>
+                                                                        <p class="text-xs text-gray-500 mb-2">Dokumen terkait penanganan laporan oleh petugas</p>
+                                                                        <a href="{{ Storage::url('dokumen_petugas/' . $laporan->dokumen_petugas) }}" 
+                                                                        target="_blank" 
+                                                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-navy hover:bg-primary-yellow hover:text-primary-navy transform hover:scale-105 transition-transform duration-300">
+                                                                            <i class="fas fa-download mr-2"></i> Unduh Dokumen
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
 
                                                     {{-- Catatan Petugas --}}
                                                     @if ($laporan->keterangan)
