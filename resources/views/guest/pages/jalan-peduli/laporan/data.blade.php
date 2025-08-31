@@ -224,23 +224,29 @@
                             </div>
 
                             {{-- Actions Row --}}
-                            <div class="md:col-span-12 flex flex-col lg:flex-row items-center justify-between gap-4 mt-4">
-                              <div class="flex flex-1 gap-3 w-full lg:w-auto">
-                                <button id="btnFilterServer" type="submit"
-                                  class="flex-1 lg:flex-none inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-xl shadow-lg text-base font-semibold text-white bg-brand-blue hover:bg-brand-blue/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300">
-                                  <i class="fas fa-search mr-2"></i> Cari
-                                </button>
-                                <a href="{{ route('laporan.data') }}"
-                                  class="flex-1 lg:flex-none inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-xl shadow text-base font-semibold text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200">
-                                  <i class="fas fa-sync-alt mr-2"></i> Reset Pencarian
-                                </a>
+                            <div class="md:col-span-12 flex flex-col lg:flex-row items-center justify-between gap-4 mt-6">
+                              {{-- Tombol Statistik --}}
+                              <div class="w-full lg:w-auto flex justify-start">
+                              <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
+                                class="inline-flex items-center justify-center px-6 py-3 rounded-xl shadow-md text-base font-semibold text-primary-navy bg-white border border-primary-navy hover:bg-primary-navy hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
+                                <i class="fas fa-chart-bar mr-2"></i> Statistik
+                              </a>
                               </div>
-                              <div class="w-full lg:w-auto flex justify-end">
-                                <a href="{{ route('guest.jalan-peduli.statistik-laporan') }}"
-                                  class="inline-flex justify-center items-center px-6 py-3 border border-primary-navy text-primary-navy rounded-xl shadow-lg text-base font-semibold bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-navy transform hover:scale-105 transition-transform duration-300 text-center">
-                                  <i class="fas fa-chart-bar mr-2"></i> Statistik
-                                </a>
-                              </div>
+                              {{-- Divider untuk mobile --}}
+                              <div class="w-full h-px bg-gray-200 my-2 lg:hidden"></div>
+                                                            {{-- Tombol Cari & Reset --}}
+                                                            <div class="w-full lg:w-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                                <button id="btnFilterServer" type="submit"
+                                                                    class="w-full sm:min-w-[160px] inline-flex items-center justify-center px-8 py-3 rounded-xl shadow-md text-base font-semibold text-white bg-brand-blue hover:bg-primary-navy focus:outline-none focus:ring-2 focus:ring-primary-navy/50 transition-all duration-200">
+                                                                    <i class="fas fa-search mr-2"></i>
+                                                                    <span>Cari</span>
+                                                                </button>
+                                                                <a href="{{ route('laporan.data') }}"
+                                                                    class="w-full sm:min-w-[160px] inline-flex items-center justify-center px-8 py-3 rounded-xl shadow-md text-base font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-navy/30 transition-all duration-200 sm:whitespace-nowrap">
+                                                                    <i class="fas fa-sync-alt mr-2"></i>
+                                                                    <span>Reset Pencarian</span>
+                                                                </a>
+                                                            </div>
                             </div>
                         </div>
                     </div>
@@ -380,13 +386,13 @@
                                                 biasanya memakan
                                                 waktu 1-2 hari kerja. Status akan diperbarui setelah verifikasi selesai.
                                             </p>
-                                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                                <a href="{{ route('laporan.download.public', ['id_laporan' => $laporan->id_laporan]) }}"
-                                                    target="_blank" @click.stop
-                                                    class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-xl shadow-lg text-white bg-primary-navy hover:bg-primary-yellow hover:text-primary-navy transform hover:scale-105 transition-transform duration-300">
-                                                    <i class="fas fa-download mr-2"></i>
-                                                    Unduh Bukti Laporan
-                                                </a>
+                                            <div class="flex flex-col sm:flex-row gap-2 justify-center lg:justify-start items-center">
+                                              <a href="{{ route('laporan.download.public', ['id_laporan' => $laporan->id_laporan]) }}"
+                                                target="_blank" @click.stop
+                                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-semibold rounded-lg shadow text-white bg-primary-navy hover:bg-primary-yellow hover:text-primary-navy transition-all duration-200 whitespace-nowrap">
+                                                <i class="fas fa-download mr-2"></i>
+                                                Download
+                                              </a>
                                             </div>
                                         </div>
                                     </div>
