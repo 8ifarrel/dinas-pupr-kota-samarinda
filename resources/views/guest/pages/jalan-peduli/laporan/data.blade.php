@@ -247,13 +247,13 @@
                                     
                                     {{-- Tombol Reset (Bawah) --}}
                                     <a href="{{ route('laporan.data') }}"
-                                        class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl shadow-md text-base font-semibold 
-                                            text-white bg-red-700 border-2 border-red-800
-                                            hover:bg-red-800 hover:border-red-900
-                                            focus:outline-none focus:ring-2 focus:ring-red-500/50
-                                            transition-all duration-200">
-                                        <i class="fas fa-sync-alt mr-2"></i>
-                                        <span>Reset Filter Pencarian</span>
+                                      class="w-full inline-flex items-center justify-center px-4 py-3 rounded-xl shadow-md text-base font-semibold 
+                                      text-red-600 bg-white
+                                      hover:bg-red-600 hover:text-white
+                                      focus:outline-none focus:ring-2 focus:ring-red-400/50
+                                      transition-all duration-200 group">
+                                      <i class="fas fa-sync-alt mr-2 transition-transform duration-300 group-hover:rotate-180"></i>
+                                      <span>Reset Filter Pencarian</span>
                                     </a>
                                 </div>
                             </div>
