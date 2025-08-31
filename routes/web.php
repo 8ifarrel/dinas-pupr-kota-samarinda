@@ -242,6 +242,7 @@ Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/get-public-map-data', [JalanPeduliLaporanGuestController::class, 'getPublicMapCoordinates'])->name('laporan.public.map.coordinates');
 
 	Route::get('/laporan/download/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoice'])->name('laporan.download');
+	Route::get('/laporan/download-public/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoicePublic'])->name('laporan.download.public');
 	
 	Route::get('/laporan/data', [JalanPeduliLaporanGuestController::class, 'index'])->name('laporan.data');
 
