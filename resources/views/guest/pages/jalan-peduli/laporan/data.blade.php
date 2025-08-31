@@ -232,7 +232,7 @@
                                 </button>
                                 <a href="{{ route('laporan.data') }}"
                                   class="flex-1 lg:flex-none inline-flex justify-center items-center px-6 py-3 border border-gray-300 rounded-xl shadow text-base font-semibold text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200">
-                                  <i class="fas fa-sync-alt mr-2"></i> Reset
+                                  <i class="fas fa-sync-alt mr-2"></i> Reset Pencarian
                                 </a>
                               </div>
                               <div class="w-full lg:w-auto flex justify-end">
