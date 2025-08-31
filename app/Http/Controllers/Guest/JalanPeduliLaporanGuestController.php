@@ -15,9 +15,10 @@ use Carbon\Carbon;
 use App\Http\Controllers\Guest\JalanPeduliPelaporController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\File;
 use App\Services\IpInfoService;
 use App\Models\JalanPeduliIPLog;
 
@@ -40,7 +41,7 @@ class JalanPeduliLaporanGuestController extends Controller
     protected function sanitizeAndValidateTextInput($input, $fieldName, $maxLength, $required = true)
     {
         // Jika field wajib dan input kosong
-        if ($required && empty(trim($input))) {
+    if ($required && empty(trim($input))) {
             $validator = Validator::make([], [], []);
             $validator->errors()->add($fieldName, "Field {$fieldName} wajib diisi.");
             throw new \Illuminate\Validation\ValidationException($validator);
@@ -257,7 +258,8 @@ class JalanPeduliLaporanGuestController extends Controller
 
             // 8. Hapus input lama dari session SETELAH berhasil
             $request->session()->forget('errors');
-            $request->session()->flash('_old_input', []);
+            // Clear old input without flashing to avoid static analysis issues
+            $request->session()->forget('_old_input');
 
             // 9. Redirect kembali dengan notifikasi sukses di session
             return redirect()->route('guest.jalan-peduli.laporan.store')->with('success_data', $successData);
@@ -277,9 +279,115 @@ class JalanPeduliLaporanGuestController extends Controller
 
         $data = ['laporan' => $laporan];
         $pdf = Pdf::loadView('guest.pages.jalan-peduli.laporan.invoice-pdf', $data);
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            // Izinkan DomPDF mengakses file di folder storage/app/public
+            'chroot' => storage_path('app/public'),
+        ]);
         $pdf->setPaper('a4', 'portrait');
 
         return $pdf->download('bukti-laporan-' . $laporan->id_laporan . '.pdf');
+    }
+
+    // Versi publik: tidak menampilkan data pelapor
+    public function downloadInvoicePublic($id_laporan)
+    {
+        $laporan = JalanPeduliLaporan::with(['kecamatan', 'kelurahan', 'status'])
+            ->where('id_laporan', $id_laporan)
+            ->firstOrFail();
+
+    // Siapkan URL HTTP (agar seragam dengan tampilan web) dan path file (fallback) untuk DomPDF
+    $photoPaths = [];
+    $photoHttpUrls = [];
+    $photoDataUris = [];
+        if (!empty($laporan->foto_kerusakan)) {
+            $arr = is_array($laporan->foto_kerusakan) ? $laporan->foto_kerusakan : json_decode($laporan->foto_kerusakan, true);
+            $photos = is_array($arr) ? $arr : [];
+            foreach ($photos as $idx => $file) {
+                // URL HTTP yang sama seperti di halaman web (butuh public/storage tersedia)
+                $photoHttpUrls[$idx] = asset('storage/jalan_peduli/' . $laporan->id_laporan . '/' . $file);
+                // Ambil path absolut dari storage agar tidak bergantung pada symlink public/storage
+                $abs = storage_path('app/public/jalan_peduli/' . $laporan->id_laporan . '/' . $file);
+                if (file_exists($abs)) {
+                    $real = realpath($abs) ?: $abs;
+                    $normalized = str_replace('\\', '/', $real); // ubah backslash menjadi slash
+                    $normalized = str_replace(' ', '%20', $normalized); // encode spasi
+                    $photoPaths[$idx] = 'file:///' . $normalized;
+                    // Buat data URI untuk keandalan maksimum
+                    try {
+                        $mime = function_exists('mime_content_type') ? mime_content_type($abs) : (File::mimeType($abs) ?: 'image/jpeg');
+                        $contents = @file_get_contents($abs);
+                        if ($contents !== false) {
+                            $photoDataUris[$idx] = 'data:' . $mime . ';base64,' . base64_encode($contents);
+                        }
+                    } catch (\Throwable $e) {
+                        Log::warning('Gagal membuat data URI (foto kerusakan)', ['path' => $abs, 'error' => $e->getMessage()]);
+                    }
+                } else {
+                    Log::warning('Foto kerusakan tidak ditemukan untuk PDF publik', [
+                        'path' => $abs,
+                        'id_laporan' => $laporan->id_laporan,
+                        'file' => $file,
+                    ]);
+                }
+            }
+        }
+
+        $petugasPaths = [];
+        $petugasHttpUrls = [];
+        $petugasDataUris = [];
+        if (!empty($laporan->foto_lanjutan)) {
+            $arr2 = is_array($laporan->foto_lanjutan) ? $laporan->foto_lanjutan : json_decode($laporan->foto_lanjutan, true);
+            if (!is_array($arr2) && is_string($laporan->foto_lanjutan)) {
+                $arr2 = [$laporan->foto_lanjutan];
+            }
+            $petugas = is_array($arr2) ? $arr2 : [];
+            foreach ($petugas as $idx => $file) {
+                $petugasHttpUrls[$idx] = asset('storage/foto_lanjutan/' . $file);
+                $abs = storage_path('app/public/foto_lanjutan/' . $file);
+                if (file_exists($abs)) {
+                    $real = realpath($abs) ?: $abs;
+                    $normalized = str_replace('\\', '/', $real);
+                    $normalized = str_replace(' ', '%20', $normalized);
+                    $petugasPaths[$idx] = 'file:///' . $normalized;
+                    try {
+                        $mime = function_exists('mime_content_type') ? mime_content_type($abs) : (File::mimeType($abs) ?: 'image/jpeg');
+                        $contents = @file_get_contents($abs);
+                        if ($contents !== false) {
+                            $petugasDataUris[$idx] = 'data:' . $mime . ';base64,' . base64_encode($contents);
+                        }
+                    } catch (\Throwable $e) {
+                        Log::warning('Gagal membuat data URI (foto lanjutan)', ['path' => $abs, 'error' => $e->getMessage()]);
+                    }
+                } else {
+                    Log::warning('Foto lanjutan petugas tidak ditemukan untuk PDF publik', [
+                        'path' => $abs,
+                        'file' => $file,
+                        'id_laporan' => $laporan->id_laporan,
+                    ]);
+                }
+            }
+        }
+
+        $data = [
+            'laporan' => $laporan,
+            'photo_paths' => $photoPaths,
+            'petugas_paths' => $petugasPaths,
+            'photo_urls' => $photoHttpUrls,
+            'petugas_urls' => $petugasHttpUrls,
+            'photo_datauris' => $photoDataUris,
+            'petugas_datauris' => $petugasDataUris,
+        ];
+        $pdf = Pdf::loadView('guest.pages.jalan-peduli.laporan.invoice-pdf-public', $data);
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'chroot' => storage_path('app/public'),
+        ]);
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->download('bukti-laporan-publik-' . $laporan->id_laporan . '.pdf');
     }
 
     public function index(Request $request)
@@ -343,7 +451,7 @@ class JalanPeduliLaporanGuestController extends Controller
             }
 
             $stats = JalanPeduliLaporan::query()
-                ->select('status_id', \DB::raw('count(*) as total'))
+                ->select('status_id', DB::raw('count(*) as total'))
                 ->whereIn('status_id', $statusIds)
                 ->groupBy('status_id')
                 ->get();
@@ -496,7 +604,7 @@ class JalanPeduliLaporanGuestController extends Controller
                 'data' => $kelurahans
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error fetching kelurahans: ' . $e->getMessage());
+            Log::error('Error fetching kelurahans: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
                 'data' => [],

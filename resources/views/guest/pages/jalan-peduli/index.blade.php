@@ -284,6 +284,7 @@
                         </div>
                     </div>
 
+
                     <div class="mt-10 max-w-2xl mx-auto">
                         <div
                             class="flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6 shadow-lg">
