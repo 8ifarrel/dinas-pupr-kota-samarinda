@@ -274,6 +274,19 @@
                     </td>
                 </tr>
             @endif
+            @if ($laporan->dokumen_petugas)
+                <tr>
+                    <td class="label">Dokumen Petugas</td>
+                    <td class="value">
+                        <span>
+                            <a href="{{ asset('storage/dokumen_petugas/' . $laporan->dokumen_petugas) }}"
+                                style="color:#1e3a8a; text-decoration: none;">
+                                Lihat Dokumen (PDF)
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td class="label">Jumlah Foto</td>
                 <td class="value">{{ count($photos) }} Foto</td>

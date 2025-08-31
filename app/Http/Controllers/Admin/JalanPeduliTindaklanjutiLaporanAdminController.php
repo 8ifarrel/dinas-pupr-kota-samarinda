@@ -7,6 +7,7 @@ use App\Models\JalanPeduliLaporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
 {
@@ -110,12 +111,14 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             $laporan->foto_lanjutan = $filename;
         }
 
-        // Tambahkan handling untuk dokumen_petugas
         if ($request->hasFile('dokumen_petugas')) {
             $file = $request->file('dokumen_petugas');
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('dokumen_petugas', $filename, 'public');
+            $path = $file->storeAs('dokumen_petugas', $filename, 'public');
             $laporan->dokumen_petugas = $filename;
+            Log::info('Dokumen petugas disimpan: ' . $filename . ' di path: ' . $path);
+        } else {
+            Log::info('Tidak ada file dokumen_petugas dalam request');
         }
 
         $laporan->status_id = $request->status_id;
@@ -142,6 +145,9 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
         }
         if ($laporan->foto_lanjutan) {
             Storage::disk('public')->delete('foto_lanjutan/' . $laporan->foto_lanjutan);
+        }
+        if ($laporan->dokumen_petugas) {
+            Storage::disk('public')->delete('dokumen_petugas/' . $laporan->dokumen_petugas);
         }
         $laporan->delete();
         return redirect()->route('admin.jalan-peduli.tindaklanjuti-laporan.index')->with('success', 'Laporan berhasil dihapus.');
