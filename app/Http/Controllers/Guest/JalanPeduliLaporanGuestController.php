@@ -404,6 +404,15 @@ class JalanPeduliLaporanGuestController extends Controller
             });
         }
 
+        // [BARU] Filter berdasarkan kecamatan dan kelurahan (lokasi kerusakan)
+        if ($request->filled('kecamatan_id')) {
+            $query->where('kecamatan_id', $request->kecamatan_id);
+        }
+
+        if ($request->filled('kelurahan_id')) {
+            $query->where('kelurahan_id', $request->kelurahan_id);
+        }
+
         if ($request->filled('tingkat_kerusakan_filter')) {
             $query->where('tingkat_kerusakan', $request->tingkat_kerusakan_filter);
         }
@@ -426,7 +435,7 @@ class JalanPeduliLaporanGuestController extends Controller
 
         $laporans = $query->paginate(5)->appends($request->query());
 
-        return view('guest.pages.jalan-peduli.laporan.data', [
+    return view('guest.pages.jalan-peduli.laporan.data', [
             'meta_description' => 'Buat Laporan Jalan Peduli - Layanan pelaporan kerusakan jalan di Kota Samarinda.',
             'page_title' => 'Buat Laporan Jalan Peduli'
         ], compact('laporans'));
@@ -609,6 +618,25 @@ class JalanPeduliLaporanGuestController extends Controller
                 'success' => false,
                 'data' => [],
                 'message' => 'Gagal mengambil data kelurahan'
+            ], 500);
+        }
+    }
+
+    public function getKecamatans()
+    {
+        try {
+            $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
+
+            return response()->json([
+                'success' => true,
+                'data' => $kecamatans
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching kecamatans: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'data' => [],
+                'message' => 'Gagal mengambil data kecamatan'
             ], 500);
         }
     }
