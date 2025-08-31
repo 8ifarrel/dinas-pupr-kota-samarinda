@@ -370,6 +370,7 @@ class JalanPeduliLaporanGuestController extends Controller
             }
         }
 
+
         $data = [
             'laporan' => $laporan,
             'photo_paths' => $photoPaths,
