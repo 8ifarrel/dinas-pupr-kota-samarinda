@@ -428,7 +428,7 @@
       const fotoGroup = document.getElementById('foto-group');
 
       const dokumenPetugasGroup = document.getElementById('dokumen-petugas-group');
-      const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5', '7']; // Status yang memerlukan dokumen petugas
+      const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5']; // Status yang memerlukan dokumen petugas
 
       function toggleFields() {
         const allowedStatuses = ['2', '3', '4', '5', '7'];

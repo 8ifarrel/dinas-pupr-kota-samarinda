@@ -116,9 +116,6 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('dokumen_petugas', $filename, 'public');
             $laporan->dokumen_petugas = $filename;
-            Log::info('Dokumen petugas disimpan: ' . $filename . ' di path: ' . $path);
-        } else {
-            Log::info('Tidak ada file dokumen_petugas dalam request');
         }
 
         $laporan->status_id = $request->status_id;
