@@ -25,8 +25,8 @@ class ServerTensorFlowService
             try {
                 $basePath = base_path();
                 $publicPath = public_path();
-            } catch (\Exception $e) {
-                // Use absolute paths sebagai fallback
+            } catch (\Throwable $e) {
+                // Use absolute paths sebagai fallback ketika helper belum siap (CLI/test)
             }
         }
         

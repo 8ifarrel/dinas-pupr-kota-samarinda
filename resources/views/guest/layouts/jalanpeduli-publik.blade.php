@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Layanan Laporan Publik')</title>
 
-    
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <meta name="description" content="{{ $meta_description }}" />
@@ -23,27 +24,32 @@
     <link rel="apple-touch-icon" href="{{ asset('image/favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('image/favicon/site.webmanifest') }}">
     <link rel="shortcut icon" href="{{ asset('image/favicon/favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('image/favicon/android-chrome-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('image/favicon/android-chrome-512x512.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="{{ asset('image/favicon/android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512"
+        href="{{ asset('image/favicon/android-chrome-512x512.png') }}">
 
     {{-- Tailwind CSS (dikompilasi melalui Vite/Mix) --}}
     @vite('resources/css/app.css')
     {{-- Jika tidak menggunakan Vite, sesuaikan dengan path CSS Anda: <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
 
     {{-- Font Awesome (opsional, jika masih digunakan di navbar/footer/tempat lain) --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{-- Page-specific Styles (jika ada css custom yang tidak bisa di-tailwind-kan) --}}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
-    @yield('styles')    
+    @yield('styles')
 </head>
+
 <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
 
     <!-- 1. Navbar -->
     @include('guest.components.jalanpeduli-navbar')
 
     <!-- 2. Konten Utama (akan mengisi ruang yang tersedia) -->
-    <main id="main-content" class="flex-grow pt-4" style="padding-top: var(--nav-offset-static, 6rem)">
+    <main id="main-content" class="flex-grow">
         @yield('content')
     </main>
 
@@ -61,41 +67,64 @@
         // Compute navbar offsets to avoid overlaps. Use two vars:
         // --nav-offset-static for layout padding (set on load/resize only)
         // --nav-offset for sticky elements (updated on scroll as navbar floats)
-        (function () {
+        (function() {
             function calculateOffset() {
                 var nav = document.getElementById('liquid-navbar');
-                if (!nav) return { staticOffset: 96, dynamicOffset: 96 };
+                if (!nav) return {
+                    staticOffset: 96,
+                    dynamicOffset: 96
+                };
                 var rect = nav.getBoundingClientRect();
                 var gap = 12; // breathing room
                 var dynamic = Math.max(0, Math.round((rect.top || 0) + rect.height + gap));
                 var staticOff = Math.max(0, Math.round(rect.height + gap));
-                return { staticOffset: staticOff, dynamicOffset: dynamic };
+                return {
+                    staticOffset: staticOff,
+                    dynamicOffset: dynamic
+                };
             }
 
             function setStaticOffset() {
                 try {
                     var off = calculateOffset().staticOffset;
                     document.documentElement.style.setProperty('--nav-offset-static', off + 'px');
-                } catch (e) { /* noop */ }
+                } catch (e) {
+                    /* noop */ }
             }
 
             function setDynamicOffset() {
                 try {
                     var off = calculateOffset().dynamicOffset;
                     document.documentElement.style.setProperty('--nav-offset', off + 'px');
-                } catch (e) { /* noop */ }
+                } catch (e) {
+                    /* noop */ }
             }
 
-            document.addEventListener('DOMContentLoaded', function(){ setStaticOffset(); setDynamicOffset(); });
-            window.addEventListener('load', function(){ setStaticOffset(); setDynamicOffset(); }, { once: true });
-            window.addEventListener('resize', function(){ setStaticOffset(); setDynamicOffset(); });
-            window.addEventListener('scroll', function(){ requestAnimationFrame(setDynamicOffset); }, { passive: true });
+            document.addEventListener('DOMContentLoaded', function() {
+                setStaticOffset();
+                setDynamicOffset();
+            });
+            window.addEventListener('load', function() {
+                setStaticOffset();
+                setDynamicOffset();
+            }, {
+                once: true
+            });
+            window.addEventListener('resize', function() {
+                setStaticOffset();
+                setDynamicOffset();
+            });
+            window.addEventListener('scroll', function() {
+                requestAnimationFrame(setDynamicOffset);
+            }, {
+                passive: true
+            });
         })();
     </script>
     @vite('resources/js/clock.js')
     @vite('resources/js/navbar-guest.js')
 
-    
+
     {{-- Jika menggunakan Livewire --}}
 </body>
 

@@ -86,7 +86,7 @@
 @section('document.body')
 
     <body class="bg-gray-100">
-        <main class="container mx-auto p-4 sm:p-8">
+        <main class="container mx-auto p-4">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
                 <div class="bg-brand-blue text-white p-8 rounded-t-2xl">
@@ -283,6 +283,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <div class="mt-10 max-w-2xl mx-auto">
                         <div

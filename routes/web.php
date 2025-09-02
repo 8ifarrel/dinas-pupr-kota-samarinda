@@ -242,6 +242,7 @@ Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/get-public-map-data', [JalanPeduliLaporanGuestController::class, 'getPublicMapCoordinates'])->name('laporan.public.map.coordinates');
 
 	Route::get('/laporan/download/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoice'])->name('laporan.download');
+	Route::get('/laporan/download-public/{id_laporan}', [JalanPeduliLaporanGuestController::class, 'downloadInvoicePublic'])->name('laporan.download.public');
 	
 	Route::get('/laporan/data', [JalanPeduliLaporanGuestController::class, 'index'])->name('laporan.data');
 
@@ -254,6 +255,8 @@ Route::prefix('jalan-peduli')->group(function () {
  * API Routes untuk Jalan Peduli
  */
 Route::prefix('api')->group(function () {
+	Route::get('/kecamatans', [JalanPeduliLaporanGuestController::class, 'getKecamatans'])
+		->name('api.kecamatans');
 	Route::get('/kelurahans/by-kecamatan/{kecamatan_id}', [JalanPeduliLaporanGuestController::class, 'getKelurahans'])
 		->name('api.kelurahans.by-kecamatan');
 });
