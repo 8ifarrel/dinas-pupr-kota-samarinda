@@ -61,6 +61,7 @@ Route::get('/beranda', [BerandaGuestController::class, 'index'])
 /**
  * Profil
  */
+use App\Http\Controllers\Guest\TupoksiGuestController;
 
 Route::prefix('profil')->group(callback: function () {
 	Route::get('/profil-kepala-dinas', [ProfilKepalaDinasGuestController::class, 'index'])
@@ -71,6 +72,9 @@ Route::prefix('profil')->group(callback: function () {
 
 	Route::get('/visi-dan-misi', [VisiDanMisiGuestController::class, 'index'])
 		->name('guest.profil.visi-dan-misi.index');
+
+	Route::get('/tupoksi', [TupoksiGuestController::class, 'index'])
+		->name('guest.profil.tupoksi.index');
 
 	Route::prefix('struktur-organisasi')->group(function () {
 		Route::get('/', [StrukturOrganisasiGuestController::class, 'index'])
