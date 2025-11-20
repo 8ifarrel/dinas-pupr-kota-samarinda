@@ -64,67 +64,67 @@
     </div>
 
     <!-- Table Section -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Id Pesanan</th>
-                    <th>Nama Pelanggan</th>
-                    <th>Alamat</th>
-                    <th>No. Tlp</th>
-                    <th>Jenis Bangunan</th>
-                    <th>Status Pengerjaan</th>
-                    <th colspan="2" class="text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pesananConfirmed as $pesanan)
-                <tr>
-                    <td>{{ $loop->iteration + ($pesananConfirmed->currentPage() - 1) * $pesananConfirmed->perPage() }}</td>
-                    <td>{{ $pesanan->id }}</td>
-                    <td>{{ $pesanan->nama_pelanggan }}</td>
-                    <td>{{ $pesanan->alamat }}</td>
-                    <td>{{ $pesanan->nomor_telepon_pelanggan }}</td>
-                    <td>{{ $pesanan->jenis_bangunan }}</td>
-                    <td>
-                        @if ($pesanan->status_pengerjaan == 'Sudah dikerjakan')
-                            <span class="status-badge status-selesai">Sudah dikerjakan</span>
-                        @elseif ($pesanan->status_pengerjaan == 'Sedang dikerjakan')
-                            <span class="status-badge status-proses">Sedang dikerjakan</span>
-                        @endif
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a href="{{ route('admin.sedot-tinja.show', $pesanan->id) }}" class="action-btn" title="Detail"><i class="fas fa-eye"></i></a>
-                            <a href="{{ route('admin.sedot-tinja.edit', $pesanan->id) }}" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
-                            <form action="{{ route('admin.sedot-tinja.destroy', $pesanan->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="action-btn delete-btn" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.sedot-tinja.print', $pesanan->id) }}" target="_blank" class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></a>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="9" class="text-center">Tidak ada pesanan terkonfirmasi</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+<div class="table-container overflow-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Id Pesanan</th>
+                <th>Nama Pelanggan</th>
+                <th>Alamat</th>
+                <th>No. Tlp</th>
+                <th>Jenis Bangunan</th>
+                <th>Status Pengerjaan</th>
+                <th colspan="2" class="text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($pesananConfirmed as $pesanan)
+            <tr>
+                <td>{{ $loop->iteration + ($pesananConfirmed->currentPage() - 1) * $pesananConfirmed->perPage() }}</td>
+                <td>{{ $pesanan->id }}</td>
+                <td>{{ $pesanan->nama_pelanggan }}</td>
+                <td>{{ $pesanan->alamat }}</td>
+                <td>{{ $pesanan->nomor_telepon_pelanggan }}</td>
+                <td>{{ $pesanan->jenis_bangunan }}</td>
+                <td>
+                    @if ($pesanan->status_pengerjaan == 'Sudah dikerjakan')
+                        <span class="status-badge status-selesai">Sudah dikerjakan</span>
+                    @elseif ($pesanan->status_pengerjaan == 'Sedang dikerjakan')
+                        <span class="status-badge status-proses">Sedang dikerjakan</span>
+                    @endif
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{{ route('admin.sedot-tinja.show', $pesanan->id) }}" class="action-btn" title="Detail"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('admin.sedot-tinja.edit', $pesanan->id) }}" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form action="{{ route('admin.sedot-tinja.destroy', $pesanan->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-btn delete-btn" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <a href="{{ route('admin.sedot-tinja.print', $pesanan->id) }}" target="_blank" class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></a>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="9" class="text-center">Tidak ada pesanan terkonfirmasi</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
 
-        <!-- Pagination -->
-        <div class="pagination">
-            {{ $pesananConfirmed->appends(request()->query())->links() }}
-        </div>
+    <!-- Pagination -->
+    <div class="pagination">
+        {{ $pesananConfirmed->appends(request()->query())->links() }}
     </div>
 </div>
+
 
 <!-- Custom CSS -->
 <style>
@@ -195,5 +195,16 @@
         display: flex;
         justify-content: center;
     }
+    /* AGAR TABEL BISA DIGESER (OVERFLOW X) */
+.overflow-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.overflow-wrapper table {
+    min-width: 1000px; 
+    white-space: nowrap;
+}
+
 </style>
 @endsection

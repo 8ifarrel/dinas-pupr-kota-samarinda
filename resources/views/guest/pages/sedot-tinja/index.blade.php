@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="min-h-screen">
-
+  
   {{-- Slider/Hero --}}
   <section class="relative">
-    <img src="{{ asset('storage/galeri-armada/gambar9.jpg') }}" class="w-full h-[280px] md:h-[420px] object-cover" alt="Sedot Tinja">
+    <img src="{{ asset('storage/galeri-armada/gambar9.jpg') }}" class="w-full h-[280px] md:h-[470px] object-cover" alt="Sedot Tinja">
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="absolute inset-0 flex items-center justify-center">
       <div class="text-center text-white px-4">
@@ -13,41 +13,92 @@
         <h1 class="text-2xl md:text-4xl font-bold mb-3">Layanan Sedot Tinja</h1>
         <p class="uppercase tracking-wider font-bold mb-2">SILALAD (Sistem Informasi Layanan Limbah Domestik)</p>
         <p class="max-w-2xl mx-auto opacity-90">Layanan resmi PUPR untuk pengelolaan air limbah domestik yang aman & higienis.</p>
-        <a href="{{ route('guest.sedot-tinja.create') }}" class="inline-block mt-5 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl shadow">
-          Daftar Layanan Sekarang
-        </a>
       </div>
     </div>
   </section>
 
   {{-- Informasi Ringkas --}}
   <section class="py-12 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-      
-      <!-- Card 1 -->
-      <div class="p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-        <div class="text-blue-600 text-4xl mb-4">🛡️</div>
-        <h3 class="text-lg font-bold mb-2">Legal & Aman</h3>
-        <p class="text-sm text-gray-600">Ditangani petugas bersertifikat, armada terstandar.</p>
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+
+      <!-- Card 1: Daftar -->
+      <div class="flex items-center p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition">
+        <div class="text-blue-600 text-5xl mr-4">🛡</div>
+        <div>
+          <h3 class="text-lg font-bold mb-2">Daftar</h3>
+          <p class="text-sm text-gray-600 mb-4">Pesan layanan sedot tinja secara online dengan mudah dan cepat.</p>
+          <a href="{{ route('guest.sedot-tinja.create') }}" 
+            class="inline-block bg-blue-600 text-white text-center font-semibold px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+            Mulai Pesanan
+          </a>
+        </div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-        <div class="text-green-600 text-4xl mb-4">✅</div>
-        <h3 class="text-lg font-bold mb-2">Proses Mudah</h3>
-        <p class="text-sm text-gray-600">Daftar online, verifikasi, petugas datang sesuai jadwal.</p>
+      <!-- Card 2: Informasi Layanan -->
+      <div class="flex items-center p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition">
+        <div class="text-green-600 text-5xl mr-4">✅</div>
+        <div>
+          <h3 class="text-lg font-bold mb-2">Informasi Layanan</h3>
+          <p class="text-sm text-gray-600 mb-4">Ketahui detail tarif, pengecualian, dan biaya tambahan sesuai lokasi.</p>
+          <a href="#keterangan-tarif"
+            class="inline-block bg-green-600 text-white text-center font-semibold px-5 py-2 rounded-lg shadow hover:bg-green-700 transition mr-2">
+            Lihat Keterangan Tarif
+          </a>
+        </div>
       </div>
 
-      <!-- Card 3 -->
-      <div class="p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-        <div class="text-purple-600 text-4xl mb-4">🔍</div>
-        <h3 class="text-lg font-bold mb-2">Transparan</h3>
-        <p class="text-sm text-gray-600">Informasi tarif & jadwal jelas, tanpa biaya tersembunyi.</p>
-      </div>
+      <!-- Card 3: Transparan / FAQ -->
+      <div class="flex items-center p-6 rounded-2xl bg-white shadow-md hover:shadow-xl transition">
+        <div class="text-purple-600 text-5xl mr-4">🔍</div>
+        <div>
+          <h3 class="text-lg font-bold mb-2">FAQ & Bantuan</h3>
+          <p class="text-sm text-gray-600 mb-4">Dapatkan jawaban atas pertanyaan umum atau hubungi admin via WhatsApp.</p>
+          
+          <!-- Button ke FAQ -->
+          <div class="flex flex-col space-y-3">
+          <a href="#faq"
+            class="inline-block bg-purple-600 text-white text-center font-semibold px-5 py-2 rounded-lg shadow hover:bg-purple-700 transition mr-2">
+            Lihat FAQ
+          </a>
 
+          <!-- Button ke WhatsApp -->
+          <div class="flex flex-col space-y-3">
+          <a href="https://wa.me/6281528231245?text=Halo%20Admin,%20saya%20ingin%20bertanya%20mengenai%20layanan%20sedot%20tinja."
+            target="_blank"
+            class="inline-block bg-green-600 text-white text-center font-semibold px-5 py-2 rounded-lg shadow hover:bg-green-700 transition mr-2">
+            Hubungi via WhatsApp
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
+  {{-- Statistik Pesanan --}}
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center mb-8">Statistik Pesanan</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Belum Dikerjakan -->
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <p class="text-lg font-semibold text-gray-700">Belum Dikerjakan</p>
+          <p class="text-3xl font-bold text-red-500 mt-2">12</p>
+        </div>
+
+        <!-- Sedang Dikerjakan -->
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <p class="text-lg font-semibold text-gray-700">Sedang Dikerjakan</p>
+          <p class="text-3xl font-bold text-yellow-500 mt-2">7</p>
+        </div>
+
+        <!-- Sudah Dikerjakan -->
+        <div class="bg-white p-6 rounded-xl shadow-md text-center">
+          <p class="text-lg font-semibold text-gray-700">Sudah Dikerjakan</p>
+          <p class="text-3xl font-bold text-green-500 mt-2">20</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   {{-- Struktur Kepengurusan --}}
   <section class="py-8 bg-gray-50">
@@ -66,7 +117,7 @@
     <div class="max-w-4xl mx-auto px-4">
       <h2 class="text-3xl font-bold mb-2 text-center text-gray-800">Tarif Layanan</h2>
       <p class="text-center text-gray-600 mb-6">
-        Tarif resmi layanan sedot tinja UPTD Pengelolaan Air Limbah Domestik.
+        Tarif Resmi Layanan Sedot Tinja UPTD Pengelolaan Air Limbah Domestik.
       </p>
 
       <div class="overflow-x-auto rounded-2xl shadow-lg border border-gray-200">
@@ -109,9 +160,22 @@
       </div>
     </div>
   </section>
-   
+
+  {{-- Deskripsi tambahan rapat dengan tabel --}}
+  <div id="keterangan" class="mt-0 text-center -translate-y-1">
+    <p class="text-sm text-gray-600 leading-relaxed max-w-3xl mx-auto">
+      <strong>Keterangan:</strong> Tarif dasar berlaku di wilayah Kota Samarinda dengan biaya 
+      <span class="font-semibold">Rp600.000 / rit</span>.  
+      Untuk kategori <span class="text-blue-700 font-medium">pengecualian</span> 
+      (seperti sekolah, rumah ibadah, madrasah, pondok pesantren, dan panti asuhan) 
+      dikenakan biaya khusus sebesar <span class="font-semibold">Rp300.000 / rit</span>.  
+      Penambahan tarif berlaku untuk lokasi tertentu (Lojanan, Palaran, dan luar kota) sesuai tabel di atas.
+    </p>
+  </div>
+
+
   <!-- Keterangan Tambahan Tarif -->
-  <section class="py-10 bg-gradient-to-b from-gray-50 to-gray-100">
+  <section id="keterangan-tarif" class="py-10 bg-gradient-to-b from-gray-50 to-gray-100">
     <div class="max-w-4xl mx-auto px-4">
       <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Tambahan Tarif</h2>
       <div class="overflow-hidden rounded-lg shadow-lg">
@@ -152,18 +216,6 @@
       *Biaya tambahan sesuai dengan lokasi pelayanan.
   </p>
 
-  {{-- Deskripsi tambahan rapat dengan tabel --}}
-  <div class="mt-2 pt-1 text-center">
-    <p class="text-sm text-gray-600 leading-relaxed max-w-3xl mx-auto">
-      <strong>Keterangan:</strong> Tarif dasar berlaku di wilayah Kota Samarinda dengan biaya 
-      <span class="font-semibold">Rp600.000 / rit</span>.  
-      Untuk kategori <span class="text-blue-700 font-medium">pengecualian</span> 
-      (seperti sekolah, rumah ibadah, madrasah, pondok pesantren, dan panti asuhan) 
-      dikenakan biaya khusus sebesar <span class="font-semibold">Rp300.000 / rit</span>.  
-      Penambahan tarif berlaku untuk lokasi tertentu (Lojanan, Palaran, dan luar kota) sesuai tabel di atas.
-    </p>
-  </div>
-
   {{-- Tombol Mulai Pesanan --}}
   <div class="text-center mt-4 mb-6">
     <a href="{{ route('guest.sedot-tinja.create') }}" 
@@ -178,7 +230,7 @@
   </div>
 
   {{-- Galeri Armada --}}
-  <section class="py-8 bg-gray-50">
+  <section class="py-8 bg-gray-0">
     <div class="max-w-5xl mx-auto">
       
       {{-- Judul --}}
@@ -192,7 +244,7 @@
           ['gambar2.jpg', 'Proses pengambilan limbah tinja menggunakan alat khusus.'],
           ['gambar3.jpg', 'Armada truk tangki kuning sedang beroperasi di lapangan.'],
           ['gambar4.jpg', 'Armada tangki siap melayani penyedotan limbah di area perumahan.'],
-          ['gambar5.jpg', 'Armada tangki digunakan untuk pelayanan di gedung perkantoran.'],
+          ['gambar5.jpg', 'Proses penyedotan di kantor Dinas PUPR Samarinda.'],
           ['gambar6.jpg', 'Mobil toilet VIP milik Dinas PUPR Kota Samarinda.'],
         ] as [$file, $desc])
           <div class="overflow-hidden rounded-xl shadow-md bg-white">
@@ -210,7 +262,7 @@
   </section>
 
   {{-- FAQ --}}
-  <section id="faq" class="py-16 bg-gray-50">
+  <section id="faq" class="py-16 bg-gray-0">
     <div class="max-w-4xl mx-auto px-6">
       <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">FAQ</h2>
       <div class="space-y-4">

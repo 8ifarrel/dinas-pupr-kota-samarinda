@@ -34,7 +34,7 @@
     </div>
 
     <!-- Table Section -->
-    <div class="table-container">
+    <div class="table-container" style="overflow-x:auto; white-space:nowrap;">
         <table>
             <thead>
                 <tr>
@@ -91,7 +91,7 @@
     </div>
 </div>
 
-<!-- Custom CSS -->
+<!-- CSS -->
 <style>
 .main-content {
     padding: 20px;
@@ -128,11 +128,10 @@
 .reset-btn:hover {
     background: #5a6268;
 }
-.table-container {
-    overflow-x: auto;
-}
+
 .table-container table {
     width: 100%;
+    min-width: 900px; /* Biar bisa discroll */
     border-collapse: collapse;
 }
 .table-container th, .table-container td {
@@ -144,6 +143,7 @@
     background: #f8f9fa;
     font-weight: bold;
 }
+
 .status-badge {
     padding: 4px 8px;
     border-radius: 6px;
@@ -153,6 +153,7 @@
 .status-selesai { background: #d4edda; color: #155724; }
 .status-proses { background: #fff3cd; color: #856404; }
 .status-belum { background: #f8d7da; color: #721c24; }
+
 .action-buttons .action-btn {
     display: inline-block;
     padding: 6px 8px;
@@ -172,4 +173,5 @@
     list-style: none;
 }
 </style>
+
 @endsection
