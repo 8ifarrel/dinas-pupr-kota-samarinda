@@ -1,0 +1,467 @@
+[33mcommit 7b98d43babea5727c9e2d7ff49999880336e5ff6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mpkl-umkt/form-sedot-tinja[m[33m, [m[1;31morigin/pkl-umkt/form-sedot-tinja[m[33m)[m
+Author: Gust05-art <gstdhika@gmail.com>
+Date:   Thu Jul 31 17:08:16 2025 +0100
+
+    update tabel sedot tinja
+
+[33mcommit 7b56501abfa33eac8e06c5c900462a27a6923fe0[m
+Author: Gust05-art <gstdhika@gmail.com>
+Date:   Thu Jul 31 16:16:03 2025 +0100
+
+    commit pertama make tabel sedot_tinja (gusti)
+
+[33mcommit 88f48ca3ca2195b35a76429c3be6c92986e85def[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 29 10:26:54 2025 +0800
+
+    template
+
+[33mcommit be27c07cb6058058b3b161fd022ec17acb842d5f[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 29 02:00:42 2025 +0800
+
+    Template view dan controller sedot tinja
+
+[33mcommit ad38926c8b2dfde292bc43cf443c1f528baa4fed[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 29 00:28:35 2025 +0800
+
+    Memperbaiki migration dan seeder
+
+[33mcommit 9893e04ef9ef99cc3f4e0b6be453a1467f054d7e[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 29 00:01:06 2025 +0800
+
+    hapus seeders
+
+[33mcommit f00749279096ddedbbdbe1b24757a121da206f98[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 29 00:00:48 2025 +0800
+
+    hapus migrations
+
+[33mcommit b8d20a85ff846aac7a7fc2f9a1f8c6f5a3984742[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Wed Jul 23 16:17:54 2025 +0800
+
+    skm nambah spi (belum responsive, mager hehehe)
+
+[33mcommit 2bf9c0e739a9652d1343e0e0feed3bd4494b2bda[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Mon Jul 21 17:54:04 2025 +0800
+
+    ga sengaja commit
+
+[33mcommit 314a6a15d30116f4b41295b676c4d53b8dc8033a[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Mon Jul 21 12:22:10 2025 +0800
+
+    ux agenda kegiatan beranda
+
+[33mcommit 8b4280b3a111b965b78fc772b248ce565376f29f[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Mon Jul 21 12:13:07 2025 +0800
+
+    ux agenda kegiatan beranda
+
+[33mcommit 88700fffc13a1c9d1e90003309ea174486d40993[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Mon Jul 21 12:01:49 2025 +0800
+
+    menghilangkan statistiik pengunjung
+
+[33mcommit b143205c0b95233c68669e874953a443602e6aca[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:57:00 2025 +0800
+
+    lagi baiki navbar guest 90%
+
+[33mcommit 153dd88490ced9bdba33dcfde0329636a7db24e8[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:48:12 2025 +0800
+
+    lagi baiki navbar guest desktop
+
+[33mcommit b27b6c9857194fbc51898c5bd819a9cb855219fc[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:41:10 2025 +0800
+
+    lagi baiki navbar guest
+
+[33mcommit e1bf5c3fc64486ebe2abc9ce5edfc1dc3166d323[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:38:53 2025 +0800
+
+    lagi baiki navbar guest
+
+[33mcommit 830dab5539d7f1785c71b0bec30817568a8a6ea4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:21:49 2025 +0800
+
+    ngetes lagi wkwk x102
+
+[33mcommit c5e98cf0128a82bf3f524fb76401b796a12dd9b2[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:18:30 2025 +0800
+
+    ngetes lagi wkwk x102
+
+[33mcommit 74cbd47c5cb38ede804d4ee0a304e47248c6ffdd[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:14:55 2025 +0800
+
+    ngetes lagi wkwk x101
+
+[33mcommit 4be6e98e992309b1f62f231d6147f67dd22e8369[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:10:18 2025 +0800
+
+    ngetes lagi wkwk x100
+
+[33mcommit 5f3c6448240de29de0387dd04596f6dced505b9e[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 23:04:10 2025 +0800
+
+    ngetes lagi wkwk
+
+[33mcommit 6ee41c87773be189d9a48ad70c00bd83e1ed944d[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 22:56:43 2025 +0800
+
+    quil resize module
+
+[33mcommit c8d9f197a6c384da4092101991d4935ebcc3dc6e[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 22:54:54 2025 +0800
+
+    agenda kegiatan responsive
+
+[33mcommit 03fa40a7475dece153ae14ad8de09f92012ac0e4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 19:34:34 2025 +0800
+
+    memperbaiki quill resize moduke lagi
+
+[33mcommit ead8453f8a3e8401820dc480f6f5ac9179d22367[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 19:31:11 2025 +0800
+
+    memperbaiki quill resize moduke
+
+[33mcommit 059efa5db14ace7e79381ffb01ce871b98523a67[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 19:12:51 2025 +0800
+
+    nambah database blocked cloud service
+
+[33mcommit 38b3a039f9af214d73705aad02132660fcb6af91[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 18:52:38 2025 +0800
+
+    menambah cloud domain
+
+[33mcommit b688f8123d3774912528ca4ffd7c1079ddce56c2[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 18:46:56 2025 +0800
+
+    memperbaiki connection timeout record statistik pengunjung
+
+[33mcommit e51fa4a068177181ca0f41f41143348a00f72e10[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 19 18:43:03 2025 +0800
+
+    multiimage berita
+
+[33mcommit 9df8ee9817f1bb293ff841d981910dc128b2fa90[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 22:16:43 2025 +0800
+
+    multiimage create berita
+
+[33mcommit e1e745f646e9f209875332def6f4dbbeb4581ba7[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 12:41:45 2025 +0800
+
+    AAA
+
+[33mcommit fb5c9eed51006acaab66c7472ed5a7ce33f89790[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 12:18:45 2025 +0800
+
+    oba memperbaiki logging
+
+[33mcommit 80c8123ea8942a66f75e940d70ec4fafc8fb3d69[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 11:52:32 2025 +0800
+
+    tambah blocked domain cloud
+
+[33mcommit 3c01da583672707d47cf90689240300633678730[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 11:33:37 2025 +0800
+
+    keren kamu gemini, google.com dihapusnya dari array gweh
+
+[33mcommit 05575e87368ed0544b1f71be7872061fa7cc6885[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 11:29:14 2025 +0800
+
+    menangani bot jahat yang sengaja melamakan waktu request http
+
+[33mcommit 197a385b1f5364416b8ccc7ebb58bb765f7a7fe8[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 11:20:26 2025 +0800
+
+    menambahkan waktu http timeout
+
+[33mcommit f60286a1272c008682d55b4072f2ebcf1262ec65[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 11:04:51 2025 +0800
+
+    INI FIX 100000000000000%%%
+
+[33mcommit 293bfb3fa615f75763d7642ea33acc4ac568a532[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 10:49:53 2025 +0800
+
+    semoga fix
+
+[33mcommit 89cc32128d4decb0aee4966a79ad32d2267a44d4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 10:26:31 2025 +0800
+
+    coba lagi wkwkkwkw
+
+[33mcommit a914280e3628dd63d168d2bdde76bb7213fcbbf0[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 10:16:20 2025 +0800
+
+    coba lagi wkwkkwkw
+
+[33mcommit 69c5ee6f98b4c06ea696d891f80ad0dee4872718[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 10:06:19 2025 +0800
+
+    coba baiki lagi wkwkkw
+
+[33mcommit b47989042b5da322da4a6b3b345a81491a5bd56c[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 09:23:30 2025 +0800
+
+    memperbaiki record statistik pengunjung cloud server
+
+[33mcommit 5bd0c0af6cac8daee039b334f5225f1f3f0ef0bd[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 18 00:17:03 2025 +0800
+
+    Perubahan Kebijakan privasi dan list cloud domain
+
+[33mcommit c38cb57ce67e35b29b28279d47055b3aa705b2b9[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 23:43:59 2025 +0800
+
+    mengubah dari ASN ke domain
+
+[33mcommit b4784a065bc745ebba8991b1acb703a1504da962[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 23:22:35 2025 +0800
+
+    menambahkan list cloud asn
+
+[33mcommit 7a729c61e60894222fec865cbf0bd38dff8e8384[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 23:09:55 2025 +0800
+
+    Mendeteksi bot jahat melalui ASN yang ada di dalam IP address
+
+[33mcommit 65d4dd0944603cba7eff3668e9c4f5b82e12c505[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 22:01:13 2025 +0800
+
+    Perbaiki namespace Admin
+
+[33mcommit 5ae3418f86b53694124edf485a6da0bc9d2733ca[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 22:00:43 2025 +0800
+
+    Perbaiki namespace Admin
+
+[33mcommit be9034a4545e7a616ac0d605bef9b24ad933733f[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 21:58:04 2025 +0800
+
+    Bot filter dan update composer
+
+[33mcommit 7bec13bb32c9680138f4c97fe3f8975bc4a88b24[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 20:49:37 2025 +0800
+
+    buku tamu fixed
+
+[33mcommit 0c77a747ee9214a9b08500bd66ba2b832a1b6bac[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 17:47:50 2025 +0800
+
+    footer
+
+[33mcommit 79d74638c544850a0766e655b8b1a548384edb3a[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 15:56:47 2025 +0800
+
+    Privacy policy notification
+
+[33mcommit d3b7a63422a386882a3ff000b2e507251f68f55b[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 15:10:06 2025 +0800
+
+    KEbijakan Privasi dan Statistik Pengunjung
+
+[33mcommit 3a8c287e8d772c6d8cc2d710b76c54e4c485cc73[m[33m ([m[1;31morigin/pkl-umkt/nailah-alert[m[33m)[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 01:07:13 2025 +0800
+
+    statistik pengjunjung balik
+
+[33mcommit af4c111e0916c93469474a6944178020cbc323b4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:43:31 2025 +0800
+
+    sedih
+
+[33mcommit eea5f4b1717411c351f3becd091b97f9a914b98a[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:43:03 2025 +0800
+
+    gweh rename
+
+[33mcommit 59ac2cd888bbf70135c8ddc1b1de310fc6477458[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:32:42 2025 +0800
+
+    fix splide autoscroll
+
+[33mcommit 44d982cfe33693ec2ba7c3108357544cc16cf14d[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:29:49 2025 +0800
+
+    test tanpa statistik
+
+[33mcommit 5f01e1eb507a9aa8319b0c7213339bc724979d74[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:27:51 2025 +0800
+
+    test
+
+[33mcommit 86188216e4ac6cb596d35c1a4b36c1154cd7501b[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 17 00:19:36 2025 +0800
+
+    agenda kegiatan dan statistik kegiatan
+
+[33mcommit 41b61b99ab7d45b978af7c004a16e81b48044300[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Wed Jul 16 22:40:00 2025 +0800
+
+    buanyak cik
+
+[33mcommit c04b4ee0a6374ebfba0d4953c8bd95563d0a1b7e[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 15 23:46:09 2025 +0800
+
+    footer menyesuaikan jarak antarmenu
+
+[33mcommit e69709a1d46e292065423b184e0b89c8d9e7f970[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 15 23:43:53 2025 +0800
+
+    footer menghapus nomor telepon dan whatsapp
+
+[33mcommit 48d27cd14427a7d75833f8b0360d58e97c336ab4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 15 21:15:24 2025 +0800
+
+    navbar href tombol portal
+
+[33mcommit 6fcffb1c10e0b28332f573fe78c44f998297ec1d[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 15 21:14:02 2025 +0800
+
+    href footer
+
+[33mcommit b911f78c4b0be2f3d4a381efc9840e3e7be4ae45[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 15 19:10:28 2025 +0800
+
+    Slider fixed
+
+[33mcommit a26a490a60124668a41ad9c641ecd1f186f9a167[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Mon Jul 14 10:09:19 2025 +0800
+
+    Penyesuaian node modules devDep
+
+[33mcommit 58b985ccd93b59d523e7d3e450cb6d68cf1d3dc4[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sun Jul 13 16:11:54 2025 +0800
+
+    bismillah 2.0
+
+[33mcommit 6fd726de1b9d1dc837cc95cf3840062e6395ab9e[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sun Jul 13 15:50:32 2025 +0800
+
+    capek buru-buru
+
+[33mcommit e4e081b89d4a686494b2056cb907a4e00b4ccc06[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sun Jul 13 14:20:21 2025 +0800
+
+    buanyakkkk\
+
+[33mcommit e109500b8f8534b78a2b9b49a1229c62fa492dc5[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Sat Jul 12 22:58:44 2025 +0800
+
+    ga tau aku ada update apa aja wkwkwk banyak bange
+
+[33mcommit 5c9534b48527bba45fba8e83b9931ef789ca8720[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 11 19:23:08 2025 +0800
+
+    foto kegiatan sisa update timestamp album dan sesuaikan ukuran box file uploader
+
+[33mcommit f8ebbec470f597715de7c3b1e57e926c9aeb1c36[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Fri Jul 11 14:52:45 2025 +0800
+
+    sisa foto kegiatan CAPEKKKKKKKKKKK
+
+[33mcommit 13dd1b61613dcb3f76813f594089e0f5d1b018eb[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 10 20:13:56 2025 +0800
+
+    BUKU TAMU MERGEDDDDDDDDDDDDDDDDDD
+
+[33mcommit 600f8b5f945b1ccf3821ab27f581c43550bcc0b2[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 10 16:43:08 2025 +0800
+
+    banyak yang diubah capekkkkkkkkkk
+
+[33mcommit f6a7eec400a8f1f6ea38675c86305c0908a1751b[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Thu Jul 10 16:13:31 2025 +0800
+
+    banyak yang diubah capekkkkkkkkkk:
+
+[33mcommit 64dc3aefe04e2cf3fb71c4d057ad17f9be27cc71[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 8 17:42:43 2025 +0800
+
+    skm
+
+[33mcommit 1112f0453beaf95a01279ce49a13c86dc3fd9343[m
+Author: 8ifarrel <farrelsirah@gmail.com>
+Date:   Tue Jul 8 13:13:19 2025 +0800
+
+    Initial commit after cleanup

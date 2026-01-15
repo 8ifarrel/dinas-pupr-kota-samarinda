@@ -40,9 +40,14 @@ use App\Http\Controllers\Guest\SKMGuestController;
 use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
-use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
 
+use App\Http\Controllers\Guest\SedotTinjaGuestController;
+use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
 use App\Http\Middleware\RecordStatistikPengunjung;
+
+/**
+ * Portal
+ */
 
 /**
  * Portal
@@ -157,7 +162,7 @@ Route::prefix('agenda-kegiatan')->middleware([BlockSearchEngines::class])->group
 	Route::get('/ajax-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaCount'])
 		->name('guest.agenda-kegiatan.ajax-count');
 	Route::get('/ajax-week-count', [AgendaKegiatanGuestController::class, 'ajaxAgendaWeekCount'])
-		->name('guest.agenda-kegiatan.ajax-week-count');
+	->name('guest.agenda-kegiatan.ajax-week-count');
 });
 
 /**
@@ -201,16 +206,40 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
 /**
  * Drainase Irigasi
  */
+Route::prefix('drainase-irigasi')->group(function () {
+    Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
+        ->name('guest.drainase-irigasi.index');
+    Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+        ->name('guest.drainase-irigasis.show');
+});
 
-// Route::prefix('drainase-irigasi')->group(function () {
-// 	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
-// 		->name('guest.drainase-irigasi.index');
 
 // 	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
 // 		->name('guest.drainase-irigasi.create');
 
 // 	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
 // 		->name('guest.drainase-irigasi.store');
+
+Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
+    ->name('guest.drainase-irigasis.show');
+
+
+/**
+ * Sedot Tinja
+ */
+Route::prefix('sedot-tinja')->group(function () {
+    Route::get('/', [SedotTinjaGuestController::class, 'index'])
+        ->name('guest.sedot-tinja.index');
+
+    Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+        ->name('guest.sedot-tinja.create');
+
+    Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+        ->name('guest.sedot-tinja.store');
+
+    Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
+        ->name('guest.sedot-tinja.show');
+});
 
 // 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
 // 		->name('guest.drainase-irigasis.how');
@@ -265,6 +294,31 @@ Route::prefix('api')->group(function () {
 		->name('api.kelurahans.by-kecamatan');
 });
 
+/**
+ * Sedot Tinja
+ */
+Route::prefix('sedot-tinja')->group(function () {
+	Route::get('/', [SedotTinjaGuestController::class, 'index'])
+		->name('guest.sedot-tinja.index');
+
+	Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+		->name('guest.sedot-tinja.create');
+
+	Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+		->name('guest.sedot-tinja.store');
+
+	Route::get('/lihat-laporan', [SedotTinjaGuestController::class, 'show'])
+		->name('guest.sedot-tinja.show');
+
+Route::get('/sedot-tinja/{id}', [SedotTinjaGuestController::class, 'show'])
+		->name('guest.sedot-tinja.show');
+
+	Route::get('/success', [SedotTinjaGuestController::class, 'success'])
+		->name('guest.sedot-tinja.success');
+
+    Route::get('/status', [SedotTinjaGuestController::class, 'status'])
+		->name('guest.sedot-tinja.status');
+});
 
 
 /*
@@ -282,7 +336,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotAuthenticated;
 use App\Http\Middleware\IsSuperAdmin;
 
-use App\Http\Controllers\Admin\LoginAdminController;
+use App\Http\Controllers\Admin\LoginAdminController;  
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\SliderAdminController;
 use App\Http\Controllers\Admin\PartnerAdminController;
@@ -302,10 +356,10 @@ use App\Http\Controllers\Admin\FotoKegiatanAdminController;
 use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
 use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
+use App\Http\Controllers\Admin\SedotTinjaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
-
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
@@ -339,6 +393,11 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 						->name('admin.super.akun-admin.update');
 					Route::delete('/delete/{id}', [AkunAdminSuperAdminController::class, 'destroy'])
 						->name('admin.super.akun-admin.destroy');
+				});
+
+				// Route untuk kelola Sedot Tinja (admin biasa)
+				Route::prefix('admin')->name('admin.')->group(function () {
+    				Route::resource('sedot-tinja', \App\Http\Controllers\Admin\SedotTinjaAdminController::class);
 				});
 
 				/**
@@ -676,7 +735,52 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 					->name('admin.profil.sejarah-dinas-pupr-kota-samarinda.update');
 			});
 		});
-	});
+
+			/**
+			 * Sedot Tinja 
+			 */
+
+			Route::prefix('admin/sedot-tinja')->middleware(['auth'])->group(function () {
+				// Route::get('/', [SedotTinjaAdminController::class, 'index'])
+				// 	->name('admin.sedot-tinja.index');
+				Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
+					->name('admin.sedot-tinja.data-pesanan');
+				Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
+					->name('admin.sedot-tinja.dataTerkonfirmasi');
+				Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
+					->name('admin.sedot-tinja.riwayat-pesanan');
+				Route::delete('/{sedotTinja}', [SedotTinjaAdminController::class, 'destroy'])
+					->name('admin.sedot-tinja.destroy');
+				Route::get('/create', [SedotTinjaAdminController::class, 'create'])
+					->name('admin.sedot-tinja.create');
+				Route::post('/', [SedotTinjaAdminController::class, 'store'])
+					->name('admin.sedot-tinja.store');
+				Route::get('/{sedotTinja}/edit', [SedotTinjaAdminController::class, 'edit'])
+					->name('admin.sedot-tinja.edit');
+				Route::put('/{sedotTinja}/update-status', [SedotTinjaAdminController::class, 'updateStatus'])
+					->name('admin.sedot-tinja.update-status');
+				Route::resource('admin/sedot-tinja', SedotTinjaAdminController::class, ['as' => 'admin']);
+				Route::get('/{sedotTinja}/print', [SedotTinjaAdminController::class, 'print'])
+					->name('admin.sedot-tinja.print');
+				Route::get('/{sedotTinja}', [SedotTinjaAdminController::class, 'show'])
+					->name('admin.sedot-tinja.show');
+			});
+
+		});
+
+			// /**
+			//  * Cetak Surat sedot tinja
+			//  */
+			// Route::prefix('admin/sedot-tinja')->middleware(['auth'])->group(function () {
+			// 	Route::get('/{sedotTinja}/print-surat-jalan', [SedotTinjaAdminController::class, 'printSuratJalan'])
+			// 		->name('admin.sedot-tinja.print.surat-jalan');
+
+			// 	Route::get('/{sedotTinja}/print-surat-pernyataan', [SedotTinjaAdminController::class, 'printSuratPernyataan'])
+			// 		->name('admin.sedot-tinja.print.surat-pernyataan');
+
+			// 	Route::get('/{sedotTinja}/print-surat-pesanan', [SedotTinjaAdminController::class, 'printSuratPesanan'])
+			// 		->name('admin.sedot-tinja.print.surat-pesanan');
+			// });
 
 	/**
 	 * Logout
@@ -684,4 +788,3 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 	Route::post('/logout', [LoginAdminController::class, 'logout'])
 		->name('admin.logout');
 });
-
