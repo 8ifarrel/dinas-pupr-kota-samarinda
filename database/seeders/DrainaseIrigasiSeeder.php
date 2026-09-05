@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -12,12 +13,37 @@ class DrainaseIrigasiSeeder extends Seeder
 {
     public function run()
     {
+        // ------------------------------------------------------------------
+        // 1. BERSIHKAN FILE GAMBAR LAMA DI STORAGE
+        // ------------------------------------------------------------------
+        Storage::deleteDirectory('public/drainase-irigasi');
+
+        // ------------------------------------------------------------------
+        // 2. KOSONGKAN TABEL (TRUNCATE) & RESET AUTO-INCREMENT ID
+        // ------------------------------------------------------------------
+        Schema::disableForeignKeyConstraints();
+
+        DB::table('drainase_irigasi_laporan_tindak_lanjut_foto')->truncate();
+        DB::table('drainase_irigasi_laporan_tindak_lanjut')->truncate();
+        DB::table('drainasei_irigasi_laporan_foto')->truncate();
+        DB::table('drainase_irigasi_laporan')->truncate();
+        DB::table('drainase_irigasi_pelapor')->truncate();
+
+        Schema::enableForeignKeyConstraints();
+
+        // ------------------------------------------------------------------
+        // 3. GENERATE DATA BARU
+        // ------------------------------------------------------------------
+
+        $kecamatanIds = DB::table('kecamatan')->pluck('id')->toArray();
+        $kelurahanIds = DB::table('kelurahan')->pluck('id')->toArray();
+
         // Seeder Pelapor
         $pelaporIds = [];
         for ($i = 1; $i <= 28; $i++) {
             $pelaporIds[] = DB::table('drainase_irigasi_pelapor')->insertGetId([
                 'nama_lengkap' => 'Pelapor ' . $i,
-                'pekerjaan' => 'Pekerjaan ' . $i,
+                'kelurahan_asal_id' => !empty($kelurahanIds) ? $kelurahanIds[array_rand($kelurahanIds)] : null,
                 'alamat' => 'Alamat Pelapor ' . $i,
                 'nomor_telepon' => '0812345678' . $i,
                 'created_at' => now(),
@@ -26,19 +52,17 @@ class DrainaseIrigasiSeeder extends Seeder
         }
 
         // Seeder Laporan (satu laporan untuk satu pelapor)
-        $kecamatanIds = DB::table('kecamatan')->pluck('id')->toArray();
-        $kelurahanIds = DB::table('kelurahan')->pluck('id')->toArray();
         $laporanIds = [];
         foreach ($pelaporIds as $i => $pelaporId) {
             $laporanIds[] = DB::table('drainase_irigasi_laporan')->insertGetId([
                 'pelapor_id' => $pelaporId,
-                'nama_jalan' => 'Jalan Laporan ' . ($i + 1), // sebelumnya 'alamat'
-                'kecamatan_id' => $kecamatanIds[array_rand($kecamatanIds)],
-                'kelurahan_id' => $kelurahanIds[array_rand($kelurahanIds)],
+                'nama_jalan' => 'Jalan Laporan ' . ($i + 1),
+                'kecamatan_id' => !empty($kecamatanIds) ? $kecamatanIds[array_rand($kecamatanIds)] : null,
+                'kelurahan_id' => !empty($kelurahanIds) ? $kelurahanIds[array_rand($kelurahanIds)] : null,
                 'longitude' => mt_rand(1170000000, 1172000000) / 10000000,
                 'latitude' => mt_rand(-1000000, 1000000) / 100000,
-                'detail_lokasi' => 'Detail lokasi laporan ' . ($i + 1), // field baru
-                'deskripsi_pengaduan' => 'Deskripsi pengaduan laporan ke-' . ($i + 1), // sebelumnya 'deskripsi'
+                'detail_lokasi' => 'Detail lokasi laporan ' . ($i + 1),
+                'deskripsi_pengaduan' => 'Deskripsi pengaduan laporan ke-' . ($i + 1),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -80,23 +104,30 @@ class DrainaseIrigasiSeeder extends Seeder
         $jenisList = ["darurat", "biasa", "rutin"];
 
         foreach ($laporanIds as $laporanId) {
-            // Random sampai status keberapa, minimal 1 (pending)
             $maxStatus = rand(1, count($statusList));
             $tindakLanjutIds = [];
+
+            // Jenis penanganan berlaku sama untuk SELURUH tahap dalam satu laporan
+            // (mengikuti perilaku aplikasi yang menyinkronkan jenis ke semua tahap).
+            // "belum_diklasifikasikan" hanya untuk laporan yang masih di tahap
+            // "pending" (Menunggu Verifikasi); begitu maju ke tahap berikutnya,
+            // laporan pasti sudah diklasifikasikan.
+            $jenisLaporan = $maxStatus === 1
+                ? 'belum_diklasifikasikan'
+                : $jenisList[array_rand($jenisList)];
+
             for ($s = 0; $s < $maxStatus; $s++) {
                 $status = $statusList[$s];
                 if ($status === "pending") {
-                    $jenis = 'belum_diklasifikasikan';
                     $deskripsi = 'Laporan telah masuk. Mohon menunggu proses lebih lanjut';
                 } else {
-                    $jenis = $jenisList[array_rand($jenisList)];
                     $deskripsi = "Tindak lanjut status {$status} laporan {$laporanId}";
                 }
                 $tindakLanjutId = DB::table('drainase_irigasi_laporan_tindak_lanjut')->insertGetId([
                     'laporan_id' => $laporanId,
                     'status' => $status,
                     'deskripsi' => $deskripsi,
-                    'jenis' => $jenis,
+                    'jenis' => $jenisLaporan,
                     'created_at' => now()->addMinutes($s),
                     'updated_at' => now()->addMinutes($s),
                 ]);

@@ -6,11 +6,11 @@
 @section('document.body')
 
 
-  <div class="px-6 pb-10 md:pb-12 pt-6 flex justify-center">
-    <div>
+  <div class="px-6 pb-10 md:pb-12 pt-6">
+    <div class="w-full">
       <!-- Header Banner -->
-      <div class="pt-6 pb-6">
-        <div class="container mx-auto">
+      <div class="pb-6">
+        <div>
           <div class="space-y-4">
             <!-- Mobile-friendly breadcrumbs with responsive design -->
             <nav aria-label="Breadcrumb">
@@ -106,7 +106,7 @@
       </div>
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- Left Panel: Search Form -->
-        <div class="lg:w-96 flex-shrink-0 space-y-6 lg:order-1">
+        <div class="lg:w-[345px] flex-shrink-0 space-y-6 lg:order-1">
           <!-- Search Form - Accordion style on mobile -->
           <div>
             <p class="text-end text-sm text-gray-600 mr-1 mb-0.5 lg:hidden">Tekan untuk membuka</p>
@@ -272,9 +272,9 @@
         </div>
 
         <!-- Right Panel: Results -->
-        <div class="flex-1 flex flex-col gap-6 lg:order-2 w-fit ">
-          <div class="bg-white rounded-lg shadow-lg border overflow-hidden w-fit">
-            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between w-fit">
+        <div class="flex-1 flex flex-col gap-6 lg:order-2 min-w-0" style="min-width: 0">
+          <div class="bg-white rounded-lg shadow-lg border overflow-hidden">
+            <div class="px-5 py-3 border-b border-gray-200 flex items-center justify-between">
               <h2 class="text-lg font-medium text-gray-900">Daftar Pengaduan</h2>
               <div class="flex items-center">
                 <div class="ml-2">
@@ -303,32 +303,38 @@
               </div>
             </div>
 
+            <!-- Scrollbar atas: sinkron dengan scroll tabel di bawah -->
+            <div id="tabel-scroll-atas" class="hidden md:block overflow-x-auto overflow-y-hidden border-b border-gray-200"
+              aria-hidden="true">
+              <div id="tabel-scroll-atas-inner" class="h-px"></div>
+            </div>
+
             <!-- Table for larger screens (hidden on mobile) -->
-            <div class="hidden md:block">
+            <div id="tabel-scroll-bawah" class="hidden md:block overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
                     <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider text-nowrap">
-                      No. Pengaduan
+                      class="pl-3 pr-1.5 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider text-nowrap">
+                      No.
                     </th>
                     <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Lokasi
                     </th>
                     <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Waktu Masuk
                     </th>
                     <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
                     <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Jenis
                     </th>
-                    <th scope="col" class="relative px-6 py-3">
+                    <th scope="col" class="relative pl-1.5 pr-3 py-2 w-px whitespace-nowrap">
                       <span class="sr-only">Detail</span>
                     </th>
                   </tr>
@@ -336,10 +342,10 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                   @forelse($laporan as $item)
                     <tr class="hover:bg-gray-50">
-                      <td class="px-6 py-4 whitespace-nowrap">
+                      <td class="pl-3 pr-1.5 py-2 whitespace-nowrap text-center">
                         <div class="text-sm font-medium text-gray-900">{{ $item->id }}</div>
                       </td>
-                      <td class="px-6 py-4">
+                      <td class="px-1.5 py-2">
                         <div class="text-sm text-gray-900">
                           {{ $item->nama_jalan }}
                           <br>
@@ -350,13 +356,13 @@
                           </a>
                         </div>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
+                      <td class="px-1.5 py-2 whitespace-nowrap">
                         <div class="text-sm text-gray-500">
                           {{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y') }}<br>
                           ({{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('H.i') }} WITA)
                         </div>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
+                      <td class="px-1.5 py-2 whitespace-nowrap">
                         <span
                           class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                           {{ $item->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
@@ -375,7 +381,7 @@
                           {{ $item->status === 'selesai' ? 'Selesai' : '' }}
                         </span>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
+                      <td class="px-1.5 py-2 whitespace-nowrap">
                         <span
                           class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                           {{ $item->jenis === 'belum_diklasifikasikan' ? 'bg-gray-100 text-gray-800' : '' }}
@@ -388,7 +394,7 @@
                           {{ $item->jenis === 'rutin' ? 'Rutin' : '' }}
                         </span>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td class="pl-1.5 pr-3 py-2 w-px whitespace-nowrap text-right text-sm font-medium">
                         <a href="{{ route('guest.drainase-irigasi.pengaduan.show', $item->id) }}"
                           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition">
                           <span>Lihat Detail & Foto</span>
@@ -403,7 +409,7 @@
                     </tr>
                   @empty
                     <tr>
-                      <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                      <td colspan="6" class="px-1.5 py-2 text-center text-gray-500">
                         Tidak ada data pengaduan yang ditemukan.
                       </td>
                     </tr>
@@ -741,5 +747,39 @@
         });
       }
     });
+  </script>
+
+  <script>
+    // Scrollbar atas tabel yang disinkronkan dengan scroll tabel di bawahnya
+    (function() {
+      const atas = document.getElementById('tabel-scroll-atas');
+      const atasInner = document.getElementById('tabel-scroll-atas-inner');
+      const bawah = document.getElementById('tabel-scroll-bawah');
+      if (!atas || !atasInner || !bawah) return;
+
+      function syncLebar() {
+        atasInner.style.width = bawah.scrollWidth + 'px';
+        // Sembunyikan scrollbar atas jika tabel tidak overflow
+        atas.style.display = bawah.scrollWidth > bawah.clientWidth ? '' : 'none';
+      }
+
+      let lock = false;
+      atas.addEventListener('scroll', function() {
+        if (lock) return;
+        lock = true;
+        bawah.scrollLeft = atas.scrollLeft;
+        lock = false;
+      });
+      bawah.addEventListener('scroll', function() {
+        if (lock) return;
+        lock = true;
+        atas.scrollLeft = bawah.scrollLeft;
+        lock = false;
+      });
+
+      syncLebar();
+      window.addEventListener('load', syncLebar);
+      window.addEventListener('resize', syncLebar);
+    })();
   </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DrainaseIrigasiLaporan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DrainaseIrigasiPetaSebaranGuestController extends Controller
@@ -20,12 +21,16 @@ class DrainaseIrigasiPetaSebaranGuestController extends Controller
             ->select(DB::raw('MAX(id) as id'))
             ->groupBy('laporan_id');
 
+        // Setiap akun kelurahan hanya melihat laporan di kelurahannya.
+        $kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+
         // Query laporan dengan status & jenis terbaru
         $laporan = DrainaseIrigasiLaporan::with([
                 'kecamatan', 'kelurahan', 'tindakLanjut' => function($q) {
                     $q->orderBy('created_at', 'desc');
                 }
             ])
+            ->when($kelurahanId, fn($q) => $q->where('drainase_irigasi_laporan.kelurahan_id', $kelurahanId))
             ->leftJoin('drainase_irigasi_laporan_tindak_lanjut as tl', function ($join) use ($latestTindakLanjutIds) {
                 $join->on('tl.laporan_id', '=', 'drainase_irigasi_laporan.id')
                     ->whereIn('tl.id', $latestTindakLanjutIds);

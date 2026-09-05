@@ -815,7 +815,7 @@
             <div id="status-filter-checkboxes">
               ${statusList.map(s => `
                             <label class="status-label" style="color:${statusColors[s] || '#333'}">
-                              <input type="checkbox" class="status-checkbox" value="${s}" ${s !== 'pending' && s !== 'selesai' ? 'checked' : ''} />
+                              <input type="checkbox" class="status-checkbox" value="${s}" ${s !== 'selesai' ? 'checked' : ''} />
                               ${statusLabels[s] || s}
                             </label>
                           `).join('')}
@@ -888,9 +888,9 @@
     let currentJenisArr = [];
     let currentSearch = "";
 
-    // Initialize filter arrays with all values except pending and selesai
+    // Initialize filter arrays with all values except selesai
     statusList.forEach(status => {
-      if (status !== 'pending' && status !== 'selesai') {
+      if (status !== 'selesai') {
         currentStatusArr.push(status);
       }
     });
@@ -1005,15 +1005,15 @@
 
       // Reset filter status
       statusClearBtn.addEventListener('click', function() {
-        // Reset checkboxes to default state (all checked except pending and selesai)
+        // Reset checkboxes to default state (all checked except selesai)
         statusDropdown.querySelectorAll('.status-checkbox').forEach(cb => {
-          cb.checked = cb.value !== 'pending' && cb.value !== 'selesai';
+          cb.checked = cb.value !== 'selesai';
         });
-        
+
         // Reset currentStatusArr to default state
         currentStatusArr = [];
         statusList.forEach(status => {
-          if (status !== 'pending' && status !== 'selesai') {
+          if (status !== 'selesai') {
             currentStatusArr.push(status);
           }
         });

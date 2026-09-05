@@ -6,6 +6,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 use App\Http\Middleware\ValidateSignedAccess;
+use App\Http\Middleware\AuthenticateKelurahan;
+use App\Http\Middleware\RedirectIfAuthenticatedKelurahan;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,6 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Register our middleware with a generic name
         $middleware->alias([
             'validate.signed.access' => ValidateSignedAccess::class,
+            'auth.kelurahan' => AuthenticateKelurahan::class,
+            'guest.kelurahan' => RedirectIfAuthenticatedKelurahan::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

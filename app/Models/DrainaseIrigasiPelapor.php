@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\DrainaseIrigasiLaporan;
+use App\Models\Kelurahan;
 use App\Models\SKM;
 
 class DrainaseIrigasiPelapor extends Model
@@ -17,7 +18,7 @@ class DrainaseIrigasiPelapor extends Model
 
     protected $fillable = [
         'nama_lengkap',
-        'pekerjaan',
+        'kelurahan_asal_id',
         'alamat',
         'nomor_telepon',
         'skm_id',
@@ -26,6 +27,11 @@ class DrainaseIrigasiPelapor extends Model
     public function laporan(): HasOne
     {
         return $this->hasOne(DrainaseIrigasiLaporan::class, 'pelapor_id');
+    }
+
+    public function kelurahanAsal(): BelongsTo
+    {
+        return $this->belongsTo(Kelurahan::class, 'kelurahan_asal_id');
     }
 
     public function skm(): BelongsTo

@@ -16,6 +16,8 @@ use App\Models\DrainaseIrigasiLaporanTindakLanjut;
 use App\Models\SKM;
 use Spatie\Browsershot\Browsershot;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\URL;
@@ -32,16 +34,17 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 		$page_subtitle = "Layanan Umum";
 		$page_title = "Buat Laporan Hantu Banyu";
 
-		$kecamatan = Kecamatan::orderBy('nama')->get();
-		$kelurahan = Kelurahan::orderBy('nama')->get();
+		// Kecamatan & kelurahan dikunci ke wilayah akun kelurahan yang login.
+		$akun = Auth::guard('kelurahan')->user();
+		$akun->loadMissing('kelurahan.kecamatan');
 
 		return view('guest.pages.drainase-irigasi.pengaduan.create', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
 			'page_subtitle' => $page_subtitle,
 			'page_context' => $this->page_context,
-			'kecamatan' => $kecamatan,
-			'kelurahan' => $kelurahan,
+			'akunKelurahan' => $akun->kelurahan,
+			'akunKecamatan' => optional($akun->kelurahan)->kecamatan,
 		]);
 	}
 
@@ -49,7 +52,6 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 	{
 		$messages = [
 			'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-			'pekerjaan.required' => 'Pekerjaan wajib diisi.',
 			'alamat.required' => 'Alamat wajib diisi.',
 			'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
 			'nomor_telepon.regex' => 'Nomor telepon harus diawali 08 dan terdiri dari 10-15 digit.',
@@ -74,7 +76,6 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 
 		$validated = $request->validate([
 			'nama_lengkap' => 'required|string|max:100',
-			'pekerjaan' => 'required|string|max:50',
 			'alamat' => 'required|string',
 			'nomor_telepon' => 'required|regex:/^08[0-9]{8,13}$/',
 			'kecamatan_id' => 'required|exists:kecamatan,id',
@@ -86,16 +87,59 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 			'deskripsi_pengaduan' => 'required|string',
 			'laporan__foto_input' => 'required',
 			'laporan__foto_input.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-			'skm__rating' => 'required|integer|min:1|max:4',
-			'skm__kritik' => 'required|string',
-			'skm__saran' => 'required|string',
+			'skm__rating' => 'nullable|integer|min:1|max:4',
+			'skm__kritik' => 'nullable|string',
+			'skm__saran' => 'nullable|string',
 			'bordered-checkbox' => 'required',
 		], $messages);
 
-		// Simpan pelapor
+		// ------------------------------------------------------------------
+		// Kunci wilayah: akun kelurahan hanya boleh melaporkan lokasi di
+		// dalam kelurahannya sendiri.
+		// ------------------------------------------------------------------
+		$akun = Auth::guard('kelurahan')->user();
+		$akun->loadMissing('kelurahan.kecamatan');
+		$kelAkun = $akun->kelurahan;
+
+		if (!$kelAkun) {
+			return back()->withInput()
+				->withErrors(['kelurahan_id' => 'Akun Anda belum terhubung ke kelurahan manapun. Hubungi admin.']);
+		}
+
+		// Abaikan pilihan dari form, paksa ke wilayah akun.
+		$validated['kelurahan_id'] = $kelAkun->id;
+		$validated['kecamatan_id'] = $kelAkun->kecamatan_id;
+
+		// Verifikasi titik koordinat lewat reverse-geocode.
+		$alamatGeo = $this->reverseGeocodeAlamat($validated['latitude'], $validated['longitude']);
+		if ($alamatGeo === null) {
+			return back()->withInput()->withErrors([
+				'koordinat' => 'Lokasi tidak dapat diverifikasi saat ini. Coba beberapa saat lagi atau periksa koneksi.',
+			]);
+		}
+
+		$kelGeo = $alamatGeo['village'] ?? $alamatGeo['neighbourhood'] ?? $alamatGeo['hamlet'] ?? '';
+		$kecGeo = $alamatGeo['city_district'] ?? $alamatGeo['municipality'] ?? $alamatGeo['county'] ?? $alamatGeo['suburb'] ?? '';
+
+		if ($kelGeo !== '') {
+			$lokasiValid = $this->namaWilayahCocok($kelGeo, $kelAkun->nama);
+		} elseif ($kecGeo !== '') {
+			$lokasiValid = $this->namaWilayahCocok($kecGeo, optional($kelAkun->kecamatan)->nama ?? '');
+		} else {
+			$lokasiValid = false;
+		}
+
+		if (!$lokasiValid) {
+			return back()->withInput()->withErrors([
+				'koordinat' => 'Titik lokasi berada di luar Kelurahan ' . $kelAkun->nama
+					. '. Anda hanya dapat melaporkan lokasi yang berada di dalam kelurahan Anda.',
+			]);
+		}
+
+		// Simpan pelapor (asal kelurahan mengikuti akun kelurahan yang login)
 		$pelapor = DrainaseIrigasiPelapor::create([
 			'nama_lengkap' => $validated['nama_lengkap'],
-			'pekerjaan' => $validated['pekerjaan'],
+			'kelurahan_asal_id' => $kelAkun->id,
 			'alamat' => $validated['alamat'],
 			'nomor_telepon' => $validated['nomor_telepon'],
 		]);
@@ -140,12 +184,14 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 			}
 		}
 
-		// Simpan SKM
+		// Simpan SKM (rating, kritik, saran bersifat opsional)
+		$skmKritik = trim((string) ($validated['skm__kritik'] ?? '')) ?: null;
+		$skmSaran = trim((string) ($validated['skm__saran'] ?? '')) ?: null;
 		$skm = SKM::create([
-			'nilai' => $validated['skm__rating'],
+			'nilai' => $validated['skm__rating'] ?? null,
 			'ip_address' => $request->ip(),
-			'kritik' => $validated['skm__kritik'],
-			'saran' => $validated['skm__saran'],
+			'kritik' => $skmKritik,
+			'saran' => $skmSaran,
 			'layanan_id' => $this->layanan_id,
 		]);
 		// Update pelapor dengan skm_id
@@ -174,9 +220,13 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 			->select(DB::raw('MAX(id) as id'))
 			->groupBy('laporan_id');
 
+		// Setiap akun kelurahan hanya melihat laporan di kelurahannya.
+		$kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+
 		// Query to get all reports with their latest status
 		$query = DrainaseIrigasiLaporan::with(['pelapor', 'kecamatan', 'kelurahan'])
 			->withTrashed()
+			->when($kelurahanId, fn($q) => $q->where('drainase_irigasi_laporan.kelurahan_id', $kelurahanId))
 			->leftJoin('drainase_irigasi_laporan_tindak_lanjut as tl', function ($join) use ($latestTindakLanjutIds) {
 				$join->on('tl.laporan_id', '=', 'drainase_irigasi_laporan.id')
 					->whereIn('tl.id', $latestTindakLanjutIds);
@@ -244,6 +294,10 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 			'tindakLanjut.foto'
 		])->withTrashed()->findOrFail($id);
 
+		// Akun kelurahan hanya boleh membuka laporan di kelurahannya.
+		$kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+		abort_unless(!$kelurahanId || (int) $laporan->kelurahan_id === (int) $kelurahanId, 404);
+
 		$page_title = "Detail Pengaduan Hantu Banyu";
 		$page_subtitle = "Detail Laporan Hantu Banyu";
 		$meta_description = "Detail laporan pengaduan Hantu Banyu Kota Samarinda";
@@ -261,7 +315,7 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 	{
 		// Fetch the report with related data
 		$laporan = DrainaseIrigasiLaporan::with([
-			'pelapor',
+			'pelapor.kelurahanAsal',
 			'kecamatan',
 			'kelurahan',
 			'foto',
@@ -277,12 +331,16 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 		// Generate the report URL for QR code
 		$show_url = route('guest.drainase-irigasi.pengaduan.show', ['id' => $laporan->id]);
 
+		// Asal kelurahan pelapor (mengikuti akun kelurahan saat laporan dibuat)
+		$kelurahan_akun = optional($laporan->pelapor->kelurahanAsal)->nama ?? '-';
+
 		// Render the PDF view
 		$html = view('guest.pages.drainase-irigasi.pengaduan.pdf', [
 			'laporan' => $laporan,
 			'tanggal_laporan' => $tanggal_laporan,
 			'waktu_laporan' => $waktu_laporan,
-			'show_url' => $show_url
+			'show_url' => $show_url,
+			'kelurahan_akun' => $kelurahan_akun,
 		])->render();
 
 		// Generate PDF filename
@@ -359,5 +417,91 @@ class DrainaseIrigasiPengaduanGuestController extends Controller
 			'page_subtitle' => $page_subtitle,
 			'page_context' => $this->page_context,
 		]);
+	}
+
+	// ------------------------------------------------------------------
+	// Helper wilayah
+	// ------------------------------------------------------------------
+
+	/**
+	 * Reverse-geocode koordinat -> array "address" dari Nominatim, atau null bila gagal.
+	 */
+	private function reverseGeocodeAlamat($lat, $lon): ?array
+	{
+		try {
+			$res = Http::withHeaders([
+				'User-Agent' => 'dinas-pupr-kota-samarinda/1.0 (hantu-banyu)',
+			])->timeout(8)->get('https://nominatim.openstreetmap.org/reverse', [
+				'format' => 'jsonv2',
+				'lat' => $lat,
+				'lon' => $lon,
+				'addressdetails' => 1,
+				'accept-language' => 'id',
+			]);
+
+			if (!$res->ok()) {
+				return null;
+			}
+
+			$addr = $res->json('address');
+
+			return is_array($addr) ? $addr : null;
+		} catch (\Throwable $e) {
+			Log::warning('Hantu Banyu reverse-geocode gagal: ' . $e->getMessage());
+			return null;
+		}
+	}
+
+	/**
+	 * Bandingkan nama wilayah dari geocoder dengan nama wilayah di basis data.
+	 * Toleran terhadap variasi penulisan (mis. "Sei/Sungai Dama", "Simpang Tiga (Loa Janan Ilir)").
+	 */
+	private function namaWilayahCocok(string $dariGeocoder, string $dariDb): bool
+	{
+		if ($dariGeocoder === '' || $dariDb === '') {
+			return false;
+		}
+
+		$a = $this->variasiNama($dariGeocoder);
+		$b = $this->variasiNama($dariDb);
+
+		foreach ($a as $x) {
+			foreach ($b as $y) {
+				if ($x === $y) {
+					return true;
+				}
+				if (strlen($x) >= 4 && strlen($y) >= 4 && (str_contains($x, $y) || str_contains($y, $x))) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Pecah sebuah nama wilayah menjadi beberapa varian ternormalisasi
+	 * (huruf kecil, tanpa spasi/tanda baca, "sei" -> "sungai").
+	 *
+	 * @return array<int,string>
+	 */
+	private function variasiNama(string $nama): array
+	{
+		$nama = strtolower(trim($nama));
+		$potongan = preg_split('/[\/()]+/', $nama) ?: [];
+		$potongan[] = $nama;
+
+		$hasil = [];
+		foreach ($potongan as $p) {
+			$p = trim($p);
+			$p = preg_replace('/\bsei\b/', 'sungai', $p);
+			$p = preg_replace('/^(kelurahan|desa|kecamatan)\s+/', '', $p);
+			$p = preg_replace('/[^a-z0-9]+/', '', $p);
+			if ($p !== '') {
+				$hasil[$p] = true;
+			}
+		}
+
+		return array_keys($hasil);
 	}
 }

@@ -346,7 +346,7 @@
             <div>
               <h3 class="font-medium text-gray-900 flex items-center gap-2 mb-4">
                 <i class="fa-solid fa-images text-blue-600"></i>
-                Foto Laporan
+                Foto Pengaduan
                 <span class="text-sm font-normal text-gray-500 ml-auto">
                   <i class="fa-solid fa-arrow-pointer"></i>
                   Klik untuk memperbesar
@@ -552,17 +552,21 @@
 @endsection
 
 @section('document.end')
+  {{-- lightbox2 butuh jQuery sebagai global; layout guest tidak memuatnya, jadi muat di sini --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Configure lightbox
-      lightbox.option({
-        'resizeDuration': 200,
-        'wrapAround': true,
-        'albumLabel': "Foto %1 dari %2",
-        'disableScrolling': true
-      });
+      if (window.lightbox) {
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true,
+          'albumLabel': "Foto %1 dari %2",
+          'disableScrolling': true
+        });
+      }
 
       // Initialize Swiper
       var swiper = new Swiper(".mySwiper", {

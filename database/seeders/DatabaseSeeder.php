@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
 			KecamatanSeeder::class,
 			KelurahanSeeder::class,
 
+			// Seeder akun kelurahan (login fitur Drainase dan Irigasi)
+			UsersKelurahanSeeder::class,
+
 			// Seeder berita dan kategori
 			BeritaKategoriSeeder::class,
 			BeritaSeeder::class,

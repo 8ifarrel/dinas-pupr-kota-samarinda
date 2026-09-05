@@ -221,16 +221,6 @@
                 <p class="text-xs text-red-600 mt-1 hidden" id="error_nama_lengkap"></p>
               </div>
               <div class="space-y-1.5">
-                <label for="pelapor__pekerjaan"
-                  class="block text-sm font-medium text-gray-900 required">Pekerjaan</label>
-                <input type="text" id="pelapor__pekerjaan" name="pekerjaan"
-                  class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Contoh: Pelajar/Mahasiswa" required>
-                <p id="pelapor__pekerjaan-explanation" class="text-sm text-gray-500 dark:text-gray-400">Masukkan
-                  pekerjaan Anda</p>
-                <p class="text-xs text-red-600 mt-1 hidden" id="error_pekerjaan"></p>
-              </div>
-              <div class="space-y-1.5">
                 <label for="pelapor__alamat" class="block text-sm font-medium text-gray-900 required">Alamat Tempat
                   Tinggal</label>
                 <input type="text" id="pelapor__alamat" name="alamat"
@@ -377,21 +367,27 @@
                     </p>
                   </div>
 
+                  <p class="text-sm text-gray-600 flex items-start gap-1.5">
+                    <i class="fa-solid fa-lock text-gray-500 mt-0.5"></i>
+                    <span>
+                      Kecamatan dan kelurahan terkunci sesuai akun Anda. Anda hanya dapat melaporkan lokasi
+                      yang berada di dalam <b>Kelurahan {{ optional($akunKelurahan)->nama ?? '-' }}</b>.
+                    </span>
+                  </p>
+
                   <div class="flex flex-col md:flex-row gap-4">
                     <div class="space-y-1 flex-1">
                       <label for="laporan__kecamatan" class="block text-sm font-medium text-gray-900 required">
                         Kecamatan
                       </label>
-                      <select id="laporan__kecamatan" name="kecamatan_id"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required>
-                        <option selected disabled>Pilih kecamatan</option>
-                        @foreach ($kecamatan as $kec)
-                          <option value="{{ $kec->id }}">{{ $kec->nama }}</option>
-                        @endforeach
+                      <select id="laporan__kecamatan"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
+                        disabled>
+                        <option selected>{{ optional($akunKecamatan)->nama ?? '-' }}</option>
                       </select>
+                      <input type="hidden" name="kecamatan_id" value="{{ optional($akunKecamatan)->id }}">
                       <p id="laporan__kecamatan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
-                        Pilih kecamatan lokasi kerusakan.
+                        Terkunci sesuai akun kelurahan Anda.
                       </p>
                       <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
                     </div>
@@ -400,18 +396,14 @@
                       <label for="laporan__kelurahan" class="block text-sm font-medium text-gray-900 required">
                         Kelurahan
                       </label>
-                      <select id="laporan__kelurahan" name="kelurahan_id"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:bg-gray-100"
-                        required disabled>
-                        <option selected disabled>Pilih kecamatan terlebih dahulu</option>
-                        @foreach ($kelurahan as $kel)
-                          <option value="{{ $kel->id }}" data-kecamatan="{{ $kel->kecamatan_id }}">
-                            {{ $kel->nama }}
-                          </option>
-                        @endforeach
+                      <select id="laporan__kelurahan"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
+                        disabled>
+                        <option selected>{{ optional($akunKelurahan)->nama ?? '-' }}</option>
                       </select>
+                      <input type="hidden" name="kelurahan_id" value="{{ optional($akunKelurahan)->id }}">
                       <p id="laporan__kelurahan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
-                        Pilih kelurahan lokasi kerusakan.
+                        Terkunci sesuai akun kelurahan Anda.
                       </p>
                       <p class="text-xs text-red-600 mt-1 hidden" id="error_kelurahan_id"></p>
                     </div>
@@ -522,7 +514,7 @@
 
               <div id="laporan__foto_group">
                 <label class="block text-sm font-medium text-gray-700 mb-1 required" for="laporan__foto_input[]">
-                  Foto Kerusakan
+                  Foto Pengaduan
                 </label>
 
                 <div id="laporan__foto_input_list" class="flex flex-row gap-2 overflow-x-auto">
@@ -625,10 +617,12 @@
               <hr>
             </div>
             <div class="space-y-1.5">
-              <p class="block text-sm font-medium text-gray-900 required">Rating</p>
+              <p class="block text-sm font-medium text-gray-900">Rating
+                <span class="text-gray-400 font-normal">(opsional)</span>
+              </p>
               <div class="flex">
                 <div class="flex items-center me-4">
-                  <input id="rating-1" type="radio" value="1" name="skm__rating"
+                  <input id="rating-1" type="radio" value="1" name="skm__rating" data-rating-opsional
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                   <label for="rating-1"
                     class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
@@ -636,7 +630,7 @@
                   </label>
                 </div>
                 <div class="flex items-center me-4">
-                  <input id="rating-2" type="radio" value="2" name="skm__rating"
+                  <input id="rating-2" type="radio" value="2" name="skm__rating" data-rating-opsional
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                   <label for="rating-2"
                     class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
@@ -644,7 +638,7 @@
                   </label>
                 </div>
                 <div class="flex items-center me-4">
-                  <input id="rating-3" type="radio" value="3" name="skm__rating"
+                  <input id="rating-3" type="radio" value="3" name="skm__rating" data-rating-opsional
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                   <label for="rating-3"
                     class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
@@ -652,7 +646,7 @@
                   </label>
                 </div>
                 <div class="flex items-center me-4">
-                  <input id="rating-4" type="radio" value="4" name="skm__rating"
+                  <input id="rating-4" type="radio" value="4" name="skm__rating" data-rating-opsional
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                   <label for="rating-4"
                     class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
@@ -666,24 +660,24 @@
               <p class="text-xs text-red-600 mt-1 hidden" id="error_skm__rating"></p>
             </div>
             <div class="space-y-1.5">
-              <label for="skm__kritik" class="block text-sm font-medium text-gray-900 required">
-                Kritik
+              <label for="skm__kritik" class="block text-sm font-medium text-gray-900">
+                Kritik <span class="text-gray-400 font-normal">(opsional)</span>
               </label>
               <textarea id="skm__kritik" name="skm__kritik"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Contoh: Tampilan aplikasi masih membingungkan" rows="2" required></textarea>
+                placeholder="Contoh: Tampilan aplikasi masih membingungkan" rows="2"></textarea>
               <p id="skm__kritik" class="text-sm text-gray-500 dark:text-gray-400">
                 Masukkan kritik terkait aplikasi layanan ini.
               </p>
               <p class="text-xs text-red-600 mt-1 hidden" id="error_skm__kritik"></p>
             </div>
             <div class="space-y-1.5">
-              <label for="skm__saran" class="block text-sm font-medium text-gray-900 required">
-                Saran
+              <label for="skm__saran" class="block text-sm font-medium text-gray-900">
+                Saran <span class="text-gray-400 font-normal">(opsional)</span>
               </label>
               <textarea id="skm__saran" name="skm__saran"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Contoh: Sediakan buku panduan untuk mengisi formulir ini" rows="2" required></textarea>
+                placeholder="Contoh: Sediakan buku panduan untuk mengisi formulir ini" rows="2"></textarea>
               <p id="skm__saran" class="text-sm text-gray-500 dark:text-gray-400">
                 Masukkan saran terkait aplikasi layanan ini.
               </p>
@@ -768,50 +762,60 @@
         });
       }
 
-      // Filter kelurahan sesuai kecamatan (tanpa API)
+      // Kecamatan & kelurahan dikunci ke wilayah akun kelurahan yang login.
+      // Tidak ada lagi filter dinamis kecamatan -> kelurahan di sisi klien.
+      const LOKASI_TERKUNCI = true;
       const kecSelect = document.getElementById('laporan__kecamatan');
       const kelSelect = document.getElementById('laporan__kelurahan');
       const namaJalanInput = document.getElementById('laporan__nama_jalan');
-      const kelOptions = Array.from(kelSelect.querySelectorAll('option[data-kecamatan]'));
 
-      // Inisialisasi: kelurahan dan nama jalan disabled
-      kelSelect.disabled = true;
-      kelSelect.classList.add('disabled:bg-gray-100');
-      kelSelect.innerHTML = '<option selected disabled>Pilih kecamatan terlebih dahulu</option>' +
-        kelOptions.map(opt => opt.outerHTML).join('');
-      namaJalanInput.disabled = true;
-      namaJalanInput.classList.add('disabled:bg-gray-100');
-      namaJalanInput.placeholder = 'Pilih kelurahan terlebih dahulu';
+      if (LOKASI_TERKUNCI) {
+        // Kelurahan sudah pasti terisi -> nama jalan boleh langsung diisi.
+        namaJalanInput.disabled = false;
+        namaJalanInput.classList.remove('disabled:bg-gray-100');
+        namaJalanInput.placeholder = 'Contoh: Insinyur Haji Juanda';
+      } else {
+        const kelOptions = Array.from(kelSelect.querySelectorAll('option[data-kecamatan]'));
 
-      kecSelect.addEventListener('change', function() {
-        const kecId = this.value;
-        kelSelect.innerHTML = '<option selected disabled>Pilih kelurahan</option>';
-        kelOptions.forEach(opt => {
-          if (opt.getAttribute('data-kecamatan') === kecId) {
-            kelSelect.appendChild(opt.cloneNode(true));
-          }
-        });
-        kelSelect.disabled = false;
-        kelSelect.classList.remove('disabled:bg-gray-100');
-        // Reset nama jalan
-        namaJalanInput.value = '';
+        // Inisialisasi: kelurahan dan nama jalan disabled
+        kelSelect.disabled = true;
+        kelSelect.classList.add('disabled:bg-gray-100');
+        kelSelect.innerHTML = '<option selected disabled>Pilih kecamatan terlebih dahulu</option>' +
+          kelOptions.map(opt => opt.outerHTML).join('');
         namaJalanInput.disabled = true;
         namaJalanInput.classList.add('disabled:bg-gray-100');
         namaJalanInput.placeholder = 'Pilih kelurahan terlebih dahulu';
-      });
 
-      kelSelect.addEventListener('change', function() {
-        if (kelSelect.value) {
-          namaJalanInput.disabled = false;
-          namaJalanInput.classList.remove('disabled:bg-gray-100');
-          namaJalanInput.placeholder = 'Contoh: Insinyur Haji Juanda';
-        } else {
+        kecSelect.addEventListener('change', function() {
+          const kecId = this.value;
+          kelSelect.innerHTML = '<option selected disabled>Pilih kelurahan</option>';
+          kelOptions.forEach(opt => {
+            if (opt.getAttribute('data-kecamatan') === kecId) {
+              kelSelect.appendChild(opt.cloneNode(true));
+            }
+          });
+          kelSelect.disabled = false;
+          kelSelect.classList.remove('disabled:bg-gray-100');
+          // Reset nama jalan
           namaJalanInput.value = '';
           namaJalanInput.disabled = true;
           namaJalanInput.classList.add('disabled:bg-gray-100');
           namaJalanInput.placeholder = 'Pilih kelurahan terlebih dahulu';
-        }
-      });
+        });
+
+        kelSelect.addEventListener('change', function() {
+          if (kelSelect.value) {
+            namaJalanInput.disabled = false;
+            namaJalanInput.classList.remove('disabled:bg-gray-100');
+            namaJalanInput.placeholder = 'Contoh: Insinyur Haji Juanda';
+          } else {
+            namaJalanInput.value = '';
+            namaJalanInput.disabled = true;
+            namaJalanInput.classList.add('disabled:bg-gray-100');
+            namaJalanInput.placeholder = 'Pilih kelurahan terlebih dahulu';
+          }
+        });
+      }
 
       // Nama jalan autocomplete langsung dari Overpass API OSM
       let jalanTimeout;
@@ -1091,6 +1095,7 @@
 
       // Helper: pilih kecamatan berdasarkan nama
       function selectKecamatanByName(name) {
+        if (LOKASI_TERKUNCI) return; // kecamatan sudah dikunci ke akun
         const kecSelect = document.getElementById('laporan__kecamatan');
         for (const opt of kecSelect.options) {
           if (opt.text.trim().toLowerCase() === name.trim().toLowerCase()) {
@@ -1102,6 +1107,7 @@
       }
       // Helper: pilih kelurahan berdasarkan nama
       function selectKelurahanByName(name) {
+        if (LOKASI_TERKUNCI) return; // kelurahan sudah dikunci ke akun
         const kelSelect = document.getElementById('laporan__kelurahan');
         for (const opt of kelSelect.options) {
           if (opt.text.trim().toLowerCase() === name.trim().toLowerCase()) {
@@ -1209,7 +1215,6 @@
         // Step 0: Data Diri
         if (stepIdx === 0) {
           const nama = document.getElementById('pelapor__nama_lengkap');
-          const pekerjaan = document.getElementById('pelapor__pekerjaan');
           const alamat = document.getElementById('pelapor__alamat');
           const telp = document.getElementById('pelapor__nomor_telepon');
           // Nama
@@ -1218,13 +1223,6 @@
             valid = false;
           } else {
             clearError(nama);
-          }
-          // Pekerjaan
-          if (!pekerjaan.value.trim()) {
-            showError(pekerjaan, 'Pekerjaan wajib diisi.');
-            valid = false;
-          } else {
-            clearError(pekerjaan);
           }
           // Alamat
           if (!alamat.value.trim()) {
@@ -1254,20 +1252,23 @@
           const detail = document.getElementById('laporan__detail_lokasi');
           const desk = document.getElementById('laporan__deskripsi');
 
-          // Kecamatan validation - improved messaging
-          if (!kec.value || kec.selectedIndex === 0) {
-            showError(kec, 'Kecamatan wajib dipilih.');
-            valid = false;
-          } else {
-            clearError(kec);
-          }
+          // Kecamatan & kelurahan dikunci ke akun -> tidak divalidasi di klien.
+          if (!LOKASI_TERKUNCI) {
+            // Kecamatan validation - improved messaging
+            if (!kec.value || kec.selectedIndex === 0) {
+              showError(kec, 'Kecamatan wajib dipilih.');
+              valid = false;
+            } else {
+              clearError(kec);
+            }
 
-          // Kelurahan validation - improved messaging
-          if (!kel.value || kel.selectedIndex === 0) {
-            showError(kel, 'Kelurahan wajib dipilih.');
-            valid = false;
-          } else {
-            clearError(kel);
+            // Kelurahan validation - improved messaging
+            if (!kel.value || kel.selectedIndex === 0) {
+              showError(kel, 'Kelurahan wajib dipilih.');
+              valid = false;
+            } else {
+              clearError(kel);
+            }
           }
 
           // Nama jalan
@@ -1344,48 +1345,23 @@
         }
         // Step 2: Konfirmasi
         if (stepIdx === 2) {
-          // Rating, kritik, saran, checkbox
-          const rating = document.querySelector('input[name="skm__rating"]:checked');
+          // Hanya pernyataan persetujuan yang wajib. Rating, kritik, dan saran opsional.
           const kritik = document.getElementById('skm__kritik');
           const saran = document.getElementById('skm__saran');
           const cek = document.getElementById('bordered-checkbox-2');
           let valid2 = true;
 
-          // Rating validation - show specific error
+          // Rating / kritik / saran bersifat opsional -> tidak divalidasi, cukup bersihkan sisa error.
           const ratingError = document.getElementById('error_skm__rating');
-          if (!rating) {
-            if (ratingError) {
-              ratingError.textContent = 'Silakan pilih salah satu rating.';
-              ratingError.classList.remove('hidden');
-              // Add red border to rating options container
-              const ratingContainer = document.querySelector('.flex.items-center.me-4').parentNode;
-              ratingContainer.classList.add('border', 'border-red-500', 'rounded-lg', 'p-2');
-            }
-            valid2 = false;
-            valid = false;
-          } else if (ratingError) {
+          if (ratingError) {
             ratingError.classList.add('hidden');
-            const ratingContainer = document.querySelector('.flex.items-center.me-4').parentNode;
-            ratingContainer.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2');
+            const ratingContainer = document.querySelector('.flex.items-center.me-4')?.parentNode;
+            if (ratingContainer) {
+              ratingContainer.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2');
+            }
           }
-
-          // Kritik validation - use existing showError/clearError functions
-          if (!kritik.value.trim()) {
-            showError(kritik, 'Kritik wajib diisi.');
-            valid2 = false;
-            valid = false;
-          } else {
-            clearError(kritik);
-          }
-
-          // Saran validation - use existing showError/clearError functions
-          if (!saran.value.trim()) {
-            showError(saran, 'Saran wajib diisi.');
-            valid2 = false;
-            valid = false;
-          } else {
-            clearError(saran);
-          }
+          clearError(kritik);
+          clearError(saran);
 
           // Checkbox validation
           const checkboxError = document.getElementById('error_bordered-checkbox');
@@ -1407,7 +1383,7 @@
 
           // Still show general alert if any validation fails
           if (!valid2) {
-            showAlert('alert-2', 'Mohon isi semua data pada langkah ini.');
+            showAlert('alert-2', 'Anda harus menyetujui pernyataan sebelum mengirim.');
           }
         }
         return valid;
@@ -1916,6 +1892,20 @@
           }
         });
       }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Rating bersifat opsional -> klik ulang pilihan yang sudah aktif untuk membatalkannya
+      document.querySelectorAll('input[data-rating-opsional]').forEach(function(radio) {
+        radio.addEventListener('mousedown', function() {
+          this.dataset.wasChecked = this.checked ? '1' : '';
+        });
+        radio.addEventListener('click', function() {
+          if (this.dataset.wasChecked === '1') {
+            this.checked = false;
+          }
+        });
+      });
     });
   </script>
 @endsection

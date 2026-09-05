@@ -204,9 +204,9 @@
           <td>{{ $laporan->pelapor->nama_lengkap }}</td>
         </tr>
         <tr>
-          <td>Pekerjaan</td>
+          <td>Asal Kelurahan</td>
           <td>:</td>
-          <td>{{ $laporan->pelapor->pekerjaan }}</td>
+          <td>{{ $kelurahan_akun ?? '-' }}</td>
         </tr>
         <tr>
           <td>Alamat</td>

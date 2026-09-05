@@ -85,8 +85,7 @@
       document.body.appendChild(downloadFrame);
 
       // Set the iframe source to the PDF route with signature preserved
-      downloadFrame.src =
-        '{{ URL::temporarySignedRoute('guest.drainase-irigasi.pengaduan.pdf', now()->addMinutes(30), ['id' => $laporan->id]) }}';
+      downloadFrame.src = @js(URL::temporarySignedRoute('guest.drainase-irigasi.pengaduan.pdf', now()->addMinutes(30), ['id' => $laporan->id]));
 
       // Remove iframe after a delay to ensure download starts
       setTimeout(() => {

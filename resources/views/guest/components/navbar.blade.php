@@ -24,7 +24,7 @@
       <img class="h-[40px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     </div>
 
-    <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
+    <div class="ms-auto lg:ms-0 flex lg:order-2 items-center gap-2 lg:gap-3 rtl:space-x-reverse">
       <a type="button" href="{{ route('guest.portal.index') }}"
         class="self-center text-brand-blue bg-brand-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-2 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Portal
