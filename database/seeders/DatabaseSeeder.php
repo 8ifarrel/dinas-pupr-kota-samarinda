@@ -17,60 +17,67 @@ class DatabaseSeeder extends Seeder
             StrukturOrganisasiSeeder::class,
             StrukturOrganisasiDiagramSeeder::class,
             StrukturOrganisasiSliderSeeder::class,
-            
+
             // Seeder kepala dinas
             KepalaDinasSeeder::class,
             KepalaDinasJenjangKarirSeeder::class,
             KepalaDinasRiwayatPendidikanSeeder::class,
-            
+
             // Seeder visi dan misi
             VisiSeeder::class,
             MisiSeeder::class,
             SejarahDinasPuprKotaSamarindaSeeder::class,
-            
+
             // Seeder lokasi (kecamatan dan kelurahan)
             KecamatanSeeder::class,
             KelurahanSeeder::class,
-            
+
+            // Seeder akun kelurahan (login fitur Drainase dan Irigasi)
+            UsersKelurahanSeeder::class,
+
             // Seeder berita dan kategori
             BeritaKategoriSeeder::class,
             BeritaSeeder::class,
             BeritaFotoTambahanSeeder::class,
-            
+
             // Seeder pengumuman
             PengumumanSeeder::class,
-            
+
             // Seeder PPID
             PpidPelaksanaKategoriSeeder::class,
             PpidPelaksanaSeeder::class,
-            
+
             // Seeder album dan foto kegiatan
             AlbumKegiatanSeeder::class,
             FotoKegiatanSeeder::class,
-            
+
             // Seeder slider
             SliderSeeder::class,
-            
+
             // Seeder partner
             PartnerSeeder::class,
-            
+
             // Seeder buku tamu
             BukuTamuSeeder::class,
-            
+
             // Seeder SKM (Survei Kepuasan Masyarakat)
+            LayananSeeder::class,
             SkmSeeder::class,
-            
+
             // Seeder users dan admin
             UsersSeeder::class,
-            
+
             // Seeder statistik pengunjung
             VisitorsSeeder::class,
             PageVisitsSeeder::class,
-            
+
             // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
             JalanPeduliStatusSeeder::class,
             JalanPeduliPelaporSeeder::class,
             JalanPeduliLaporanSeeder::class,
+
+            // Seeder Hantu Banyu (Drainase dan Irigasi)
+            DrainaseIrigasiSeeder::class,
         ]);
     }
 }

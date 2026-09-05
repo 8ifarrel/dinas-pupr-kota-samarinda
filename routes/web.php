@@ -10,6 +10,7 @@
 |
 */
 
+
 use App\Http\Controllers\Guest\DrainaseIrigasiGuestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\BlockSearchEngines;
@@ -41,6 +42,10 @@ use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
+use App\Http\Controllers\Guest\DrainaseIrigasiPengaduanGuestController;
+use App\Http\Controllers\Guest\DrainaseIrigasiPetaSebaranGuestController;
+use App\Http\Controllers\Guest\LoginKelurahanGuestController;
+use App\Http\Controllers\Guest\AkunKelurahanGuestController;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 
@@ -199,24 +204,6 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
 // });
 
 /**
- * Drainase Irigasi
- */
-
-// Route::prefix('drainase-irigasi')->group(function () {
-// 	Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
-// 		->name('guest.drainase-irigasi.index');
-
-// 	Route::get('/buat-laporan', [DrainaseIrigasiGuestController::class, 'create'])
-// 		->name('guest.drainase-irigasi.create');
-
-// 	Route::post('/kirim-laporan', [DrainaseIrigasiGuestController::class, 'store'])
-// 		->name('guest.drainase-irigasi.store');
-
-// 	Route::get('/lihat-laporan', [DrainaseIrigasiGuestController::class, 'show'])
-// 		->name('guest.drainase-irigasis.how');
-// });
-
-/**
  * Jalan Peduli Utama
  */
 use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
@@ -253,6 +240,66 @@ Route::prefix('jalan-peduli')->group(function () {
 	Route::get('/laporan/faq', [JalanPeduliFaqGuestController::class, 'index'])->name('faq');
 
 	Route::get('/statistik', [JalanPeduliStatistikLaporanGuestController::class, 'index'])->name('guest.jalan-peduli.statistik-laporan');
+});
+
+/**
+ * Drainase Irigasi (Hantu Banyu)
+ */
+Route::prefix('drainase-irigasi')->group(function () {
+	/**
+	 * Login Akun Kelurahan
+	 *
+	 * Seluruh fitur Drainase dan Irigasi (termasuk halaman beranda) hanya
+	 * dapat diakses setelah login menggunakan akun kelurahan.
+	 */
+	Route::middleware(['guest.kelurahan'])->group(function () {
+		Route::get('/login', [LoginKelurahanGuestController::class, 'index'])
+			->name('guest.drainase-irigasi.login.index');
+		Route::post('/login', [LoginKelurahanGuestController::class, 'login'])
+			->middleware('throttle:10,1')
+			->name('guest.drainase-irigasi.login');
+	});
+
+	Route::post('/logout', [LoginKelurahanGuestController::class, 'logout'])
+		->name('guest.drainase-irigasi.logout');
+
+	/**
+	 * Fitur Drainase dan Irigasi (wajib login akun kelurahan)
+	 */
+	Route::middleware(['auth.kelurahan'])->group(function () {
+		Route::get('/', [DrainaseIrigasiGuestController::class, 'index'])
+			->name('guest.drainase-irigasi.index');
+
+		/**
+		 * Kelola Akun Kelurahan
+		 */
+		Route::get('/akun', [AkunKelurahanGuestController::class, 'edit'])
+			->name('guest.drainase-irigasi.akun.edit');
+		Route::put('/akun', [AkunKelurahanGuestController::class, 'update'])
+			->name('guest.drainase-irigasi.akun.update');
+
+		Route::get('/pengaduan/buat', [DrainaseIrigasiPengaduanGuestController::class, 'create'])
+			->name('guest.drainase-irigasi.pengaduan.create');
+		Route::post('/pengaduan/kirim', [DrainaseIrigasiPengaduanGuestController::class, 'store'])
+			->name('guest.drainase-irigasi.pengaduan.store');
+
+		Route::get('/pengaduan/bukti-pengaduan/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'pdf'])
+			->middleware('validate.signed.access')
+			->name('guest.drainase-irigasi.pengaduan.pdf');
+
+		Route::get('/pengaduan/hasil/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'result'])
+			->middleware('validate.signed.access')
+			->name('guest.drainase-irigasi.pengaduan.result');
+
+		Route::get('/pengaduan/lihat', [DrainaseIrigasiPengaduanGuestController::class, 'index'])
+			->name('guest.drainase-irigasi.pengaduan.index');
+
+		Route::get('/pengaduan/lihat/{id}', [DrainaseIrigasiPengaduanGuestController::class, 'show'])
+			->name('guest.drainase-irigasi.pengaduan.show');
+
+		Route::get('/peta-sebaran', [DrainaseIrigasiPetaSebaranGuestController::class, 'index'])
+			->name('guest.drainase-irigasi.peta-sebaran.index');
+	});
 });
 
 /**
@@ -305,6 +352,10 @@ use App\Http\Controllers\Admin\KelolaAkunSayaAdminController;
 use App\Http\Controllers\Admin\JalanPeduliLaporanMasukAdminController;
 use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
+use App\Http\Controllers\Admin\HantuBanyuAdminController;
+use App\Http\Controllers\Admin\HantuBanyuLaporanAdminController;
+use App\Http\Controllers\Admin\HantuBanyuStatistikLaporanAdminController;
+use App\Http\Controllers\Admin\HantuBanyuAkunKelurahanAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 
@@ -402,6 +453,54 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
 				Route::get('/laporan/{id_laporan}/download', [JalanPeduliLaporanMasukAdminController::class, 'download'])->name('admin.laporan.download');
 				// UPDATED: Route for downloading ALL filtered reports (now a ZIP with PDF summary and photos)
 				Route::get('/laporan/download-all', [JalanPeduliLaporanMasukAdminController::class, 'downloadAll'])->name('admin.laporan.downloadAll');
+			});
+		});
+
+		/**
+		 * Hantu Banyu (Drainase & Irigasi)
+		 */
+		Route::prefix('hantu-banyu')->group(function () {
+			Route::get('/', [HantuBanyuAdminController::class, 'index'])
+				->name('admin.hantu-banyu.index');
+
+			Route::prefix('laporan')->group(function () {
+				Route::get('/', [HantuBanyuLaporanAdminController::class, 'index'])
+					->name('admin.hantu-banyu.laporan.index');
+				Route::get('/unduh-pdf', [HantuBanyuLaporanAdminController::class, 'unduhPdf'])
+					->name('admin.hantu-banyu.laporan.unduh-pdf');
+				Route::get('/{id}', [HantuBanyuLaporanAdminController::class, 'detail'])
+					->whereNumber('id')
+					->name('admin.hantu-banyu.laporan.detail');
+				Route::get('/{id}/pdf', [HantuBanyuLaporanAdminController::class, 'unduhPdfSatu'])
+					->whereNumber('id')
+					->name('admin.hantu-banyu.laporan.pdf');
+
+				Route::post('/{id}/slot/{status}', [HantuBanyuLaporanAdminController::class, 'simpanSlot'])
+					->whereNumber('id')->whereIn('status', HantuBanyuLaporanAdminController::STATUS)
+					->name('admin.hantu-banyu.laporan.slot.simpan');
+			});
+
+			Route::prefix('statistik-laporan')->group(function () {
+				Route::get('/', [HantuBanyuStatistikLaporanAdminController::class, 'index'])
+					->name('admin.hantu-banyu.statistik-laporan.index');
+			});
+
+			Route::prefix('akun-kelurahan')->group(function () {
+				Route::get('/', [HantuBanyuAkunKelurahanAdminController::class, 'index'])
+					->name('admin.hantu-banyu.akun-kelurahan.index');
+				Route::get('/create', [HantuBanyuAkunKelurahanAdminController::class, 'create'])
+					->name('admin.hantu-banyu.akun-kelurahan.create');
+				Route::post('/store', [HantuBanyuAkunKelurahanAdminController::class, 'store'])
+					->name('admin.hantu-banyu.akun-kelurahan.store');
+				Route::get('/edit/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'edit'])
+					->whereNumber('id')
+					->name('admin.hantu-banyu.akun-kelurahan.edit');
+				Route::put('/update/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'update'])
+					->whereNumber('id')
+					->name('admin.hantu-banyu.akun-kelurahan.update');
+				Route::delete('/delete/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'destroy'])
+					->whereNumber('id')
+					->name('admin.hantu-banyu.akun-kelurahan.destroy');
 			});
 		});
 

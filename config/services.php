@@ -39,5 +39,12 @@ return [
         'token' => env('MAPTILER_TOKEN'),
     ],
 
+    // Browsershot (generator PDF Hantu Banyu). Di Linux biarkan kosong agar
+    // binary Node/npm dideteksi otomatis dari PATH; di Windows isi lewat .env.
+    'browsershot' => [
+        'node_binary' => env('BROWSERSHOT_NODE_BINARY'),
+        'npm_binary' => env('BROWSERSHOT_NPM_BINARY'),
+    ],
+
 ];
 

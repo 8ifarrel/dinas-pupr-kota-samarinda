@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('kelurahan', function (Blueprint $table) {
             $table->unsignedSmallInteger('id')->primary();
-            $table->string('nama');
+            $table->string('nama')->unique();
             $table->unsignedSmallInteger('kecamatan_id');
 
             $table->foreign('kecamatan_id')

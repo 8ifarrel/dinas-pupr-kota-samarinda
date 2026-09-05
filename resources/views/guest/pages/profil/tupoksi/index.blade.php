@@ -15,7 +15,7 @@
 
   <div class="px-5 sm:px-10 py-5 md:py-12 lg:px-24 3xl:px-48 space-y-4">
     {{-- Tugas --}}
-    @if ($tupoksi->tugas)
+    @if ($tupoksi?->tugas)
       <div>
         <h2 class="text-xl sm:text-3xl font-semibold mb-2">Tugas</h2>
         <div>
@@ -25,7 +25,7 @@
     @endif
 
     {{-- Pokok --}}
-    @if ($tupoksi->pokok)
+    @if ($tupoksi?->pokok)
       <div>
         <h2 class="text-xl sm:text-3xl font-semibold mb-2">Pokok</h2>
         <div>
@@ -35,7 +35,7 @@
     @endif
 
     {{-- Fungsi --}}
-    @if ($tupoksi->fungsi)
+    @if ($tupoksi?->fungsi)
       <div>
         <h2 class="text-xl sm:text-3xl font-semibold mb-2">Fungsi</h2>
         <div>

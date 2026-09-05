@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\TensorFlowModelController;
 use App\Http\Controllers\Api\TensorFlowTestController;
 use App\Http\Controllers\Guest\JalanPeduliApiLaporanUserGuest;
 use App\Http\Controllers\Api\ApiKeyController;
+use App\Http\Controllers\Api\GeocodingController;
 
 
 Route::get('/user', function (Request $request) {
@@ -27,13 +28,16 @@ Route::prefix('keys')->middleware(['web'])->group(function () {
         Route::post('/{id}/regenerate', [ApiKeyController::class, 'regenerate'])->name('api.keys.regenerate');
         Route::get('/{id}/usage', [ApiKeyController::class, 'getUsageStats'])->name('api.keys.usage');
     });
-    
+
     // Route validate bisa diakses oleh siapa saja (untuk testing API key)
     Route::post('/validate', [ApiKeyController::class, 'validate'])->name('api.keys.validate');
 });
 
 //---------------GOOGLE MAP GET KORDINAT--------------------//
 Route::get('/kordinat', [MapController::class, 'getCoordinates']);
+
+//---------------REVERSE GEOCODING (HANTU BANYU)--------------------//
+Route::get('/reverse-geocode', [GeocodingController::class, 'reverseGeocode']);
 
 //---------------MACHINE LEARNING MODEL API--------------------//
 Route::get('/ml/model-info', [TensorFlowModelController::class, 'getModelInfo'])->name('api.ml.model-info');
@@ -49,5 +53,5 @@ Route::get('/laporan/{id_laporan}', [JalanPeduliApiLaporanUserGuest::class, 'sho
 
 // Route POST untuk membuat laporan baru, DENGAN middleware API Key
 Route::post('/laporan/upload', [JalanPeduliApiLaporanUserGuest::class, 'store'])
-     ->name('api.laporan.store')    
+     ->name('api.laporan.store')
      ->middleware('auth.apikey');

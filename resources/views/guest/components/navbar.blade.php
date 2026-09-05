@@ -16,7 +16,7 @@
   <p class="text-center text-white font-semibold text-sm current-time"></p>
 </div>
 
-<nav class="bg-white lg:bg-brand-blue border-gray-200" id="navbar">
+<nav class="bg-white lg:bg-brand-blue border-gray-200 shadow" id="navbar">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-3">
 
     <div class="lg:hidden flex gap-2">
@@ -24,7 +24,7 @@
       <img class="h-[40px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     </div>
 
-    <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
+    <div class="ms-auto lg:ms-0 flex lg:order-2 items-center gap-2 lg:gap-3 rtl:space-x-reverse">
       <a type="button" href="{{ route('guest.portal.index') }}"
         class="self-center text-brand-blue bg-brand-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-2 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Portal
@@ -217,8 +217,8 @@
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sijakon</a>
                   </li>
                   <li>
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
+                    <a href="{{ route('guest.drainase-irigasi.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi</a>
                   </li>
                   <li>
                     <a href="{{-- route('guest.sedot-tinja.index') --}}"

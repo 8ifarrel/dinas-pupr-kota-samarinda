@@ -19,10 +19,12 @@ class BukuTamuGuestController extends Controller
 	{
 		$meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
 		$page_title = "Buku Tamu";
+		$page_subtitle = "Layanan Umum";
 
 		return view('guest.pages.buku-tamu.index', [
 			'meta_description' => $meta_description,
 			'page_title' => $page_title,
+			'page_subtitle' => $page_subtitle,
 		]);
 	}
 

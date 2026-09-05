@@ -46,6 +46,12 @@
           Jalan Peduli
         </a>
       </li>
+      <li>
+        <a href="{{ route('guest.drainase-irigasi.index') }}">
+          <i class="fa-solid fa-thumbtack me-1" style="color: #080808;"></i>
+          Drainase dan Irigasi
+        </a>
+      </li>
     </ul>
     <ul
       class="xs:mx-auto sm:mx-0 mb-3 lg:mb-0 xl:mb-0 text-base sm:text-lg p-0 m-0 flex flex-col justify-start space-y-3 w-fit">
