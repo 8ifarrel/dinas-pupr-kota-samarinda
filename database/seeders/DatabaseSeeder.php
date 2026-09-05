@@ -4,80 +4,83 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+/**
+ * Urutan pemanggilan seeder mengikuti ketergantungan antar tabel.
+ * Memindahkan sebuah seeder ke atas ketergantungannya akan membuat relasinya
+ * kosong atau melanggar foreign key.
+ */
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        $this->call([
-            // Seeder dasar organisasi dan struktur
-            SusunanOrganisasiSeeder::class,
-            StrukturOrganisasiSeeder::class,
-            StrukturOrganisasiDiagramSeeder::class,
-            StrukturOrganisasiSliderSeeder::class,
+  public function run(): void
+  {
+    $this->call([
+      // 1. Susunan organisasi jadi acuan hampir seluruh tabel lain
+      //    (struktur, kategori berita, akun admin, buku tamu).
+      SusunanOrganisasiSeeder::class,
+      StrukturOrganisasiSeeder::class,
+      StrukturOrganisasiDiagramSeeder::class,
+      StrukturOrganisasiSliderSeeder::class,
 
-            // Seeder kepala dinas
-            KepalaDinasSeeder::class,
-            KepalaDinasJenjangKarirSeeder::class,
-            KepalaDinasRiwayatPendidikanSeeder::class,
+      // 2. Profil kepala dinas beserta riwayatnya (mengacu susunan organisasi).
+      KepalaDinasSeeder::class,
+      KepalaDinasRiwayatPendidikanSeeder::class,
+      KepalaDinasJenjangKarirSeeder::class,
 
-            // Seeder visi dan misi
-            VisiSeeder::class,
-            MisiSeeder::class,
-            SejarahDinasPuprKotaSamarindaSeeder::class,
+      // 3. Halaman profil yang berdiri sendiri.
+      VisiSeeder::class,
+      MisiSeeder::class,
+      TupoksiSeeder::class,
+      SejarahDinasPUPRKotaSamarindaSeeder::class,
 
-            // Seeder lokasi (kecamatan dan kelurahan)
-            KecamatanSeeder::class,
-            KelurahanSeeder::class,
+      // 4. Wilayah: kelurahan mengacu kecamatan, akun kelurahan mengacu kelurahan.
+      KecamatanSeeder::class,
+      KelurahanSeeder::class,
+      UsersKelurahanSeeder::class,
 
-            // Seeder akun kelurahan (login fitur Drainase dan Irigasi)
-            UsersKelurahanSeeder::class,
+      // 5. Berita: kategori dulu, lalu berita, lalu foto pendukungnya.
+      BeritaKategoriSeeder::class,
+      BeritaSeeder::class,
+      BeritaFotoTambahanSeeder::class,
 
-            // Seeder berita dan kategori
-            BeritaKategoriSeeder::class,
-            BeritaSeeder::class,
-            BeritaFotoTambahanSeeder::class,
+      // 6. Informasi publik lainnya.
+      PengumumanSeeder::class,
+      PPIDPelaksanaKategoriSeeder::class,
+      PPIDPelaksanaSeeder::class,
+      AgendaKegiatanSeeder::class,
 
-            // Seeder pengumuman
-            PengumumanSeeder::class,
+      // 7. Galeri: album dulu karena nama berkas foto memakai slug album.
+      AlbumKegiatanSeeder::class,
+      FotoKegiatanSeeder::class,
 
-            // Seeder PPID
-            PpidPelaksanaKategoriSeeder::class,
-            PpidPelaksanaSeeder::class,
+      // 8. Elemen beranda.
+      SliderSeeder::class,
+      PartnerSeeder::class,
 
-            // Seeder album dan foto kegiatan
-            AlbumKegiatanSeeder::class,
-            FotoKegiatanSeeder::class,
+      // 9. Layanan publik. Layanan mengacu struktur organisasi, SKM mengacu layanan.
+      BukuTamuSeeder::class,
+      LayananSeeder::class,
+      SKMSeeder::class,
 
-            // Seeder slider
-            SliderSeeder::class,
+      // 10. Akun panel admin. Kunci API mengacu id super admin, jadi harus setelah UsersSeeder.
+      UsersSeeder::class,
+      JalanPeduliApiKeySeeder::class,
+      HantuBanyuApiKeySeeder::class,
 
-            // Seeder partner
-            PartnerSeeder::class,
+      // 11. Statistik pengunjung; page_visits mengacu visitor_id pada tabel visitors.
+      VisitorsSeeder::class,
+      PageVisitsSeeder::class,
 
-            // Seeder buku tamu
-            BukuTamuSeeder::class,
+      // 12. Hantu Banyu mengacu kelurahan/kecamatan dan SKM.
+      HantuBanyuSeeder::class,
 
-            // Seeder SKM (Survei Kepuasan Masyarakat)
-            LayananSeeder::class,
-            SkmSeeder::class,
-
-            // Seeder users dan admin
-            UsersSeeder::class,
-
-            // Seeder statistik pengunjung
-            VisitorsSeeder::class,
-            PageVisitsSeeder::class,
-
-            // Seeder Jalan Peduli - pastikan ada seeder untuk pelapor dulu
-            JalanPeduliStatusSeeder::class,
-            JalanPeduliPelaporSeeder::class,
-            JalanPeduliLaporanSeeder::class,
-
-            // Seeder Hantu Banyu (Drainase dan Irigasi)
-            DrainaseIrigasiSeeder::class,
-        ]);
-    }
+      // 13. Jalan Peduli (dikelola terpisah) sengaja ditempatkan paling akhir.
+      //     JalanPeduliLaporanSeeder mengunduh gambar dari picsum.photos saat
+      //     dijalankan, sehingga gagal bila tidak ada koneksi internet. Dengan
+      //     menaruhnya di urutan terakhir, kegagalan itu tidak lagi memutus
+      //     seeder lain yang sudah selesai lebih dulu.
+      JalanPeduliStatusSeeder::class,
+      JalanPeduliPelaporSeeder::class,
+      JalanPeduliLaporanSeeder::class,
+    ]);
+  }
 }

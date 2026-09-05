@@ -94,7 +94,7 @@
                 </span>
               </td>
               <td>
-                <a href="{{ route('admin.hantu-banyu.laporan.detail', $item->id) }}" class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                <a href="{{ route('admin.hantu-banyu.laporan.edit', $item->id) }}" class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid fa-pencil"></i>
                 </a>
               </td>

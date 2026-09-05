@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Visi extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'visi';
+  protected $table = 'visi';
 
-    protected $primaryKey = 'id_visi';
+  protected $primaryKey = 'id_visi';
 
-    protected $fillable = [
-        'deskripsi_visi',
-        'periode_mulai',
-        'periode_selesai',
-    ];
+  protected $fillable = [
+    'deskripsi_visi',
+    'periode_mulai',
+    'periode_selesai',
+  ];
 }
 

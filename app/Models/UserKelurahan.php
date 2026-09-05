@@ -8,31 +8,31 @@ use Illuminate\Notifications\Notifiable;
 
 class UserKelurahan extends Authenticatable
 {
-    use HasFactory, Notifiable;
+  use HasFactory, Notifiable;
 
-    protected $table = 'users_kelurahan';
+  protected $table = 'users_kelurahan';
 
-    protected $fillable = [
-        'kelurahan_id',
-        'fullname',
-        'name',
-        'password',
+  protected $fillable = [
+    'kelurahan_id',
+    'fullname',
+    'name',
+    'password',
+  ];
+
+  protected $hidden = [
+    'password',
+    'remember_token',
+  ];
+
+  protected function casts(): array
+  {
+    return [
+      'password' => 'hashed',
     ];
+  }
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-        ];
-    }
-
-    public function kelurahan()
-    {
-        return $this->belongsTo(Kelurahan::class, 'kelurahan_id', 'id');
-    }
+  public function kelurahan()
+  {
+    return $this->belongsTo(Kelurahan::class, 'kelurahan_id', 'id');
+  }
 }

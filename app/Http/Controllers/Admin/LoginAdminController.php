@@ -11,35 +11,35 @@ use App\Models\User;
 
 class LoginAdminController extends Controller
 {
-	public function index()
-	{
-		$page_title = "Login Admin";
-		return view('admin.pages.login.index', [
-			'page_title' => $page_title,
-		]);
-	}
+  public function index()
+  {
+    $page_title = "Login Admin";
+    return view('admin.pages.login.index', [
+      'page_title' => $page_title,
+    ]);
+  }
 
-	public function login(Request $request)
-	{
-		$request->validate([
-			'name' => 'required|exists:users,name',
-			'password' => 'required|string',
-		]);
+  public function login(Request $request)
+  {
+    $request->validate([
+      'name' => 'required|exists:users,name',
+      'password' => 'required|string',
+    ]);
 
-		$user = User::where('name', $request->name)->first();
+    $user = User::where('name', $request->name)->first();
 
-		if ($user && Hash::check($request->password, $user->password)) {
-			Auth::login($user);
+    if ($user && Hash::check($request->password, $user->password)) {
+      Auth::login($user);
 
-			return redirect()->route('admin.dashboard.index');
-		}
-	}
+      return redirect()->route('admin.dashboard.index');
+    }
+  }
 
-	public function logout()
-	{
-		Auth::logout();
-		return redirect()->route('guest.beranda.index');
-	}
-	
+  public function logout()
+  {
+    Auth::logout();
+    return redirect()->route('guest.beranda.index');
+  }
+  
 }
 

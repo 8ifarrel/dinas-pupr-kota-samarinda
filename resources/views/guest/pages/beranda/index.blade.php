@@ -286,7 +286,7 @@
   </div>
 
   {{-- Statistik Pengunjung --}}
-  {{-- <div class="bg-gray-200 p-6 md:p-12">
+  <div class="bg-gray-200 p-6 md:p-12">
     @include('guest.components.section-title', [
         'page_subtitle' => 'Statistik',
         'page_title' => 'Statistik Pengunjung',
@@ -316,7 +316,7 @@
         </div>
       </div>
     </div>
-  </div> --}}
+  </div>
 @endsection
 
 @section('document.end')

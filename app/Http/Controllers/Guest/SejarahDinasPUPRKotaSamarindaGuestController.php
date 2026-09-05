@@ -7,24 +7,24 @@ use App\Models\SejarahDinasPUPRKotaSamarinda;
 
 class SejarahDinasPUPRKotaSamarindaGuestController extends Controller
 {
-	public string $page_context = 'Sejarah';
+  public string $page_context = 'Sejarah';
 
-	public function index()
-	{
-		$meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-		$page_subtitle = "Profil";
-		$page_title = "Sejarah";
+  public function index()
+  {
+    $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+    $page_subtitle = "Profil";
+    $page_title = "Sejarah";
 
-		$sejarah_dinas_pupr_kota_samarinda = SejarahDinasPUPRKotaSamarinda::select(
-			'deskripsi_sejarah_dinas_pupr_kota_samarinda'
-		)->first();
+    $sejarah_dinas_pupr_kota_samarinda = SejarahDinasPUPRKotaSamarinda::select(
+      'deskripsi_sejarah_dinas_pupr_kota_samarinda'
+    )->first();
 
-		return view('guest.pages.profil.sejarah-dinas-pupr-kota-samarinda.index', [
-			'meta_description' => $meta_description,
-			'page_title' => $page_title,
-			'page_subtitle' => $page_subtitle,
-			'sejarah_dinas_pupr_kota_samarinda' => $sejarah_dinas_pupr_kota_samarinda,
-			'page_context' => $this->page_context,
-		]);
-	}
+    return view('guest.pages.profil.sejarah-dinas-pupr-kota-samarinda.index', [
+      'meta_description' => $meta_description,
+      'page_title' => $page_title,
+      'page_subtitle' => $page_subtitle,
+      'sejarah_dinas_pupr_kota_samarinda' => $sejarah_dinas_pupr_kota_samarinda,
+      'page_context' => $this->page_context,
+    ]);
+  }
 }

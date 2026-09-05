@@ -2,49 +2,49 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Third Party Services
-    |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Third Party Services
+  |--------------------------------------------------------------------------
+  |
+  | This file is for storing the credentials for third party services such
+  | as Mailgun, Postmark, AWS and more. This file provides the de facto
+  | location for this type of information, allowing packages to have
+  | a conventional file to locate the various service credentials.
+  |
+  */
 
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
-    ],
+  'postmark' => [
+    'token' => env('POSTMARK_TOKEN'),
+  ],
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
+  'ses' => [
+    'key' => env('AWS_ACCESS_KEY_ID'),
+    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+    'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+  ],
 
-    'resend' => [
-        'key' => env('RESEND_KEY'),
-    ],
+  'resend' => [
+    'key' => env('RESEND_KEY'),
+  ],
 
-    'slack' => [
-        'notifications' => [
-            'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
-            'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
-        ],
+  'slack' => [
+    'notifications' => [
+      'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
+      'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
     ],
-    
-    'maptiler' => [
-        'token' => env('MAPTILER_TOKEN'),
-    ],
+  ],
+  
+  'maptiler' => [
+    'token' => env('MAPTILER_TOKEN'),
+  ],
 
-    // Browsershot (generator PDF Hantu Banyu). Di Linux biarkan kosong agar
-    // binary Node/npm dideteksi otomatis dari PATH; di Windows isi lewat .env.
-    'browsershot' => [
-        'node_binary' => env('BROWSERSHOT_NODE_BINARY'),
-        'npm_binary' => env('BROWSERSHOT_NPM_BINARY'),
-    ],
+  // Browsershot (generator PDF Hantu Banyu). Di Linux biarkan kosong agar
+  // binary Node/npm dideteksi otomatis dari PATH; di Windows isi lewat .env.
+  'browsershot' => [
+    'node_binary' => env('BROWSERSHOT_NODE_BINARY'),
+    'npm_binary' => env('BROWSERSHOT_NPM_BINARY'),
+  ],
 
 ];
 

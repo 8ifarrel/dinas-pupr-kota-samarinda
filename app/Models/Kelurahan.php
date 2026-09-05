@@ -9,22 +9,22 @@ use App\Models\JalanPeduliLaporan;
 
 class Kelurahan extends Model
 {
-    protected $table = 'kelurahan';
+  protected $table = 'kelurahan';
 
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'int';
+  protected $primaryKey = 'id';
+  public $incrementing = false;
+  protected $keyType = 'int';
 
-    public $timestamps = false;
+  public $timestamps = false;
 
-    protected $fillable = [
-        'id',
-        'nama',
-        'kecamatan_id',
-    ];
+  protected $fillable = [
+    'id',
+    'nama',
+    'kecamatan_id',
+  ];
 
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
-    }
+  public function kecamatan()
+  {
+    return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+  }
 }

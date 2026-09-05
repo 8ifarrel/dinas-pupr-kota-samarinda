@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\PPIDPelaksanaKategori;
-use Illuminate\Http\Request;
 
 class PPIDPelaksanaKategoriGuestController extends Controller
 {

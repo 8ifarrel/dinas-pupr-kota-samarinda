@@ -78,6 +78,11 @@
               Laporan</a>
           </li>
           <li>
+            <a href="{{ route('admin.hantu-banyu.skm.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Survei
+              Kepuasan</a>
+          </li>
+          <li>
             <a href="{{ route('admin.hantu-banyu.akun-kelurahan.index') }}"
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
               Kelurahan</a>
@@ -186,14 +191,27 @@
 
       {{-- Struktur Organisasi --}}
       <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-          href="{{ route('admin.struktur-organisasi.index') }}">
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-struktur-organisasi" data-collapse-toggle="dropdown-struktur-organisasi">
           <i class="fa-solid fa-sitemap"></i>
-
-          <span class="ms-3">
-            Struktur Organisasi
-          </span>
-        </a>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Struktur Organisasi</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-struktur-organisasi" class="hidden py-2 space-y-2">
+          <li>
+            <a href="{{ route('admin.struktur-organisasi.susunan-organisasi.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Susunan
+              Organisasi</a>
+          </li>
+          <li>
+            <a href="{{ route('admin.struktur-organisasi.organigram.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Organigram</a>
+          </li>
+        </ul>
       </li>
 
       {{-- Profil --}}
@@ -209,6 +227,11 @@
           </svg>
         </button>
         <ul id="dropdown-profil" class="hidden py-2 space-y-2">
+          <li>
+            <a href="{{ route('admin.kepala-dinas.edit') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Kepala
+              Dinas</a>
+          </li>
           <li>
             <a href="{{ route('admin.profil.visi-dan-misi.index') }}"
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi
@@ -254,20 +277,35 @@
 
         {{-- API Keys --}}
         <li>
-          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
-            href="{{ route('admin.super.api-key.index') }}">
+          <button type="button"
+            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+            aria-controls="dropdown-api-key" data-collapse-toggle="dropdown-api-key">
             <i class="fa-solid fa-key"></i>
-            <span class="ms-3">
-              API Key
-            </span>
-          </a>
+            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">API Key</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <ul id="dropdown-api-key" class="hidden py-2 space-y-2">
+            <li>
+              <a href="{{ route('admin.super.api-key.jalan-peduli.index') }}"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Jalan
+                Peduli</a>
+            </li>
+            <li>
+              <a href="{{ route('admin.super.api-key.hantu-banyu.index') }}"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
+                Banyu</a>
+            </li>
+          </ul>
         </li>
 
         {{-- Log --}}
         <li>
-          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
-            {{-- <i class="fa-solid fa-file-circle-exclamation"></i> --}}
-            <i class="fa-regular fa-circle-question"></i>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="{{ route('admin.super.log.index') }}">
+            <i class="fa-solid fa-clipboard-list"></i>
             <span class="ms-3">
               Log
             </span>

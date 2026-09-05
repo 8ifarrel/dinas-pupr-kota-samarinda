@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\AlbumKegiatan;
 use App\Models\FotoKegiatan;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class FotoKegiatanAdminController extends Controller
 {

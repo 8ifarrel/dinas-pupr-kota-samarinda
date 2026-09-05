@@ -8,20 +8,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Layanan extends Model
 {
-    protected $table = 'layanan';
+  /**
+   * Id layanan untuk survei umum, yaitu survei kepuasan yang tidak terikat
+   * fitur tertentu (diisi lewat halaman /skm). Layanan lain seperti Hantu Banyu
+   * memakai idnya masing-masing sehingga rekapnya bisa dipisah.
+   */
+  public const ID_UMUM = 0;
 
-    protected $fillable = [
-        'nama',
-        'struktur_organisasi_id',
-    ];
+  protected $table = 'layanan';
 
-    public function strukturOrganisasi(): BelongsTo
-    {
-        return $this->belongsTo(StrukturOrganisasi::class, 'struktur_organisasi_id', 'id_struktur_organisasi');
-    }
+  protected $fillable = [
+    'nama',
+    'struktur_organisasi_id',
+  ];
 
-    public function skm(): HasMany
-    {
-        return $this->hasMany(SKM::class, 'layanan_id');
-    }
+  public function strukturOrganisasi(): BelongsTo
+  {
+    return $this->belongsTo(StrukturOrganisasi::class, 'struktur_organisasi_id', 'id_struktur_organisasi');
+  }
+
+  public function skm(): HasMany
+  {
+    return $this->hasMany(SKM::class, 'layanan_id');
+  }
 }

@@ -217,8 +217,8 @@
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sijakon</a>
                   </li>
                   <li>
-                    <a href="{{ route('guest.drainase-irigasi.index') }}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi</a>
+                    <a href="{{ route('guest.hantu-banyu.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hantu Banyu</a>
                   </li>
                   <li>
                     <a href="{{-- route('guest.sedot-tinja.index') --}}"

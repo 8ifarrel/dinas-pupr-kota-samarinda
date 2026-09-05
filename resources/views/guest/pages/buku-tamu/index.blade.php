@@ -10,7 +10,7 @@
   <section class="relative h-screen flex flex-col items-center justify-center overflow-hidden">
     {{-- Map BG --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
-      <img src="{{ asset('image/hero/drainase-irigasi.jpeg') }}" alt="Peta Samarinda"
+      <img src="{{ asset('image/hero/hantu-banyu.jpeg') }}" alt="Peta Samarinda"
         class="w-full h-full object-cover opacity-25 blur-[2px]" />
       <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/70 via-white/10 to-white"></div>
     </div>
