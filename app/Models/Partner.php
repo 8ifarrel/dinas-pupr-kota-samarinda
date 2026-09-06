@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partner extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'partner';
-    protected $primaryKey = 'id_partner';
+  protected $table = 'partner';
+  protected $primaryKey = 'id_partner';
 
-    protected $fillable = [
-        'foto_partner',
-        'nama_partner',
-        'url_partner',
-    ];
+  protected $fillable = [
+    'foto_partner',
+    'nama_partner',
+    'url_partner',
+  ];
 }
 

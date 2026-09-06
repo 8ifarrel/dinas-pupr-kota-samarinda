@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Storage;
 
 class OrganigramAdminController extends Controller
 {
+  public function index()
+  {
+    $page_title = "Organigram";
+    $page_description = 'Bagan organigram utama Dinas PUPR Kota Samarinda.';
+    $organigram = StrukturOrganisasiDiagram::select('diagram_struktur_organisasi')
+      ->whereNull('id_struktur_organisasi')
+      ->first();
+
+    return view('admin.pages.struktur-organisasi.organigram.index', [
+      'page_title' => $page_title,
+      'page_description' => $page_description,
+      'organigram' => $organigram,
+    ]);
+  }
+
   public function edit($id)
   {
     if ($id != 1) {
@@ -51,7 +66,7 @@ class OrganigramAdminController extends Controller
       $organigram->save();
     }
 
-    return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Organigram berhasil diperbarui.');
+    return redirect()->route('admin.struktur-organisasi.organigram.index')->with('success', 'Organigram berhasil diperbarui.');
   }
 }
 

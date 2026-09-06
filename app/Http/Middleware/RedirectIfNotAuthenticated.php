@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfNotAuthenticated
 {
-    public function handle(Request $request, Closure $next)
-    {
-        if (!Auth::check()) {
-            return redirect()->route('guest.portal.index');
-        }
-
-        return $next($request);
+  public function handle(Request $request, Closure $next)
+  {
+    if (!Auth::check()) {
+      return redirect()->route('guest.portal.index');
     }
+
+    return $next($request);
+  }
 }
 

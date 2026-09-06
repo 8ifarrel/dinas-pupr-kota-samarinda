@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kecamatan extends Model
 {
-    protected $table = 'kecamatan';
+  protected $table = 'kecamatan';
 
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'int';
+  protected $primaryKey = 'id';
+  public $incrementing = false;
+  protected $keyType = 'int';
 
-    public $timestamps = false;
+  public $timestamps = false;
 
-    protected $fillable = [
-        'id',
-        'nama',
-    ];
+  protected $fillable = [
+    'id',
+    'nama',
+  ];
 }

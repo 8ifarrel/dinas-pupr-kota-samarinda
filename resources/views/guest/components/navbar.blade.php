@@ -1,5 +1,5 @@
-<div class="hidden my-4 mx-16 lg:flex justify-between items-center">
-  <figure class="flex gap-2">
+<div class="hidden px-6 py-2 lg:flex justify-between items-center">
+  <figure class="flex flex-col py-2 gap-y-2 gap-x-4 lg:flex-row">
     <img class="h-[55px]" src="{{ config('app.logo_pemkot') }}" alt="{{ config('app.nama_pemkot') }}" />
     <img class="h-[55px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     <figcaption class="my-auto text-lg text-brand-blue font-bold w-[365px] uppercase">
@@ -24,7 +24,7 @@
       <img class="h-[40px]" src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" />
     </div>
 
-    <div class="ms-auto lg:ms-0 flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
+    <div class="ms-auto lg:ms-0 flex lg:order-2 items-center gap-2 lg:gap-3 rtl:space-x-reverse">
       <a type="button" href="{{ route('guest.portal.index') }}"
         class="self-center text-brand-blue bg-brand-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-2 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Portal
@@ -89,6 +89,10 @@
                     <a href="{{ route('guest.profil.struktur-organisasi.index') }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Struktur
                       Organisasi</a>
+                  </li>
+                  <li>
+                    <a href="{{ route('guest.profil.tupoksi.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tugas dan Fungsi</a>
                   </li>
                 </div>
               </div>
@@ -205,20 +209,20 @@
 
                 <div class="border-s-2 ms-4 border-black/15">
                   <li>
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli (soon)</a>
+                    <a href="{{ route('guest.jalan-peduli.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jalan Peduli</a>
                   </li>
                   <li>
                     <a href="{{ url('https://sijakon.samarindakota.go.id') }}"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sijakon</a>
                   </li>
                   <li>
-                    <a href="{{-- --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Drainase dan Irigasi (soon)</a>
+                    <a href="{{ route('guest.hantu-banyu.index') }}"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Hantu Banyu</a>
                   </li>
                   <li>
                     <a href="{{-- route('guest.sedot-tinja.index') --}}"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja</a>
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sedot Tinja (soon)</a>
                   </li>
                 </div>
               </div>

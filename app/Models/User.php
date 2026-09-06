@@ -9,33 +9,33 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+  use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'is_super_admin',
-        'fullname',
-        'name',
-        'email',
-        'password',
-        'id_susunan_organisasi',
+  protected $fillable = [
+    'is_super_admin',
+    'fullname',
+    'name',
+    'email',
+    'password',
+    'id_susunan_organisasi',
+  ];
+
+  protected $hidden = [
+    'password',
+    'remember_token',
+  ];
+
+  protected function casts(): array
+  {
+    return [
+      'email_verified_at' => 'datetime',
+      'password' => 'hashed',
     ];
+  }
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    public function susunanOrganisasi()
-    {
-        return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
-    }
+  public function susunanOrganisasi()
+  {
+    return $this->belongsTo(SusunanOrganisasi::class, 'id_susunan_organisasi', 'id_susunan_organisasi');
+  }
 }
 
