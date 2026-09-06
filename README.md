@@ -1,141 +1,65 @@
-# Website Dinas PUPR Kota Samarinda
+# Website Dinas PUPR Kota Samarinda — Branch `akun-kelurahan`
 
-Website resmi **Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kota Samarinda** — portal informasi publik sekaligus panel administrasi untuk mengelola konten dan layanan dinas.
+> Dokumentasi fitur **Akun Kelurahan** dan API-nya. Kode fitur ini sudah ada di `main` (bukan fitur terpisah yang menunggu digabung); branch ini murni tempat dokumentasinya. Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
 
-Dibangun dengan [Laravel 12](https://laravel.com/) di sisi backend dan [Tailwind CSS](https://tailwindcss.com/) + [Alpine.js](https://alpinejs.dev/) di sisi frontend.
+## Tentang Akun Kelurahan
 
-## Daftar Isi
+Akun kelurahan adalah identitas login **milik bersama**, sengaja ditempatkan di level super admin (bukan di dalam salah satu fitur) supaya fitur mana pun yang butuh login kelurahan bisa memakai akun yang sudah ada, tanpa membangun sistem akun sendiri. Saat ini dipakai oleh **Hantu Banyu**; fitur mendatang yang butuh login kelurahan tinggal memakai akun yang sama.
 
-- [Fitur](#fitur)
-- [API](#api)
-- [Teknologi](#teknologi)
-- [Instalasi](#instalasi)
-- [Konfigurasi Environment](#konfigurasi-environment)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Struktur Branch](#struktur-branch)
-- [Menjalankan Test](#menjalankan-test)
-- [Lisensi & Kepemilikan](#lisensi--kepemilikan)
-
-## Fitur
-
-### Portal Publik
-
-- **Profil Dinas** — sejarah, visi & misi, tupoksi, struktur organisasi, profil Kepala Dinas
-- **Berita & Pengumuman** — publikasi berita per kategori dan pengumuman resmi
-- **PPID Pelaksana** — informasi publik sesuai kategori PPID
-- **Agenda & Album Kegiatan** — jadwal kegiatan dan galeri dokumentasi
-- **Survei Kepuasan Masyarakat (SKM)** — pengisian dan rekap kepuasan layanan
-- **Jalan Peduli** — pelaporan kerusakan jalan oleh warga beserta peta sebaran dan status tindak lanjut
-- **Hantu Banyu** *(Drainase & Irigasi)* — pengaduan drainase/irigasi oleh operator kelurahan; lihat [detail fitur ini di branch `hantu-banyu`](../../tree/hantu-banyu#readme)
-- **Statistik Pengunjung** — pencatatan kunjungan situs dengan penyaringan lalu lintas bot/cloud
-
-### Panel Admin (E-Panel)
-
-- Manajemen konten (berita, pengumuman, PPID, agenda, album, partner, slider)
-- Manajemen struktur organisasi dan akun admin (dengan level super admin)
-- Manajemen akun kelurahan (dipakai bersama oleh fitur Hantu Banyu dan fitur mendatang lain yang membutuhkan login kelurahan)
-- API key per-fitur untuk integrasi eksternal
-- Log aktivitas admin
+Super admin mengelola akun kelurahan (buat, ubah, hapus) lewat panel admin.
 
 ## API
 
-Tiga fitur menyediakan API untuk integrasi eksternal, masing-masing dengan kunci API dan tabel kunci terpisah — kunci satu fitur tidak berlaku di fitur lain:
+API ini dijaga kunci API khusus fitur `akun-kelurahan` — kunci Jalan Peduli maupun Hantu Banyu tidak berlaku di sini, begitu pula sebaliknya. Kunci diberi awalan `kelurahan-` dan disertakan lewat header:
 
-| Fitur | Kegunaan API |
+```
+X-API-KEY: kelurahan-xxxxxxxxxxxxxxxx
+```
+
+### Endpoint Data Akun
+
+| Method | Endpoint | Keterangan |
+|---|---|---|
+| `GET` | `/api/akun-kelurahan` | Daftar seluruh akun kelurahan. Bisa difilter `?kecamatan_id=`. Tidak memuat kolom sandi |
+| `GET` | `/api/akun-kelurahan/{id}` | Detail satu akun kelurahan |
+| `POST` | `/api/akun-kelurahan/verifikasi` | Verifikasi `name` + `password`. Pemeriksaan lewat provider guard `kelurahan` yang sama persis dengan login web, sehingga hasilnya selalu konsisten dengan login web. Dibatasi `throttle:20,1` karena endpoint ini memeriksa kata sandi |
+
+Contoh verifikasi:
+
+```bash
+curl -X POST https://domain-anda/api/akun-kelurahan/verifikasi \
+  -H "X-API-KEY: kelurahan-xxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "kelurahan_taniaman", "password": "kata-sandi"}'
+```
+
+Respons memuat `success`, `message`, `valid`, dan (bila valid) `data` berisi `id`, `fullname`, `username`, `kelurahan`, `kecamatan`. Pesan gagal untuk username tidak dikenal maupun sandi salah **sengaja disamakan**, supaya endpoint ini tidak bisa dipakai menebak username mana yang terdaftar.
+
+### Manajemen Kunci API
+
+Hanya bisa diakses super admin yang sudah login lewat web (bukan lewat `X-API-KEY`):
+
+| Method | Endpoint |
 |---|---|
-| **Jalan Peduli** | Integrasi pelaporan kerusakan jalan dari luar website ini |
-| **Hantu Banyu** | Integrasi pelaporan drainase/irigasi serta reverse geocoding koordinat |
-| **Akun Kelurahan** | Verifikasi kredensial dan data akun kelurahan, dipakai sistem eksternal mana pun yang perlu login kelurahan tanpa membangun sistem akunnya sendiri |
+| `GET` | `/api/akun-kelurahan-keys` |
+| `POST` | `/api/akun-kelurahan-keys` |
+| `GET` | `/api/akun-kelurahan-keys/{id}` |
+| `PUT` | `/api/akun-kelurahan-keys/{id}` |
+| `DELETE` | `/api/akun-kelurahan-keys/{id}` |
+| `POST` | `/api/akun-kelurahan-keys/{id}/regenerate` |
+| `GET` | `/api/akun-kelurahan-keys/{id}/usage` |
 
-Penjelasan lengkap cara pakai tiap API — endpoint, format kunci, contoh request — ada di README branch masing-masing fitur: [`kkn-unmul/jalan-peduli`](../../tree/kkn-unmul/jalan-peduli#readme), [`hantu-banyu`](../../tree/hantu-banyu#readme), dan [`akun-kelurahan`](../../tree/akun-kelurahan#readme).
+`POST /api/akun-kelurahan-keys/validate` bisa diakses siapa saja, untuk menguji apakah suatu kunci masih valid.
 
-## Teknologi
+## Fitur yang Memerlukan Akses Akun Kelurahan
 
-| Lapisan | Teknologi |
-|---|---|
-| Backend | PHP 8.2+, Laravel 12 |
-| Frontend | Blade, Tailwind CSS, Alpine.js, Vite |
-| Basis Data | MySQL |
-| PDF | Browsershot (Puppeteer/Node) |
-| Lainnya | Laravel Sanctum-style API key custom, Yajra DataTables, PhpSpreadsheet |
+Halaman-halaman berikut (di web ini, bukan API) hanya bisa diakses setelah login sebagai akun kelurahan:
 
-## Instalasi
-
-### Prasyarat
-
-- PHP ^8.2 dengan ekstensi standar Laravel
-- Composer
-- Node.js & npm
-- MySQL
-- Node/npm dapat diakses dari PATH (dibutuhkan Browsershot untuk PDF Hantu Banyu; lihat [Konfigurasi Environment](#konfigurasi-environment) bila berjalan di Windows)
-
-### Langkah
-
-```bash
-git clone https://github.com/8ifarrel/dinas-pupr-kota-samarinda.git
-cd dinas-pupr-kota-samarinda
-
-composer install
-npm install
-
-cp .env.example .env
-php artisan key:generate
-```
-
-Buat basis data MySQL kosong, lalu isi kredensialnya di `.env` (lihat bagian berikutnya), kemudian:
-
-```bash
-php artisan migrate
-php artisan db:seed   # opsional, mengisi data contoh untuk pengembangan
-```
-
-## Konfigurasi Environment
-
-Salin `.env.example` menjadi `.env` lalu sesuaikan sekurang-kurangnya:
-
-| Variabel | Keterangan |
-|---|---|
-| `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Kredensial MySQL. Proyek ini **tidak** memakai SQLite bawaan Laravel |
-| `IPINFO_TOKEN` | Token [IPInfo](https://ipinfo.io/), dipakai statistik pengunjung untuk menyaring lalu lintas cloud/datacenter. Boleh dikosongkan (penyaring dilewati) |
-| `MAPTILER_TOKEN` | Token [MapTiler](https://www.maptiler.com/), dipakai peta sebaran Jalan Peduli |
-| `TURNSTILE_SITEKEY`, `TURNSTILE_SECRET` | Kredensial [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/), captcha pada form laporan Jalan Peduli |
-| `BROWSERSHOT_NODE_BINARY`, `BROWSERSHOT_NPM_BINARY` | Path Node/npm untuk PDF Hantu Banyu. Biarkan kosong di Linux (dideteksi otomatis dari PATH); di Windows isi dengan path lengkap berkutip tunggal |
-
-Detail lengkap dan komentar tiap variabel ada di `.env.example`.
-
-## Menjalankan Aplikasi
-
-```bash
-php artisan serve
-npm run dev       # kompilasi aset saat pengembangan
-```
-
-Untuk produksi:
-
-```bash
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-## Struktur Branch
-
-| Branch | Isi |
-|---|---|
-| `main` | Kode aplikasi produksi — seluruh fitur yang sudah selesai |
-| `hantu-banyu` | Fitur pengaduan Drainase & Irigasi. Sudah final, tergabung penuh ke `main` |
-| `buku-tamu` | Fitur Buku Tamu, belum digabung ke `main` |
-| `kkn-unmul/jalan-peduli`, `pkl-umkt/*` | Cabang kerja mitra magang/KKN untuk fitur tertentu |
-
-> **Catatan:** branch yang sudah final dan tergabung penuh ke `main` (seperti `hantu-banyu`) tidak lagi dikembangkan langsung di branch tersebut. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur yang sudah final, buat branch baru dari `main`, kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
-
-## Menjalankan Test
-
-```bash
-php artisan test
-```
+- **Halaman utama Hantu Banyu** — beranda fitur setelah login
+- **Kelola Akun Saya** — ubah username dan kata sandi akun kelurahan sendiri
+- **Pengaduan Hantu Banyu** — buat pengaduan baru, kirim, lihat daftar dan detail pengaduan wilayahnya, lihat hasil, unduh bukti pengaduan (PDF)
+- **Peta Sebaran** — visualisasi lokasi laporan Hantu Banyu
 
 ## Lisensi & Kepemilikan
 
-Proyek ini adalah properti **Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda** untuk keperluan internal dan layanan publik resmi. Bukan proyek open-source untuk digunakan ulang di luar konteks tersebut tanpa izin.
+Proyek ini adalah properti **Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda** untuk keperluan internal dan layanan publik resmi.
