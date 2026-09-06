@@ -35,7 +35,6 @@ use App\Http\Controllers\Guest\VisiDanMisiGuestController;
 use App\Http\Controllers\Guest\BeritaGuestController;
 use App\Http\Controllers\Guest\BeritaKategoriGuestController;
 use App\Http\Controllers\Guest\PengumumanGuestController;
-use App\Http\Controllers\Guest\BukuTamuGuestController;
 use App\Http\Controllers\Guest\PPIDPelaksanaKategoriGuestController;
 use App\Http\Controllers\Guest\PPIDPelaksanaGuestController;
 use App\Http\Controllers\Guest\SKMGuestController;
@@ -192,27 +191,6 @@ Route::get('/kebijakan-privasi', [KebijakanPrivasiGuestController::class, 'index
   ->name('guest.kebijakan-privasi.index');
 
 /**
- * Buku Tamu
- */
-
-// Route::prefix('buku-tamu')->middleware([BlockSearchEngines::class])->group(function () {
-// 	Route::get('/', [BukuTamuGuestController::class, 'index'])
-// 		->name('guest.buku-tamu.index');
-
-// 	Route::get('/daftar', [BukuTamuGuestController::class, 'create'])
-// 		->name('guest.buku-tamu.create');
-
-// 	Route::post('/daftar', [BukuTamuGuestController::class, 'store'])
-// 		->name('guest.buku-tamu.store');
-
-// 	Route::get('/hasil', [BukuTamuGuestController::class, 'result'])
-// 		->name('guest.buku-tamu.result');
-
-// 	Route::get('/status', [BukuTamuGuestController::class, 'show'])
-// 		->name('guest.buku-tamu.show');
-// });
-
-/**
  * Jalan Peduli Utama
  */
 use App\Http\Controllers\Guest\JalanPeduliFaqGuestController;
@@ -359,7 +337,6 @@ use App\Http\Controllers\Admin\KepalaDinasAdminController;
 use App\Http\Controllers\Admin\VisiDanMisiAdminController;
 use App\Http\Controllers\Admin\SejarahDinasPUPRKotaSamarindaAdminController;
 use App\Http\Controllers\Admin\OrganigramAdminController;
-use App\Http\Controllers\Admin\BukuTamuAdminController;
 use App\Http\Controllers\Admin\FotoKegiatanAdminController;
 use App\Http\Controllers\Admin\AlbumKegiatanAdminController;
 use App\Http\Controllers\Admin\AgendaKegiatanAdminController;
@@ -699,18 +676,6 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
         ->name('admin.agenda-kegiatan.destroy');
       Route::get('/datatable', [AgendaKegiatanAdminController::class, 'datatable'])
         ->name('admin.agenda-kegiatan.datatable');
-    });
-
-    /**
-     * Buku Tamu
-     */
-    Route::prefix('buku-tamu')->group(function () {
-      Route::get('/', [BukuTamuAdminController::class, 'index'])
-        ->name('admin.buku-tamu.index');
-      Route::get('/edit/{id}', [BukuTamuAdminController::class, 'edit'])
-        ->name('admin.buku-tamu.edit');
-      Route::post('/update/{id}', [BukuTamuAdminController::class, 'update'])
-        ->name('admin.buku-tamu.update');
     });
 
     Route::prefix('struktur-organisasi')->group(function () {

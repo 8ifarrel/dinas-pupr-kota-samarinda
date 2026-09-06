@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
   {
     $this->call([
       // 1. Susunan organisasi jadi acuan hampir seluruh tabel lain
-      //    (struktur, kategori berita, akun admin, buku tamu).
+      //    (struktur, kategori berita, akun admin).
       SusunanOrganisasiSeeder::class,
       StrukturOrganisasiSeeder::class,
       StrukturOrganisasiDiagramSeeder::class,
@@ -57,7 +57,6 @@ class DatabaseSeeder extends Seeder
       PartnerSeeder::class,
 
       // 9. Layanan publik. Layanan mengacu struktur organisasi, SKM mengacu layanan.
-      BukuTamuSeeder::class,
       LayananSeeder::class,
       SKMSeeder::class,
 

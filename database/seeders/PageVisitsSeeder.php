@@ -27,7 +27,6 @@ class PageVisitsSeeder extends Seeder
     'Profil Kepala Dinas',
     'Visi dan Misi',
     'Sejarah',
-    'Buku Tamu',
     'Hantu Banyu', 'Hantu Banyu',
     'Portal',
     'Kebijakan Privasi',

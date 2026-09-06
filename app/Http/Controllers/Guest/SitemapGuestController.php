@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Response;
  *
  * Hanya memuat halaman yang boleh diindeks. Halaman yang sudah dilarang pada
  * robots.txt maupun yang memakai middleware BlockSearchEngines (e-panel, SKM,
- * buku tamu, agenda kegiatan) sengaja tidak dimasukkan, begitu pula halaman
+ * agenda kegiatan) sengaja tidak dimasukkan, begitu pula halaman
  * yang menuntut login seperti Hantu Banyu.
  */
 class SitemapGuestController extends Controller
@@ -44,7 +44,6 @@ class SitemapGuestController extends Controller
       "User-agent: *",
       "Disallow: /e-panel",
       "Disallow: /skm",
-      "Disallow: /buku-tamu",
       "",
       "Sitemap: " . route("guest.sitemap"),
       "",

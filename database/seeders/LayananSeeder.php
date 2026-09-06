@@ -23,7 +23,6 @@ class LayananSeeder extends Seeder
       ['id' => 1,             'nama' => 'gistaru',     'struktur_organisasi_id' => 6],
       ['id' => 2,             'nama' => 'sijakon',     'struktur_organisasi_id' => 5],
       ['id' => 3,             'nama' => 'jalan_peduli', 'struktur_organisasi_id' => 9],
-      ['id' => 4,             'nama' => 'buku_tamu',   'struktur_organisasi_id' => null],
       ['id' => 5,             'nama' => 'hantu_banyu', 'struktur_organisasi_id' => 10],
       ['id' => 6,             'nama' => 'sedot_tinja', 'struktur_organisasi_id' => 8],
     ];
