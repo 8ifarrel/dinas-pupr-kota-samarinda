@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Misi extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'misi';
+  protected $table = 'misi';
 
-    protected $primaryKey = 'id_misi';
+  protected $primaryKey = 'id_misi';
 
-    protected $fillable = [
-        'nomor_urut',
-        'deskripsi_misi',
-        'periode_mulai',
-        'periode_selesai',
-    ];
+  protected $fillable = [
+    'nomor_urut',
+    'deskripsi_misi',
+    'periode_mulai',
+    'periode_selesai',
+  ];
 }
 

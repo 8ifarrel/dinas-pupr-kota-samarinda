@@ -8,6 +8,7 @@ use App\Models\JalanPeduliPelapor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -92,7 +93,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                 $finalJenis = $request->input('jenis_kerusakan');
                 $finalTingkat = $request->input('tingkat_kerusakan');
                 $predictionSource = 'client_provided';
-                \Log::info("ML Prediction: Using client-provided results", [
+                Log::info("ML Prediction: Using client-provided results", [
                     'jenis' => $finalJenis,
                     'tingkat' => $finalTingkat,
                     'source' => 'client_tensorflowjs'
@@ -107,7 +108,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                     $finalTingkat = $predictions['tingkat'] ?? 'Tidak Terdeteksi';
                     $predictionSource = $predictions['method'] ?? 'server_tensorflow';
                     
-                    \Log::info("ML Prediction: Using server-side TensorFlow.js", [
+                    Log::info("ML Prediction: Using server-side TensorFlow.js", [
                         'jenis' => $finalJenis,
                         'tingkat' => $finalTingkat,
                         'confidence_jenis' => $predictions['confidence_jenis'] ?? 'unknown',
@@ -181,11 +182,11 @@ class JalanPeduliApiLaporanUserGuest extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Gagal membuat laporan dari API: ' . $e->getMessage(), [
+            Log::error('Gagal membuat laporan dari API: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
                 'request' => $request->except('foto_kerusakan')
             ]);
-            \Log::error('Gagal membuat laporan dari API (detail): ' . $e->getMessage(), [
+            Log::error('Gagal membuat laporan dari API (detail): ' . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->except('foto_kerusakan'),
@@ -266,7 +267,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
                 'data' => null
             ], 404);
         } catch (\Exception $e) {
-            \Log::error('Error retrieving laporan for API: ' . $e->getMessage(), ['exception' => $e]);
+            Log::error('Error retrieving laporan for API: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat mengambil data laporan.',
@@ -313,7 +314,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Error retrieving list of laporan for API: ' . $e->getMessage(), ['exception' => $e]);
+            Log::error('Error retrieving list of laporan for API: ' . $e->getMessage(), ['exception' => $e]);
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat mengambil daftar laporan.',
@@ -354,14 +355,14 @@ class JalanPeduliApiLaporanUserGuest extends Controller
             
             // Check jika service tersedia
             if (!$tensorFlowService->isAvailable()) {
-                \Log::warning('TensorFlow.js service tidak tersedia, menggunakan fallback');
+                Log::warning('TensorFlow.js service tidak tersedia, menggunakan fallback');
                 return $this->predictKerusakanFromImageFallback($imageFile);
             }
             
             // Prediksi menggunakan TensorFlow.js sama seperti di buat-laporan.js
             $result = $tensorFlowService->predict($imageFile);
             
-            \Log::info('Server TensorFlow.js prediction successful', [
+            Log::info('Server TensorFlow.js prediction successful', [
                 'jenis' => $result['jenis'],
                 'tingkat' => $result['tingkat'],
                 'confidence_jenis' => $result['confidence_jenis'],
@@ -372,7 +373,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
             return $result;
             
         } catch (\Exception $e) {
-            \Log::error('Server TensorFlow.js prediction error: ' . $e->getMessage());
+            Log::error('Server TensorFlow.js prediction error: ' . $e->getMessage());
             
             // Fallback ke rule-based jika TensorFlow.js gagal
             return $this->predictKerusakanFromImageFallback($imageFile);
@@ -399,7 +400,7 @@ class JalanPeduliApiLaporanUserGuest extends Controller
             ];
             
         } catch (\Exception $e) {
-            \Log::warning('Server-side ML prediction failed: ' . $e->getMessage());
+            Log::warning('Server-side ML prediction failed: ' . $e->getMessage());
             
             // Ultimate fallback
             return [

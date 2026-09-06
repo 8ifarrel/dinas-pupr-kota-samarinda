@@ -1,56 +1,80 @@
-// Create sample test image untuk testing API
-const { createCanvas } = require('canvas');
-const fs = require('fs');
+// Create sample test image untuk testing API (Jimp-only)
+const Jimp = require("jimp");
+const path = require("path");
 
-// Create a more realistic road damage image
-const canvas = createCanvas(300, 300);
-const ctx = canvas.getContext('2d');
+(async () => {
+    const width = 300,
+        height = 300;
+    const image = new Jimp(width, height, "#707070");
 
-// Background road texture
-ctx.fillStyle = '#707070';
-ctx.fillRect(0, 0, 300, 300);
+    // Road texture pattern
+    const texColor = Jimp.cssColorToHex("#606060");
+    for (let i = 0; i < width; i += 10) {
+        for (let dx = 0; dx < 5; dx++) {
+            const x = i + dx;
+            const y = 150;
+            if (x < width) image.setPixelColor(texColor, x, y);
+        }
+    }
 
-// Add road texture pattern
-for (let i = 0; i < 300; i += 10) {
-    ctx.fillStyle = '#606060';
-    ctx.fillRect(i, 150, 5, 2);
-}
+    // Crack pattern: draw polyline by plotting pixels (Bresenham-like simple steps)
+    const crackColor = Jimp.cssColorToHex("#303030");
+    const line = (x0, y0, x1, y1) => {
+        const dx = Math.abs(x1 - x0),
+            sx = x0 < x1 ? 1 : -1;
+        const dy = -Math.abs(y1 - y0),
+            sy = y0 < y1 ? 1 : -1;
+        let err = dx + dy,
+            x = x0,
+            y = y0;
+        while (true) {
+            if (x >= 0 && y >= 0 && x < width && y < height)
+                image.setPixelColor(crackColor, x, y);
+            if (x === x1 && y === y1) break;
+            const e2 = 2 * err;
+            if (e2 >= dy) {
+                err += dy;
+                x += sx;
+            }
+            if (e2 <= dx) {
+                err += dx;
+                y += sy;
+            }
+        }
+    };
+    // main crack
+    line(50, 100, 80, 120);
+    line(80, 120, 120, 110);
+    line(120, 110, 160, 140);
+    line(160, 140, 200, 130);
+    line(200, 130, 250, 160);
+    // secondary cracks
+    line(100, 80, 130, 200);
+    line(180, 70, 210, 220);
 
-// Add crack pattern (more realistic)
-ctx.strokeStyle = '#303030';
-ctx.lineWidth = 3;
-ctx.beginPath();
-ctx.moveTo(50, 100);
-ctx.lineTo(80, 120);
-ctx.lineTo(120, 110);
-ctx.lineTo(160, 140);
-ctx.lineTo(200, 130);
-ctx.lineTo(250, 160);
-ctx.stroke();
+    // Potholes as filled circles
+    const fillCircle = (cx, cy, r, hex) => {
+        for (let y = -r; y <= r; y++) {
+            for (let x = -r; x <= r; x++) {
+                if (x * x + y * y <= r * r) {
+                    const px = cx + x,
+                        py = cy + y;
+                    if (px >= 0 && py >= 0 && px < width && py < height)
+                        image.setPixelColor(hex, px, py);
+                }
+            }
+        }
+    };
+    const hole = Jimp.cssColorToHex("#202020");
+    fillCircle(70, 200, 12, hole);
+    fillCircle(180, 250, 8, hole);
 
-// Add secondary cracks
-ctx.lineWidth = 2;
-ctx.beginPath();
-ctx.moveTo(100, 80);
-ctx.lineTo(130, 200);
-ctx.stroke();
-
-ctx.beginPath();
-ctx.moveTo(180, 70);
-ctx.lineTo(210, 220);
-ctx.stroke();
-
-// Add some holes/potholes
-ctx.fillStyle = '#202020';
-ctx.beginPath();
-ctx.arc(70, 200, 12, 0, 2 * Math.PI);
-ctx.fill();
-
-ctx.beginPath();
-ctx.arc(180, 250, 8, 0, 2 * Math.PI);
-ctx.fill();
-
-// Save as test image for API
-const buffer = canvas.toBuffer('image/jpeg', { quality: 0.8 });
-fs.writeFileSync('../public/test-road-damage.jpg', buffer);
-console.log('API test image created: public/test-road-damage.jpg');
+    const outPath = path.join(
+        __dirname,
+        "..",
+        "public",
+        "test-road-damage.jpg"
+    );
+    await image.quality(80).writeAsync(outPath);
+    console.log("API test image created:", outPath);
+})();

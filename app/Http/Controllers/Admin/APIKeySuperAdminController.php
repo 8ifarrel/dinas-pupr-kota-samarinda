@@ -3,65 +3,60 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-// use App\Models\APIKey;
 
+/**
+ * Halaman kelola kunci API. Kunci itu sendiri di-CRUD lewat AJAX ke
+ * App\Http\Controllers\Api\JalanPeduliApiKeyController /
+ * App\Http\Controllers\Api\HantuBanyuApiKeyController (lihat routes/api.php),
+ * jadi controller ini hanya bertugas menampilkan halamannya.
+ */
 class APIKeySuperAdminController extends Controller
 {
-    /**
-     * Menampilkan data API key yang ada di sistem.
-     */
-    public function index()
-    {
-        $page_title = "API Key";
-        $page_description = "Kelola API Key yang digunakan untuk mengakses API dari sistem ini.";
-        // TODO: Panggil data API Key dari model
-        // $api_key = 
+  public function indexJalanPeduli()
+  {
+    return view('admin.pages.super-admin.api-key.jalan-peduli.index', [
+      'page_title' => 'API Key Jalan Peduli',
+      'page_description' => 'Kelola API Key yang digunakan untuk mengirim laporan Jalan Peduli lewat API.',
+    ]);
+  }
 
-        return view('admin.pages.super-admin.api-key.index', [
-            'page_title' => $page_title,
-            'page_description' => $page_description,
-            // TODO: Uncomment ini
-            // 'api_key' => $api_key
-        ]);
-    }
+  public function createJalanPeduli()
+  {
+    return view('admin.pages.super-admin.api-key.jalan-peduli.create', [
+      'page_title' => 'Buat API Key Jalan Peduli',
+      'page_description' => 'Tambah API Key baru untuk mengakses API Jalan Peduli.',
+    ]);
+  }
 
-    /**
-     * Menampilkan form untuk membuat API key.
-     */
-    public function create()
-    {
-        $page_title = "Buat API Key";
-        $page_description = "Tambah API Key baru untuk mengakses API dari sistem ini.";
+  public function indexHantuBanyu()
+  {
+    return view('admin.pages.super-admin.api-key.hantu-banyu.index', [
+      'page_title' => 'API Key Hantu Banyu',
+      'page_description' => 'Kelola API Key yang digunakan untuk mengirim laporan Hantu Banyu lewat API.',
+    ]);
+  }
 
-        return view('admin.pages.super-admin.api-key.create', [
-            'page_title' => $page_title,
-            'page_description' => $page_description,
-        ]);
-    }
+  public function createHantuBanyu()
+  {
+    return view('admin.pages.super-admin.api-key.hantu-banyu.create', [
+      'page_title' => 'Buat API Key Hantu Banyu',
+      'page_description' => 'Tambah API Key baru untuk mengakses API Hantu Banyu.',
+    ]);
+  }
 
-    /**
-     * Memperbarui status API
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     */
-    public function update(Request $request, $id)
-    {
-        // TODO: Validasi data yang dikirim dari form
-        // TODO: Update data API berdasarkan ID
-        // TODO: Redirect atau berikan response setelah update
-    }
+  public function indexAkunKelurahan()
+  {
+    return view('admin.pages.super-admin.api-key.akun-kelurahan.index', [
+      'page_title' => 'API Key Akun Kelurahan',
+      'page_description' => 'Kelola API Key yang digunakan untuk membaca dan memverifikasi akun kelurahan lewat API.',
+    ]);
+  }
 
-    /**
-     * Menghapus data API dari database berdasarkan ID.
-     *
-     * @param  int  $id
-     */
-    public function destroy($id)
-    {
-        // TODO: Validasi data yang dikirim dari form
-        // TODO: Hapus data API berdasarkan ID
-        // TODO: Redirect atau berikan response setelah penghapusan
-    }
+  public function createAkunKelurahan()
+  {
+    return view('admin.pages.super-admin.api-key.akun-kelurahan.create', [
+      'page_title' => 'Buat API Key Akun Kelurahan',
+      'page_description' => 'Tambah API Key baru untuk mengakses API akun kelurahan.',
+    ]);
+  }
 }

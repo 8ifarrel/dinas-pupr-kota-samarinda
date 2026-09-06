@@ -10,113 +10,113 @@ use Illuminate\Support\Str;
 
 class PengumumanAdminController extends Controller
 {
-	public function index()
-	{
-		$pengumuman = Pengumuman::latest()->get();
-		$page_title = "Pengumuman";
-		$page_description = "Kelola daftar pengumuman resmi Dinas PUPR Kota Samarinda.";
+  public function index()
+  {
+    $pengumuman = Pengumuman::latest()->get();
+    $page_title = "Pengumuman";
+    $page_description = "Kelola daftar pengumuman resmi Dinas PUPR Kota Samarinda.";
 
-		return view('admin.pages.pengumuman.index', [
-			'pengumuman' => $pengumuman,
-			'page_title' => $page_title,
-			'page_description' => $page_description,
-		]);
-	}
+    return view('admin.pages.pengumuman.index', [
+      'pengumuman' => $pengumuman,
+      'page_title' => $page_title,
+      'page_description' => $page_description,
+    ]);
+  }
 
-	public function create()
-	{
-		$page_title = "Pengumuman";
-		$page_description = "Buat pengumuman baru beserta lampiran jika diperlukan.";
+  public function create()
+  {
+    $page_title = "Pengumuman";
+    $page_description = "Buat pengumuman baru beserta lampiran jika diperlukan.";
 
-		return view('admin.pages.pengumuman.create', [
-			'page_title' => $page_title,
-			'page_description' => $page_description,
-		]);
-	}
+    return view('admin.pages.pengumuman.create', [
+      'page_title' => $page_title,
+      'page_description' => $page_description,
+    ]);
+  }
 
-	public function store(Request $request)
-	{
-		$request->validate([
-			'judul_pengumuman' => 'required|string|max:255',
-			'perihal' => 'required|string',
-			'file_lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-		]);
+  public function store(Request $request)
+  {
+    $request->validate([
+      'judul_pengumuman' => 'required|string|max:255',
+      'perihal' => 'required|string',
+      'file_lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+    ]);
 
-		$slug = Str::slug($request->judul_pengumuman);
-		$fileLampiranPath = null;
-		if ($request->hasFile('file_lampiran')) {
-			$file = $request->file('file_lampiran');
-			$fileName = $slug . '.' . $file->getClientOriginalExtension();
-			$fileLampiranPath = Storage::disk('public')->putFileAs('Pengumuman', $file, $fileName);
-		}
+    $slug = Str::slug($request->judul_pengumuman);
+    $fileLampiranPath = null;
+    if ($request->hasFile('file_lampiran')) {
+      $file = $request->file('file_lampiran');
+      $fileName = $slug . '.' . $file->getClientOriginalExtension();
+      $fileLampiranPath = Storage::disk('public')->putFileAs('Pengumuman', $file, $fileName);
+    }
 
-		Pengumuman::create([
-			'judul_pengumuman' => $request->judul_pengumuman,
-			'slug_pengumuman' => $slug,
-			'perihal' => $request->perihal,
-			'file_lampiran' => $fileLampiranPath,
-			'views_count' => 0,
-		]);
+    Pengumuman::create([
+      'judul_pengumuman' => $request->judul_pengumuman,
+      'slug_pengumuman' => $slug,
+      'perihal' => $request->perihal,
+      'file_lampiran' => $fileLampiranPath,
+      'views_count' => 0,
+    ]);
 
-		return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil ditambahkan.');
-	}
+    return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil ditambahkan.');
+  }
 
-	public function edit($id)
-	{
-		$pengumuman = Pengumuman::findOrFail($id);
-		$page_title = "Edit Pengumuman";
-		$page_description = "Ubah informasi atau lampiran dari pengumuman yang sudah ada.";
+  public function edit($id)
+  {
+    $pengumuman = Pengumuman::findOrFail($id);
+    $page_title = "Edit Pengumuman";
+    $page_description = "Ubah informasi atau lampiran dari pengumuman yang sudah ada.";
 
-		return view('admin.pages.pengumuman.edit', [
-			'pengumuman' => $pengumuman,
-			'page_title' => $page_title,
-			'page_description' => $page_description,
-		]);
-	}
+    return view('admin.pages.pengumuman.edit', [
+      'pengumuman' => $pengumuman,
+      'page_title' => $page_title,
+      'page_description' => $page_description,
+    ]);
+  }
 
-	public function update(Request $request, $id)
-	{
-		$request->validate([
-			'judul_pengumuman' => 'required|string|max:255',
-			'perihal' => 'required|string',
-			'file_lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-		]);
+  public function update(Request $request, $id)
+  {
+    $request->validate([
+      'judul_pengumuman' => 'required|string|max:255',
+      'perihal' => 'required|string',
+      'file_lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+    ]);
 
-		$pengumuman = Pengumuman::findOrFail($id);
-		$slug = Str::slug($request->judul_pengumuman);
-		$fileLampiranPath = $pengumuman->file_lampiran;
+    $pengumuman = Pengumuman::findOrFail($id);
+    $slug = Str::slug($request->judul_pengumuman);
+    $fileLampiranPath = $pengumuman->file_lampiran;
 
-		if ($request->hasFile('file_lampiran')) {
-			if ($fileLampiranPath) {
-				Storage::disk('public')->delete($fileLampiranPath);
-			}
+    if ($request->hasFile('file_lampiran')) {
+      if ($fileLampiranPath) {
+        Storage::disk('public')->delete($fileLampiranPath);
+      }
 
-			$file = $request->file('file_lampiran');
-			$fileName = $slug . '.' . $file->getClientOriginalExtension();
-			$fileLampiranPath = Storage::disk('public')->putFileAs('Pengumuman', $file, $fileName);
-		}
+      $file = $request->file('file_lampiran');
+      $fileName = $slug . '.' . $file->getClientOriginalExtension();
+      $fileLampiranPath = Storage::disk('public')->putFileAs('Pengumuman', $file, $fileName);
+    }
 
-		$pengumuman->update([
-			'judul_pengumuman' => $request->judul_pengumuman,
-			'slug_pengumuman' => $slug,
-			'perihal' => $request->perihal,
-			'file_lampiran' => $fileLampiranPath,
-		]);
+    $pengumuman->update([
+      'judul_pengumuman' => $request->judul_pengumuman,
+      'slug_pengumuman' => $slug,
+      'perihal' => $request->perihal,
+      'file_lampiran' => $fileLampiranPath,
+    ]);
 
-		return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil diperbarui.');
-	}
+    return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil diperbarui.');
+  }
 
-	public function destroy($id)
-	{
-		$pengumuman = Pengumuman::findOrFail($id);
+  public function destroy($id)
+  {
+    $pengumuman = Pengumuman::findOrFail($id);
 
-		if ($pengumuman->file_lampiran) {
-			Storage::disk('public')->delete($pengumuman->file_lampiran);
-		}
+    if ($pengumuman->file_lampiran) {
+      Storage::disk('public')->delete($pengumuman->file_lampiran);
+    }
 
-		$pengumuman->delete();
+    $pengumuman->delete();
 
-		return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil dihapus.');
-	}
+    return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil dihapus.');
+  }
 }
 

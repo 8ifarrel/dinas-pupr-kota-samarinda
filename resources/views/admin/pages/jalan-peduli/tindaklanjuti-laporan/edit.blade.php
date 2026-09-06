@@ -213,12 +213,40 @@
                 @endforeach
               </select>
             </div>
+            
             <div id="keterangan-group" style="display: none;">
               <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">Keterangan</label>
               <textarea name="keterangan" id="keterangan" rows="4"
                 class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Masukkan keterangan...">{{ $laporan->keterangan }}</textarea>
             </div>
+
+            {{-- Di dalam form edit, setelah bagian foto_lanjutan --}}
+            <div id="dokumen-petugas-group" style="display: none;">
+              <label for="dokumen_petugas" class="block text-sm font-medium text-gray-700 mb-2">Unggah Dokumen Petugas</label>
+              <input type="file" name="dokumen_petugas" id="dokumen_petugas" accept=".pdf,.doc,.docx">
+              <p class="mt-2 text-xs text-gray-500">
+                Anda dapat mengunggah dokumen terkait penanganan laporan di sini (PDF, DOC, DOCX maks 10MB).
+              </p>
+              
+              {{-- Tampilkan dokumen yang sudah ada jika ada --}}
+              @if($laporan->dokumen_petugas)
+              <div class="mt-3 bg-gray-50 rounded-lg border border-gray-200 p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-file-pdf text-red-500 text-3xl mr-4"></i>
+                  <div>
+                    <p class="text-sm text-gray-600 mb-1">Dokumen Petugas Terlampir</p>
+                    <a href="{{ Storage::url('dokumen_petugas/' . $laporan->dokumen_petugas) }}" 
+                      target="_blank" 
+                      class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                      <i class="fas fa-download mr-2"></i> Lihat Dokumen
+                    </a>
+                  </div>
+                </div>
+              </div>
+              @endif
+            </div>
+
             <div id="foto-group" style="display: none;">
               <label for="foto" class="block text-sm font-medium text-gray-700 mb-2">Unggah Foto Bukti</label>
               <input type="file" name="foto_lanjutan" id="foto" accept="image/png, image/jpeg">
@@ -226,6 +254,7 @@
                 Anda dapat mengunggah foto bukti pengerjaan atau survei di sini (JPG, PNG maks 3MB).
               </p>
             </div>
+
             <div>
               <label for="tingkat_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Tingkat Kerusakan</label>
               <select name="tingkat_kerusakan" id="tingkat_kerusakan" required
@@ -235,6 +264,7 @@
                 <option value="berat" {{ strtolower($laporan->tingkat_kerusakan) == 'berat' ? 'selected' : '' }}>Berat</option>
               </select>
             </div>
+
             <div>
               <label for="jenis_kerusakan" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kerusakan</label>
               <select name="jenis_kerusakan" id="jenis_kerusakan" required
@@ -392,22 +422,56 @@
         });
       }
 
+      const dokumenPetugasInput = document.getElementById('dokumen_petugas');
+      if (dokumenPetugasInput) {
+        FilePond.create(dokumenPetugasInput, {
+          labelIdle: `Seret & Lepas file atau <span class="filepond--label-action">Jelajahi</span>`,
+          labelFileProcessingComplete: 'Upload Selesai',
+          labelTapToUndo: 'ketuk untuk membatalkan',
+          labelTapToCancel: 'ketuk untuk membatalkan',
+          
+          allowFileTypeValidation: false,
+          acceptedFileTypes: ['application/pdf', '.pdf', 'application/msword', '.doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
+        
+          labelFileTypeNotAllowed: 'Jenis file tidak valid. Hanya file PDF, DOC, dan DOCX yang diperbolehkan.',
+          fileValidateTypeLabelExpectedTypes: 'Hanya menerima {allButLastType} atau {lastType}',
+          maxFileSize: '10MB',
+          labelMaxFileSizeExceeded: 'File terlalu besar',
+          labelMaxFileSize: 'Ukuran file maksimum adalah {filesize}',
+          name: 'dokumen_petugas',
+          server: null,
+          storeAsFile: true,
+        });
+      }
+
       // Conditional fields logic
       const statusSelect = document.getElementById('status');
       const keteranganGroup = document.getElementById('keterangan-group');
       const fotoGroup = document.getElementById('foto-group');
+
+      const dokumenPetugasGroup = document.getElementById('dokumen-petugas-group');
+      
       function toggleFields() {
+        const dokumenPetugasRequiredStatuses = ['2', '3', '4', '5'];
         const allowedStatuses = ['2', '3', '4', '5', '7'];
         const isAllowed = allowedStatuses.includes(statusSelect.value);
         keteranganGroup.style.display = isAllowed ? 'block' : 'none';
         const photoRequiredStatuses = ['3', '4', '5'];
         const photoFieldIsVisible = photoRequiredStatuses.includes(statusSelect.value);
         fotoGroup.style.display = photoFieldIsVisible ? 'block' : 'none';
+
+        // Tampilkan field dokumen petugas hanya untuk status tertentu
+        const dokumenPetugasFieldIsVisible = dokumenPetugasRequiredStatuses.includes(statusSelect.value);
+        dokumenPetugasGroup.style.display = dokumenPetugasFieldIsVisible ? 'block' : 'none';
+
         if (!isAllowed) {
           document.getElementById('keterangan').value = '';
         }
         if (!photoFieldIsVisible && window.FilePond && fotoInput && fotoInput._pond) {
           fotoInput._pond.removeFiles();
+        }
+        if (!dokumenPetugasFieldIsVisible && window.FilePond && dokumenPetugasInput && dokumenPetugasInput._pond) {
+          dokumenPetugasInput._pond.removeFiles();
         }
       }
       statusSelect.addEventListener('change', toggleFields);

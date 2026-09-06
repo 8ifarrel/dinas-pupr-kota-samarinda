@@ -39,7 +39,7 @@
                                 class="block w-full pl-14 pr-5 py-4 border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 bg-white text-slate-700 placeholder-slate-400 transition-all duration-300 ease-in-out hover:border-blue-300 hover:shadow-md"
                                 id="search" name="search" placeholder="Cari berdasarkan kata kunci..."
                                 value="{{ request('search') }}">
-                    </div>
+                    </div> 
                 </div>
             </div>
         </form>

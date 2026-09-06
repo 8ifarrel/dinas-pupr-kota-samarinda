@@ -8,34 +8,34 @@ use App\Models\Misi;
 
 class VisiDanMisiGuestController extends Controller
 {
-    public string $page_context = 'Visi dan Misi';
+  public string $page_context = 'Visi dan Misi';
 
-    public function index()
-    {
-        $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_subtitle = "Profil";
-        $page_title = "Visi dan Misi";
+  public function index()
+  {
+    $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+    $page_subtitle = "Profil";
+    $page_title = "Visi dan Misi";
 
-        $visi = Visi::select(
-            'deskripsi_visi',
-            'periode_mulai',
-            'periode_selesai'
-        )->first();
+    $visi = Visi::select(
+      'deskripsi_visi',
+      'periode_mulai',
+      'periode_selesai'
+    )->first();
 
-        $misi = Misi::select(
-            'deskripsi_misi',
-            'periode_mulai',
-            'periode_selesai'
-        )->orderBy('nomor_urut')->get();
+    $misi = Misi::select(
+      'deskripsi_misi',
+      'periode_mulai',
+      'periode_selesai'
+    )->orderBy('nomor_urut')->get();
 
-        return view('guest.pages.profil.visi-dan-misi.index', [
-            'meta_description' => $meta_description,
-            'page_title' => $page_title,
-            'page_subtitle' => $page_subtitle,
-            'visi' => $visi,
-            'misi' => $misi,
-            'page_context' => $this->page_context, 
-        ]);
-    }
+    return view('guest.pages.profil.visi-dan-misi.index', [
+      'meta_description' => $meta_description,
+      'page_title' => $page_title,
+      'page_subtitle' => $page_subtitle,
+      'visi' => $visi,
+      'misi' => $misi,
+      'page_context' => $this->page_context, 
+    ]);
+  }
 }
 

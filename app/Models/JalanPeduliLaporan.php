@@ -33,6 +33,7 @@ class JalanPeduliLaporan extends Model
         'keterangan',
         'foto_lanjutan',
         'dokumen_pendukung',
+        'dokumen_petugas',
         'status_id',
         'jenis_kerusakan',
         'tingkat_kerusakan',

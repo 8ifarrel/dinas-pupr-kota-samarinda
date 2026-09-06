@@ -13,6 +13,25 @@ use App\Models\StrukturOrganisasiSlider;
 
 class SusunanOrganisasiAdminController extends Controller
 {
+  public function index()
+  {
+    $page_title = "Struktur Organisasi";
+    $page_description = 'Kelola susunan organisasi Dinas PUPR Kota Samarinda.';
+
+    // Kepala Dinas sudah punya halaman kelola sendiri (menu Profil > Kepala
+    // Dinas), jadi tidak perlu tampil lagi di daftar Susunan Organisasi ini.
+    $susunan_organisasi = SusunanOrganisasi::with('parent')
+      ->where('id_susunan_organisasi', '!=', 0)
+      ->where('kelompok_susunan_organisasi', '!=', 'Kepala Dinas')
+      ->get();
+
+    return view('admin.pages.struktur-organisasi.susunan-organisasi.index', [
+      'page_title' => $page_title,
+      'page_description' => $page_description,
+      'susunan_organisasi' => $susunan_organisasi,
+    ]);
+  }
+
   public function create()
   {
     $page_title = "Tambah Susunan Organisasi";
@@ -54,7 +73,7 @@ class SusunanOrganisasiAdminController extends Controller
 
     // Jika subbagian/fungsional, skip struktur_organisasi, diagram, slider
     if ($isSubbagian || $isFungsional) {
-      return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Susunan Organisasi berhasil ditambahkan.');
+      return redirect()->route('admin.struktur-organisasi.susunan-organisasi.index')->with('success', 'Susunan Organisasi berhasil ditambahkan.');
     }
 
     // --- Handle Struktur Organisasi ---
@@ -113,7 +132,7 @@ class SusunanOrganisasiAdminController extends Controller
       }
     }
 
-    return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Struktur Organisasi berhasil ditambahkan.');
+    return redirect()->route('admin.struktur-organisasi.susunan-organisasi.index')->with('success', 'Struktur Organisasi berhasil ditambahkan.');
   }
 
   public function edit($id)
@@ -181,7 +200,7 @@ class SusunanOrganisasiAdminController extends Controller
         // Hapus struktur_organisasi
         $susunan->strukturOrganisasi->delete();
       }
-      return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Susunan Organisasi berhasil diperbarui.');
+      return redirect()->route('admin.struktur-organisasi.susunan-organisasi.index')->with('success', 'Susunan Organisasi berhasil diperbarui.');
     }
 
     // --- Handle Struktur Organisasi ---
@@ -263,7 +282,7 @@ class SusunanOrganisasiAdminController extends Controller
       }
     }
 
-    return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Struktur Organisasi berhasil diperbarui.');
+    return redirect()->route('admin.struktur-organisasi.susunan-organisasi.index')->with('success', 'Struktur Organisasi berhasil diperbarui.');
   }
 
   public function destroy($id)
@@ -271,6 +290,6 @@ class SusunanOrganisasiAdminController extends Controller
     $susunan = SusunanOrganisasi::findOrFail($id);
     $susunan->delete();
 
-    return redirect()->route('admin.struktur-organisasi.index')->with('success', 'Struktur Organisasi berhasil dihapus.');
+    return redirect()->route('admin.struktur-organisasi.susunan-organisasi.index')->with('success', 'Struktur Organisasi berhasil dihapus.');
   }
 }

@@ -7,6 +7,7 @@ use App\Models\JalanPeduliLaporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
 {
@@ -100,6 +101,7 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             'jenis_kerusakan'  => 'nullable|string|max:255',
             'tingkat_kerusakan'=> 'nullable|string|max:255',
             'foto_lanjutan'    => 'nullable|file|mimes:jpeg,png,jpg,webp,pdf|max:10240',
+            'dokumen_petugas'  => 'nullable|file|mimes:pdf,doc,docx|max:10240', 
         ]);
 
         if ($request->hasFile('foto_lanjutan')) {
@@ -107,6 +109,13 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('foto_lanjutan', $filename, 'public');
             $laporan->foto_lanjutan = $filename;
+        }
+
+        if ($request->hasFile('dokumen_petugas')) {
+            $file = $request->file('dokumen_petugas');
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('dokumen_petugas', $filename, 'public');
+            $laporan->dokumen_petugas = $filename;
         }
 
         $laporan->status_id = $request->status_id;
@@ -133,6 +142,9 @@ class JalanPeduliTindaklanjutiLaporanAdminController extends Controller
         }
         if ($laporan->foto_lanjutan) {
             Storage::disk('public')->delete('foto_lanjutan/' . $laporan->foto_lanjutan);
+        }
+        if ($laporan->dokumen_petugas) {
+            Storage::disk('public')->delete('dokumen_petugas/' . $laporan->dokumen_petugas);
         }
         $laporan->delete();
         return redirect()->route('admin.jalan-peduli.tindaklanjuti-laporan.index')->with('success', 'Laporan berhasil dihapus.');

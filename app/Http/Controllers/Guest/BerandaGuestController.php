@@ -11,75 +11,83 @@ use App\Models\KepalaDinas;
 use App\Models\AgendaKegiatan;
 use App\Models\Visitor;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class BerandaGuestController extends Controller
 {
-    public string $page_context = 'Beranda';
+  public string $page_context = 'Beranda';
 
-    public function index()
-    {
-        $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_title = "Beranda";
+  public function index()
+  {
+    $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+    $page_title = "Beranda";
 
-        $berita = Berita::with('kategori.susunanOrganisasi')
-            ->select(
-                'judul_berita',
-                'slug_berita',
-                'foto_berita',
-                'id_berita_kategori',
-                'created_at'
-            )
-            ->orderBy('created_at', 'desc')
-            ->take(6)
-            ->get();
+    $berita = Berita::with('kategori.susunanOrganisasi')
+      ->select(
+        'judul_berita',
+        'slug_berita',
+        'foto_berita',
+        'id_berita_kategori',
+        'created_at'
+      )
+      ->orderBy('created_at', 'desc')
+      ->take(6)
+      ->get();
 
 
-        $slider = Slider::select(
-            'foto_slider',
-        )->where('is_visible', true)->orderBy('nomor_urut_slider')->get();
+    $slider = Slider::select(
+      'foto_slider',
+    )->where('is_visible', true)->orderBy('nomor_urut_slider')->get();
 
-        $struktur_organisasi = StrukturOrganisasi::with('susunanOrganisasi')->select(
-            'id_susunan_organisasi',
-            'ikon_jabatan',
-            'nomor_urut_jabatan'
-        )->get();
+    $struktur_organisasi = StrukturOrganisasi::with('susunanOrganisasi')->select(
+      'id_susunan_organisasi',
+      'ikon_jabatan',
+      'nomor_urut_jabatan'
+    )->get();
 
-        $kepala_dinas = KepalaDinas::with('susunanOrganisasi')
-            ->where('id_susunan_organisasi', 1)
-            ->first();
+    $kepala_dinas = KepalaDinas::with('susunanOrganisasi')
+      ->where('id_susunan_organisasi', 1)
+      ->first();
 
-        $partner = Partner::select(
-            'nama_partner',
-            'foto_partner',
-            'url_partner',
-        )->get();
+    $partner = Partner::select(
+      'nama_partner',
+      'foto_partner',
+      'url_partner',
+    )->get();
 
-        $today = Carbon::today();
-        $thisWeek = Carbon::now()->startOfWeek();
-        $thisMonth = Carbon::now()->startOfMonth();
+    $statistik_pengunjung = Cache::remember('statistik_pengunjung_beranda', now()->addHours(3), function () {
+      $today = Carbon::today();
+      $thisMonth = Carbon::now()->startOfMonth();
 
-        $statistik_pengunjung = [
-            'today' => Visitor::whereDate('first_visit_at', $today)->count(),
-            'this_week' => Visitor::where('first_visit_at', '>=', $thisWeek)->count(),
-            'this_month' => Visitor::where('first_visit_at', '>=', $thisMonth)->count(),
-        ];
+      // Awal minggu kalender (Senin) bisa jatuh di bulan sebelumnya (mis. 31
+      // Agustus untuk minggu yang memuat 1-6 September). Dibatasi ke awal
+      // bulan supaya "minggu ini" selalu bagian dari "bulan ini", bukan
+      // window terpisah yang bisa melebihi hitungan bulan.
+      $thisWeek = Carbon::now()->startOfWeek()->max($thisMonth);
 
-        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
-        $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
-        $agenda_kegiatan = AgendaKegiatan::whereBetween('tanggal', [$startOfWeek, $endOfWeek])
-            ->orderBy('tanggal')->orderBy('waktu_mulai')->get();
+      return [
+        'today' => Visitor::whereDate('first_visit_at', $today)->count(),
+        'this_week' => Visitor::where('first_visit_at', '>=', $thisWeek)->count(),
+        'this_month' => Visitor::where('first_visit_at', '>=', $thisMonth)->count(),
+      ];
+    });
 
-        return view('guest.pages.beranda.index', [
-            'meta_description' => $meta_description,
-            'page_title' => $page_title,
-            'berita' => $berita,
-            'slider' => $slider,
-            'struktur_organisasi' => $struktur_organisasi,
-            'partner' => $partner,
-            'kepala_dinas' => $kepala_dinas,
-            'statistik_pengunjung' => $statistik_pengunjung,
-            'agenda_kegiatan' => $agenda_kegiatan,
-            'page_context' => $this->page_context,
-        ]);
-    }
+    $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+    $endOfWeek = Carbon::now()->endOfWeek()->format('Y-m-d');
+    $agenda_kegiatan = AgendaKegiatan::whereBetween('tanggal', [$startOfWeek, $endOfWeek])
+      ->orderBy('tanggal')->orderBy('waktu_mulai')->get();
+
+    return view('guest.pages.beranda.index', [
+      'meta_description' => $meta_description,
+      'page_title' => $page_title,
+      'berita' => $berita,
+      'slider' => $slider,
+      'struktur_organisasi' => $struktur_organisasi,
+      'partner' => $partner,
+      'kepala_dinas' => $kepala_dinas,
+      'statistik_pengunjung' => $statistik_pengunjung,
+      'agenda_kegiatan' => $agenda_kegiatan,
+      'page_context' => $this->page_context,
+    ]);
+  }
 }

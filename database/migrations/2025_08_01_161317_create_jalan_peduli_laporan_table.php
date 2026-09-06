@@ -36,6 +36,7 @@ return new class extends Migration {
             $table->text('keterangan')->nullable();
             $table->string('foto_lanjutan')->nullable();
             $table->string('dokumen_pendukung')->nullable();
+            $table->string('dokumen_petugas')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->foreign('status_id')
                 ->references('status_id')

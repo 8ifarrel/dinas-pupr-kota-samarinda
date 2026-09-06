@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeAdBlockWarningBtn = document.getElementById('closeAdBlockModalBtn');
     
     // --- URL GOOGLE DRIVE (Disesuaikan untuk Embedding) ---
-    const fileId = '1hsZQWloo3d5KgUfPO0MvOvowUkUqErPg';
+    const fileId = '1CFO6PB-hM5kzS9hNgH-b1GG_xP6-iHHH';
     const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
 
     // --- LOGIKA DETEKSI AD BLOCKER (Tidak diubah) ---
