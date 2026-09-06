@@ -85,10 +85,14 @@ class RecordStatistikPengunjung
 
     if (!$isKnownVisitor) {
       try {
-        $token = env('IPINFO_TOKEN');
+        // Dibaca lewat config, bukan env() langsung. Dengan env(), begitu
+        // "php artisan config:cache" dijalankan di produksi nilainya menjadi
+        // null, sehingga seluruh penyaring lalu lintas cloud di bawah ini
+        // mati tanpa suara dan bot ikut terhitung sebagai pengunjung.
+        $token = config('services.ipinfo.token');
         if ($token) {
           $ip = $request->ip();
-          $url = "https://api.ipinfo.io/lite/{$ip}?token={$token}";
+          $url = rtrim(config('services.ipinfo.base_url'), '/') . "/{$ip}?token={$token}";
           $cacheKey = "ipinfo:{$ip}";
 
           // Cache hasil sukses lebih lama, hasil gagal dicoba lagi lebih cepat

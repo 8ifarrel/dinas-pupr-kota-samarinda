@@ -18,7 +18,8 @@ class GeocodingController extends Controller
     }
 
     try {
-      $url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={$lat}&lon={$lon}&addressdetails=1";
+      $baseUrl = rtrim(config('services.nominatim.base_url'), '/');
+      $url = "{$baseUrl}/reverse?format=jsonv2&lat={$lat}&lon={$lon}&addressdetails=1";
 
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
@@ -87,7 +88,7 @@ class GeocodingController extends Controller
       $query = "[out:json][timeout:10];way(around:{$radius},{$lat},{$lon})[\"highway\"~\"^({$jenisJalan})$\"][\"name\"];out tags geom;";
 
       $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, 'https://overpass-api.de/api/interpreter');
+      curl_setopt($ch, CURLOPT_URL, config('services.overpass.url'));
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['data' => $query]));
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

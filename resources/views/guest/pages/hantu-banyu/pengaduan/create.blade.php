@@ -838,7 +838,7 @@
             );
             out tags center;
           `;
-          fetch('https://overpass-api.de/api/interpreter', {
+          fetch(@json(config('services.overpass.url')), {
               method: 'POST',
               body: overpassQuery,
               headers: {

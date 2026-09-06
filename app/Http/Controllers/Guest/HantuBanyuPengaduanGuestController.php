@@ -425,7 +425,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     try {
       $res = Http::withHeaders([
         'User-Agent' => 'dinas-pupr-kota-samarinda/1.0 (hantu-banyu)',
-      ])->timeout(8)->get('https://nominatim.openstreetmap.org/reverse', [
+      ])->timeout(8)->get(rtrim(config('services.nominatim.base_url'), '/') . '/reverse', [
         'format' => 'jsonv2',
         'lat' => $lat,
         'lon' => $lon,
