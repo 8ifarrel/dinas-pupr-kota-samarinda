@@ -42,6 +42,7 @@ use App\Http\Controllers\Guest\AlbumKegiatanGuestController;
 use App\Http\Controllers\Guest\AgendaKegiatanGuestController;
 use App\Http\Controllers\Guest\KebijakanPrivasiGuestController;
 use App\Http\Controllers\Guest\JalanPeduliLaporanGuestController;
+use App\Http\Controllers\Guest\SedotTinjaGuestController;
 use App\Http\Controllers\Guest\HantuBanyuPengaduanGuestController;
 use App\Http\Controllers\Guest\HantuBanyuPetaSebaranGuestController;
 use App\Http\Controllers\Guest\LoginKelurahanGuestController;
@@ -230,6 +231,25 @@ Route::prefix('jalan-peduli')->group(function () {
 });
 
 /**
+ * Sedot Tinja (SILALAD - Sistem Informasi Layanan Limbah Domestik)
+ */
+Route::prefix('sedot-tinja')->group(function () {
+  Route::get('/', [SedotTinjaGuestController::class, 'index'])
+    ->name('guest.sedot-tinja.index');
+  Route::get('/buat-laporan', [SedotTinjaGuestController::class, 'create'])
+    ->name('guest.sedot-tinja.create');
+  Route::post('/kirim-laporan', [SedotTinjaGuestController::class, 'store'])
+    ->name('guest.sedot-tinja.store');
+  Route::get('/status', [SedotTinjaGuestController::class, 'status'])
+    ->name('guest.sedot-tinja.status');
+  Route::get('/success', [SedotTinjaGuestController::class, 'success'])
+    ->name('guest.sedot-tinja.success');
+  Route::get('/{id}', [SedotTinjaGuestController::class, 'show'])
+    ->whereNumber('id')
+    ->name('guest.sedot-tinja.show');
+});
+
+/**
  * Hantu Banyu (Pemeliharaan Saluran Drainase dan Irigasi)
  *
  * Redirect permanen dari URL lama /drainase-irigasi/* agar tautan yang
@@ -348,6 +368,7 @@ use App\Http\Controllers\Admin\HantuBanyuAdminController;
 use App\Http\Controllers\Admin\HantuBanyuLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuSKMAdminController;
+use App\Http\Controllers\Admin\SedotTinjaAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\AkunKelurahanSuperAdminController;
@@ -524,6 +545,34 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->name('admin.hantu-banyu.skm.index');
       });
 
+    });
+
+    /**
+     * Sedot Tinja (SILALAD)
+     */
+    Route::prefix('sedot-tinja')->group(function () {
+      Route::get('/data-pesanan', [SedotTinjaAdminController::class, 'dataPesanan'])
+        ->name('admin.sedot-tinja.data-pesanan');
+      Route::get('/data-terkonfirmasi', [SedotTinjaAdminController::class, 'dataTerkonfirmasi'])
+        ->name('admin.sedot-tinja.dataTerkonfirmasi');
+      Route::get('/riwayat-pesanan', [SedotTinjaAdminController::class, 'riwayatPesanan'])
+        ->name('admin.sedot-tinja.riwayat-pesanan');
+      Route::get('/create', [SedotTinjaAdminController::class, 'create'])
+        ->name('admin.sedot-tinja.create');
+      Route::post('/', [SedotTinjaAdminController::class, 'store'])
+        ->name('admin.sedot-tinja.store');
+      Route::get('/{sedotTinja}/edit', [SedotTinjaAdminController::class, 'edit'])
+        ->name('admin.sedot-tinja.edit');
+      Route::put('/{sedotTinja}/update-status', [SedotTinjaAdminController::class, 'updateStatus'])
+        ->name('admin.sedot-tinja.update-status');
+      Route::put('/{sedotTinja}', [SedotTinjaAdminController::class, 'update'])
+        ->name('admin.sedot-tinja.update');
+      Route::delete('/{sedotTinja}', [SedotTinjaAdminController::class, 'destroy'])
+        ->name('admin.sedot-tinja.destroy');
+      Route::get('/{sedotTinja}/print', [SedotTinjaAdminController::class, 'print'])
+        ->name('admin.sedot-tinja.print');
+      Route::get('/{sedotTinja}', [SedotTinjaAdminController::class, 'show'])
+        ->name('admin.sedot-tinja.show');
     });
 
     /**

@@ -73,14 +73,35 @@
         </ul>
       </li>
 
-      {{-- Sedot Tinja --}}
+      {{-- Sedot Tinja (SILALAD) --}}
       <li>
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
-          <i class="fa-regular fa-circle-question"></i>
-          <span class="ms-3">
-            Sedot Tinja
-          </span>
-        </a>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-sedot-tinja" data-collapse-toggle="dropdown-sedot-tinja">
+          <i class="fa-solid fa-toilet"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Sedot Tinja</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-sedot-tinja" class="hidden py-2 space-y-2">
+          <li>
+            <a href="{{ route('admin.sedot-tinja.data-pesanan') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+              Pesanan</a>
+          </li>
+          <li>
+            <a href="{{ route('admin.sedot-tinja.dataTerkonfirmasi') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+              Terkonfirmasi</a>
+          </li>
+          <li>
+            <a href="{{ route('admin.sedot-tinja.riwayat-pesanan') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Riwayat
+              Pesanan</a>
+          </li>
+        </ul>
       </li>
 
       {{-- Sijakon --}}

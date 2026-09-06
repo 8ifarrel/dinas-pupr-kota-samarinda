@@ -73,7 +73,10 @@ class DatabaseSeeder extends Seeder
       // 12. Hantu Banyu mengacu kelurahan/kecamatan dan SKM.
       HantuBanyuSeeder::class,
 
-      // 13. Jalan Peduli (dikelola terpisah) sengaja ditempatkan paling akhir.
+      // 13. Sedot Tinja (SILALAD), tabel berdiri sendiri tanpa foreign key.
+      SedotTinjaSeeder::class,
+
+      // 14. Jalan Peduli (dikelola terpisah) sengaja ditempatkan paling akhir.
       //     JalanPeduliLaporanSeeder mengunduh gambar dari picsum.photos saat
       //     dijalankan, sehingga gagal bila tidak ada koneksi internet. Dengan
       //     menaruhnya di urutan terakhir, kegagalan itu tidak lagi memutus

@@ -1,155 +1,56 @@
-# Website Dinas PUPR Kota Samarinda
+# Website Dinas PUPR Kota Samarinda — Branch `silalad`
 
-Website resmi **Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kota Samarinda** — portal informasi publik sekaligus panel administrasi untuk mengelola konten dan layanan dinas.
+> Fitur **SILALAD** (Sistem Informasi Layanan Limbah Domestik) — layanan sedot tinja. Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
 
-Dibangun dengan [Laravel 12](https://laravel.com/) di sisi backend dan [Tailwind CSS](https://tailwindcss.com/) + [Alpine.js](https://alpinejs.dev/) di sisi frontend.
+## Tentang Branch Ini
 
-## Daftar Isi
+Branch `pkl-umkt/form-sedot-tinja` (tempat fitur ini awalnya dikembangkan oleh anak PKL) sudah sangat usang — bercabang dari `main` sejak Agustus 2025, dari saat itu Laravel di-*upgrade*, seeder ditata ulang, sistem kunci API dibuat, dan banyak hal lain di `main` berubah total. Karena itu, branch ini **bukan** hasil `git merge` langsung antara `main` dan branch sumber — merge mentah seperti itu akan menabrak ratusan baris tak terkait dan berisiko menyeret `main` mundur ke versi lama.
 
-- [Fitur](#fitur)
-- [API](#api)
-- [Teknologi](#teknologi)
-- [Instalasi](#instalasi)
-- [Konfigurasi Environment](#konfigurasi-environment)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Struktur Branch](#struktur-branch)
-- [Menjalankan Test](#menjalankan-test)
-- [Lisensi & Kepemilikan](#lisensi--kepemilikan)
+Yang dilakukan sebenarnya adalah **forward-port** (istilah yang lebih tepat dibanding "penggabungan"): kode milik fitur SILALAD dipindah dan disesuaikan agar berjalan di atas `main` versi terkini, sementara berkas lintas-fitur (routing, seeder, config, dsb.) tetap versi `main`, hanya ditambahkan bagian SILALAD-nya. Jadi branch ini = kode `main` terkini + fitur SILALAD di atasnya, bukan gabungan mentah dua riwayat commit yang berbeda.
 
-## Fitur
+Selama proses ini, beberapa cacat *mekanis* pada kode sumber (yang membuat instalasi baru gagal total) sudah diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Cacat pada **logika/keamanan fitur itu sendiri** sengaja **tidak** diperbaiki di sini — lihat bagian [Masalah yang Diketahui](#masalah-yang-diketahui) — karena itu perlu keputusan terpisah sebelum fitur ini layak digabungkan ke `main`.
 
-### Portal Publik
+## Cakupan Fitur
 
-- **Profil Dinas** — sejarah, visi & misi, tupoksi, struktur organisasi, profil Kepala Dinas
-- **Berita & Pengumuman** — publikasi berita per kategori dan pengumuman resmi
-- **PPID Pelaksana** — informasi publik sesuai kategori PPID
-- **Agenda & Album Kegiatan** — jadwal kegiatan dan galeri dokumentasi
-- **Survei Kepuasan Masyarakat (SKM)** — pengisian dan rekap kepuasan layanan
-- **Jalan Peduli** — pelaporan kerusakan jalan oleh warga beserta peta sebaran dan status tindak lanjut
-- **Hantu Banyu** *(Drainase & Irigasi)* — pengaduan drainase/irigasi oleh operator kelurahan; lihat [detail fitur ini di branch `hantu-banyu`](../../tree/hantu-banyu#readme)
-- **Statistik Pengunjung** — pencatatan kunjungan situs dengan penyaringan lalu lintas bot/cloud
+- **Pendaftaran Sedot Tinja** — warga mengisi form berisi data pelanggan, lokasi, jenis bangunan, dan captcha Cloudflare Turnstile
+- **Kode Booking Otomatis** — format `STJ-<tahun>-<nomor urut>`
+- **Cek Status** — warga melihat status pesanan berdasarkan riwayat/nomor telepon
+- **Kelola Pesanan (Admin)** — data pesanan masuk, data terkonfirmasi, riwayat pesanan, ubah status, cetak pesanan
 
-### Panel Admin (E-Panel)
+## Struktur Kode
 
-1. Manajemen konten (berita, pengumuman, PPID, agenda, album, partner, slider)
-2. Manajemen struktur organisasi
-3. Manajemen akun kelurahan (dipakai bersama oleh fitur Hantu Banyu dan fitur mendatang lain yang membutuhkan login kelurahan)
-4. Dua level admin, yaitu Admin dan Super Admin
-5. API key per-fitur untuk integrasi eksternal
-6. Log aktivitas website dari Admin, Super Admin, Kelurahan, Pengunjung Publik, dan Sistem
-
-#### Level Akses
-
-- **Admin** — mengelola konten dan operasional harian sesuai kewenangannya
-- **Super Admin** — seluruh kewenangan Admin, ditambah pengelolaan akun admin lain, akun kelurahan, kunci API, dan log aktivitas
-- **Kelurahan** — login khusus operator kelurahan untuk fitur yang mensyaratkan identitas kelurahan (mis. Hantu Banyu)
-- **Publik (Guest)** — pengunjung tanpa login, mengakses portal publik dan fitur yang terbuka untuk umum
-
-## API
-
-Tiga fitur menyediakan API untuk integrasi eksternal, masing-masing dengan kunci API dan tabel kunci terpisah — kunci satu fitur tidak berlaku di fitur lain:
-
-| Fitur | Kegunaan API |
+| Bagian | Isi |
 |---|---|
-| **Jalan Peduli** | Integrasi pelaporan kerusakan jalan dari luar website ini |
-| **Hantu Banyu** | Integrasi pelaporan drainase/irigasi serta reverse geocoding koordinat |
-| **Akun Kelurahan** | Verifikasi kredensial dan data akun kelurahan, dipakai sistem eksternal mana pun yang perlu login kelurahan tanpa membangun sistem akunnya sendiri |
+| Model | `App\Models\SedotTinja` |
+| Controller guest | `App\Http\Controllers\Guest\SedotTinjaGuestController` |
+| Controller admin | `App\Http\Controllers\Admin\SedotTinjaAdminController` |
+| View guest | `resources/views/guest/pages/sedot-tinja/` |
+| View admin | `resources/views/admin/pages/sedot-tinja/` |
+| Rute publik | prefix `/sedot-tinja` |
+| Rute admin | prefix `/e-panel/sedot-tinja`, level akses Admin (bukan Super Admin) |
 
-Penjelasan lengkap cara pakai tiap API — endpoint, format kunci, contoh request — ada di README branch masing-masing fitur: [`kkn-unmul/jalan-peduli`](../../tree/kkn-unmul/jalan-peduli#readme), [`hantu-banyu`](../../tree/hantu-banyu#readme), dan [`akun-kelurahan`](../../tree/akun-kelurahan#readme).
+## Perbaikan Mekanis yang Sudah Dilakukan
 
-## Teknologi
+Supaya branch ini minimal bisa dipasang dari kosong (`migrate` + `seed`) tanpa error, hal-hal berikut disamakan/dirapikan saat porting — bukan perubahan perilaku fitur:
 
-| Lapisan | Teknologi |
-|---|---|
-| Backend | PHP 8.2+, Laravel 12 |
-| Frontend | Blade, Tailwind CSS, Alpine.js, Vite |
-| UI Components | [Flowbite](https://flowbite.com/) (modal, dropdown, tab, dsb. di atas Tailwind) |
-| Basis Data | MySQL |
-| Tabel & Grafik | DataTables, Chart.js |
-| Peta | Leaflet |
-| Editor & Media | Quill (rich text), Cropper.js (crop gambar), Lightbox2 + Viewer.js (galeri gambar) |
-| UI Interaksi | SweetAlert2 (dialog), Splide (carousel), jQuery |
-| PDF | Browsershot (Puppeteer/Node) untuk Hantu Banyu, DomPDF untuk Jalan Peduli |
-| HTTP Client | Guzzle (panggilan API eksternal seperti IPInfo dan Nominatim) |
-| Lainnya | Sistem kunci API kustom per-fitur (bukan Sanctum) |
+- Migrasi yang menambah ulang kolom `kode_booking` (sudah ada di migrasi pembuatan tabel) dan migrasi-migrasi kosong/tidak terpakai dari branch sumber **tidak dibawa**.
+- Rute admin & publik ditulis ulang bersih (branch sumber punya rute bertingkat ganda `admin/admin/sedot-tinja/...` serta nama rute yang didefinisikan berkali-kali).
+- Nama field `saran_dan_masukan` (model & validasi) disamakan dengan nama kolom asli di tabel, `saran_masukan`.
+- Data contoh (seeder) diperbaiki agar cocok dengan kolom yang benar-benar ada di tabel, dan mengisi `kode_booking` (kolom ini wajib diisi tapi seeder aslinya tidak mengisinya).
+- Verifikasi Cloudflare Turnstile disamakan dengan konvensi yang sudah dipakai Jalan Peduli (`config('app.turnstile_secret')`), bukan lewat paket composer yang sebenarnya tidak pernah dipakai kodenya.
+- Satu bug lama di `LoginAdminController` (login gagal tidak memberi respons apa pun) ikut terbawa perbaikannya dari branch sumber.
 
-## Instalasi
+Sudah diuji: `php artisan migrate` dan `php artisan db:seed` dari basis data kosong berjalan tanpa error di lingkungan terisolasi sebelum branch ini didorong.
 
-### Prasyarat
+## Masalah yang Diketahui
 
-- PHP ^8.2 dengan ekstensi standar Laravel
-- Composer
-- Node.js & npm
-- MySQL
-- Node/npm dapat diakses dari PATH (dibutuhkan Browsershot untuk PDF Hantu Banyu; lihat [Konfigurasi Environment](#konfigurasi-environment) bila berjalan di Windows)
+Ini **belum diperbaiki** — sengaja dipertahankan apa adanya dari branch sumber, menunggu keputusan sebelum digabung ke `main`:
 
-### Langkah
-
-```bash
-git clone https://github.com/8ifarrel/dinas-pupr-kota-samarinda.git
-cd dinas-pupr-kota-samarinda
-
-composer install
-npm install
-
-cp .env.example .env
-php artisan key:generate
-```
-
-Buat basis data MySQL kosong, lalu isi kredensialnya di `.env` (lihat bagian berikutnya), kemudian:
-
-```bash
-php artisan migrate
-php artisan db:seed   # opsional, mengisi data contoh untuk pengembangan
-```
-
-## Konfigurasi Environment
-
-Salin `.env.example` menjadi `.env` lalu sesuaikan sekurang-kurangnya:
-
-| Variabel | Keterangan |
-|---|---|
-| `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | Kredensial MySQL. Proyek ini **tidak** memakai SQLite bawaan Laravel |
-| `IPINFO_TOKEN` | Token [IPInfo](https://ipinfo.io/), dipakai statistik pengunjung untuk menyaring lalu lintas cloud/datacenter. Boleh dikosongkan (penyaring dilewati) |
-| `MAPTILER_TOKEN` | Token [MapTiler](https://www.maptiler.com/), dipakai peta sebaran Jalan Peduli |
-| `TURNSTILE_SITEKEY`, `TURNSTILE_SECRET` | Kredensial [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/), captcha pada form laporan Jalan Peduli |
-| `BROWSERSHOT_NODE_BINARY`, `BROWSERSHOT_NPM_BINARY` | Path Node/npm untuk PDF Hantu Banyu. Biarkan kosong di Linux (dideteksi otomatis dari PATH); di Windows isi dengan path lengkap berkutip tunggal |
-
-Detail lengkap dan komentar tiap variabel ada di `.env.example`.
-
-## Menjalankan Aplikasi
-
-```bash
-php artisan serve
-npm run dev       # kompilasi aset saat pengembangan
-```
-
-Untuk produksi:
-
-```bash
-npm run build
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-## Struktur Branch
-
-| Branch | Isi |
-|---|---|
-| `main` | Kode aplikasi produksi — seluruh fitur yang sudah selesai |
-| `hantu-banyu` | Fitur pengaduan Drainase & Irigasi. Sudah final, tergabung penuh ke `main` |
-| `buku-tamu` | Fitur Buku Tamu, belum digabung ke `main` |
-| `kkn-unmul/jalan-peduli`, `pkl-umkt/*` | Cabang kerja mitra magang/KKN untuk fitur tertentu |
-
-> **Catatan:** branch yang sudah final dan tergabung penuh ke `main` (seperti `hantu-banyu`) tidak lagi dikembangkan langsung di branch tersebut. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur yang sudah final, buat branch baru dari `main`, kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
-
-## Menjalankan Test
-
-```bash
-php artisan test
-```
+- **Kebocoran data pribadi** — halaman publik (daftar pesanan, detail pesanan, cek status) menampilkan nama, nomor telepon, dan alamat pelanggan ke siapa saja tanpa login maupun filter kepemilikan.
+- **Upload foto tidak tersimpan** — form pendaftaran memvalidasi field foto, tapi file-nya tidak pernah benar-benar disimpan.
+- **Nomor & email admin di-hardcode** di kode (bukan di `.env`), dipakai untuk notifikasi WhatsApp/email.
+- **Berkas sampah** ikut ter-*commit* di riwayat branch sumber (log `git log` yang salah redirect ke file, berkas `.tmp`) — sudah tidak dibawa ke branch ini, disebut di sini sebagai catatan riwayat saja.
 
 ## Lisensi & Kepemilikan
 
-Proyek ini adalah properti **Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda** untuk keperluan internal dan layanan publik resmi. Bukan proyek open-source untuk digunakan ulang di luar konteks tersebut tanpa izin.
+Sama seperti `main` — proyek ini properti **Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda**, bukan proyek open-source untuk digunakan ulang di luar konteks tersebut tanpa izin.
