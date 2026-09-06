@@ -1,453 +1,423 @@
-@extends('guest.layouts.silalad')
+@extends('guest.layouts.main')
 
-@section('styles')
-<style>
-  /* Stepper */
-  #stepper {
-    position: relative;
-  }
-  #stepper::before {
-    content: "";
-    position: absolute;
-    top: 20px;
-    left: 12%;
-    right: 12%;
-    height: 3px;
-    background: #e5e7eb;
-    z-index: 0;
-  }
-  .step-item {
-    position: relative;
-    z-index: 1;
-  }
-  .step-circle {
-    transition: all 0.3s ease;
-  }
-  .step-circle.active {
-    background: #2563eb;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
-  }
-  .step-circle.completed {
-    background: #16a34a;
-    color: #fff;
-  }
-
-  /* Input & Select */
-  input[type="text"],
-  input[type="number"],
-  input[type="file"],
-  select,
-  textarea {
-    transition: all 0.2s ease;
-  }
-  input:focus,
-  select:focus,
-  textarea:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-    outline: none;
-  }
-
-  /* Tombol Navigasi */
-  button {
-    transition: all 0.2s ease;
-  }
-  button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-  button:active {
-    transform: translateY(1px);
-  }
-
-  /* Map */
-  #map {
-    border: 2px solid #e5e7eb;
-    border-radius: 0.75rem;
-    overflow: hidden;
-  }
-
-  /* Rating Stars */
-  .star {
-    color: #d1d5db; /* abu-abu */
-    transition: color 0.2s;
-    font-size: 2rem;
-    cursor: pointer;
-  }
-  .star.selected { color: #fbbf24; } /* kuning */
-</style>
+@section('document.start')
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 @endsection
 
-@section('content')
-<div class="min-h-screen py-10 px-4 bg-gray-50">
-  <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow p-8">
+@section('document.body')
+  <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
+    {{-- Breadcrumb --}}
+    <nav aria-label="Breadcrumb" class="max-w-[940px] mx-auto mb-2.5">
+      <ol class="inline-flex items-center text-sm">
+        <li class="inline-flex items-center">
+          <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">Beranda</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+            </svg>
+            <a href="{{ route('guest.silalad.index') }}" class="text-blue-600 underline">SILALAD</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+            </svg>
+            <span class="text-gray-500 font-medium">Form Pendaftaran</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
 
-    <h1 class="text-2xl font-bold mb-6 text-center">Form Pendaftaran Layanan SILALAD</h1>
+    <div class="max-w-[940px] mx-auto border shadow-lg p-4 sm:p-8 rounded-lg space-y-8">
+      <div class="text-center space-y-2.5">
+        <h1 class="text-2xl md:text-3xl font-bold">Form Pendaftaran SILALAD</h1>
+        <p class="text-gray-700 text-base md:text-lg">
+          Silakan isi formulir di bawah ini untuk memesan layanan sedot tinja UPTD Pengelolaan Air Limbah Domestik.
+        </p>
+      </div>
 
-    <!-- Stepper -->
-    <div id="stepper" class="flex justify-between mb-8">
-      <div class="step-item text-center flex-1">
-        <div class="step-circle w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-blue-600 text-white font-semibold">1</div>
-        <p class="mt-2 text-sm">Data Pelanggan</p>
+      {{-- Stepper --}}
+      <div class="mb-8">
+        <div class="relative flex items-center justify-between" style="height:56px;">
+          <div id="stepper-line-left"
+            class="absolute left-[calc(50%/3)] right-1/2 top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 z-0 transition-colors">
+          </div>
+          <div id="stepper-line-right"
+            class="absolute left-1/2 right-[calc(50%/3)] top-1/2 transform -translate-y-1/2 h-1 bg-gray-200 z-0 transition-colors">
+          </div>
+          <ol id="stepper-bar" class="flex w-full z-10 relative">
+            <li class="flex-1 flex flex-col items-center stepper-step stepper-step-active relative">
+              <span class="flex items-center justify-center w-10 h-10 bg-brand-blue text-white rounded-full z-10">
+                <i class="fa-solid fa-address-card"></i>
+              </span>
+            </li>
+            <li class="flex-1 flex flex-col items-center stepper-step relative">
+              <span class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full z-10">
+                <i class="fa-solid fa-location-dot"></i>
+              </span>
+            </li>
+            <li class="flex-1 flex flex-col items-center stepper-step relative">
+              <span class="flex items-center justify-center w-10 h-10 bg-gray-100 text-gray-500 rounded-full z-10">
+                <i class="fa-solid fa-paper-plane"></i>
+              </span>
+            </li>
+          </ol>
+        </div>
+        <div class="flex w-full mt-2">
+          <div class="flex-1 flex flex-col items-center">
+            <span class="font-semibold text-brand-blue text-xs sm:text-sm text-center">Data Pelanggan</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center">
+            <span class="font-semibold text-gray-500 text-xs sm:text-sm text-center">Detail Alamat</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center">
+            <span class="font-semibold text-gray-500 text-xs sm:text-sm text-center">Konfirmasi</span>
+          </div>
+        </div>
       </div>
-      <div class="step-item text-center flex-1">
-        <div class="step-circle w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-semibold">2</div>
-        <p class="mt-2 text-sm">Detail Alamat</p>
-      </div>
-      <div class="step-item text-center flex-1">
-        <div class="step-circle w-10 h-10 mx-auto flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-semibold">3</div>
-        <p class="mt-2 text-sm">Konfirmasi</p>
-      </div>
+
+      <form id="silaladForm" method="POST" action="{{ route('guest.silalad.store') }}" novalidate>
+        @csrf
+        <input type="hidden" name="kabkota_id" value="Samarinda">
+
+        @if ($errors->any())
+          <div id="alert-form-errors" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <div class="ms-3 text-sm font-medium">
+              <ul class="mb-0 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        @endif
+
+        {{-- STEP 1: Data Pelanggan --}}
+        <div class="step space-y-4" data-step="1">
+          <div class="space-y-1.5">
+            <label for="nama_pelanggan" class="block text-sm font-medium text-gray-900">Nama</label>
+            <input type="text" id="nama_pelanggan" name="nama_pelanggan" value="{{ old('nama_pelanggan') }}"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Masukkan nama Anda" required>
+          </div>
+          <div class="space-y-1.5">
+            <label for="nomor_telepon_pelanggan" class="block text-sm font-medium text-gray-900">Nomor Telepon</label>
+            <input type="text" id="nomor_telepon_pelanggan" name="nomor_telepon_pelanggan" value="{{ old('nomor_telepon_pelanggan') }}"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contoh: 081234567890" required>
+            <p class="text-sm text-gray-500">Dipakai untuk cek status pesanan Anda nanti.</p>
+          </div>
+          <div class="space-y-1.5">
+            <label for="alamat" class="block text-sm font-medium text-gray-900">Alamat</label>
+            <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Masukkan alamat lengkap Anda" required>
+          </div>
+        </div>
+
+        {{-- STEP 2: Detail Alamat --}}
+        <div class="step hidden space-y-4" data-step="2">
+          <div class="space-y-1.5">
+            <label for="alamat_detail" class="block text-sm font-medium text-gray-900">Detail Alamat</label>
+            <textarea id="alamat_detail" name="alamat_detail" rows="2"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('alamat_detail') }}</textarea>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="layanan" class="block text-sm font-medium text-gray-900">Jenis Layanan</label>
+            <select id="layanan" name="layanan"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+              <option value="">-- Pilih Layanan --</option>
+              <option value="sedot tinja" {{ old('layanan') == 'sedot tinja' ? 'selected' : '' }}>Sedot Lumpur Tinja</option>
+              <option value="sedot lumpur" {{ old('layanan') == 'sedot lumpur' ? 'selected' : '' }}>Sedot Lemak (soon)</option>
+              <option value="sedot lemak" {{ old('layanan') == 'sedot lemak' ? 'selected' : '' }}>Peminjaman WC Portabel (soon)</option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="detail_laporan" class="block text-sm font-medium text-gray-900">Detail Laporan</label>
+            <textarea id="detail_laporan" name="detail_laporan" rows="2"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('detail_laporan') }}</textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label for="kecamatan_id" class="block text-sm font-medium text-gray-900">Kecamatan</label>
+              <select id="kecamatan_id" name="kecamatan_id"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                @foreach ($kecamatans as $kecamatan)
+                  <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>
+                    {{ $kecamatan->nama }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+            <div class="space-y-1.5">
+              <label for="kelurahan_id" class="block text-sm font-medium text-gray-900">Kelurahan</label>
+              <select id="kelurahan_id" name="kelurahan_id"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="jenis_bangunan" class="block text-sm font-medium text-gray-900">Jenis Bangunan</label>
+            <select id="jenis_bangunan" name="jenis_bangunan"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+              <option value="">-- Pilih Bangunan --</option>
+              <option value="Rumah">Rumah</option>
+              <option value="Tempat ibadah">Tempat Ibadah</option>
+              <option value="Panti asuhan">Panti Asuhan</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Sekolah">Sekolah</option>
+              <option value="Panti jompo">Panti Jompo</option>
+              <option value="Pabrik">Pabrik</option>
+              <option value="Madrasah">Madrasah</option>
+              <option value="Rumah sakit">Rumah Sakit</option>
+              <option value="Restoran">Restoran</option>
+              <option value="Kampus">Kampus</option>
+              <option value="Pondok pesantren">Pondok Pesantren</option>
+              <option value="Kantor">Kantor</option>
+              <option value="Puskesmas">Puskesmas</option>
+              <option value="Klinik">Klinik</option>
+              <option value="Apartemen">Apartemen</option>
+              <option value="Mall">Mall</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div id="jenis_bangunan_lainnya_div" class="space-y-1.5 hidden">
+            <label for="jenis_bangunan_lainnya" class="block text-sm font-medium text-gray-900">Tuliskan Jenis Bangunan</label>
+            <input type="text" id="jenis_bangunan_lainnya" name="jenis_bangunan_lainnya"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Isi jenis bangunan lain...">
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label for="rt" class="block text-sm font-medium text-gray-900">RT</label>
+              <input type="number" id="rt" name="rt" value="{{ old('rt') }}"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Nomor RT" required>
+            </div>
+            <div class="space-y-1.5">
+              <label for="nomor_bangunan" class="block text-sm font-medium text-gray-900">Nomor Rumah</label>
+              <input type="number" id="nomor_bangunan" name="nomor_bangunan" value="{{ old('nomor_bangunan') }}"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Nomor rumah" required>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-sm font-medium text-gray-900">Titik Lokasi</label>
+            <div id="map" class="w-full rounded-lg border" style="height:400px;"></div>
+            <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
+            <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
+            <p class="text-sm text-gray-500">Geser penanda atau klik peta untuk memilih titik lokasi: <span id="latText">-</span>, <span id="lngText">-</span></p>
+          </div>
+        </div>
+
+        {{-- STEP 3: Konfirmasi --}}
+        <div class="step hidden space-y-4" data-step="3">
+          <div class="space-y-1.5">
+            <label class="block text-sm font-bold text-gray-900">Rating</label>
+            <p class="text-xs text-gray-600">Berikan pendapat Anda mengenai layanan ini</p>
+            <div id="rating-stars" class="flex space-x-2">
+              <span data-value="1" class="star">&#9734;</span>
+              <span data-value="2" class="star">&#9734;</span>
+              <span data-value="3" class="star">&#9734;</span>
+              <span data-value="4" class="star">&#9734;</span>
+              <span data-value="5" class="star">&#9734;</span>
+            </div>
+            <input type="hidden" name="rating" id="rating" value="{{ old('rating') }}">
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="saran_masukan" class="block text-sm font-medium text-gray-900">Saran & Masukan</label>
+            <textarea id="saran_masukan" name="saran_masukan" rows="2"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('saran_masukan') }}</textarea>
+          </div>
+
+          <div>
+            <div class="cf-turnstile" data-sitekey="{{ config('app.turnstile_sitekey') }}"></div>
+            @error('cf-turnstile-response')
+              <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+            @enderror
+          </div>
+        </div>
+
+        {{-- Navigasi --}}
+        <div class="flex justify-between mt-6">
+          <button type="button" id="prevBtn"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-4 py-2 hidden">
+            <i class="fa-solid fa-arrow-left"></i> Kembali
+          </button>
+          <button type="button" id="nextBtn"
+            class="ms-auto inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue rounded-lg px-5 py-2 transition">
+            Lanjut <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button type="submit" id="submitBtn"
+            class="ms-auto inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg px-5 py-2 hidden">
+            Kirim <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
     </div>
-
-    <!-- Form -->
-    <form id="silaladForm" method="POST" action="{{ route('guest.silalad.store') }}">
-      @csrf
-
-      <!-- STEP 1 -->
-      <div class="step" data-step="1">
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Nama</label>
-          <input type="text" 
-                name="nama_pelanggan" 
-                value="{{ old('nama_pelanggan') }}" 
-                class="w-full border rounded-lg px-3 py-2" 
-                placeholder="Masukkan nama anda"
-                required>
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Nomor Telepon</label>
-          <input type="text" 
-                name="nomor_telepon_pelanggan" 
-                value="{{ old('nomor_telepon_pelanggan') }}" 
-                class="w-full border rounded-lg px-3 py-2" 
-                placeholder="Contoh: 081234567890"
-                required>
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Alamat</label>
-          <input type="text" 
-                name="alamat" 
-                value="{{ old('alamat') }}" 
-                class="w-full border rounded-lg px-3 py-2" 
-                placeholder="Masukkan alamat lengkap anda"
-                required>
-        </div>
-      </div>
-
-
-      <!-- STEP 2 -->
-      <div class="step hidden" data-step="2">
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Detail Alamat</label>
-          <textarea name="alamat_detail" class="w-full border rounded-lg px-3 py-2" rows="2" required>{{ old('alamat_detail') }}</textarea>
-        </div>
-
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Jenis Layanan</label>
-          <select name="layanan" class="w-full border rounded-lg px-3 py-2" required>
-            <option value="">-- Pilih Layanan --</option>
-            <option value="sedot tinja" {{ old('layanan')=='sedot tinja' ? 'selected' : '' }}>Sedot Lumpur Tinja</option>
-            <option value="sedot lumpur" {{ old('layanan')=='sedot lumpur' ? 'selected' : '' }}>Sedot Lemak (soon)</option>
-            <option value="sedot lemak" {{ old('layanan')=='sedot lemak' ? 'selected' : '' }}>Peminjaman WC  Portabel 9(soon)</option>
-          </select>
-        </div>
-
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Detail Laporan</label>
-          <textarea name="detail_laporan" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('detail_laporan') }}</textarea>
-        </div>
-
-        <!-- Dropdown API Alamat -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div>
-            <label class="block mb-1 font-medium">Kabupaten/Kota</label>
-            <select id="kabkota_id" name="kabkota_id" class="w-full border rounded-lg px-3 py-2" required></select>
-          </div>
-          <div>
-            <label class="block mb-1 font-medium">Kecamatan</label>
-            <select id="kecamatan_id" name="kecamatan_id" class="w-full border rounded-lg px-3 py-2" required></select>
-          </div>
-          <div>
-            <label class="block mb-1 font-medium">Kelurahan</label>
-            <select id="kelurahan_id" name="kelurahan_id" class="w-full border rounded-lg px-3 py-2" required></select>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Jenis Bangunan</label>
-          <select id="jenis_bangunan" name="jenis_bangunan" class="w-full border rounded-lg px-3 py-2" required>
-            <option value="">-- Pilih Bangunan --</option>
-            <option value="Rumah">Rumah </option>
-            <option value="Tempat ibadah">Tempat Ibadah</option>
-            <option value="Panti asuhan">Panti Asuhan</option>
-            <option value="Hotel">Hotel</option>
-            <option value="Sekolah">Sekolah</option>
-            <option value="Panti jompo">Panti Jompo</option>
-            <option value="Pabrik">Pabrik</option>
-            <option value="Madrasah">Madrasah</option>
-            <option value="Rumah sakit">Rumah Sakit</option>
-            <option value="Restoran">Restoran</option>
-            <option value="Kampus">Kampus</option>
-            <option value="Pondok pesantren">Pondok Pesantren</option>
-            <option value="Kantor">Kantor</option>
-            <option value="Puskesmas">Puskesmas</option>
-            <option value="Klinik">Klinik</option>
-            <option value="Apartemen">Apartemen</option>
-            <option value="Mall">Mall</option>
-            <option value="Lainnya">Lainnya </option>
-          </select>
-        </div>
-
-        <!-- Input tambahan untuk 'Lainnya' -->
-        <div id="jenis_bangunan_lainnya_div" class="mb-4 hidden">
-          <label class="block mb-1 font-medium">Tuliskan Jenis Bangunan</label>
-          <input type="text" id="jenis_bangunan_lainnya" name="jenis_bangunan_lainnya"
-                class="w-full border rounded-lg px-3 py-2"
-                placeholder="Isi jenis bangunan lain...">
-        </div>
-
-        <div class="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <label class="block mb-1 font-medium">RT</label>
-          <input type="number" 
-                name="rt" 
-                value="{{ old('rt') }}" 
-                class="w-full border rounded-lg px-3 py-2" 
-                placeholder="Masukkan nomor RT"
-                required>
-        </div>
-        <div>
-          <label class="block mb-1 font-medium">Nomor Rumah</label>
-          <input type="number" 
-                name="nomor_bangunan" 
-                value="{{ old('nomor_bangunan') }}" 
-                class="w-full border rounded-lg px-3 py-2" 
-                placeholder="Masukkan nomor rumah"
-                required>
-        </div>
-      </div>
-
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Titik Lokasi</label>
-          <div id="map" class="w-full rounded-lg border" style="height:400px;"></div>
-          <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
-          <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
-          <p class="mt-2 text-sm text-gray-600">
-          Titik lokasi: <span id="latText">-</span>, <span id="lngText">-</span></p>
-        </div>
-      </div>
-
-
-      <!-- STEP 3 -->
-      <div class="step hidden" data-step="3">
-         <!-- Rating -->
-        <div class="mb-4">
-          <label class="block mb-1 font-bold text-sm">Rating</label>
-          <p class="text-xs text-gray-600">Berikan pendapatmu mengenai website ini</p>
-          <div id="rating-stars" class="flex space-x-2">
-            <span data-value="1" class="star">&#9734;</span>
-            <span data-value="2" class="star">&#9734;</span>
-            <span data-value="3" class="star">&#9734;</span>
-            <span data-value="4" class="star">&#9734;</span>
-            <span data-value="5" class="star">&#9734;</span>
-          </div>
-          <input type="hidden" name="rating" id="rating" value="{{ old('rating') }}">
-        </div>
-
-        <!-- <div class="mb-4">
-          <label class="block mb-1 font-medium">Masukan</label>
-          <textarea name="Masukan" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('Masukan') }}</textarea>
-        </div> -->
-        <div class="mb-4">
-          <label class="block mb-1 font-medium">Saran & Masukan</label>
-          <textarea name="saran & masukan" class="w-full border rounded-lg px-3 py-2" rows="2">{{ old('saran & masukan') }}</textarea>
-        </div>
-        {{--  Captcha Turnstile --}}
-        <div class="mb-4">
-          <div class="cf-turnstile" data-sitekey="{{ config('app.turnstile_sitekey') }}"></div>
-          @error('cf-turnstile-response')
-            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-          @enderror
-        </div>
-        <!-- <div class="mb-4">
-          <label class="inline-flex items-center">
-            <input type="checkbox" name="setuju" value="1" required class="mr-2" {{ old('setuju') ? 'checked' : '' }}>
-            <span>Saya menyetujui bila ada tambahan biaya pada saat di lokasi</span>
-          </label>
-        </div> -->
-      </div>
-
-      <!-- Navigation -->
-      <div class="flex justify-between mt-6">
-        <button type="button" id="prevBtn" class="px-6 py-2 bg-gray-300 rounded-lg hidden">Kembali</button>
-        <button type="button" id="nextBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg">Lanjut</button>
-        <button type="submit" id="submitBtn" class="px-6 py-2 bg-green-600 text-white rounded-lg hidden">Kirim</button>
-      </div>
-    </form>
   </div>
-</div>
 @endsection
 
-@section('scripts')
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const selectBangunan = document.getElementById("jenis_bangunan");
-    const divLainnya = document.getElementById("jenis_bangunan_lainnya_div");
-    const inputLainnya = document.getElementById("jenis_bangunan_lainnya");
+@section('document.end')
+  <style>
+    .step-circle-active { background: rgb(34, 52, 104) !important; color: #fff; }
+    .star { color: #d1d5db; transition: color 0.2s; font-size: 2rem; cursor: pointer; }
+    .star.selected { color: #fbbf24; }
+  </style>
 
-    selectBangunan.addEventListener("change", function() {
-      if (this.value === "Lainnya") {
-        divLainnya.classList.remove("hidden");
-        inputLainnya.setAttribute("required", "required");
-      } else {
-        divLainnya.classList.add("hidden");
-        inputLainnya.removeAttribute("required");
-        inputLainnya.value = ""; // reset kalau user ganti pilihan lain
-      }
-    });
-  });
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-  // Google Maps
-  let map, marker;
-  window.initMap = function() {
-    const defaultPos = { lat: -0.502, lng: 117.153 };
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: defaultPos,
-      zoom: 12,
-    });
-    marker = new google.maps.Marker({
-      position: defaultPos,
-      map,
-      draggable: true,
-    });
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Jenis bangunan "Lainnya"
+      const selectBangunan = document.getElementById("jenis_bangunan");
+      const divLainnya = document.getElementById("jenis_bangunan_lainnya_div");
+      const inputLainnya = document.getElementById("jenis_bangunan_lainnya");
 
-    document.getElementById('latitude').value = marker.getPosition().lat();
-    document.getElementById('longitude').value = marker.getPosition().lng();
-    document.getElementById('latText').innerText = defaultPos.lat.toFixed(6);
-    document.getElementById('lngText').innerText = defaultPos.lng.toFixed(6);
-    
-    // Kalau marker digeser
-    google.maps.event.addListener(marker, 'dragend', function() {
-      updateLatLng(marker.getPosition().lat(), marker.getPosition().lng());
-    });
-
-    // Kalau user klik map
-    google.maps.event.addListener(map, 'click', function(event) {
-      marker.setPosition(event.latLng);
-      updateLatLng(event.latLng.lat(), event.latLng.lng());
-    });
-
-  }
-
-  function updateLatLng(lat, lng) {
-    document.getElementById('latitude').value = lat;
-    document.getElementById('longitude').value = lng;
-    document.getElementById('latText').innerText = lat.toFixed(6);
-    document.getElementById('lngText').innerText = lng.toFixed(6);
-  }
-
-  document.addEventListener("DOMContentLoaded", function() {
-    let currentStep = 1;
-    const steps = document.querySelectorAll('.step');
-    const stepCircles = document.querySelectorAll('.step-circle');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const submitBtn = document.getElementById('submitBtn');
-
-    function showStep(step) {
-      steps.forEach(s => s.classList.add('hidden'));
-      document.querySelector(`.step[data-step="${step}"]`).classList.remove('hidden');
-
-      stepCircles.forEach((circle, i) => {
-        circle.classList.remove('active', 'completed');
-        if (i + 1 < step) {
-          circle.classList.add('completed');
-        } else if (i + 1 === step) {
-          circle.classList.add('active');
+      selectBangunan.addEventListener("change", function() {
+        if (this.value === "Lainnya") {
+          divLainnya.classList.remove("hidden");
+          inputLainnya.setAttribute("required", "required");
+        } else {
+          divLainnya.classList.add("hidden");
+          inputLainnya.removeAttribute("required");
+          inputLainnya.value = "";
         }
       });
 
-      prevBtn.classList.toggle('hidden', step === 1);
-      nextBtn.classList.toggle('hidden', step === steps.length);
+      // Kecamatan -> Kelurahan (data internal, bukan API pihak ketiga)
+      const kecamatanSelect = document.getElementById("kecamatan_id");
+      const kelurahanSelect = document.getElementById("kelurahan_id");
+
+      kecamatanSelect.addEventListener("change", function() {
+        kelurahanSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
+        if (!this.value) {
+          kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>';
+          return;
+        }
+        fetch(`/api/kelurahans/by-kecamatan/${this.value}`)
+          .then(res => res.json())
+          .then(data => {
+            kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelurahan --</option>';
+            if (data.success && data.data.length > 0) {
+              data.data.forEach(k => {
+                const opt = document.createElement('option');
+                opt.value = k.id;
+                opt.textContent = k.nama;
+                kelurahanSelect.appendChild(opt);
+              });
+            } else {
+              kelurahanSelect.innerHTML = '<option value="" disabled selected>Tidak ada data kelurahan</option>';
+            }
+          })
+          .catch(() => {
+            kelurahanSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data</option>';
+          });
+      });
+
+      // Rating bintang
+      const stars = document.querySelectorAll("#rating-stars .star");
+      const ratingInput = document.getElementById("rating");
+      stars.forEach(star => {
+        star.addEventListener("click", function() {
+          const value = this.getAttribute("data-value");
+          ratingInput.value = value;
+          stars.forEach(s => { s.innerHTML = "&#9734;"; s.classList.remove("selected"); });
+          for (let i = 0; i < value; i++) {
+            stars[i].innerHTML = "&#9733;";
+            stars[i].classList.add("selected");
+          }
+        });
+      });
+    });
+
+    // Peta Leaflet
+    let map, marker;
+    const defaultPos = [-0.502, 117.153];
+
+    function initSilaladMap() {
+      map = L.map('map').setView(defaultPos, 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      marker = L.marker(defaultPos, { draggable: true }).addTo(map);
+      updateLatLng(defaultPos[0], defaultPos[1]);
+
+      marker.on('dragend', function() {
+        const pos = marker.getLatLng();
+        updateLatLng(pos.lat, pos.lng);
+      });
+
+      map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+        updateLatLng(e.latlng.lat, e.latlng.lng);
+      });
+    }
+
+    function updateLatLng(lat, lng) {
+      document.getElementById('latitude').value = lat;
+      document.getElementById('longitude').value = lng;
+      document.getElementById('latText').innerText = lat.toFixed(6);
+      document.getElementById('lngText').innerText = lng.toFixed(6);
+    }
+
+    // Stepper
+    document.addEventListener("DOMContentLoaded", function() {
+      let currentStep = 1;
+      const steps = document.querySelectorAll('.step');
+      const stepCircles = document.querySelectorAll('#stepper-bar .stepper-step span');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      let mapInitialized = false;
+
+      function showStep(step) {
+        steps.forEach(s => s.classList.add('hidden'));
+        document.querySelector(`.step[data-step="${step}"]`).classList.remove('hidden');
+
+        stepCircles.forEach((circle, i) => {
+          circle.classList.remove('step-circle-active', 'bg-gray-100', 'text-gray-500', 'bg-brand-blue', 'text-white');
+          if (i + 1 <= step) {
+            circle.classList.add('bg-brand-blue', 'text-white');
+          } else {
+            circle.classList.add('bg-gray-100', 'text-gray-500');
+          }
+        });
+
+        prevBtn.classList.toggle('hidden', step === 1);
+        nextBtn.classList.toggle('hidden', step === steps.length);
         submitBtn.classList.toggle('hidden', step !== steps.length);
 
-      // masuk ke step 2, trigger resize agar map muncul normal
-      if(step === 2 && map){
-        setTimeout(() => {
-          google.maps.event.trigger(map, "resize");
-          map.setCenter(marker.getPosition());
-        }, 300);
-      }
-    }
-
-    nextBtn.addEventListener('click', () => { currentStep++; showStep(currentStep); });
-    prevBtn.addEventListener('click', () => { currentStep--; showStep(currentStep); });
-    showStep(currentStep);
-  });
-
-  // API Alamat
-  async function fetchWilayah(url, targetId) {
-    try {
-        let res = await fetch(url);
-        let data = await res.json();
-        let select = document.getElementById(targetId);
-        select.innerHTML = '<option value="">-- Pilih --</option>';
-        data.result.forEach(d => {
-        select.innerHTML += `<option value="${d.id}">${d.text}</option>`;
-        });
-    } catch (err) {
-        console.error("API Alamat error:", err);
-        document.getElementById(targetId).innerHTML = '<option value="">Gagal load data</option>';
-    }
-    }
-
-    fetchWilayah("https://alamat.thecloudalert.com/api/kabkota/get/?d_provinsi_id=15", "kabkota_id");
-
-    document.getElementById("kabkota_id").addEventListener("change", function() {
-    fetchWilayah(
-      `https://alamat.thecloudalert.com/api/kecamatan/get/?d_kabkota_id=${this.value}`, 
-      "kecamatan_id"
-      );
-    });
-    document.getElementById("kecamatan_id").addEventListener("change", function() {
-    fetchWilayah(
-      `https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=${this.value}`, 
-      "kelurahan_id"
-    );
-  });
-
-  // ⭐ Rating
-  document.addEventListener("DOMContentLoaded", function() {
-    const stars = document.querySelectorAll("#rating-stars .star");
-    const ratingInput = document.getElementById("rating");
-
-    stars.forEach(star => {
-      star.addEventListener("click", function() {
-        const value = this.getAttribute("data-value");
-        ratingInput.value = value;
-
-        stars.forEach(s => {
-          s.innerHTML = "&#9734;"; // kosong ☆
-          s.classList.remove("selected");
-        });
-
-        for (let i = 0; i < value; i++) {
-          stars[i].innerHTML = "&#9733;"; // penuh ★
-          stars[i].classList.add("selected");
+        if (step === 2) {
+          if (!mapInitialized) {
+            initSilaladMap();
+            mapInitialized = true;
+          }
+          setTimeout(() => map.invalidateSize(), 200);
         }
-      });
+      }
+
+      nextBtn.addEventListener('click', () => { currentStep++; showStep(currentStep); });
+      prevBtn.addEventListener('click', () => { currentStep--; showStep(currentStep); });
+      showStep(currentStep);
     });
-  });
-
-</script>
-
-{{-- Google Maps --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARqG3-uSv0J4VgNmU9YtaNdWExMqxPgRg&callback=initMap" async defer></script>
-
-{{-- Cloudflare Turnstile --}}
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
+  </script>
 @endsection

@@ -2,219 +2,232 @@
 
 @section('title', $page_title)
 
-@section('content')
-<div class="main-content">
-    <h2 class="mb-4">{{ $page_title }}</h2>
-
-    <form action="{{ route('admin.silalad.store') }}" method="POST" class="custom-form">
-        @csrf
-
-        <div class="row g-3">
-            <!-- Nama Pelanggan -->
-            <div class="col-md-6">
-                <label for="nama_pelanggan">Nama Pelanggan</label>
-                <input type="text" name="nama_pelanggan" value="{{ old('nama_pelanggan') }}" class="form-control" required>
-            </div>
-
-            <!-- Nomor Telepon -->
-            <div class="col-md-6">
-                <label for="nomor_telepon_pelanggan">Nomor Telepon</label>
-                <input type="text" name="nomor_telepon_pelanggan" value="{{ old('nomor_telepon_pelanggan') }}" class="form-control" required>
-            </div>
-
-            <!-- Alamat -->
-            <div class="col-12">
-                <label for="alamat">Alamat</label>
-                <textarea name="alamat" class="form-control" rows="2" required>{{ old('alamat') }}</textarea>
-            </div>
-
-            <!-- Detail Alamat -->
-            <div class="col-12">
-                <label for="detail_alamat">Detail Alamat (Jalan / Perumahan)</label>
-                <textarea name="detail_alamat" class="form-control" rows="2" required>{{ old('detail_alamat') }}</textarea>
-            </div>
-
-            <!-- Nomor Rumah & RT -->
-            <div class="col-md-4">
-                <label for="nomor_rumah">Nomor Rumah</label>
-                <input type="text" name="nomor_rumah" value="{{ old('nomor_rumah') }}" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label for="rt">RT</label>
-                <input type="text" name="rt" value="{{ old('rt') }}" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label for="rw">RW</label>
-                <input type="text" name="rw" value="{{ old('rw') }}" class="form-control">
-            </div>
-
-            <!-- Kabupaten, Kecamatan, Kelurahan -->
-            <div class="col-md-4">
-                <label for="kabupaten">Kabupaten</label>
-                <input type="text" name="kabupaten" value="{{ old('kabupaten') }}" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label for="kecamatan">Kecamatan</label>
-                <input type="text" name="kecamatan" value="{{ old('kecamatan') }}" class="form-control" required>
-            </div>
-            <div class="col-md-4">
-                <label for="kelurahan">Kelurahan</label>
-                <input type="text" name="kelurahan" value="{{ old('kelurahan') }}" class="form-control" required>
-            </div>
-
-            <!-- Jenis Bangunan -->
-            <div class="col-md-6">
-                <label for="jenis_bangunan">Jenis Bangunan</label>
-                <select id="jenis_bangunan" name="jenis_bangunan" class="form-control" required>
-                    <option value="">-- Pilih Bangunan --</option>
-                    <option value="Rumah">Rumah (Rp600.000)</option>
-                    <option value="Tempat ibadah">Tempat Ibadah (Rp300.000)</option>
-                    <option value="Panti asuhan">Panti Asuhan (Rp300.000)</option>
-                    <option value="Hotel">Hotel (Rp600.000)</option>
-                    <option value="Sekolah">Sekolah (Rp300.000)</option>
-                    <option value="Panti jompo">Panti Jompo (Rp300.000)</option>
-                    <option value="Pabrik">Pabrik (Rp600.000)</option>
-                    <option value="Madrasah">Madrasah (Rp300.000)</option>
-                    <option value="Rumah sakit">Rumah Sakit (Rp600.000)</option>
-                    <option value="Restoran">Restoran (Rp600.000)</option>
-                    <option value="Kampus">Kampus (Rp300.000)</option>
-                    <option value="Pondok pesantren">Pondok Pesantren (Rp300.000)</option>
-                    <option value="Kantor">Kantor (Rp600.000)</option>
-                    <option value="Puskesmas">Puskesmas (Rp300.000)</option>
-                    <option value="Klinik">Klinik (Rp300.000)</option>
-                    <option value="Apartemen">Apartemen (Rp600.000)</option>
-                    <option value="Mall">Mall (Rp600.000)</option>
-                    <option value="Lainnya">Lainnya (Rp0)</option>
-                </select>
-            </div>
-
-            <!-- Jenis Layanan -->
-            <div class="col-md-6">
-                <label for="jenis_Layanan">Jenis Layanan</label>
-                <select id="jenis_Layanan" name="jenis_Layanan" class="form-control" required>
-                    <option value="">-- Pilih Layanan --</option>
-                    <option value="Sedot tinja">Sedot tinja</option>
-                    <option value="Sedot lemak">Sedot lemak (soon)</option>
-                    <option value="Peminjaman WC Portable">Peminjaman WC Portable (soon)</option>
-                </select>
-            </div>
-
-            <!-- Detail Laporan -->
-            <div class="col-12">
-                <label for="detail_laporan">Detail Laporan</label>
-                <textarea name="detail_laporan" class="form-control" rows="3">{{ old('detail_laporan') }}</textarea>
-            </div>
-
-            <!-- Google Maps -->
-            <div class="col-12">
-                <label for="lokasi">Titik Lokasi (Google Maps)</label>
-                <input type="text" id="lokasi" name="lokasi" class="form-control mb-2" value="{{ old('lokasi') }}" placeholder="Klik peta untuk memilih lokasi" readonly>
-                <div id="map"></div>
-            </div>
-
-            <!-- Status -->
-            <div class="col-md-6">
-                <label for="status_pengerjaan">Status Pengerjaan</label>
-                <select name="status_pengerjaan" class="form-control" required>
-                    <option value="Belum dikerjakan">Belum dikerjakan</option>
-                    <option value="Sedang dikerjakan">Sedang dikerjakan</option>
-                    <option value="Sudah dikerjakan">Sudah dikerjakan</option>
-                    <option value="Dibatalkan">Dibatalkan</option>
-                </select>
-            </div>
-
-            <!-- Tombol -->
-            <div class="col-12 d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('admin.silalad.data-pesanan') }}" class="btn btn-secondary">Batal</a>
-            </div>
-        </div>
-    </form>
-</div>
+@section('document.head')
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 @endsection
 
-@section('scripts')
-<style>
-    .custom-form {
-        background: #f8f9fa;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .custom-form label {
-        font-weight: 600;
-        margin-bottom: 6px;
-        display: block;
-    }
-    .form-control, select, textarea {
-        border-radius: 8px !important;
-        padding: 10px;
-        border: 1px solid #ced4da;
-        transition: border-color 0.3s;
-    }
-    .form-control:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-    }
-    #map {
-        height: 300px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-    }
-    .btn-primary {
-        background: #007bff;
-        border: none;
-        transition: background-color 0.3s;
-    }
-    .btn-primary:hover {
-        background: #0056b3;
-    }
-    .btn-secondary {
-        background: #6c757d;
-        border: none;
-        transition: background-color 0.3s;
-    }
-    .btn-secondary:hover {
-        background: #565e64;
-    }
-</style>
+@section('document.body')
+  <div class="flex items-center gap-3 mb-5">
+    <a href="{{ route('admin.silalad.data-pesanan') }}"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-3 py-2">
+      <i class="fa-solid fa-arrow-left"></i> Kembali
+    </a>
+    <h1 class="text-xl font-bold text-gray-900">{{ $page_title }}</h1>
+  </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const selectBangunan = document.getElementById("jenis_bangunan");
-    const divLainnya = document.getElementById("jenis_bangunan_lainnya_div");
-    const inputLainnya = document.getElementById("jenis_bangunan_lainnya");
+  <form action="{{ route('admin.silalad.store') }}" method="POST"
+    class="bg-white rounded-lg shadow-lg border p-6 space-y-5">
+    @csrf
 
-    if (selectBangunan) {
-        selectBangunan.addEventListener("change", function() {
-            if (this.value === "Lainnya") {
-                divLainnya?.classList.remove("d-none");
-                inputLainnya?.setAttribute("required", "required");
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="nama_pelanggan" class="block text-sm font-medium text-gray-900">Nama Pelanggan</label>
+        <input type="text" id="nama_pelanggan" name="nama_pelanggan" value="{{ old('nama_pelanggan') }}"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+      </div>
+      <div class="space-y-1.5">
+        <label for="nomor_telepon_pelanggan" class="block text-sm font-medium text-gray-900">Nomor Telepon</label>
+        <input type="text" id="nomor_telepon_pelanggan" name="nomor_telepon_pelanggan" value="{{ old('nomor_telepon_pelanggan') }}"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+      </div>
+    </div>
+
+    <div class="space-y-1.5">
+      <label for="alamat" class="block text-sm font-medium text-gray-900">Alamat</label>
+      <textarea id="alamat" name="alamat" rows="2"
+        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>{{ old('alamat') }}</textarea>
+    </div>
+
+    <div class="space-y-1.5">
+      <label for="alamat_detail" class="block text-sm font-medium text-gray-900">Alamat Detail</label>
+      <input type="text" id="alamat_detail" name="alamat_detail" value="{{ old('alamat_detail') }}"
+        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="layanan" class="block text-sm font-medium text-gray-900">Jenis Layanan</label>
+        <select id="layanan" name="layanan"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          <option value="">-- Pilih Layanan --</option>
+          <option value="sedot tinja" {{ old('layanan') == 'sedot tinja' ? 'selected' : '' }}>Sedot Lumpur Tinja</option>
+          <option value="sedot lumpur" {{ old('layanan') == 'sedot lumpur' ? 'selected' : '' }}>Sedot Lemak (soon)</option>
+          <option value="sedot lemak" {{ old('layanan') == 'sedot lemak' ? 'selected' : '' }}>Peminjaman WC Portabel (soon)</option>
+        </select>
+      </div>
+      <div class="space-y-1.5">
+        <label for="jenis_bangunan" class="block text-sm font-medium text-gray-900">Jenis Bangunan</label>
+        <select id="jenis_bangunan" name="jenis_bangunan"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          <option value="">-- Pilih Bangunan --</option>
+          <option value="Rumah">Rumah</option>
+          <option value="Tempat ibadah">Tempat Ibadah</option>
+          <option value="Panti asuhan">Panti Asuhan</option>
+          <option value="Hotel">Hotel</option>
+          <option value="Sekolah">Sekolah</option>
+          <option value="Panti jompo">Panti Jompo</option>
+          <option value="Pabrik">Pabrik</option>
+          <option value="Madrasah">Madrasah</option>
+          <option value="Rumah sakit">Rumah Sakit</option>
+          <option value="Restoran">Restoran</option>
+          <option value="Kampus">Kampus</option>
+          <option value="Pondok pesantren">Pondok Pesantren</option>
+          <option value="Kantor">Kantor</option>
+          <option value="Puskesmas">Puskesmas</option>
+          <option value="Klinik">Klinik</option>
+          <option value="Apartemen">Apartemen</option>
+          <option value="Mall">Mall</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="space-y-1.5">
+      <label for="detail_laporan" class="block text-sm font-medium text-gray-900">Detail Laporan</label>
+      <textarea id="detail_laporan" name="detail_laporan" rows="2"
+        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('detail_laporan') }}</textarea>
+    </div>
+
+    <input type="hidden" name="kabkota_id" value="Samarinda">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="kecamatan_id" class="block text-sm font-medium text-gray-900">Kecamatan</label>
+        <select id="kecamatan_id" name="kecamatan_id"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          <option value="" disabled selected>-- Pilih Kecamatan --</option>
+          @foreach ($kecamatans as $kecamatan)
+            <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="space-y-1.5">
+        <label for="kelurahan_id" class="block text-sm font-medium text-gray-900">Kelurahan</label>
+        <select id="kelurahan_id" name="kelurahan_id"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          <option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="rt" class="block text-sm font-medium text-gray-900">RT</label>
+        <input type="number" id="rt" name="rt" value="{{ old('rt') }}"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+      </div>
+      <div class="space-y-1.5">
+        <label for="nomor_bangunan" class="block text-sm font-medium text-gray-900">Nomor Rumah</label>
+        <input type="number" id="nomor_bangunan" name="nomor_bangunan" value="{{ old('nomor_bangunan') }}"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+      </div>
+    </div>
+
+    <div class="space-y-1.5">
+      <label class="block text-sm font-medium text-gray-900">Titik Lokasi</label>
+      <div id="map" class="w-full rounded-lg border" style="height:320px;"></div>
+      <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
+      <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="rating" class="block text-sm font-medium text-gray-900">Rating</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" value="{{ old('rating') }}"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      </div>
+      <div class="space-y-1.5">
+        <label for="status_pengerjaan" class="block text-sm font-medium text-gray-900">Status Pengerjaan</label>
+        <select id="status_pengerjaan" name="status_pengerjaan"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          <option value="Belum dikerjakan">Belum dikerjakan</option>
+          <option value="Sedang dikerjakan">Sedang dikerjakan</option>
+          <option value="Sudah dikerjakan">Sudah dikerjakan</option>
+          <option value="Dibatalkan">Dibatalkan</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label for="kritik" class="block text-sm font-medium text-gray-900">Kritik</label>
+        <textarea id="kritik" name="kritik" rows="2"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('kritik') }}</textarea>
+      </div>
+      <div class="space-y-1.5">
+        <label for="saran" class="block text-sm font-medium text-gray-900">Saran</label>
+        <textarea id="saran" name="saran" rows="2"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('saran') }}</textarea>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit"
+        class="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue rounded-lg px-5 py-2.5 transition">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan
+      </button>
+      <a href="{{ route('admin.silalad.data-pesanan') }}"
+        class="inline-flex items-center text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-5 py-2.5">
+        Batal
+      </a>
+    </div>
+  </form>
+@endsection
+
+@section('document.end')
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const selectBangunan = document.getElementById('jenis_bangunan');
+
+      const kecamatanSelect = document.getElementById('kecamatan_id');
+      const kelurahanSelect = document.getElementById('kelurahan_id');
+      kecamatanSelect.addEventListener('change', function() {
+        kelurahanSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
+        if (!this.value) {
+          kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>';
+          return;
+        }
+        fetch(`/api/kelurahans/by-kecamatan/${this.value}`)
+          .then(res => res.json())
+          .then(data => {
+            kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelurahan --</option>';
+            if (data.success && data.data.length > 0) {
+              data.data.forEach(k => {
+                const opt = document.createElement('option');
+                opt.value = k.id;
+                opt.textContent = k.nama;
+                kelurahanSelect.appendChild(opt);
+              });
             } else {
-                divLainnya?.classList.add("d-none");
-                inputLainnya?.removeAttribute("required");
-                if (inputLainnya) inputLainnya.value = "";
+              kelurahanSelect.innerHTML = '<option value="" disabled selected>Tidak ada data kelurahan</option>';
             }
-        });
-    }
+          })
+          .catch(() => {
+            kelurahanSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data</option>';
+          });
+      });
 
-    // Google Maps
-    var map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -0.502106, lng: 117.153709 },
-        zoom: 13
+      const defaultPos = [-0.502, 117.153];
+      const map = L.map('map').setView(defaultPos, 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      const marker = L.marker(defaultPos, { draggable: true }).addTo(map);
+
+      function updateLatLng(lat, lng) {
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+      }
+      updateLatLng(defaultPos[0], defaultPos[1]);
+
+      marker.on('dragend', function() {
+        const pos = marker.getLatLng();
+        updateLatLng(pos.lat, pos.lng);
+      });
+      map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+        updateLatLng(e.latlng.lat, e.latlng.lng);
+      });
     });
-
-    var marker;
-    map.addListener("click", function(event) {
-        var lat = event.latLng.lat();
-        var lng = event.latLng.lng();
-        document.getElementById("lokasi").value = lat + "," + lng;
-
-        if (marker) marker.setPosition(event.latLng);
-        else marker = new google.maps.Marker({ position: event.latLng, map: map });
-    });
-});
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+  </script>
 @endsection

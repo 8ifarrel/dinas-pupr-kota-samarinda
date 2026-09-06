@@ -4,23 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Silalad;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class SilaladAdminController extends Controller
-
 {
-    // /**
-    //  * Index semua pesanan
-    //  */
-    //  public function index()
-    //  {
-    //      $pesananPending = Silalad::orderBy('created_at', 'desc')->paginate(10);
-    //      $page_title = 'Semua Pesanan';
-        
-
-    //      return view('admin.pages.silalad.index', compact('pesananPending', 'page_title'));
-    //  }
-
     /**
      * Pesanan masuk (Belum dikerjakan)
      */
@@ -28,11 +16,10 @@ class SilaladAdminController extends Controller
     {
         $pesananPending = Silalad::where('status_pengerjaan', 'Belum dikerjakan')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->get();
 
         $page_title = 'Data Pesanan Masuk';
 
-        
         return view('admin.pages.silalad.data-pesanan', compact('pesananPending', 'page_title'));
     }
 
@@ -52,17 +39,18 @@ class SilaladAdminController extends Controller
         if ($tahun) {
             $query->whereYear('created_at', $tahun);
         }
-        $pesananConfirmed = $query->orderBy('updated_at', 'desc')->paginate(10);
+        $pesananConfirmed = $query->orderBy('updated_at', 'desc')->get();
 
         $page_title = 'Data Terkonfirmasi';
-        return view('admin.pages.silalad.data-terkonfirmasi', compact( 'pesananConfirmed', 'page_title', 'bulan', 'tahun'));
+        return view('admin.pages.silalad.data-terkonfirmasi', compact('pesananConfirmed', 'page_title', 'bulan', 'tahun'));
     }
+
     /**
      * Riwayat semua pesanan
      */
     public function riwayatPesanan()
     {
-        $riwayat = Silalad::orderBy('updated_at', 'desc')->paginate(10);
+        $riwayat = Silalad::orderBy('updated_at', 'desc')->get();
 
         $page_title = 'Riwayat Pesanan';
 
@@ -75,7 +63,9 @@ class SilaladAdminController extends Controller
     public function create()
     {
         $page_title = 'Buat Pesanan Baru';
-        return view('admin.pages.silalad.create', compact('page_title'));
+        $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
+
+        return view('admin.pages.silalad.create', compact('page_title', 'kecamatans'));
     }
 
     /**
@@ -125,8 +115,9 @@ class SilaladAdminController extends Controller
         $data->saran = $data->saran_masukan;
 
         $routeBatal = route('admin.silalad.data-pesanan');
+        $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
 
-        return view('admin.pages.silalad.edit', compact('page_title', 'page_description', 'data', 'routeBatal'));
+        return view('admin.pages.silalad.edit', compact('page_title', 'page_description', 'data', 'routeBatal', 'kecamatans'));
     }
 
 
@@ -240,51 +231,4 @@ class SilaladAdminController extends Controller
     }
 
 
-    /**
-     * Cetak Surat Jalan
-     */
-//     public function printSuratJalan(Silalad $silalad)
-//     {
-//         return view('admin.pages.silalad.print-surat-jalan', compact('silalad'));
-//     }
-
-//     /**
-//      * Cetak Surat Pernyataan Kerja
-//      */
-//     public function printSuratPernyataan(Silalad $silalad)
-//     {
-//         return view('admin.pages.silalad.print-surat-pernyataan', compact('silalad'));
-//     }
-
-//     /**
-//      * Cetak Surat Pesanan
-//      */
-//     public function printSuratPesanan(Silalad $silalad)
-//     {
-//         return view('admin.pages.silalad.print-surat-pesanan', compact('silalad'));
-//     }
-//   }
-
-//   public function print(Silalad $silalad, Request $request)
-//     {
-//         $type = $request->get('type', ); 
-
-//         switch ($type) {
-//             case 'pesanan':
-//                 return view('admin.pages.silalad.surat-pesanan', [
-//                     'item' => $silalad,
-//                     'page_title' => 'Surat Pesanan'
-//                 ]);
-//             case 'jalan':
-//                 return view('admin.pages.silalad.surat-jalan', [
-//                     'item' => $silalad,
-//                     'page_title' => 'Surat Jalan'
-//                 ]);
-//             default:
-//                 return view('admin.pages.silalad.surat-perintah-kerja', [
-//                     'item' => $silalad,
-//                     'page_title' => 'Surat Perintah Kerja'
-//                 ]);
-//         }
-//     }
 }

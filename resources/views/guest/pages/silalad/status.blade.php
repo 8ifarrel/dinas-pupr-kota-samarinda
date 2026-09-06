@@ -1,156 +1,171 @@
-@extends('guest.layouts.silalad')
+@extends('guest.layouts.main')
 
-@section('content')
-<div class="min-h-screen py-10 px-4 bg-gray-50">
-  <div class="max-w-4xl mx-auto space-y-6"> {{-- pakai space-y-6 biar antar box ada jarak --}}
+@section('document.body')
+  <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
+    <nav aria-label="Breadcrumb" class="max-w-4xl mx-auto mb-2.5">
+      <ol class="inline-flex items-center text-sm">
+        <li class="inline-flex items-center">
+          <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">Beranda</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+            </svg>
+            <a href="{{ route('guest.silalad.index') }}" class="text-blue-600 underline">SILALAD</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+            </svg>
+            <span class="text-gray-500 font-medium">Cek Status</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
 
-    {{-- Kotak Pencarian --}}
-    <div class="bg-white rounded-2xl shadow p-6">
-      <h2 class="text-xl font-bold mb-4 text-center">Cek Status Layanan</h2>
+    <div class="max-w-4xl mx-auto space-y-6">
+      {{-- Kotak Pencarian --}}
+      <div class="bg-white rounded-lg shadow-lg border p-6">
+        <h1 class="text-xl md:text-2xl font-bold mb-1 text-center">Cek Status Pesanan SILALAD</h1>
+        <p class="text-sm text-gray-600 text-center mb-4">
+          Masukkan nomor telepon yang Anda pakai saat mendaftar.
+        </p>
 
-      <form method="GET" action="{{ route('guest.silalad.status') }}" class="space-y-4">
-        <div>
-          <label for="nomor_telepon_pelanggan" class="block text-sm font-medium text-gray-700 mb-1">
-            Nomor Telepon
-          </label>
-          <input type="text" name="nomor_telepon_pelanggan" id="nomor_telepon_pelanggan" 
-                 value="{{ request('nomor_telepon_pelanggan') }}"
-                 placeholder="Masukkan Nomor Telepon Anda"
-                 class="w-full border rounded-lg px-3 py-2" required>
-        </div>
-        <button type="submit" 
-                class="w-full px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">
-          Cari
-        </button>
-      </form>
+        <form method="GET" action="{{ route('guest.silalad.status') }}" class="flex flex-col sm:flex-row gap-3">
+          <div class="flex-1 space-y-1.5">
+            <label for="nomor_telepon_pelanggan" class="sr-only">Nomor Telepon</label>
+            <input type="text" name="nomor_telepon_pelanggan" id="nomor_telepon_pelanggan"
+              value="{{ request('nomor_telepon_pelanggan') }}" placeholder="Masukkan nomor telepon Anda"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+          </div>
+          <button type="submit"
+            class="inline-flex justify-center items-center gap-1.5 px-6 py-2.5 bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue text-white text-sm font-semibold rounded-lg transition">
+            <i class="fa-solid fa-magnifying-glass"></i> Cari
+          </button>
+        </form>
 
-      @if(isset($result))
-        <div class="mt-6">
-          <h3 class="text-lg font-semibold mb-2">Hasil Pencarian</h3>
-          @if($result->isEmpty())
-            <p class="text-gray-600">Tidak ada data ditemukan untuk nomor telepon tersebut.</p>
-          @else
+        @if (request()->filled('nomor_telepon_pelanggan'))
+          <div class="mt-6">
+            <h2 class="text-base font-semibold mb-2 text-gray-900">Hasil Pencarian</h2>
+            @if ($result->isEmpty())
+              <p class="text-sm text-gray-500">Tidak ada pesanan ditemukan untuk nomor telepon tersebut.</p>
+            @else
+              <div class="overflow-x-auto">
+                <table class="w-full border rounded-lg text-sm">
+                  <thead class="bg-brand-blue text-white">
+                    <tr>
+                      <th class="px-3 py-2 text-left">Kode Booking</th>
+                      <th class="px-3 py-2 text-left">Tanggal</th>
+                      <th class="px-3 py-2 text-left">Nama</th>
+                      <th class="px-3 py-2 text-left">Status</th>
+                      <th class="px-3 py-2 text-left">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y">
+                    @foreach ($result as $item)
+                      <tr class="odd:bg-white even:bg-gray-50">
+                        <td class="px-3 py-2 font-semibold text-brand-blue">{{ $item->kode_booking ?? '-' }}</td>
+                        <td class="px-3 py-2">{{ $item->created_at->format('d M Y') }}</td>
+                        <td class="px-3 py-2">{{ $item->nama_pelanggan }}</td>
+                        <td class="px-3 py-2">
+                          @php
+                            $badge = match ($item->status_pengerjaan) {
+                                'Belum dikerjakan' => 'bg-yellow-100 text-yellow-800',
+                                'Sedang dikerjakan' => 'bg-blue-100 text-blue-800',
+                                default => 'bg-green-100 text-green-800',
+                            };
+                          @endphp
+                          <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $badge }}">
+                            {{ $item->status_pengerjaan }}
+                          </span>
+                        </td>
+                        <td class="px-3 py-2">
+                          <a href="{{ route('guest.silalad.show', $item->id) }}?telepon={{ urlencode($item->nomor_telepon_pelanggan) }}"
+                            class="text-blue-600 hover:underline">
+                            Lihat Detail
+                          </a>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            @endif
+          </div>
+        @endif
+      </div>
+
+      {{-- Kotak Histori --}}
+      @if (request()->filled('nomor_telepon_pelanggan'))
+        <div class="bg-white rounded-lg shadow-lg border p-6">
+          <h2 class="text-lg font-bold mb-4 text-gray-900">Histori Pendaftaran</h2>
+
+          <form method="GET" action="{{ route('guest.silalad.status') }}" class="flex flex-wrap gap-3 mb-4">
+            <input type="hidden" name="nomor_telepon_pelanggan" value="{{ request('nomor_telepon_pelanggan') }}">
+            <select name="year" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+              <option value="">Pilih Tahun</option>
+              @foreach ($years as $year)
+                <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+              @endforeach
+            </select>
+            <select name="month" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+              <option value="">Pilih Bulan</option>
+              @foreach (range(1, 12) as $m)
+                <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
+                  {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                </option>
+              @endforeach
+            </select>
+            <button type="submit"
+              class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-4 py-2">
+              <i class="fa-solid fa-filter"></i> Filter
+            </button>
+          </form>
+
+          <div class="overflow-x-auto">
             <table class="w-full border rounded-lg text-sm">
-              <thead class="bg-blue-900 text-white">
+              <thead class="bg-gray-800 text-white">
                 <tr>
-                  <th class="px-3 py-2 text-left">ID</th>
+                  <th class="px-3 py-2 text-left">Kode Booking</th>
                   <th class="px-3 py-2 text-left">Tanggal</th>
-                  <th class="px-3 py-2 text-left">Nama</th>
+                  <th class="px-3 py-2 text-left">Alamat</th>
                   <th class="px-3 py-2 text-left">Status</th>
-                  <th class="px-3 py-2 text-left">Aksi</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach($result as $item)
+              <tbody class="divide-y">
+                @forelse ($history as $item)
                   <tr class="odd:bg-white even:bg-gray-50">
-                    <td class="px-3 py-2 font-semibold text-blue-700">#{{ $item->id }}</td>
+                    <td class="px-3 py-2 font-semibold text-brand-blue">{{ $item->kode_booking ?? '-' }}</td>
                     <td class="px-3 py-2">{{ $item->created_at->format('d M Y') }}</td>
-                    <td class="px-3 py-2">{{ $item->nama_pelanggan }}</td>
+                    <td class="px-3 py-2">{{ $item->alamat }}</td>
                     <td class="px-3 py-2">
-                      @if($item->status_pengerjaan === 'Belum dikerjakan')
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">
-                          {{ $item->status_pengerjaan }}
-                        </span>
-                      @elseif($item->status_pengerjaan === 'Sedang dikerjakan')
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                          {{ $item->status_pengerjaan }}
-                        </span>
-                      @else
-                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
-                          {{ $item->status_pengerjaan }}
-                        </span>
-                      @endif
-                    </td>
-                    <td class="px-3 py-2">
-                      <a href="{{ route('guest.silalad.show', $item->id) }}?telepon={{ urlencode($item->nomor_telepon_pelanggan) }}"
-                         class="text-blue-600 hover:underline">
-                        Lihat Detail
-                      </a>
+                      @php
+                        $badge = match ($item->status_pengerjaan) {
+                            'Belum dikerjakan' => 'bg-yellow-100 text-yellow-800',
+                            'Sedang dikerjakan' => 'bg-blue-100 text-blue-800',
+                            default => 'bg-green-100 text-green-800',
+                        };
+                      @endphp
+                      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium {{ $badge }}">
+                        {{ $item->status_pengerjaan }}
+                      </span>
                     </td>
                   </tr>
-                @endforeach
+                @empty
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-gray-500">Belum ada histori pendaftaran.</td>
+                  </tr>
+                @endforelse
               </tbody>
             </table>
-          @endif
+          </div>
         </div>
       @endif
     </div>
-
-    {{-- Kotak Histori --}}
-    <div class="bg-white rounded-2xl shadow p-6">
-      <h2 class="text-xl font-bold mb-4 text-center">Histori Pendaftaran</h2>
-
-      {{-- Filter --}}
-      <form method="GET" action="{{ route('guest.silalad.status') }}" class="flex flex-wrap gap-3 mb-4">
-        <input type="hidden" name="nomor_telepon_pelanggan" value="{{ request('nomor_telepon_pelanggan') }}">
-        <select name="year" class="border rounded-lg px-3 py-2">
-          <option value="">Pilih Tahun</option>
-          @foreach($years as $year)
-            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-              {{ $year }}
-            </option>
-          @endforeach
-        </select>
-
-        <select name="month" class="border rounded-lg px-3 py-2">
-          <option value="">Pilih Bulan</option>
-          @foreach(range(1,12) as $m)
-            <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
-              {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
-            </option>
-          @endforeach
-        </select>
-
-        <button type="submit" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg">
-          Filter
-        </button>
-      </form>
-
-      {{-- Tabel Histori --}}
-      <div class="overflow-x-auto">
-        <table class="w-full border rounded-lg text-sm">
-          <thead class="bg-gray-800 text-white">
-            <tr>
-              <th class="px-3 py-2 text-left">ID</th>
-              <th class="px-3 py-2 text-left">Tanggal</th>
-              <th class="px-3 py-2 text-left">Nama</th>
-              <th class="px-3 py-2 text-left">Alamat</th>
-              <th class="px-3 py-2 text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse($history as $item)
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="px-3 py-2 font-semibold text-blue-700">#{{ $item->id }}</td>
-                <td class="px-3 py-2">{{ $item->created_at->format('d M Y') }}</td>
-                <td class="px-3 py-2">{{ $item->nama_pelanggan }}</td>
-                <td class="px-3 py-2">{{ $item->alamat }}</td>
-                <td class="px-3 py-2">
-                  @if($item->status_pengerjaan === 'Belum dikerjakan')
-                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">
-                      {{ $item->status_pengerjaan }}
-                    </span>
-                  @elseif($item->status_pengerjaan === 'Sedang dikerjakan')
-                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                      {{ $item->status_pengerjaan }}
-                    </span>
-                  @else
-                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
-                      {{ $item->status_pengerjaan }}
-                    </span>
-                  @endif
-                </td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="5" class="text-center py-4 text-gray-500">Belum ada histori pendaftaran.</td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
-</div>
 @endsection

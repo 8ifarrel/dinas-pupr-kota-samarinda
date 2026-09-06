@@ -2,209 +2,126 @@
 
 @section('title', $page_title)
 
-@section('content')
-<div class="container-fluid">
+@section('document.head')
+  @vite(['resources/css/datatables.css', 'resources/js/datatables.js'])
+@endsection
 
-    {{-- Pesan Sukses --}}
-    @if(session('success'))
-        <div class="alert alert-success mt-3">{{ session('success') }}</div>
-    @endif
-
-    <!-- Header -->
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">{{ $page_title }}</h1>
+@section('document.body')
+  <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
+    {{-- Filter --}}
+    <div class="bg-gray-50 rounded-lg border p-4 mb-4">
+      <form method="GET" action="{{ route('admin.silalad.dataTerkonfirmasi') }}" class="flex flex-wrap items-end gap-3">
+        @php
+          $selCls = 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5';
+          $bulanNama = [1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'];
+        @endphp
+        <div>
+          <label for="bulan" class="block text-sm font-medium text-gray-700 mb-1">Bulan</label>
+          <select name="bulan" id="bulan" class="{{ $selCls }}">
+            <option value="">-- Semua Bulan --</option>
+            @foreach ($bulanNama as $angka => $nama)
+              <option value="{{ $angka }}" {{ request('bulan') == $angka ? 'selected' : '' }}>{{ $nama }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div>
+          <label for="tahun" class="block text-sm font-medium text-gray-700 mb-1">Tahun</label>
+          <select name="tahun" id="tahun" class="{{ $selCls }}">
+            <option value="">-- Semua Tahun --</option>
+            @php $tahunSekarang = date('Y'); @endphp
+            @for ($t = $tahunSekarang; $t >= 2020; $t--)
+              <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
+            @endfor
+          </select>
+        </div>
+        <button type="submit"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue rounded-lg px-4 py-2.5 transition">
+          <i class="fa-solid fa-filter"></i> Filter
+        </button>
+        <a href="{{ route('admin.silalad.dataTerkonfirmasi') }}"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-4 py-2.5">
+          Reset
+        </a>
+      </form>
     </div>
 
-    <!-- Filter Section -->
-    <div class="card p-4 mb-4">
-        <h5 class="card-title mb-3">Filter Laporan</h5>
-        <form method="GET" action="{{ route('admin.silalad.dataTerkonfirmasi') }}" 
-              class="flex flex-wrap items-end gap-4">
-
-            <!-- Pilih Bulan -->
-            <div class="flex flex-col">
-                <label for="bulan" class="mb-1 font-semibold text-gray-700">Bulan</label>
-                <select name="bulan" id="bulan" 
-                    class="form-select px-3 py-2 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary">
-                    <option value="">-- Semua Bulan --</option>
-                    @php
-                        $daftarBulan = [
-                            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
-                            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
-                            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
-                        ];
-                    @endphp
-                    @foreach ($daftarBulan as $angkaBulan => $namaBulan)
-                        <option value="{{ $angkaBulan }}" {{ request('bulan') == $angkaBulan ? 'selected' : '' }}>
-                            {{ $namaBulan }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Pilih Tahun -->
-            <div class="flex flex-col">
-                <label for="tahun" class="mb-1 font-semibold text-gray-700">Tahun</label>
-                <select name="tahun" id="tahun" 
-                    class="form-select px-3 py-2 rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary">
-                    <option value="">-- Semua Tahun --</option>
-                    @php $tahunSekarang = date('Y'); @endphp
-                    @for ($t = $tahunSekarang; $t >= 2020; $t--)
-                        <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
-                    @endfor
-                </select>
-            </div>
-
-            <!-- Tombol Filter -->
-            <div class="flex gap-2">
-                <button type="submit" class="btn btn-primary px-4">Filter</button>
-                <a href="{{ route('admin.silalad.dataTerkonfirmasi') }}" class="btn btn-secondary px-4">Reset</a>
-            </div>
-        </form>
-    </div>
-
-    <!-- Table Section -->
-<div class="table-container overflow-wrapper">
-    <table>
+    <div class="relative overflow-x-auto text-sm md:text-base">
+      <table id="pesananTerkonfirmasi" class="stripe hover row-border table-auto" style="width:100%">
         <thead>
-            <tr>
-                <th>No</th>
-                <th>Id Pesanan</th>
-                <th>Nama Pelanggan</th>
-                <th>Alamat</th>
-                <th>No. Tlp</th>
-                <th>Jenis Bangunan</th>
-                <th>Status Pengerjaan</th>
-                <th colspan="2" class="text-center">Aksi</th>
-            </tr>
+          <tr>
+            <th>No.</th>
+            <th>Pelanggan</th>
+            <th>Alamat</th>
+            <th>No. Telepon</th>
+            <th>Jenis Bangunan</th>
+            <th>Status</th>
+            <th>Kelola</th>
+          </tr>
         </thead>
         <tbody>
-            @forelse ($pesananConfirmed as $pesanan)
+          @foreach ($pesananConfirmed as $index => $pesanan)
             <tr>
-                <td>{{ $loop->iteration + ($pesananConfirmed->currentPage() - 1) * $pesananConfirmed->perPage() }}</td>
-                <td>{{ $pesanan->id }}</td>
-                <td>{{ $pesanan->nama_pelanggan }}</td>
-                <td>{{ $pesanan->alamat }}</td>
-                <td>{{ $pesanan->nomor_telepon_pelanggan }}</td>
-                <td>{{ $pesanan->jenis_bangunan }}</td>
-                <td>
-                    @if ($pesanan->status_pengerjaan == 'Sudah dikerjakan')
-                        <span class="status-badge status-selesai">Sudah dikerjakan</span>
-                    @elseif ($pesanan->status_pengerjaan == 'Sedang dikerjakan')
-                        <span class="status-badge status-proses">Sedang dikerjakan</span>
-                    @endif
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a href="{{ route('admin.silalad.show', $pesanan->id) }}" class="action-btn" title="Detail"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('admin.silalad.edit', $pesanan->id) }}" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
-                        <form action="{{ route('admin.silalad.destroy', $pesanan->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="action-btn delete-btn" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-                <td>
-                    <a href="{{ route('admin.silalad.print', $pesanan->id) }}" target="_blank" class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></a>
-                </td>
+              <td>{{ $index + 1 }}</td>
+              <td>
+                <div class="font-medium text-gray-900">{{ $pesanan->nama_pelanggan }}</div>
+                <div class="text-xs text-gray-500">{{ $pesanan->kode_booking ?? '-' }}</div>
+              </td>
+              <td>{{ $pesanan->alamat }}</td>
+              <td>{{ $pesanan->nomor_telepon_pelanggan }}</td>
+              <td>{{ $pesanan->jenis_bangunan }}</td>
+              <td>
+                @php
+                  $badge = $pesanan->status_pengerjaan === 'Sudah dikerjakan'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-blue-100 text-blue-800';
+                @endphp
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium {{ $badge }}">
+                  {{ $pesanan->status_pengerjaan }}
+                </span>
+              </td>
+              <td>
+                <div class="flex gap-1.5">
+                  <a href="{{ route('admin.silalad.show', $pesanan) }}"
+                    class="flex justify-center items-center w-9 h-9 text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm">
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                  <a href="{{ route('admin.silalad.edit', $pesanan) }}"
+                    class="flex justify-center items-center w-9 h-9 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg text-sm">
+                    <i class="fa-solid fa-pencil"></i>
+                  </a>
+                  <a href="{{ route('admin.silalad.print', $pesanan) }}"
+                    class="flex justify-center items-center w-9 h-9 text-white bg-gray-600 hover:bg-gray-700 rounded-lg text-sm">
+                    <i class="fa-solid fa-print"></i>
+                  </a>
+                  <form action="{{ route('admin.silalad.destroy', $pesanan) }}" method="POST"
+                    onsubmit="return confirm('Yakin ingin menghapus pesanan ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                      class="flex justify-center items-center w-9 h-9 text-white bg-red-600 hover:bg-red-700 rounded-lg text-sm">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
             </tr>
-            @empty
-            <tr>
-                <td colspan="9" class="text-center">Tidak ada pesanan terkonfirmasi</td>
-            </tr>
-            @endforelse
+          @endforeach
         </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="pagination">
-        {{ $pesananConfirmed->appends(request()->query())->links() }}
+      </table>
     </div>
-</div>
+  </div>
+@endsection
 
-
-<!-- Custom CSS -->
-<style>
-    .table-container {
-        background: #fff;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-    }
-    .table-container table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .table-container th, .table-container td {
-        padding: 10px;
-        border: 1px solid #eee;
-        text-align: left;
-    }
-    .table-container th {
-        background: #f8f9fa;
-        font-weight: bold;
-    }
-    .status-badge {
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 600;
-    }
-    .status-selesai {
-        background: #d4edda;
-        color: #155724;
-    }
-    .status-proses {
-        background: #fff3cd;
-        color: #856404;
-    }
-    .action-btn {
-        display: inline-block;
-        padding: 6px 8px;
-        border-radius: 6px;
-        background: #f1f1f1;
-        color: #333;
-        margin-right: 4px;
-        text-decoration: none;
-        border: none;
-    }
-    .action-btn:hover {
-        background: #ddd;
-    }
-    .edit-btn {
-        background: #ffeeba;
-        color: #856404;
-    }
-    .delete-btn {
-        background: #f8d7da;
-        color: #721c24;
-    }
-    .print-btn {
-        background: #ffc107;
-        color: #212529;
-    }
-    .print-btn:hover {
-        background: #e0a800;
-    }
-    .pagination {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    /* AGAR TABEL BISA DIGESER (OVERFLOW X) */
-.overflow-wrapper {
-    overflow-x: auto;
-    width: 100%;
-}
-
-.overflow-wrapper table {
-    min-width: 1000px; 
-    white-space: nowrap;
-}
-
-</style>
+@section('document.end')
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      $('#pesananTerkonfirmasi').DataTable({
+        order: [[0, 'asc']],
+        columnDefs: [{
+          orderable: false,
+          targets: [6]
+        }]
+      });
+    });
+  </script>
 @endsection

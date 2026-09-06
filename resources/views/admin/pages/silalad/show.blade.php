@@ -1,83 +1,132 @@
 @extends('admin.layout')
 
-@section('title', 'Detail Laporan SILALAD')
+@section('title', 'Detail Pesanan SILALAD')
 
-@section('content')
-<div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-6">Detail Laporan SILALAD</h1>
+@section('document.body')
+  <div class="flex items-center gap-3 mb-5">
+    <a href="{{ route('admin.silalad.data-pesanan') }}"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-3 py-2">
+      <i class="fa-solid fa-arrow-left"></i> Kembali
+    </a>
+    <h1 class="text-xl font-bold text-gray-900">Detail Pesanan SILALAD</h1>
+  </div>
 
-    <div class="bg-white p-6 border rounded shadow space-y-3 text-sm leading-relaxed">
-    <p><strong>Nama:</strong> {{ $silalad->nama_pelanggan }}</p>
-    <p><strong>Telepon:</strong> {{ $silalad->nomor_telepon_pelanggan }}</p>
-    <p><strong>Alamat:</strong> {{ $silalad->alamat }}</p>
-    <p><strong>Alamat Detail:</strong> {{ $silalad->alamat_detail }}</p>
-    <p><strong>Layanan:</strong> {{ $silalad->layanan }}</p>
-    <p><strong>Detail Laporan:</strong> {{ $silalad->detail_laporan }}</p>
-    <p><strong>Kab/Kota:</strong> {{ $silalad->kabkota_id }}</p>
-    <p><strong>Kecamatan:</strong> {{ $silalad->kecamatan_id }}</p>
-    <p><strong>Kelurahan:</strong> {{ $silalad->kelurahan_id }}</p>
-    <p><strong>Latitude:</strong> {{ $silalad->latitude ?? '-' }}</p>
-    <p><strong>Longitude:</strong> {{ $silalad->longitude ?? '-' }}</p>
-    <p><strong>Jenis Bangunan:</strong> {{ $silalad->jenis_bangunan }}</p>
-    <p><strong>Nomor Bangunan:</strong> {{ $silalad->nomor_bangunan }}</p>
-    <p><strong>RT:</strong> {{ $silalad->rt }}</p>
-    <p><strong>Rating:</strong> {{ $silalad->rating }}</p>
-    <p><strong>Kritik:</strong> {{ $silalad->kritik }}</p>
-    <p><strong>Saran:</strong> {{ $silalad->saran }}</p>
-    <p><strong>Status Pengerjaan:</strong> {{ $silalad->status_pengerjaan }}</p>
-    <p><strong>Persetujuan:</strong> {{ $silalad->setuju ? 'Ya' : 'Tidak' }}</p>
-    <p><strong>Dibuat Pada:</strong> {{ $silalad->created_at->format('d-m-Y H:i') }}</p>
-    <p><strong>Diupdate Pada:</strong> {{ $silalad->updated_at->format('d-m-Y H:i') }}</p>
-
-            <span class="px-2 py-1 rounded 
-                {{ $silalad->status_pengerjaan == 'Sudah dikerjakan' ? 'bg-green-200 text-green-700' : 'bg-yellow-200 text-yellow-700' }}">
-                {{ $silalad->status_pengerjaan }}
-            </span>
-        </p>
-        <p><strong>Dibuat pada:</strong> {{ $silalad->created_at->format('d-m-Y H:i') }}</p>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 bg-white rounded-lg shadow-lg border p-6">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <tbody class="divide-y">
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700 w-1/3">Kode Booking</td>
+              <td class="px-2 py-2.5 text-brand-blue font-semibold">{{ $silalad->kode_booking ?? '-' }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Nama</td>
+              <td class="px-2 py-2.5">{{ $silalad->nama_pelanggan }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Telepon</td>
+              <td class="px-2 py-2.5">{{ $silalad->nomor_telepon_pelanggan }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Alamat</td>
+              <td class="px-2 py-2.5">{{ $silalad->alamat }} {{ $silalad->alamat_detail }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Layanan</td>
+              <td class="px-2 py-2.5">{{ $silalad->layanan }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Detail Laporan</td>
+              <td class="px-2 py-2.5">{{ $silalad->detail_laporan ?: '-' }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Wilayah</td>
+              <td class="px-2 py-2.5">{{ $silalad->kabkota_id }} / Kec. {{ $silalad->kecamatan_id }} / Kel. {{ $silalad->kelurahan_id }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Jenis Bangunan</td>
+              <td class="px-2 py-2.5">{{ $silalad->jenis_bangunan }}, No. {{ $silalad->nomor_bangunan }}, RT {{ $silalad->rt }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Titik Lokasi</td>
+              <td class="px-2 py-2.5">{{ $silalad->latitude ?? '-' }}, {{ $silalad->longitude ?? '-' }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Rating</td>
+              <td class="px-2 py-2.5">{{ $silalad->rating ?? '-' }} / 5</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Kritik & Saran</td>
+              <td class="px-2 py-2.5">{{ $silalad->saran_masukan ?: '-' }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Persetujuan Biaya</td>
+              <td class="px-2 py-2.5">{{ $silalad->setuju ? 'Ya' : 'Tidak' }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Dibuat</td>
+              <td class="px-2 py-2.5">{{ $silalad->created_at->format('d-m-Y H:i') }}</td>
+            </tr>
+            <tr>
+              <td class="px-2 py-2.5 font-medium text-gray-700">Diupdate</td>
+              <td class="px-2 py-2.5">{{ $silalad->updated_at->format('d-m-Y H:i') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="mt-6 flex gap-3">
-        <a href="{{ route('admin.silalad.data-pesanan') }}" 
-           class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
-            Kembali
+    <div class="space-y-6">
+      <div class="bg-white rounded-lg shadow-lg border p-6">
+        <h3 class="font-semibold text-gray-900 mb-3">Status Saat Ini</h3>
+        @php
+          $badge = match ($silalad->status_pengerjaan) {
+              'Sudah dikerjakan' => 'bg-green-100 text-green-800',
+              'Sedang dikerjakan' => 'bg-blue-100 text-blue-800',
+              'Dibatalkan' => 'bg-gray-200 text-gray-700',
+              default => 'bg-yellow-100 text-yellow-800',
+          };
+        @endphp
+        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium {{ $badge }}">
+          {{ $silalad->status_pengerjaan }}
+        </span>
 
-        </a>
-        <a href="{{ route('admin.silalad.edit', $silalad->id) }}" 
-           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-            Edit
-        </a>
-
-        <form action="{{ route('admin.silalad.destroy', $silalad->id) }}" 
-              method="POST" 
-              onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-            @csrf
-            @method('DELETE')
-            <button type="submit" 
-                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
-                Hapus
-            </button>
+        <form action="{{ route('admin.silalad.update-status', $silalad->id) }}" method="POST" class="mt-4 space-y-2">
+          @csrf
+          @method('PUT')
+          <select name="status_pengerjaan"
+            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            @foreach (['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'] as $status)
+              <option value="{{ $status }}" {{ $silalad->status_pengerjaan == $status ? 'selected' : '' }}>{{ $status }}</option>
+            @endforeach
+          </select>
+          <button type="submit"
+            class="w-full inline-flex justify-center items-center gap-1.5 text-sm font-semibold text-white bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue rounded-lg px-4 py-2 transition">
+            <i class="fa-solid fa-rotate"></i> Update Status
+          </button>
         </form>
-        
-            <form action="{{ route('admin.silalad.update-status', $silalad->id) }}" 
-        method="POST" class="inline">
-        @csrf
-        @method('PUT')
-        <select name="status_pengerjaan" class="border rounded px-2 py-1">
-            <option value="Belum dikerjakan" {{ $silalad->status_pengerjaan == 'Belum dikerjakan' ? 'selected' : '' }}>Belum dikerjakan</option>
-            <option value="Sedang dikerjakan" {{ $silalad->status_pengerjaan == 'Sedang dikerjakan' ? 'selected' : '' }}>Sedang dikerjakan</option>
-            <option value="Sudah dikerjakan" {{ $silalad->status_pengerjaan == 'Sudah dikerjakan' ? 'selected' : '' }}>Sudah dikerjakan</option>
-            <option value="Dibatalkan" {{ $silalad->status_pengerjaan == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-        </select>
-        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded ml-2">
-            Update Status
-        </button>
-    </form>
+      </div>
 
-        </button>
-    </form>
-
-
+      <div class="bg-white rounded-lg shadow-lg border p-6 space-y-2">
+        <a href="{{ route('admin.silalad.edit', $silalad->id) }}"
+          class="w-full inline-flex justify-center items-center gap-1.5 text-sm font-semibold text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg px-4 py-2 transition">
+          <i class="fa-solid fa-pencil"></i> Edit Pesanan
+        </a>
+        <a href="{{ route('admin.silalad.print', $silalad->id) }}"
+          class="w-full inline-flex justify-center items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-4 py-2">
+          <i class="fa-solid fa-print"></i> Cetak
+        </a>
+        <form action="{{ route('admin.silalad.destroy', $silalad->id) }}" method="POST"
+          onsubmit="return confirm('Yakin ingin menghapus pesanan ini?');">
+          @csrf
+          @method('DELETE')
+          <button type="submit"
+            class="w-full inline-flex justify-center items-center gap-1.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 transition">
+            <i class="fa-solid fa-trash"></i> Hapus Pesanan
+          </button>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 @endsection

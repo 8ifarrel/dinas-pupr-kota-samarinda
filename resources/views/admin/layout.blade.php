@@ -40,7 +40,6 @@
     @include('admin.components.alert')
 
     @yield('document.body')
-    @yield('content')
   </div>
 
   @vite('resources/js/app.js')

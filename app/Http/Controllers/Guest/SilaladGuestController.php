@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Silalad;
+use App\Models\Kecamatan;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -18,12 +19,19 @@ class SilaladGuestController extends Controller
      */
     public function index()
     {
-        $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+        $meta_description = "SILALAD - layanan sedot tinja UPTD Pengelolaan Air Limbah Domestik Dinas PUPR Kota Samarinda.";
         $page_title = "SILALAD";
+
+        $statistik = [
+            'belum_dikerjakan' => Silalad::where('status_pengerjaan', 'Belum dikerjakan')->count(),
+            'sedang_dikerjakan' => Silalad::where('status_pengerjaan', 'Sedang dikerjakan')->count(),
+            'sudah_dikerjakan' => Silalad::where('status_pengerjaan', 'Sudah dikerjakan')->count(),
+        ];
 
         return view('guest.pages.silalad.index', compact(
             'page_title',
-            'meta_description'
+            'meta_description',
+            'statistik'
         ));
     }
 
@@ -37,7 +45,7 @@ class SilaladGuestController extends Controller
      */
     public function show($id)
     {
-        $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+        $meta_description = "Detail pemesanan layanan SILALAD.";
 
         $order = Silalad::where('id', $id)
             ->where('nomor_telepon_pelanggan', request('telepon'))
@@ -57,12 +65,14 @@ class SilaladGuestController extends Controller
      */
     public function create()
     {
-        $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
+        $meta_description = "Daftar layanan SILALAD - sedot tinja - secara online.";
         $page_title = "Form Pendaftaran SILALAD";
+        $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
 
         return view('guest.pages.silalad.create', compact(
             'page_title',
-            'meta_description'
+            'meta_description',
+            'kecamatans'
         ));
     }
 
@@ -221,6 +231,7 @@ class SilaladGuestController extends Controller
                 'history'     => $history,
                 'years'       => $years,
                 'page_title'  => 'Cek Status SILALAD',
+                'meta_description' => 'Cek status pemesanan layanan SILALAD berdasarkan nomor telepon.',
             ]);
         }
 
