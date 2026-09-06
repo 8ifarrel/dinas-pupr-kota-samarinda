@@ -44,6 +44,22 @@ class APIKeySuperAdminController extends Controller
     ]);
   }
 
+  public function indexSilalad()
+  {
+    return view('admin.pages.super-admin.api-key.silalad.index', [
+      'page_title' => 'API Key SILALAD',
+      'page_description' => 'Kelola API Key yang digunakan untuk mendaftarkan dan memantau pesanan SILALAD lewat API.',
+    ]);
+  }
+
+  public function createSilalad()
+  {
+    return view('admin.pages.super-admin.api-key.silalad.create', [
+      'page_title' => 'Buat API Key SILALAD',
+      'page_description' => 'Tambah API Key baru untuk mengakses API SILALAD.',
+    ]);
+  }
+
   public function indexAkunKelurahan()
   {
     return view('admin.pages.super-admin.api-key.akun-kelurahan.index', [

@@ -5,119 +5,58 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Silalad;
 use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 
 class SilaladAdminController extends Controller
 {
     /**
-     * Pesanan masuk (Belum dikerjakan)
+     * Daftar semua pesanan (dulu terpecah jadi "Data Pesanan", "Data
+     * Terkonfirmasi", dan "Riwayat Pesanan" yang saling tumpang tindih -
+     * digabung jadi satu daftar dengan filter status/bulan/tahun.
      */
-    public function dataPesanan()
+    public function dataPesanan(Request $request)
     {
-        $pesananPending = Silalad::where('status_pengerjaan', 'Belum dikerjakan')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $page_title = 'Data Pesanan Masuk';
-
-        return view('admin.pages.silalad.data-pesanan', compact('pesananPending', 'page_title'));
-    }
-
-    /**
-     * Pesanan terkonfirmasi (Sedang dikerjakan atau Sudah dikerjakan)
-     */
-    public function dataTerkonfirmasi(Request $request)
-    {
+        $status = $request->get('status');
         $bulan = $request->get('bulan');
         $tahun = $request->get('tahun');
 
-        $query = Silalad::whereIn('status_pengerjaan', ['Sedang dikerjakan', 'Sudah dikerjakan']);
+        $query = Silalad::query();
 
+        if ($status) {
+            $query->where('status_pengerjaan', $status);
+        }
         if ($bulan) {
             $query->whereMonth('created_at', $bulan);
         }
         if ($tahun) {
             $query->whereYear('created_at', $tahun);
         }
-        $pesananConfirmed = $query->orderBy('updated_at', 'desc')->get();
 
-        $page_title = 'Data Terkonfirmasi';
-        return view('admin.pages.silalad.data-terkonfirmasi', compact('pesananConfirmed', 'page_title', 'bulan', 'tahun'));
+        $pesanan = $query->orderBy('created_at', 'desc')->get();
+
+        $page_title = 'Daftar Pesanan';
+
+        return view('admin.pages.silalad.daftar-pesanan', compact('pesanan', 'page_title', 'status', 'bulan', 'tahun'));
     }
 
     /**
-     * Riwayat semua pesanan
-     */
-    public function riwayatPesanan()
-    {
-        $riwayat = Silalad::orderBy('updated_at', 'desc')->get();
-
-        $page_title = 'Riwayat Pesanan';
-
-        return view('admin.pages.silalad.riwayat-pesanan', compact('riwayat', 'page_title'));
-    }
-
-    /**
-     * Tampilkan form buat pesanan baru
-     */
-    public function create()
-    {
-        $page_title = 'Buat Pesanan Baru';
-        $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
-
-        return view('admin.pages.silalad.create', compact('page_title', 'kecamatans'));
-    }
-
-    /**
-     * Simpan pesanan baru ke database
-     */
-    public function store(Request $request)
-    {
-        // Handle checkbox 'setuju'
-        $request->merge(['setuju' => $request->has('setuju')]);
-
-        $validated = $this->validateRequest($request);
-
-        Silalad::create($validated);
-
-        return redirect()->route('admin.silalad.data-pesanan')
-            ->with('success', 'Pesanan berhasil dibuat.');
-    }
-
-    /**
-     * Tampilkan detail pesanan
-     */
-    public function show(Silalad $silalad)
-    {
-        $page_title = 'Detail Pesanan';
-
-        // Lihat catatan di edit() soal kritik/saran vs kolom asli saran_masukan.
-        $silalad->kritik = $silalad->saran_masukan;
-        $silalad->saran = $silalad->saran_masukan;
-
-        return view('admin.pages.silalad.show', compact('silalad', 'page_title'));
-    }
-
-    /**
-     * Tampilkan form edit pesanan
+     * Tampilkan form edit pesanan.
+     *
+     * Satu-satunya yang benar-benar bisa diubah admin di sini adalah status
+     * pengerjaan - seluruh data lain diisi pelanggan sendiri saat mendaftar
+     * dan ditampilkan sebagai referensi (disabled), bukan untuk diedit.
      */
     public function edit(Silalad $silalad)
     {
         $page_title = 'Edit Pesanan';
-        $page_description = 'Form untuk mengedit data pesanan';
         $data = $silalad; // agar view pakai $data tetap jalan
 
-        // Kolom fisiknya cuma satu (saran_masukan), tapi form punya dua kotak
-        // terpisah (Kritik & Saran) peninggalan desain awal. Supaya isinya
-        // tidak hilang diam-diam, kedua kotak ditampilkan dari nilai yang sama
-        // dan digabung kembali saat disimpan - lihat validateRequest().
-        $data->kritik = $data->saran_masukan;
-        $data->saran = $data->saran_masukan;
-
         $routeBatal = route('admin.silalad.data-pesanan');
-        $kecamatans = Kecamatan::orderBy('nama')->get(['id', 'nama']);
+        $namaKecamatan = optional(Kecamatan::find($data->kecamatan_id))->nama ?? $data->kecamatan_id;
+        $namaKelurahan = optional(Kelurahan::find($data->kelurahan_id))->nama ?? $data->kelurahan_id;
 
-        return view('admin.pages.silalad.edit', compact('page_title', 'page_description', 'data', 'routeBatal', 'kecamatans'));
+        return view('admin.pages.silalad.edit', compact('page_title', 'data', 'routeBatal', 'namaKecamatan', 'namaKelurahan'));
     }
 
 
@@ -133,18 +72,8 @@ class SilaladAdminController extends Controller
         $silalad->status_pengerjaan = $request->status_pengerjaan;
         $silalad->save();
 
-        switch ($silalad->status_pengerjaan) {
-            case 'Belum dikerjakan':
-                return redirect()->route('admin.silalad.data-pesanan')
-                    ->with('success', 'Pesanan dikembalikan ke daftar pending.');
-            case 'Sedang dikerjakan':
-                return redirect()->route('admin.silalad.dataTerkonfirmasi')
-                    ->with('success', 'Pesanan berhasil dikonfirmasi.');
-            case 'Sudah dikerjakan':
-            case 'Dibatalkan':
-                return redirect()->route('admin.silalad.riwayat-pesanan')
-                    ->with('success', 'Status pesanan dipindahkan ke riwayat.');
-        }
+        return redirect()->route('admin.silalad.data-pesanan')
+            ->with('success', 'Status pesanan berhasil diperbarui.');
     }
 
         public function update(Request $request, Silalad $silalad)

@@ -88,18 +88,18 @@
         <ul id="dropdown-silalad" class="hidden py-2 space-y-2">
           <li>
             <a href="{{ route('admin.silalad.data-pesanan') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Daftar
               Pesanan</a>
           </li>
           <li>
-            <a href="{{ route('admin.silalad.dataTerkonfirmasi') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Data
-              Terkonfirmasi</a>
+            <a href="{{ route('admin.silalad.statistik-laporan.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Statistik
+              Laporan</a>
           </li>
           <li>
-            <a href="{{ route('admin.silalad.riwayat-pesanan') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Riwayat
-              Pesanan</a>
+            <a href="{{ route('admin.silalad.skm.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Survei
+              Kepuasan</a>
           </li>
         </ul>
       </li>
@@ -312,6 +312,10 @@
               <a href="{{ route('admin.super.api-key.hantu-banyu.index') }}"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
                 Banyu</a>
+            </li>
+            <li>
+              <a href="{{ route('admin.super.api-key.silalad.index') }}"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">SILALAD</a>
             </li>
             <li>
               <a href="{{ route('admin.super.api-key.akun-kelurahan.index') }}"

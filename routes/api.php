@@ -16,6 +16,10 @@ use App\Http\Controllers\Api\HantuBanyuApiKeyController;
 use App\Http\Controllers\Api\HantuBanyuLaporanController;
 use App\Http\Controllers\Api\GeocodingController;
 
+// SILALAD
+use App\Http\Controllers\Api\SilaladApiKeyController;
+use App\Http\Controllers\Api\SilaladPesananController;
+
 // Akun Kelurahan
 use App\Http\Controllers\Api\KelurahanApiKeyController;
 use App\Http\Controllers\Api\AkunKelurahanController;
@@ -107,6 +111,45 @@ Route::prefix('hantu-banyu/laporan')->middleware('auth.apikey:hantu-banyu')->gro
 //---------------REVERSE GEOCODING--------------------//
 Route::get('/hantu-banyu/reverse-geocode', [GeocodingController::class, 'reverseGeocode'])
   ->name('api.hantu-banyu.reverse-geocode');
+
+
+//==================================================================//
+//                             SILALAD                              //
+//==================================================================//
+
+//---------------API KEY MANAGEMENT--------------------//
+// HANYA untuk super admin yang sudah login via web interface
+Route::prefix('silalad-keys')->middleware(['web'])->group(function () {
+  // Middleware khusus untuk memastikan user adalah super admin
+  Route::middleware(\App\Http\Middleware\RedirectIfNotAuthenticated::class, \App\Http\Middleware\IsSuperAdmin::class)->group(function () {
+    Route::get('/', [SilaladApiKeyController::class, 'index'])->name('api.silalad-keys.index');
+    Route::post('/', [SilaladApiKeyController::class, 'store'])->name('api.silalad-keys.store');
+    Route::get('/{id}', [SilaladApiKeyController::class, 'show'])->name('api.silalad-keys.show');
+    Route::put('/{id}', [SilaladApiKeyController::class, 'update'])->name('api.silalad-keys.update');
+    Route::delete('/{id}', [SilaladApiKeyController::class, 'destroy'])->name('api.silalad-keys.destroy');
+    Route::post('/{id}/regenerate', [SilaladApiKeyController::class, 'regenerate'])->name('api.silalad-keys.regenerate');
+    Route::get('/{id}/usage', [SilaladApiKeyController::class, 'getUsageStats'])->name('api.silalad-keys.usage');
+  });
+
+  // Route validate bisa diakses oleh siapa saja (untuk testing API key)
+  Route::post('/validate', [SilaladApiKeyController::class, 'validate'])->name('api.silalad-keys.validate');
+});
+
+// ---------------PESANAN API--------------------//
+// Memakai kunci API SILALAD; kunci fitur lain tidak berlaku di sini,
+// begitu pula sebaliknya.
+Route::prefix('silalad/pesanan')->middleware('auth.apikey:silalad')->group(function () {
+  Route::post('/', [SilaladPesananController::class, 'store'])
+    ->name('api.silalad-pesanan.store');
+
+  // Didaftarkan sebelum /{id} supaya "status" tidak tertangkap sebagai id.
+  Route::get('/status', [SilaladPesananController::class, 'status'])
+    ->name('api.silalad-pesanan.status');
+
+  Route::get('/{id}', [SilaladPesananController::class, 'show'])
+    ->whereNumber('id')
+    ->name('api.silalad-pesanan.show');
+});
 
 
 //==================================================================//

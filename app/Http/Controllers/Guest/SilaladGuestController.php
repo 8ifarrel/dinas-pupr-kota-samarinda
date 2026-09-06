@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Silalad;
 use App\Models\Kecamatan;
+use App\Models\Kelurahan;
+use App\Models\SKM;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Http;
 
 class SilaladGuestController extends Controller
 {
     public string $page_context = 'SILALAD';
+
+    /**
+     * Id layanan SILALAD di tabel `layanan` - dipakai untuk merekap SKM
+     * (Survei Kepuasan Masyarakat) khusus fitur ini di E-Panel, terpisah
+     * dari survei umum maupun survei fitur lain seperti Hantu Banyu.
+     */
+    public int $layanan_id = 6;
 
     /**
      * Halaman utama daftar layanan SILALAD
@@ -36,31 +44,6 @@ class SilaladGuestController extends Controller
     }
 
     /**
-     * Menampilkan detail satu pemesanan.
-     *
-     * Hanya bisa diakses bila nomor telepon yang dipakai saat mendaftar
-     * disertakan lewat query string (?telepon=...) dan cocok dengan data
-     * pemesanan tersebut, supaya id pemesanan tidak bisa ditebak/diurut
-     * untuk melihat data pelanggan lain.
-     */
-    public function show($id)
-    {
-        $meta_description = "Detail pemesanan layanan SILALAD.";
-
-        $order = Silalad::where('id', $id)
-            ->where('nomor_telepon_pelanggan', request('telepon'))
-            ->first();
-
-        abort_if(!$order, 404);
-
-        return view('guest.pages.silalad.show', [
-            'order' => $order,
-            'page_title' => 'Detail Pemesanan SILALAD',
-            'meta_description' => $meta_description,
-        ]);
-    }
-
-    /**
      * Form create laporan
      */
     public function create()
@@ -81,6 +64,10 @@ class SilaladGuestController extends Controller
      */
   public function store(Request $request)
     {
+        // Checkbox persetujuan biaya tambahan - opsional, dicentang atau
+        // tidak tetap boleh mengirim form.
+        $request->merge(['setuju' => $request->has('setuju')]);
+
         $validated = $request->validate([
             'nama_pelanggan'           => 'required|string|max:150',
             'nomor_telepon_pelanggan'  => 'required|string|max:15',
@@ -98,13 +85,13 @@ class SilaladGuestController extends Controller
             'rt'                       => 'required|string',
             'nomor_bangunan'           => 'required|string',
             'rating'                   => 'nullable|integer|min:1|max:5',
-            'saran_masukan'        => 'nullable|string',
-            'cf-turnstile-response'    => 'required',
+            'kritik'                   => 'nullable|string',
+            'saran'                    => 'nullable|string',
+            'setuju'                   => 'boolean',
         ],[
         'jenis_bangunan.required' => 'Jenis bangunan wajib dipilih.',
         'jenis_bangunan_lainnya.required_if' => 'Jenis bangunan lain harus diisi bila memilih Lainnya.',
         ],[
-            'cf-turnstile-response.required' => 'Captcha wajib diselesaikan.',
             'nama_pelanggan.required' => 'Nama wajib diisi.',
             'nomor_telepon_pelanggan.required' => 'Nomor telepon wajib diisi.',
             'alamat.required' => 'Alamat tidak boleh kosong.',
@@ -114,25 +101,26 @@ class SilaladGuestController extends Controller
             'jenis_bangunan.required' => 'Jenis bangunan wajib dipilih.',
             'rt.required' => 'RT wajib diisi.',
             'nomor_bangunan.required' => 'Nomor rumah wajib diisi.',
-            'setuju.accepted' => 'Anda harus menyetujui syarat tambahan biaya.',
         ]);
+
+        // Kritik & saran dikirim terpisah dari SKM (Survei Kepuasan
+        // Masyarakat) - simpan salinannya sebelum digabung, supaya bisa
+        // dicatat sebagai baris SKM tersendiri di tabel `skm` (lihat bawah).
+        $skmNilai = $validated['rating'] ?? null;
+        $skmKritik = $validated['kritik'] ?? null;
+        $skmSaran = $validated['saran'] ?? null;
+
+        // Form punya dua kotak terpisah "Kritik" dan "Saran", tapi kolom
+        // fisiknya di tabel cuma satu (saran_masukan) - gabungkan di sini
+        // (konvensi yang sama dipakai SilaladAdminController).
+        $validated['saran_masukan'] = collect([$validated['kritik'] ?? null, $validated['saran'] ?? null])
+            ->filter()
+            ->implode("\n");
+        unset($validated['kritik'], $validated['saran']);
 
         // === Handle opsi "Lainnya" ===
         if ($request->jenis_bangunan === 'Lainnya' && $request->filled('jenis_bangunan_lainnya')) {
             $validated['jenis_bangunan'] = $request->jenis_bangunan_lainnya;
-        }
-
-        // === Verifikasi ke API Cloudflare Turnstile ===
-        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret'   => config('app.turnstile_secret'),
-            'response' => $request->input('cf-turnstile-response'),
-            'remoteip' => $request->ip(),
-        ]);
-
-        $result = $response->json();
-
-        if (!($result['success'] ?? false)) {
-            return back()->withErrors(['cf-turnstile-response' => 'Verifikasi captcha gagal.'])->withInput();
         }
 
         // === Generate kode_booking otomatis ===
@@ -149,6 +137,18 @@ class SilaladGuestController extends Controller
 
         // Simpan ke database
         $data = Silalad::create($validated);
+
+        // === Simpan SKM (rating, kritik, saran bersifat opsional) ===
+        // Direkap di tabel `skm` bersama (id layanan 6 = SILALAD), sama
+        // seperti pola yang dipakai Hantu Banyu, supaya E-Panel bisa
+        // menampilkan survei kepuasan lewat halaman yang sama bentuknya.
+        SKM::create([
+            'nilai' => $skmNilai,
+            'ip_address' => $request->ip(),
+            'kritik' => $skmKritik,
+            'saran' => $skmSaran,
+            'layanan_id' => $this->layanan_id,
+        ]);
 
         // === Notifikasi Email ke Admin ===
         try {
@@ -193,23 +193,59 @@ class SilaladGuestController extends Controller
         ));
     }
 
+    /**
+     * Halaman detail satu pesanan (dibuka dari "Lihat Detail" di halaman
+     * cek status).
+     */
+    public function show(Request $request, $id)
+    {
+        $data = Silalad::findOrFail($id);
+
+        // Nomor telepon dipakai sebagai "kunci" - tanpa nomor telepon yang
+        // cocok, orang lain tidak bisa asal menebak id pesanan untuk
+        // mengintip detail pesanan pelanggan lain.
+        if ($data->nomor_telepon_pelanggan !== $request->query('nomor_telepon_pelanggan')) {
+            abort(403);
+        }
+
+        $page_title = 'Detail Pesanan SILALAD';
+        $meta_description = 'Detail pemesanan layanan SILALAD.';
+        $namaKecamatan = optional(Kecamatan::find($data->kecamatan_id))->nama ?? $data->kecamatan_id;
+        $namaKelurahan = optional(Kelurahan::find($data->kelurahan_id))->nama ?? $data->kelurahan_id;
+
+        return view('guest.pages.silalad.show', compact(
+            'data',
+            'page_title',
+            'meta_description',
+            'namaKecamatan',
+            'namaKelurahan'
+        ));
+    }
+
     public function status(Request $request)
         {
-            // Ambil semua tahun dari data untuk filter
-            $years = Silalad::selectRaw('YEAR(created_at) as year')
-                ->distinct()
-                ->orderBy('year', 'desc')
-                ->pluck('year');
-
-            // Histori & hasil pencarian sama-sama wajib disaring berdasarkan nomor
-            // telepon yang dipakai saat mendaftar. Tanpa nomor telepon, keduanya
-            // tetap kosong - supaya halaman ini tidak jadi daftar publik seluruh
-            // pemesanan pelanggan lain.
-            $result = collect();
+            // Wajib disaring berdasarkan nomor telepon yang dipakai saat
+            // mendaftar. Tanpa nomor telepon, tetap kosong - supaya halaman
+            // ini tidak jadi daftar publik seluruh pemesanan pelanggan lain.
             $history = collect();
+            // Tahun difilter hanya dari pesanan milik nomor telepon ini
+            // sendiri, bukan dari seluruh pelanggan lain - supaya pilihan
+            // tahun yang tampil memang relevan dengan riwayat orang ini.
+            $years = collect();
+            $statusList = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
 
             if ($request->filled('nomor_telepon_pelanggan')) {
+                $years = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
+                    ->selectRaw('YEAR(created_at) as year')
+                    ->distinct()
+                    ->orderBy('year', 'desc')
+                    ->pluck('year');
+
                 $historyQuery = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan);
+
+                if ($request->filled('status')) {
+                    $historyQuery->where('status_pengerjaan', $request->status);
+                }
 
                 if ($request->filled('year')) {
                     $historyQuery->whereYear('created_at', $request->year);
@@ -219,17 +255,13 @@ class SilaladGuestController extends Controller
                     $historyQuery->whereMonth('created_at', $request->month);
                 }
 
-                $history = $historyQuery->orderBy('created_at', 'desc')->paginate(10, ['*'], 'history_page');
-
-                $result = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+                $history = $historyQuery->orderBy('created_at', 'desc')->paginate(10, ['*'], 'history_page')->withQueryString();
             }
 
             return view('guest.pages.silalad.status', [
-                'result'      => $result,
                 'history'     => $history,
                 'years'       => $years,
+                'statusList'  => $statusList,
                 'page_title'  => 'Cek Status SILALAD',
                 'meta_description' => 'Cek status pemesanan layanan SILALAD berdasarkan nomor telepon.',
             ]);

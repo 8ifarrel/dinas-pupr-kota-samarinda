@@ -73,7 +73,7 @@
             <span class="font-semibold text-brand-blue text-xs sm:text-sm text-center">Data Pelanggan</span>
           </div>
           <div class="flex-1 flex flex-col items-center">
-            <span class="font-semibold text-gray-500 text-xs sm:text-sm text-center">Detail Alamat</span>
+            <span class="font-semibold text-gray-500 text-xs sm:text-sm text-center">Detail Lokasi</span>
           </div>
           <div class="flex-1 flex flex-col items-center">
             <span class="font-semibold text-gray-500 text-xs sm:text-sm text-center">Konfirmasi</span>
@@ -83,7 +83,6 @@
 
       <form id="silaladForm" method="POST" action="{{ route('guest.silalad.store') }}" novalidate>
         @csrf
-        <input type="hidden" name="kabkota_id" value="Samarinda">
 
         @if ($errors->any())
           <div id="alert-form-errors" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50" role="alert">
@@ -114,19 +113,21 @@
             <p class="text-sm text-gray-500">Dipakai untuk cek status pesanan Anda nanti.</p>
           </div>
           <div class="space-y-1.5">
-            <label for="alamat" class="block text-sm font-medium text-gray-900">Alamat</label>
+            <label for="alamat" class="block text-sm font-medium text-gray-900">Alamat Pelanggan</label>
             <input type="text" id="alamat" name="alamat" value="{{ old('alamat') }}"
               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Masukkan alamat lengkap Anda" required>
+              placeholder="Masukkan alamat pribadi Anda" required>
           </div>
         </div>
 
-        {{-- STEP 2: Detail Alamat --}}
+        {{-- STEP 2: Detail Lokasi --}}
         <div class="step hidden space-y-4" data-step="2">
           <div class="space-y-1.5">
-            <label for="alamat_detail" class="block text-sm font-medium text-gray-900">Detail Alamat</label>
+            <label for="alamat_detail" class="block text-sm font-medium text-gray-900">Alamat</label>
             <textarea id="alamat_detail" name="alamat_detail" rows="2"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('alamat_detail') }}</textarea>
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contoh: Jl. Merdeka No. 5, dekat Masjid Al-Ikhlas">{{ old('alamat_detail') }}</textarea>
+            <p class="text-sm text-gray-500">Nama jalan dan lokasi bangunan yang ingin dilayani.</p>
           </div>
 
           <div class="space-y-1.5">
@@ -135,21 +136,31 @@
               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
               <option value="">-- Pilih Layanan --</option>
               <option value="sedot tinja" {{ old('layanan') == 'sedot tinja' ? 'selected' : '' }}>Sedot Lumpur Tinja</option>
-              <option value="sedot lumpur" {{ old('layanan') == 'sedot lumpur' ? 'selected' : '' }}>Sedot Lemak (soon)</option>
-              <option value="sedot lemak" {{ old('layanan') == 'sedot lemak' ? 'selected' : '' }}>Peminjaman WC Portabel (soon)</option>
+              <option value="sedot lumpur" disabled>Sedot Lemak (belum tersedia)</option>
+              <option value="sedot lemak" disabled>Peminjaman WC Portabel (belum tersedia)</option>
             </select>
           </div>
 
           <div class="space-y-1.5">
             <label for="detail_laporan" class="block text-sm font-medium text-gray-900">Detail Laporan</label>
             <textarea id="detail_laporan" name="detail_laporan" rows="2"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('detail_laporan') }}</textarea>
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contoh: Septic tank sudah penuh dan mulai berbau">{{ old('detail_laporan') }}</textarea>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="kabkota_id" class="block text-sm font-medium text-gray-900">Kabupaten/Kota</label>
+            <select id="kabkota_id" name="kabkota_id"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+              <option value="Samarinda" data-source="internal" selected>Kota Samarinda</option>
+            </select>
+            <p class="text-sm text-gray-500">Selain Kota Samarinda, daftar kecamatan/kelurahan diambil dari layanan wilayah pihak ketiga.</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-1.5">
               <label for="kecamatan_id" class="block text-sm font-medium text-gray-900">Kecamatan</label>
-              <select id="kecamatan_id" name="kecamatan_id"
+              <select id="kecamatan_id" name="kecamatan_id" data-source="internal"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option value="" disabled selected>-- Pilih Kecamatan --</option>
                 @foreach ($kecamatans as $kecamatan)
@@ -161,7 +172,7 @@
             </div>
             <div class="space-y-1.5">
               <label for="kelurahan_id" class="block text-sm font-medium text-gray-900">Kelurahan</label>
-              <select id="kelurahan_id" name="kelurahan_id"
+              <select id="kelurahan_id" name="kelurahan_id" data-source="internal"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>
               </select>
@@ -198,7 +209,7 @@
             <label for="jenis_bangunan_lainnya" class="block text-sm font-medium text-gray-900">Tuliskan Jenis Bangunan</label>
             <input type="text" id="jenis_bangunan_lainnya" name="jenis_bangunan_lainnya"
               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Isi jenis bangunan lain...">
+              placeholder="Contoh: Gudang">
           </div>
 
           <div class="grid grid-cols-2 gap-4">
@@ -206,13 +217,13 @@
               <label for="rt" class="block text-sm font-medium text-gray-900">RT</label>
               <input type="number" id="rt" name="rt" value="{{ old('rt') }}"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Nomor RT" required>
+                placeholder="Contoh: 05" required>
             </div>
             <div class="space-y-1.5">
               <label for="nomor_bangunan" class="block text-sm font-medium text-gray-900">Nomor Rumah</label>
               <input type="number" id="nomor_bangunan" name="nomor_bangunan" value="{{ old('nomor_bangunan') }}"
                 class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Nomor rumah" required>
+                placeholder="Contoh: 12" required>
             </div>
           </div>
 
@@ -241,16 +252,23 @@
           </div>
 
           <div class="space-y-1.5">
-            <label for="saran_masukan" class="block text-sm font-medium text-gray-900">Saran & Masukan</label>
-            <textarea id="saran_masukan" name="saran_masukan" rows="2"
-              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">{{ old('saran_masukan') }}</textarea>
+            <label for="kritik" class="block text-sm font-medium text-gray-900">Kritik</label>
+            <textarea id="kritik" name="kritik" rows="2"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contoh: Admin agak lama merespons WhatsApp">{{ old('kritik') }}</textarea>
           </div>
 
-          <div>
-            <div class="cf-turnstile" data-sitekey="{{ config('app.turnstile_sitekey') }}"></div>
-            @error('cf-turnstile-response')
-              <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
+          <div class="space-y-1.5">
+            <label for="saran" class="block text-sm font-medium text-gray-900">Saran</label>
+            <textarea id="saran" name="saran" rows="2"
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contoh: Mohon tambahkan jadwal akhir pekan">{{ old('saran') }}</textarea>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1">
+            <input type="checkbox" id="setuju" name="setuju" value="1" {{ old('setuju') ? 'checked' : '' }}
+              class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            <label for="setuju" class="text-sm font-medium text-gray-900">Saya setuju jika terdapat biaya tambahan</label>
           </div>
         </div>
 
@@ -282,7 +300,6 @@
   </style>
 
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -302,20 +319,65 @@
         }
       });
 
-      // Kecamatan -> Kelurahan (data internal, bukan API pihak ketiga)
+      // Kabupaten/Kota -> Kecamatan -> Kelurahan.
+      // Kota Samarinda pakai data internal situs ini sendiri (akurat & cepat).
+      // Kabupaten/kota lain di luar Samarinda tidak ada di data internal,
+      // jadi dipakaikan API wilayah pihak ketiga sebagai sumber data.
+      const WILAYAH_API = 'https://alamat.thecloudalert.com/api';
+      const PROVINSI_KALTIM_ID = 15;
+      const internalKecamatans = @json($kecamatans->map(fn ($k) => ['id' => $k->id, 'nama' => $k->nama]));
+
+      const kabkotaSelect = document.getElementById("kabkota_id");
       const kecamatanSelect = document.getElementById("kecamatan_id");
       const kelurahanSelect = document.getElementById("kelurahan_id");
 
-      kecamatanSelect.addEventListener("change", function() {
-        kelurahanSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
-        if (!this.value) {
-          kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan Dulu --</option>';
-          return;
-        }
-        fetch(`/api/kelurahans/by-kecamatan/${this.value}`)
+      function resetKelurahan(placeholder) {
+        kelurahanSelect.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
+      }
+
+      function populateKecamatanInternal() {
+        kecamatanSelect.dataset.source = 'internal';
+        kecamatanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan --</option>';
+        internalKecamatans.forEach(k => {
+          const opt = document.createElement('option');
+          opt.value = k.id;
+          opt.textContent = k.nama;
+          kecamatanSelect.appendChild(opt);
+        });
+        resetKelurahan('-- Pilih Kecamatan Dulu --');
+      }
+
+      function loadKecamatanExternal(kabkotaId) {
+        kecamatanSelect.dataset.source = 'external';
+        kecamatanSelect.innerHTML = '<option value="" disabled selected>Memuat...</option>';
+        fetch(`${WILAYAH_API}/kecamatan/get/?d_kabkota_id=${kabkotaId}`)
           .then(res => res.json())
           .then(data => {
-            kelurahanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kelurahan --</option>';
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>-- Pilih Kecamatan --</option>';
+            (data.result || []).forEach(d => {
+              const opt = document.createElement('option');
+              opt.value = d.text; // simpan nama, bukan id API pihak ketiga
+              opt.dataset.id = d.id;
+              opt.textContent = d.text;
+              kecamatanSelect.appendChild(opt);
+            });
+            resetKelurahan('-- Pilih Kecamatan Dulu --');
+          })
+          .catch(() => {
+            kecamatanSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data</option>';
+          });
+      }
+
+      function loadKelurahanInternal(kecamatanId) {
+        resetKelurahan('Memuat...');
+        if (!kecamatanId) {
+          resetKelurahan('-- Pilih Kecamatan Dulu --');
+          return;
+        }
+        fetch(`/api/kelurahans/by-kecamatan/${kecamatanId}`)
+          .then(res => res.json())
+          .then(data => {
+            resetKelurahan('-- Pilih Kelurahan --');
             if (data.success && data.data.length > 0) {
               data.data.forEach(k => {
                 const opt = document.createElement('option');
@@ -324,12 +386,65 @@
                 kelurahanSelect.appendChild(opt);
               });
             } else {
-              kelurahanSelect.innerHTML = '<option value="" disabled selected>Tidak ada data kelurahan</option>';
+              resetKelurahan('Tidak ada data kelurahan');
             }
           })
-          .catch(() => {
-            kelurahanSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data</option>';
+          .catch(() => resetKelurahan('Gagal memuat data'));
+      }
+
+      function loadKelurahanExternal(kecamatanApiId) {
+        resetKelurahan('Memuat...');
+        if (!kecamatanApiId) {
+          resetKelurahan('-- Pilih Kecamatan Dulu --');
+          return;
+        }
+        fetch(`${WILAYAH_API}/kelurahan/get/?d_kecamatan_id=${kecamatanApiId}`)
+          .then(res => res.json())
+          .then(data => {
+            resetKelurahan('-- Pilih Kelurahan --');
+            (data.result || []).forEach(d => {
+              const opt = document.createElement('option');
+              opt.value = d.text; // simpan nama, bukan id API pihak ketiga
+              opt.textContent = d.text;
+              kelurahanSelect.appendChild(opt);
+            });
+          })
+          .catch(() => resetKelurahan('Gagal memuat data'));
+      }
+
+      // Muat daftar kabupaten/kota lain (Kalimantan Timur) sebagai tambahan
+      // opsi "Kota Samarinda" yang sudah ada. Tidak memicu event change,
+      // supaya kecamatan bawaan (internal, Samarinda) tidak ikut ter-reset.
+      fetch(`${WILAYAH_API}/kabkota/get/?d_provinsi_id=${PROVINSI_KALTIM_ID}`)
+        .then(res => res.json())
+        .then(data => {
+          (data.result || []).forEach(d => {
+            if (/samarinda/i.test(d.text)) return; // sudah ada sebagai opsi bawaan
+            const opt = document.createElement('option');
+            opt.value = d.text;
+            opt.dataset.source = 'external';
+            opt.dataset.id = d.id;
+            opt.textContent = d.text;
+            kabkotaSelect.appendChild(opt);
           });
+        })
+        .catch(() => {}); // opsi Kota Samarinda tetap tersedia meski API gagal
+
+      kabkotaSelect.addEventListener("change", function() {
+        const opt = this.selectedOptions[0];
+        if (opt.dataset.source === 'internal') {
+          populateKecamatanInternal();
+        } else {
+          loadKecamatanExternal(opt.dataset.id);
+        }
+      });
+
+      kecamatanSelect.addEventListener("change", function() {
+        if (this.dataset.source === 'internal') {
+          loadKelurahanInternal(this.value);
+        } else {
+          loadKelurahanExternal(this.selectedOptions[0]?.dataset.id);
+        }
       });
 
       // Rating bintang

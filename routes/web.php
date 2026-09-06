@@ -369,6 +369,8 @@ use App\Http\Controllers\Admin\HantuBanyuLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuSKMAdminController;
 use App\Http\Controllers\Admin\SilaladAdminController;
+use App\Http\Controllers\Admin\SilaladSKMAdminController;
+use App\Http\Controllers\Admin\SilaladStatistikLaporanAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\AkunKelurahanSuperAdminController;
@@ -447,6 +449,13 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
               ->name('admin.super.api-key.hantu-banyu.index');
             Route::get('/create', [APIKeySuperAdminController::class, 'createHantuBanyu'])
               ->name('admin.super.api-key.hantu-banyu.create');
+          });
+
+          Route::prefix('silalad')->group(function () {
+            Route::get('/', [APIKeySuperAdminController::class, 'indexSilalad'])
+              ->name('admin.super.api-key.silalad.index');
+            Route::get('/create', [APIKeySuperAdminController::class, 'createSilalad'])
+              ->name('admin.super.api-key.silalad.create');
           });
 
           Route::prefix('akun-kelurahan')->group(function () {
@@ -553,14 +562,10 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
     Route::prefix('silalad')->group(function () {
       Route::get('/data-pesanan', [SilaladAdminController::class, 'dataPesanan'])
         ->name('admin.silalad.data-pesanan');
-      Route::get('/data-terkonfirmasi', [SilaladAdminController::class, 'dataTerkonfirmasi'])
-        ->name('admin.silalad.dataTerkonfirmasi');
-      Route::get('/riwayat-pesanan', [SilaladAdminController::class, 'riwayatPesanan'])
-        ->name('admin.silalad.riwayat-pesanan');
-      Route::get('/create', [SilaladAdminController::class, 'create'])
-        ->name('admin.silalad.create');
-      Route::post('/', [SilaladAdminController::class, 'store'])
-        ->name('admin.silalad.store');
+      Route::get('/statistik-laporan', [SilaladStatistikLaporanAdminController::class, 'index'])
+        ->name('admin.silalad.statistik-laporan.index');
+      Route::get('/skm', [SilaladSKMAdminController::class, 'index'])
+        ->name('admin.silalad.skm.index');
       Route::get('/{silalad}/edit', [SilaladAdminController::class, 'edit'])
         ->name('admin.silalad.edit');
       Route::put('/{silalad}/update-status', [SilaladAdminController::class, 'updateStatus'])
@@ -571,8 +576,6 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
         ->name('admin.silalad.destroy');
       Route::get('/{silalad}/print', [SilaladAdminController::class, 'print'])
         ->name('admin.silalad.print');
-      Route::get('/{silalad}', [SilaladAdminController::class, 'show'])
-        ->name('admin.silalad.show');
     });
 
     /**
