@@ -63,9 +63,15 @@ Penjelasan lengkap cara pakai tiap API — endpoint, format kunci, contoh reques
 |---|---|
 | Backend | PHP 8.2+, Laravel 12 |
 | Frontend | Blade, Tailwind CSS, Alpine.js, Vite |
+| UI Components | [Flowbite](https://flowbite.com/) (modal, dropdown, tab, dsb. di atas Tailwind) |
 | Basis Data | MySQL |
-| PDF | Browsershot (Puppeteer/Node) |
-| Lainnya | Laravel Sanctum-style API key custom, Yajra DataTables, PhpSpreadsheet |
+| Tabel & Grafik | DataTables, Chart.js |
+| Peta | Leaflet |
+| Editor & Media | Quill (rich text), Cropper.js (crop gambar), Lightbox2 + Viewer.js (galeri gambar) |
+| UI Interaksi | SweetAlert2 (dialog), Splide (carousel), jQuery |
+| PDF | Browsershot (Puppeteer/Node) untuk Hantu Banyu, DomPDF untuk Jalan Peduli |
+| HTTP Client | Guzzle (panggilan API eksternal seperti IPInfo dan Nominatim) |
+| Lainnya | Sistem kunci API kustom per-fitur (bukan Sanctum) |
 
 ## Instalasi
 
