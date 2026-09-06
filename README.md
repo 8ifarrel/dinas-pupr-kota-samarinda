@@ -31,11 +31,19 @@ Dibangun dengan [Laravel 12](https://laravel.com/) di sisi backend dan [Tailwind
 
 ### Panel Admin (E-Panel)
 
-- Manajemen konten (berita, pengumuman, PPID, agenda, album, partner, slider)
-- Manajemen struktur organisasi dan akun admin (dengan level super admin)
-- Manajemen akun kelurahan (dipakai bersama oleh fitur Hantu Banyu dan fitur mendatang lain yang membutuhkan login kelurahan)
-- API key per-fitur untuk integrasi eksternal
-- Log aktivitas admin
+1. Manajemen konten (berita, pengumuman, PPID, agenda, album, partner, slider)
+2. Manajemen struktur organisasi
+3. Manajemen akun kelurahan (dipakai bersama oleh fitur Hantu Banyu dan fitur mendatang lain yang membutuhkan login kelurahan)
+4. Dua level admin, yaitu Admin dan Super Admin
+5. API key per-fitur untuk integrasi eksternal
+6. Log aktivitas website dari Admin, Super Admin, Kelurahan, Pengunjung Publik, dan Sistem
+
+#### Level Akses
+
+- **Admin** — mengelola konten dan operasional harian sesuai kewenangannya
+- **Super Admin** — seluruh kewenangan Admin, ditambah pengelolaan akun admin lain, akun kelurahan, kunci API, dan log aktivitas
+- **Kelurahan** — login khusus operator kelurahan untuk fitur yang mensyaratkan identitas kelurahan (mis. Hantu Banyu)
+- **Publik (Guest)** — pengunjung tanpa login, mengakses portal publik dan fitur yang terbuka untuk umum
 
 ## API
 
