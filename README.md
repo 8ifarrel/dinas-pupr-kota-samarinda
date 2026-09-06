@@ -33,6 +33,8 @@ Fitur Hantu Banyu melayani pengaduan warga terkait kondisi drainase dan irigasi 
 
 Di `main`, seluruh bagian di atas sudah konsisten memakai penamaan `HantuBanyu*`.
 
+> **Jangan melanjutkan pengembangan di branch ini.** Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur Hantu Banyu, buat branch baru dari `main` (bukan dari branch ini), kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai. Melanjutkan di sini berarti bekerja di atas kode yang sudah usang.
+
 ## Instalasi & Menjalankan
 
 Ikuti langkah instalasi umum di [README `main`](../../tree/main#readme). Tidak ada perbedaan proses setup antara branch ini dengan `main`.
