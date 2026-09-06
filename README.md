@@ -7,6 +7,7 @@ Dibangun dengan [Laravel 12](https://laravel.com/) di sisi backend dan [Tailwind
 ## Daftar Isi
 
 - [Fitur](#fitur)
+- [API](#api)
 - [Teknologi](#teknologi)
 - [Instalasi](#instalasi)
 - [Konfigurasi Environment](#konfigurasi-environment)
@@ -35,6 +36,18 @@ Dibangun dengan [Laravel 12](https://laravel.com/) di sisi backend dan [Tailwind
 - Manajemen akun kelurahan (dipakai bersama oleh fitur Hantu Banyu dan fitur mendatang lain yang membutuhkan login kelurahan)
 - API key per-fitur untuk integrasi eksternal
 - Log aktivitas admin
+
+## API
+
+Tiga fitur menyediakan API untuk integrasi eksternal, masing-masing dengan kunci API dan tabel kunci terpisah — kunci satu fitur tidak berlaku di fitur lain:
+
+| Fitur | Kegunaan API |
+|---|---|
+| **Jalan Peduli** | Integrasi pelaporan kerusakan jalan dari luar website ini |
+| **Hantu Banyu** | Integrasi pelaporan drainase/irigasi serta reverse geocoding koordinat |
+| **Akun Kelurahan** | Verifikasi kredensial dan data akun kelurahan, dipakai sistem eksternal mana pun yang perlu login kelurahan tanpa membangun sistem akunnya sendiri |
+
+Penjelasan lengkap cara pakai tiap API — endpoint, format kunci, contoh request — ada di README branch masing-masing fitur: [`kkn-unmul/jalan-peduli`](../../tree/kkn-unmul/jalan-peduli#readme), [`hantu-banyu`](../../tree/hantu-banyu#readme), dan [`akun-kelurahan`](../../tree/akun-kelurahan#readme).
 
 ## Teknologi
 
