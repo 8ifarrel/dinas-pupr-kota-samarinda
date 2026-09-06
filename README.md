@@ -115,6 +115,8 @@ php artisan view:cache
 | `buku-tamu` | Pengembangan aktif fitur Buku Tamu (belum digabung ke `main`) |
 | `kkn-unmul/jalan-peduli`, `pkl-umkt/*` | Cabang kerja mitra magang/KKN untuk fitur tertentu |
 
+> **Catatan untuk Hantu Banyu:** jangan melanjutkan pengembangan atau perbaikan bug pada branch `hantu-banyu` yang lama — kodenya masih memakai penamaan `DrainaseIrigasi*` yang sudah usang. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur ini, buat branch baru dari `main` (yang sudah memakai penamaan `HantuBanyu*` final), kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
+
 ## Menjalankan Test
 
 ```bash
