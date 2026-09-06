@@ -371,9 +371,9 @@ use App\Http\Controllers\Admin\HantuBanyuAdminController;
 use App\Http\Controllers\Admin\HantuBanyuLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuStatistikLaporanAdminController;
 use App\Http\Controllers\Admin\HantuBanyuSKMAdminController;
-use App\Http\Controllers\Admin\HantuBanyuAkunKelurahanAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
+use App\Http\Controllers\Admin\AkunKelurahanSuperAdminController;
 use App\Http\Controllers\Admin\LogSuperAdminController;
 
 Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(function () {
@@ -410,6 +410,30 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
         });
 
         /**
+         * Akun Kelurahan
+         *
+         * Berada di level super admin karena akun kelurahan dipakai bersama
+         * lintas fitur, bukan milik salah satu fitur saja.
+         */
+        Route::prefix('akun-kelurahan')->group(function () {
+          Route::get('/', [AkunKelurahanSuperAdminController::class, 'index'])
+            ->name('admin.super.akun-kelurahan.index');
+          Route::get('/create', [AkunKelurahanSuperAdminController::class, 'create'])
+            ->name('admin.super.akun-kelurahan.create');
+          Route::post('/store', [AkunKelurahanSuperAdminController::class, 'store'])
+            ->name('admin.super.akun-kelurahan.store');
+          Route::get('/edit/{id}', [AkunKelurahanSuperAdminController::class, 'edit'])
+            ->whereNumber('id')
+            ->name('admin.super.akun-kelurahan.edit');
+          Route::put('/update/{id}', [AkunKelurahanSuperAdminController::class, 'update'])
+            ->whereNumber('id')
+            ->name('admin.super.akun-kelurahan.update');
+          Route::delete('/delete/{id}', [AkunKelurahanSuperAdminController::class, 'destroy'])
+            ->whereNumber('id')
+            ->name('admin.super.akun-kelurahan.destroy');
+        });
+
+        /**
          * API Key
          */
         Route::prefix('api-key')->group(function () {
@@ -425,6 +449,13 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
               ->name('admin.super.api-key.hantu-banyu.index');
             Route::get('/create', [APIKeySuperAdminController::class, 'createHantuBanyu'])
               ->name('admin.super.api-key.hantu-banyu.create');
+          });
+
+          Route::prefix('akun-kelurahan')->group(function () {
+            Route::get('/', [APIKeySuperAdminController::class, 'indexAkunKelurahan'])
+              ->name('admin.super.api-key.akun-kelurahan.index');
+            Route::get('/create', [APIKeySuperAdminController::class, 'createAkunKelurahan'])
+              ->name('admin.super.api-key.akun-kelurahan.create');
           });
         });
 
@@ -516,23 +547,6 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->name('admin.hantu-banyu.skm.index');
       });
 
-      Route::prefix('akun-kelurahan')->group(function () {
-        Route::get('/', [HantuBanyuAkunKelurahanAdminController::class, 'index'])
-          ->name('admin.hantu-banyu.akun-kelurahan.index');
-        Route::get('/create', [HantuBanyuAkunKelurahanAdminController::class, 'create'])
-          ->name('admin.hantu-banyu.akun-kelurahan.create');
-        Route::post('/store', [HantuBanyuAkunKelurahanAdminController::class, 'store'])
-          ->name('admin.hantu-banyu.akun-kelurahan.store');
-        Route::get('/edit/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'edit'])
-          ->whereNumber('id')
-          ->name('admin.hantu-banyu.akun-kelurahan.edit');
-        Route::put('/update/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'update'])
-          ->whereNumber('id')
-          ->name('admin.hantu-banyu.akun-kelurahan.update');
-        Route::delete('/delete/{id}', [HantuBanyuAkunKelurahanAdminController::class, 'destroy'])
-          ->whereNumber('id')
-          ->name('admin.hantu-banyu.akun-kelurahan.destroy');
-      });
     });
 
     /**

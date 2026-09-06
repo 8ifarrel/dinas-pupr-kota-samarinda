@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\HantuBanyuApiKey;
 use App\Models\JalanPeduliApiKey;
+use App\Models\KelurahanApiKey;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ class VerifyApiKey
   protected array $models = [
     'jalan-peduli' => JalanPeduliApiKey::class,
     'hantu-banyu' => HantuBanyuApiKey::class,
+    'akun-kelurahan' => KelurahanApiKey::class,
   ];
 
   /**

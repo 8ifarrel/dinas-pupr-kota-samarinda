@@ -35,6 +35,9 @@ class LogAktivitasObserver
     \App\Models\Visitor::class,
     \App\Models\PageVisit::class,
     \App\Models\JalanPeduliIPLog::class,
+    \App\Models\BeritaView::class,
+    \App\Models\PengumumanView::class,
+    \App\Models\AlbumKegiatanView::class,
   ];
 
   /** Kolom yang nilainya tidak boleh ikut tersimpan di log. */
@@ -48,6 +51,11 @@ class LogAktivitasObserver
   private const KOLOM_DIABAIKAN = [
     'created_at',
     'updated_at',
+    // Naik sendiri saat pengunjung membuka berita/pengumuman/album kegiatan,
+    // bukan hasil perbuatan admin. Bila ikut dicatat, log akan penuh baris
+    // "ubah" atas nama publik yang tidak berguna bagi siapa pun. Perubahan
+    // yang hanya berisi kolom ini otomatis tidak menghasilkan log sama sekali.
+    'views_count',
   ];
 
   private const BATAS_PANJANG_NILAI = 500;

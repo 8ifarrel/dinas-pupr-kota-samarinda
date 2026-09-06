@@ -82,11 +82,6 @@
               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Survei
               Kepuasan</a>
           </li>
-          <li>
-            <a href="{{ route('admin.hantu-banyu.akun-kelurahan.index') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
-              Kelurahan</a>
-          </li>
         </ul>
       </li>
 
@@ -275,6 +270,17 @@
           </a>
         </li>
 
+        {{-- Akun Kelurahan --}}
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="{{ route('admin.super.akun-kelurahan.index') }}">
+            <i class="fa-solid fa-building-user"></i>
+            <span class="ms-3">
+              Akun Kelurahan
+            </span>
+          </a>
+        </li>
+
         {{-- API Keys --}}
         <li>
           <button type="button"
@@ -297,6 +303,11 @@
               <a href="{{ route('admin.super.api-key.hantu-banyu.index') }}"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
                 Banyu</a>
+            </li>
+            <li>
+              <a href="{{ route('admin.super.api-key.akun-kelurahan.index') }}"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
+                Kelurahan</a>
             </li>
           </ul>
         </li>

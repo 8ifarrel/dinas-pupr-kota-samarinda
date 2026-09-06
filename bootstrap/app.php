@@ -19,6 +19,23 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        /**
+         * visitor_id sengaja tidak dienkripsi.
+         *
+         * RecordStatistikPengunjung dipasang sebagai middleware global,
+         * sehingga berjalan SEBELUM EncryptCookies sempat mendekripsi apa pun.
+         * Selama cookie ini ikut dienkripsi, yang terbaca di sana hanyalah teks
+         * sandi sepanjang ratusan karakter - lolos pemeriksaan strlen > 64 -
+         * sehingga UUID pengunjung dibuat ulang pada setiap permintaan dan satu
+         * orang terhitung sebagai pengunjung baru berkali-kali.
+         *
+         * Isinya hanya UUID acak tanpa makna dan bukan token keamanan, jadi
+         * tidak ada yang bocor bila dibiarkan terbaca.
+         */
+        $middleware->encryptCookies(except: [
+            'visitor_id',
+        ]);
+
         $middleware->prepend(RecordStatistikPengunjung::class);
         $middleware->alias([
             'auth.apikey' => VerifyApiKey::class,

@@ -73,6 +73,13 @@ class RecordStatistikPengunjung
       cookie()->queue('visitor_id', $visitorId, 60 * 24 * 365); // menit * hari * tahun
     }
 
+    // cookie()->queue() hanya menitipkan cookie untuk balasan, sehingga pada
+    // kunjungan pertama controller masih membaca null. Ditanam juga ke bag
+    // cookie request supaya penghitung views berita/pengumuman/album kegiatan
+    // bisa mengenali pengunjung sejak halaman pertama yang dia buka, bukan
+    // baru pada halaman kedua.
+    $request->cookies->set('visitor_id', $visitorId);
+
     // Visitor yang sudah pernah tercatat tidak perlu dicek ulang ke IPInfo
     $isKnownVisitor = Visitor::where('visitor_id', $visitorId)->exists();
 

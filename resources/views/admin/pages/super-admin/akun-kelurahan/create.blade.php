@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('document.body')
-  <form action="{{ route('admin.hantu-banyu.akun-kelurahan.store') }}" method="POST" autocomplete="off">
+  <form action="{{ route('admin.super.akun-kelurahan.store') }}" method="POST" autocomplete="off">
     @csrf
 
     <div class="mb-4">

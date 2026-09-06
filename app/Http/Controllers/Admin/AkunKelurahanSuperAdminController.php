@@ -11,7 +11,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class HantuBanyuAkunKelurahanAdminController extends Controller
+/**
+ * Kelola akun kelurahan. Sengaja berada di level super admin, bukan di dalam
+ * salah satu fitur, karena akun kelurahan adalah identitas milik bersama:
+ * hari ini dipakai Hantu Banyu, dan fitur baru mana pun yang kelak butuh
+ * login kelurahan bisa langsung memakai akun yang sudah ada tanpa membuat
+ * sistem akun sendiri. Menempatkannya di bawah satu fitur akan menyiratkan
+ * kepemilikan yang keliru dan membuat fitur berikutnya ragu memakainya.
+ */
+class AkunKelurahanSuperAdminController extends Controller
 {
   public function index(Request $request)
   {
@@ -29,9 +37,9 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     $kecamatanList = Kecamatan::orderBy('nama')->get(['id', 'nama']);
 
     $page_title = 'Akun Kelurahan';
-    $page_description = 'Kelola akun kelurahan yang digunakan untuk melaporkan Hantu Banyu. Setiap kelurahan hanya boleh memiliki satu akun.';
+    $page_description = 'Kelola akun kelurahan yang dipakai bersama oleh fitur-fitur yang membutuhkan login kelurahan, saat ini Hantu Banyu. Setiap kelurahan hanya boleh memiliki satu akun.';
 
-    return view('admin.pages.hantu-banyu.akun-kelurahan.index', compact(
+    return view('admin.pages.super-admin.akun-kelurahan.index', compact(
       'akun',
       'kecamatanList',
       'kecamatanId',
@@ -50,7 +58,7 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     $page_title = 'Tambah Akun Kelurahan';
     $page_description = 'Isi form untuk menambahkan akun kelurahan baru.';
 
-    return view('admin.pages.hantu-banyu.akun-kelurahan.create', compact(
+    return view('admin.pages.super-admin.akun-kelurahan.create', compact(
       'kelurahanTersedia',
       'page_title',
       'page_description'
@@ -79,7 +87,7 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     ]);
 
     return redirect()
-      ->route('admin.hantu-banyu.akun-kelurahan.index')
+      ->route('admin.super.akun-kelurahan.index')
       ->with('success', 'Akun kelurahan berhasil ditambahkan.');
   }
 
@@ -97,7 +105,7 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     $page_title = 'Edit Akun Kelurahan';
     $page_description = 'Ubah data akun atau atur ulang kata sandi akun kelurahan.';
 
-    return view('admin.pages.hantu-banyu.akun-kelurahan.edit', compact(
+    return view('admin.pages.super-admin.akun-kelurahan.edit', compact(
       'akun',
       'kelurahanTersedia',
       'page_title',
@@ -137,7 +145,7 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     $akun->save();
 
     return redirect()
-      ->route('admin.hantu-banyu.akun-kelurahan.index')
+      ->route('admin.super.akun-kelurahan.index')
       ->with('success', 'Akun kelurahan berhasil diperbarui.');
   }
 
@@ -147,7 +155,7 @@ class HantuBanyuAkunKelurahanAdminController extends Controller
     $akun->delete();
 
     return redirect()
-      ->route('admin.hantu-banyu.akun-kelurahan.index')
+      ->route('admin.super.akun-kelurahan.index')
       ->with('success', 'Akun kelurahan berhasil dihapus.');
   }
 }

@@ -32,11 +32,15 @@
         "jquery": "^3.7.1",
         "leaflet": "^1.9.4",
         "lightbox2": "^2.11.5",
-        "puppeteer": "^24.16.1",
-        "quill": "^2.0.3",
+        "puppeteer": "^25.10.0",
+        "quill": "^2.0.2",
         "quill-resize-module": "^2.0.4",
         "sweetalert2": "^11.4.8",
         "tailwindcss-filters": "^3.0.0",
         "viewerjs": "^1.11.7"
+    },
+    "allowScripts": {
+        "esbuild@0.25.7": true,
+        "puppeteer@25.10.0": true
     }
 }

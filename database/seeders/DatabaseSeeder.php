@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
       UsersSeeder::class,
       JalanPeduliApiKeySeeder::class,
       HantuBanyuApiKeySeeder::class,
+      KelurahanApiKeySeeder::class,
 
       // 11. Statistik pengunjung; page_visits mengacu visitor_id pada tabel visitors.
       VisitorsSeeder::class,

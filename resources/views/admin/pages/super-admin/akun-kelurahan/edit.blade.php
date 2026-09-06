@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('document.body')
-  <form action="{{ route('admin.hantu-banyu.akun-kelurahan.update', $akun->id) }}" method="POST" autocomplete="off">
+  <form action="{{ route('admin.super.akun-kelurahan.update', $akun->id) }}" method="POST" autocomplete="off">
     @csrf
     @method('PUT')
 

@@ -43,4 +43,20 @@ class APIKeySuperAdminController extends Controller
       'page_description' => 'Tambah API Key baru untuk mengakses API Hantu Banyu.',
     ]);
   }
+
+  public function indexAkunKelurahan()
+  {
+    return view('admin.pages.super-admin.api-key.akun-kelurahan.index', [
+      'page_title' => 'API Key Akun Kelurahan',
+      'page_description' => 'Kelola API Key yang digunakan untuk membaca dan memverifikasi akun kelurahan lewat API.',
+    ]);
+  }
+
+  public function createAkunKelurahan()
+  {
+    return view('admin.pages.super-admin.api-key.akun-kelurahan.create', [
+      'page_title' => 'Buat API Key Akun Kelurahan',
+      'page_description' => 'Tambah API Key baru untuk mengakses API akun kelurahan.',
+    ]);
+  }
 }
