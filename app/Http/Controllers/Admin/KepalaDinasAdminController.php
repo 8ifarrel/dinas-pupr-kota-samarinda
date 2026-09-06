@@ -119,6 +119,6 @@ class KepalaDinasAdminController extends Controller
       }
     }
 
-    return redirect()->route('admin.susunan-organisasi.index')->with('success', 'Data Kepala Dinas berhasil diperbarui.');
+    return redirect()->route('admin.kepala-dinas.edit')->with('success', 'Data Kepala Dinas berhasil diperbarui.');
   }
 }
