@@ -66,7 +66,7 @@ Penjelasan lengkap cara pakai tiap API — endpoint, format kunci, contoh reques
 | UI Components | [Flowbite](https://flowbite.com/) (modal, dropdown, tab, dsb. di atas Tailwind) |
 | Basis Data | MySQL |
 | Tabel & Grafik | DataTables, Chart.js |
-| Peta | Leaflet |
+| Peta | Leaflet, dengan tile dari OpenStreetMap (bawaan), Esri World Imagery (mode satelit, gratis), dan MapTiler (peta publik Jalan Peduli, butuh token) |
 | Editor & Media | Quill (rich text), Cropper.js (crop gambar), Lightbox2 + Viewer.js (galeri gambar) |
 | UI Interaksi | SweetAlert2 (dialog), Splide (carousel), jQuery |
 | PDF | Browsershot (Puppeteer/Node) untuk Hantu Banyu, DomPDF untuk Jalan Peduli |
