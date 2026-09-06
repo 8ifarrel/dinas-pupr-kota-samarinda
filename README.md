@@ -111,11 +111,11 @@ php artisan view:cache
 | Branch | Isi |
 |---|---|
 | `main` | Kode aplikasi produksi — seluruh fitur yang sudah selesai |
-| `hantu-banyu` | Salinan arsip kode `main`, ditandai untuk fitur Drainase & Irigasi |
+| `hantu-banyu` | Fitur pengaduan Drainase & Irigasi. Sudah final, tergabung penuh ke `main` |
 | `buku-tamu` | Fitur Buku Tamu, belum digabung ke `main` |
 | `kkn-unmul/jalan-peduli`, `pkl-umkt/*` | Cabang kerja mitra magang/KKN untuk fitur tertentu |
 
-> **Catatan untuk Hantu Banyu:** branch `hantu-banyu` adalah salinan arsip, bukan branch yang dikembangkan berkelanjutan. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur ini, buat branch baru dari `main`, kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
+> **Catatan:** branch yang sudah final dan tergabung penuh ke `main` (seperti `hantu-banyu`) tidak lagi dikembangkan langsung di branch tersebut. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur yang sudah final, buat branch baru dari `main`, kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
 
 ## Menjalankan Test
 
