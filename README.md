@@ -53,12 +53,7 @@ Hanya bisa diakses super admin yang sudah login lewat web (bukan lewat `X-API-KE
 
 ## Fitur yang Memerlukan Akses Akun Kelurahan
 
-Halaman-halaman berikut (di web ini, bukan API) hanya bisa diakses setelah login sebagai akun kelurahan:
-
-- **Halaman utama Hantu Banyu** — beranda fitur setelah login
-- **Kelola Akun Saya** — ubah username dan kata sandi akun kelurahan sendiri
-- **Pengaduan Hantu Banyu** — buat pengaduan baru, kirim, lihat daftar dan detail pengaduan wilayahnya, lihat hasil, unduh bukti pengaduan (PDF)
-- **Peta Sebaran** — visualisasi lokasi laporan Hantu Banyu
+1. **Hantu Banyu**
 
 ## Lisensi & Kepemilikan
 
