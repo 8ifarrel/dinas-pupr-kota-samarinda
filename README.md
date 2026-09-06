@@ -41,8 +41,7 @@ Daftar ini adalah cacat yang ditemukan pada branch `pkl-umkt/form-sedot-tinja`, 
 - **(Sudah diperbaiki saat pemindahan)** Satu bug lama di `LoginAdminController` (login gagal tidak memberi respons apa pun) ikut terbawa perbaikannya dari branch sumber.
 - **Kebocoran data pribadi** — halaman publik (daftar pesanan, detail pesanan, cek status) menampilkan nama, nomor telepon, dan alamat pelanggan ke siapa saja tanpa login maupun filter kepemilikan.
 - **Upload foto tidak tersimpan** — form pendaftaran memvalidasi field foto, tapi file-nya tidak pernah benar-benar disimpan.
-- **Nomor & email admin di-hardcode** di kode (bukan di `.env`), dipakai untuk notifikasi WhatsApp/email.
-- **Berkas sampah** ikut ter-*commit* di riwayat branch sumber (log `git log` yang salah redirect ke file, berkas `.tmp`) — sudah tidak dibawa ke branch ini, disebut di sini sebagai catatan riwayat saja.
+- **(Sudah diperbaiki saat pemindahan)** Berkas sampah yang ikut ter-*commit* di riwayat branch sumber (log `git log` yang salah redirect ke file, berkas `.tmp`) tidak dibawa ke branch ini.
 
 Sudah diuji: `php artisan migrate` dan `php artisan db:seed` dari basis data kosong berjalan tanpa error di lingkungan terisolasi sebelum branch ini didorong.
 
