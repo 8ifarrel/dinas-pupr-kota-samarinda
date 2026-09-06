@@ -1,12 +1,12 @@
 # Website Dinas PUPR Kota Samarinda — Branch `hantu-banyu`
 
-> Cabang pengembangan fitur **Hantu Banyu** (layanan pengaduan Drainase & Irigasi). Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
+> Arsip riwayat pengembangan fitur **Hantu Banyu** (layanan pengaduan Drainase & Irigasi). Fiturnya sudah sepenuhnya tergabung ke `main` dengan penamaan final — branch ini tidak lagi dikembangkan. Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
 
 ## Tentang Branch Ini
 
-Branch ini adalah riwayat pengembangan fitur Hantu Banyu sejak tahap awal, ketika kodenya masih memakai penamaan **Drainase Irigasi** (`DrainaseIrigasiGuestController`, `DrainaseIrigasiLaporan`, dsb.) sebelum dirapikan dan diganti nama menjadi **Hantu Banyu** pada `main`. Sebagian tampilan admin di sini sudah memakai nama baru, sementara kode guest-facing masih dengan penamaan lama — mencerminkan proses migrasi penamaan yang sedang berjalan.
+Branch ini adalah snapshot pengembangan fitur Hantu Banyu pada tahap awal, ketika kodenya masih memakai penamaan **Drainase Irigasi** (`DrainaseIrigasiGuestController`, `DrainaseIrigasiLaporan`, dsb.), sebelum kemudian dirapikan dan diganti nama menjadi **Hantu Banyu** secara konsisten pada `main`. Sebagian tampilan admin di sini sudah memakai nama baru, sementara kode guest-facing masih dengan penamaan lama — jejak proses ganti nama yang saat itu sedang berjalan.
 
-**Versi fitur yang sudah selesai dan stabil ada di branch `main`.** Gunakan branch ini bila Anda melanjutkan riwayat pengembangan fitur ini, bukan sebagai sumber kode produksi.
+Riwayat commit branch ini berhenti di titik yang sudah menyatu penuh ke `main` (tidak ada perubahan yang tertinggal). **Versi fitur yang sudah selesai dan stabil ada di branch `main`.** Branch ini disimpan sebagai riwayat, bukan sebagai sumber kode produksi maupun tempat melanjutkan pengembangan.
 
 ## Cakupan Fitur
 
