@@ -111,7 +111,7 @@ php artisan view:cache
 | Branch | Isi |
 |---|---|
 | `main` | Cabang rilis, berisi seluruh fitur yang sudah selesai |
-| `hantu-banyu` | Pengembangan aktif fitur Drainase & Irigasi |
+| `hantu-banyu` | Arsip riwayat pengembangan fitur Drainase & Irigasi. Sudah sepenuhnya tergabung ke `main` dengan penamaan final; branch ini disimpan sebagai riwayat, bukan untuk dikembangkan lebih lanjut |
 | `buku-tamu` | Pengembangan aktif fitur Buku Tamu (belum digabung ke `main`) |
 | `kkn-unmul/jalan-peduli`, `pkl-umkt/*` | Cabang kerja mitra magang/KKN untuk fitur tertentu |
 
