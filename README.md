@@ -8,7 +8,7 @@ Branch `pkl-umkt/form-sedot-tinja` (tempat fitur ini awalnya dikembangkan oleh a
 
 Yang dilakukan adalah **pemindahan manual**: kode milik fitur SILALAD dipindah dan disesuaikan agar berjalan di atas `main` versi terkini, sementara berkas lintas-fitur (routing, seeder, config, dsb.) tetap versi `main`, hanya ditambahkan bagian SILALAD-nya. Jadi branch ini = kode `main` terkini + fitur SILALAD di atasnya, bukan gabungan mentah dua riwayat commit yang berbeda.
 
-Selama proses ini, beberapa cacat *mekanis* pada kode sumber (yang membuat instalasi baru gagal total) sudah diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Cacat pada **logika/keamanan fitur itu sendiri** sengaja **tidak** diperbaiki di sini — lihat bagian [Masalah yang Diketahui](#masalah-yang-diketahui) — karena itu perlu keputusan terpisah sebelum fitur ini layak digabungkan ke `main`.
+Selama proses ini, beberapa cacat *mekanis* bawaan branch sumber (yang membuat instalasi baru gagal total) ikut diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Cacat pada **logika/keamanan fitur itu sendiri** sengaja **tidak** diperbaiki di sini — lihat bagian [Masalah yang Ditemukan di Branch Sumber](#masalah-yang-ditemukan-di-branch-sumber) — karena itu perlu keputusan terpisah sebelum fitur ini layak digabungkan ke `main`.
 
 ## Cakupan Fitur
 
@@ -29,9 +29,13 @@ Selama proses ini, beberapa cacat *mekanis* pada kode sumber (yang membuat insta
 | Rute publik | prefix `/sedot-tinja` |
 | Rute admin | prefix `/e-panel/sedot-tinja`, level akses Admin (bukan Super Admin) |
 
-## Perbaikan Mekanis yang Sudah Dilakukan
+## Masalah yang Ditemukan di Branch Sumber
 
-Supaya branch ini minimal bisa dipasang dari kosong (`migrate` + `seed`) tanpa error, hal-hal berikut disamakan/dirapikan saat porting — bukan perubahan perilaku fitur:
+Daftar ini adalah cacat yang ditemukan pada branch `pkl-umkt/form-sedot-tinja`, bukan sesuatu yang muncul akibat proses pemindahan kode ke sini.
+
+### Sudah Diperbaiki Saat Dipindahkan
+
+Cacat *mekanis* berikut membuat instalasi baru gagal total, jadi ikut diperbaiki agar branch ini minimal bisa dipasang dari kosong (`migrate` + `seed`) — bukan perubahan perilaku fitur:
 
 - Migrasi yang menambah ulang kolom `kode_booking` (sudah ada di migrasi pembuatan tabel) dan migrasi-migrasi kosong/tidak terpakai dari branch sumber **tidak dibawa**.
 - Rute admin & publik ditulis ulang bersih (branch sumber punya rute bertingkat ganda `admin/admin/sedot-tinja/...` serta nama rute yang didefinisikan berkali-kali).
@@ -42,9 +46,9 @@ Supaya branch ini minimal bisa dipasang dari kosong (`migrate` + `seed`) tanpa e
 
 Sudah diuji: `php artisan migrate` dan `php artisan db:seed` dari basis data kosong berjalan tanpa error di lingkungan terisolasi sebelum branch ini didorong.
 
-## Masalah yang Diketahui
+### Belum Diperbaiki
 
-Ini **belum diperbaiki** — sengaja dipertahankan apa adanya dari branch sumber, menunggu keputusan sebelum digabung ke `main`:
+Ini sengaja dipertahankan apa adanya dari branch sumber, menunggu keputusan sebelum digabung ke `main`:
 
 - **Kebocoran data pribadi** — halaman publik (daftar pesanan, detail pesanan, cek status) menampilkan nama, nomor telepon, dan alamat pelanggan ke siapa saja tanpa login maupun filter kepemilikan.
 - **Upload foto tidak tersimpan** — form pendaftaran memvalidasi field foto, tapi file-nya tidak pernah benar-benar disimpan.
