@@ -4,9 +4,9 @@
 
 ## Tentang Akun Kelurahan
 
-Akun kelurahan adalah identitas login **milik bersama**, sengaja ditempatkan di level super admin (bukan di dalam salah satu fitur) supaya fitur mana pun yang butuh login kelurahan bisa memakai akun yang sudah ada, tanpa membangun sistem akun sendiri. Saat ini dipakai oleh **Hantu Banyu**; fitur mendatang yang butuh login kelurahan tinggal memakai akun yang sama.
+Akun kelurahan adalah satu identitas login yang dipakai bersama oleh fitur mana pun yang membutuhkan login kelurahan — bukan akun yang dimiliki atau dibuat khusus untuk satu fitur tertentu. Saat ini dipakai oleh **Hantu Banyu**; fitur mendatang yang butuh login kelurahan tinggal memakai akun yang sudah ada, tanpa perlu membangun sistem akunnya sendiri.
 
-Super admin mengelola akun kelurahan (buat, ubah, hapus) lewat panel admin.
+Hanya admin dengan akses **super admin** yang bisa mengelola seluruh akun kelurahan (membuat, mengubah, dan menghapus) lewat panel admin.
 
 ## API
 
