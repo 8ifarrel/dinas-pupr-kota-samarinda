@@ -6,7 +6,7 @@
 
 Branch `pkl-umkt/form-sedot-tinja` (tempat fitur ini awalnya dikembangkan oleh anak PKL) sudah sangat usang — bercabang dari `main` sejak Agustus 2025, dari saat itu Laravel di-*upgrade*, seeder ditata ulang, sistem kunci API dibuat, dan banyak hal lain di `main` berubah total. Karena itu, branch ini **bukan** hasil `git merge` langsung antara `main` dan branch sumber — merge mentah seperti itu akan menabrak ratusan baris tak terkait dan berisiko menyeret `main` mundur ke versi lama.
 
-Yang dilakukan sebenarnya adalah **forward-port** (istilah yang lebih tepat dibanding "penggabungan"): kode milik fitur SILALAD dipindah dan disesuaikan agar berjalan di atas `main` versi terkini, sementara berkas lintas-fitur (routing, seeder, config, dsb.) tetap versi `main`, hanya ditambahkan bagian SILALAD-nya. Jadi branch ini = kode `main` terkini + fitur SILALAD di atasnya, bukan gabungan mentah dua riwayat commit yang berbeda.
+Yang dilakukan adalah **pemindahan manual**: kode milik fitur SILALAD dipindah dan disesuaikan agar berjalan di atas `main` versi terkini, sementara berkas lintas-fitur (routing, seeder, config, dsb.) tetap versi `main`, hanya ditambahkan bagian SILALAD-nya. Jadi branch ini = kode `main` terkini + fitur SILALAD di atasnya, bukan gabungan mentah dua riwayat commit yang berbeda.
 
 Selama proses ini, beberapa cacat *mekanis* pada kode sumber (yang membuat instalasi baru gagal total) sudah diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Cacat pada **logika/keamanan fitur itu sendiri** sengaja **tidak** diperbaiki di sini — lihat bagian [Masalah yang Diketahui](#masalah-yang-diketahui) — karena itu perlu keputusan terpisah sebelum fitur ini layak digabungkan ke `main`.
 
