@@ -13,7 +13,13 @@ class AkunKelurahanGuestController extends Controller
 
   public function edit()
   {
-    $akun = Auth::guard('kelurahan')->user()->loadMissing('kelurahan');
+    // Guard mengembalikan kontrak Authenticatable, yang tidak mengenal metode
+    // Eloquent. Model sebenarnya baru ditentukan config/auth.php saat aplikasi
+    // berjalan, sehingga penganalisis statis perlu diberi tahu lewat anotasi.
+    // Rute ini dijaga middleware AuthenticateKelurahan, jadi tidak akan null.
+    /** @var \App\Models\UserKelurahan $akun */
+    $akun = Auth::guard('kelurahan')->user();
+    $akun->loadMissing('kelurahan');
 
     return view('guest.pages.hantu-banyu.akun.edit', [
       'page_title' => 'Kelola Akun Kelurahan',
@@ -25,6 +31,7 @@ class AkunKelurahanGuestController extends Controller
 
   public function update(Request $request)
   {
+    /** @var \App\Models\UserKelurahan $akun */
     $akun = Auth::guard('kelurahan')->user();
 
     $validated = $request->validate([

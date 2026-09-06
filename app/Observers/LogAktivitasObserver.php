@@ -166,7 +166,11 @@ class LogAktivitasObserver
    */
   private function pelaku(): array
   {
-    if ($admin = Auth::user()) {
+    // Anotasi diperlukan karena guard mengembalikan kontrak Authenticatable,
+    // sedangkan model sebenarnya baru ditentukan config/auth.php saat berjalan.
+    /** @var \App\Models\User|null $admin */
+    $admin = Auth::user();
+    if ($admin) {
       return [
         'tipe' => ($admin->is_super_admin ?? false) ? 'super_admin' : 'admin',
         'id' => $admin->id ?? null,
@@ -175,7 +179,9 @@ class LogAktivitasObserver
       ];
     }
 
-    if ($kelurahan = Auth::guard('kelurahan')->user()) {
+    /** @var \App\Models\UserKelurahan|null $kelurahan */
+    $kelurahan = Auth::guard('kelurahan')->user();
+    if ($kelurahan) {
       return [
         'tipe' => 'kelurahan',
         'id' => $kelurahan->id ?? null,

@@ -14,6 +14,9 @@ class KelolaAkunSayaAdminController extends Controller
 {
   public function edit($id)
   {
+    // Anotasi diperlukan karena guard mengembalikan kontrak Authenticatable,
+    // sedangkan model sebenarnya baru ditentukan config/auth.php saat berjalan.
+    /** @var \App\Models\User $user */
     $user = Auth::user();
     if ($user->id != $id) {
       abort(403);
@@ -29,6 +32,7 @@ class KelolaAkunSayaAdminController extends Controller
 
   public function update(Request $request, $id)
   {
+    /** @var \App\Models\User $user */
     $user = Auth::user();
     if ($user->id != $id) {
       abort(403);
@@ -105,6 +109,7 @@ class KelolaAkunSayaAdminController extends Controller
 
   public function destroy($id)
   {
+    /** @var \App\Models\User $user */
     $user = Auth::user();
     if ($user->id != $id) {
       abort(403);

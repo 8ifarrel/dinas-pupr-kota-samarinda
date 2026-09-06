@@ -33,6 +33,10 @@ class HantuBanyuPengaduanGuestController extends Controller
     $page_title = "Buat Laporan Hantu Banyu";
 
     // Kecamatan & kelurahan dikunci ke wilayah akun kelurahan yang login.
+    // Anotasi diperlukan karena guard mengembalikan kontrak Authenticatable,
+    // sedangkan model sebenarnya baru ditentukan config/auth.php saat berjalan.
+    // Rute ini dijaga middleware AuthenticateKelurahan, jadi tidak akan null.
+    /** @var \App\Models\UserKelurahan $akun */
     $akun = Auth::guard('kelurahan')->user();
     $akun->loadMissing('kelurahan.kecamatan');
 
@@ -95,6 +99,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     // Kunci wilayah: akun kelurahan hanya boleh melaporkan lokasi di
     // dalam kelurahannya sendiri.
     // ------------------------------------------------------------------
+    /** @var \App\Models\UserKelurahan $akun */
     $akun = Auth::guard('kelurahan')->user();
     $akun->loadMissing('kelurahan.kecamatan');
     $kelAkun = $akun->kelurahan;

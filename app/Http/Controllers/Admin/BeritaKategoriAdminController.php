@@ -16,6 +16,9 @@ class BeritaKategoriAdminController extends Controller
     $page_title = "Kategori Berita";
     $page_description = "Kelola kategori yang mengelompokkan berita. Kategori mengikuti struktur organisasi yang ada.";
 
+    // Anotasi diperlukan karena guard mengembalikan kontrak Authenticatable,
+    // sedangkan model sebenarnya baru ditentukan config/auth.php saat berjalan.
+    /** @var \App\Models\User|null $user */
     $user = Auth::user();
     $susunanOrganisasi = $user->susunanOrganisasi ?? null;
 

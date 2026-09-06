@@ -4,13 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\BukuTamu;
 
 class BukuTamuAdminController extends Controller
 {
   public function index()
   {
-    $user = auth()->user();
+    // Memakai facade Auth, bukan helper auth(). Helper itu dideklarasikan
+    // mengembalikan AuthFactory|Guard, dan AuthFactory hanya punya guard()
+    // serta shouldUse() sehingga user() dianggap tidak ada. Sisa controller
+    // di proyek ini juga memakai facade, jadi sekalian seragam.
+    //
+    // Anotasi di bawah diperlukan karena guard mengembalikan kontrak
+    // Authenticatable, sedangkan model sebenarnya baru ditentukan
+    // config/auth.php saat aplikasi berjalan.
+    /** @var \App\Models\User|null $user */
+    $user = Auth::user();
     $susunanOrganisasi = $user->susunanOrganisasi ?? null;
     $id_kepala_dinas = 1;
 

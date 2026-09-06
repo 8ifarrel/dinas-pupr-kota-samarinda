@@ -241,6 +241,7 @@ class AkunAdminSuperAdminController extends Controller
         $user->password = Hash::make($request->password);
       } elseif ($request->reset_mode === 'lupa') {
         // Cek superadmin yang sedang login
+        /** @var \App\Models\User|null $superadmin */
         $superadmin = Auth::user();
         if (
           !$superadmin ||
