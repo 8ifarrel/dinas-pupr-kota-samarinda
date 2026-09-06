@@ -8,7 +8,7 @@ Branch `pkl-umkt/form-sedot-tinja` (tempat fitur ini awalnya dikembangkan oleh a
 
 Yang dilakukan adalah **pemindahan manual**: kode milik fitur SILALAD dipindah dan disesuaikan agar berjalan di atas `main` versi terkini, sementara berkas lintas-fitur (routing, seeder, config, dsb.) tetap versi `main`, hanya ditambahkan bagian SILALAD-nya. Jadi branch ini = kode `main` terkini + fitur SILALAD di atasnya, bukan gabungan mentah dua riwayat commit yang berbeda.
 
-Selama proses ini, beberapa cacat *mekanis* bawaan branch sumber (yang membuat instalasi baru gagal total) ikut diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Cacat pada **logika/keamanan fitur itu sendiri** tidak diperbaiki di sini — lihat bagian [Masalah yang Ditemukan di Branch Sumber](#masalah-yang-ditemukan-di-branch-sumber) — sehingga fitur ini belum digabungkan ke `main`.
+Selama proses ini, beberapa cacat *mekanis* bawaan branch sumber (yang membuat instalasi baru gagal total) ikut diperbaiki agar branch ini minimal bisa di-*migrate* dan di-*seed*. Rincian selengkapnya ada di bagian [Masalah yang Ditemukan di Branch Sumber](#masalah-yang-ditemukan-di-branch-sumber).
 
 ## Cakupan Fitur
 
