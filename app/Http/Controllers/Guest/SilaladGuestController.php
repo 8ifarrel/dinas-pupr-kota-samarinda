@@ -4,88 +4,53 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SedotTinja;
+use App\Models\Silalad;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class SedotTinjaGuestController extends Controller
+class SilaladGuestController extends Controller
 {
-    public string $page_context = 'Sedot Tinja';
+    public string $page_context = 'SILALAD';
 
     /**
-     * Halaman utama daftar layanan Sedot Tinja
+     * Halaman utama daftar layanan SILALAD
      */
     public function index()
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_title = "Sedot Tinja";
+        $page_title = "SILALAD";
 
-        // Ambil data dari DB (10 terbaru)
-        $data = SedotTinja::latest()->paginate(10);
-
-        return view('guest.pages.sedot-tinja.index', compact(
+        return view('guest.pages.silalad.index', compact(
             'page_title',
-            'meta_description',
-            'data'
+            'meta_description'
         ));
     }
 
     /**
-     * Menampilkan daftar laporan
+     * Menampilkan detail satu pemesanan.
+     *
+     * Hanya bisa diakses bila nomor telepon yang dipakai saat mendaftar
+     * disertakan lewat query string (?telepon=...) dan cocok dengan data
+     * pemesanan tersebut, supaya id pemesanan tidak bisa ditebak/diurut
+     * untuk melihat data pelanggan lain.
      */
-    public function show($id = null)
+    public function show($id)
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_title = "Lihat Laporan Sedot Tinja";
 
-        if ($id) {
-            // Kalau ada ID → tampilkan detail 1 data
-            $order = SedotTinja::findOrFail($id);
+        $order = Silalad::where('id', $id)
+            ->where('nomor_telepon_pelanggan', request('telepon'))
+            ->first();
 
-            return view('guest.pages.sedot-tinja.show', [
-                'order' => $order,
-                'page_title' => 'Detail Pemesanan Sedot Tinja',
-                'meta_description' => $meta_description,
-            ]);
-        } else {
-            // Kalau tidak ada ID → tampilkan semua data
-            $data = SedotTinja::all();
+        abort_if(!$order, 404);
 
-            return view('guest.pages.sedot-tinja.show', [
-                'data' => $data,
-                'page_title' => $page_title,
-                'meta_description' => $meta_description,
-            ]);
-        }
+        return view('guest.pages.silalad.show', [
+            'order' => $order,
+            'page_title' => 'Detail Pemesanan SILALAD',
+            'meta_description' => $meta_description,
+        ]);
     }
-
-
-    // public function show()
-    // {
-    //     $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-    //     $page_title = "Lihat Laporan Sedot Tinja";
-
-    //     $data = SedotTinja::all();
-
-    //     return view('guest.pages.sedot-tinja.show', compact(
-    //         'page_title',
-    //         'meta_description',
-    //         'data'
-    //     ));
-    // }
-
-    // public function show($id)
-    // {
-    //     // Ambil data berdasarkan ID
-    //     $order = SedotTinja::findOrFail($id);
-
-    //     return view('guest.pages.sedot-tinja.show', [
-    //         'order' => $order,
-    //         'page_title' => 'Detail Pemesanan Sedot Tinja'
-    //     ]);
-    // }
-
 
     /**
      * Form create laporan
@@ -93,9 +58,9 @@ class SedotTinjaGuestController extends Controller
     public function create()
     {
         $meta_description = "Laporkan kerusakan serta dapatkan berita dan informasi terbaru lainnya dari Dinas PUPR Kota Samarinda.";
-        $page_title = "Form Pendaftaran Sedot Tinja";
+        $page_title = "Form Pendaftaran SILALAD";
 
-        return view('guest.pages.sedot-tinja.create', compact(
+        return view('guest.pages.silalad.create', compact(
             'page_title',
             'meta_description'
         ));
@@ -122,7 +87,6 @@ class SedotTinjaGuestController extends Controller
             'jenis_bangunan_lainnya'   => 'nullable|string|max:100',
             'rt'                       => 'required|string',
             'nomor_bangunan'           => 'required|string',
-            'foto'                     => 'nullable|image|max:2048',
             'rating'                   => 'nullable|integer|min:1|max:5',
             'saran_masukan'        => 'nullable|string',
             'cf-turnstile-response'    => 'required',
@@ -162,29 +126,29 @@ class SedotTinjaGuestController extends Controller
         }
 
         // === Generate kode_booking otomatis ===
-        $lastOrder = SedotTinja::whereYear('created_at', now()->year)
+        $lastOrder = Silalad::whereYear('created_at', now()->year)
             ->orderByDesc('id')
             ->first();
 
         $lastNumber = $lastOrder ? intval(substr($lastOrder->kode_booking, -3)) : 0;
         $newNumber  = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
 
-        $kode_booking = 'STJ-' . now()->year . '-' . $newNumber;
+        $kode_booking = 'SIL-' . now()->year . '-' . $newNumber;
         $validated['kode_booking'] = $kode_booking; // tambahkan ke data validasi
 
 
         // Simpan ke database
-        $data = SedotTinja::create($validated);
+        $data = Silalad::create($validated);
 
         // === Notifikasi Email ke Admin ===
         try {
             Mail::raw(
-                "Pendaftaran baru Sedot Tinja dari: {$data->nama_pelanggan}, 
+                "Pendaftaran baru SILALAD dari: {$data->nama_pelanggan}, 
                  No: {$data->nomor_telepon_pelanggan}, 
                  Alamat: {$data->alamat}", 
                 function($msg) {
                     $msg->to('pipaair1605@gmail.com')
-                        ->subject('Pendaftaran Baru Sedot Tinja');
+                        ->subject('Pendaftaran Baru SILALAD');
                 }
             );
         } catch (\Exception $e) {
@@ -193,12 +157,12 @@ class SedotTinjaGuestController extends Controller
 
         // === Buat link WA untuk user ===
         $waAdmin = "+6281528231245"; // ganti nomor admin
-        $pesanWA = urlencode("Halo Admin, saya {$data->nama_pelanggan} sudah daftar layanan Sedot Tinja. Mohon info lebih lanjut.");
+        $pesanWA = urlencode("Halo Admin, saya {$data->nama_pelanggan} sudah daftar layanan SILALAD. Mohon info lebih lanjut.");
         $urlWA   = "https://wa.me/{$waAdmin}?text={$pesanWA}";
 
         // Redirect ke halaman sukses
         return redirect()
-            ->route('guest.sedot-tinja.success')
+            ->route('guest.silalad.success')
             ->with([
                 'status' => 'Pendaftaran berhasil dikirim. Tim kami akan segera memproses.',
                 'wa_link' => $urlWA
@@ -211,9 +175,9 @@ class SedotTinjaGuestController extends Controller
     public function success()
     {
         $page_title = "Pendaftaran Sukses";
-        $meta_description = "Pendaftaran layanan sedot tinja berhasil dikirim.";
+        $meta_description = "Pendaftaran layanan SILALAD berhasil dikirim.";
 
-        return view('guest.pages.sedot-tinja.success', compact(
+        return view('guest.pages.silalad.success', compact(
             'page_title',
             'meta_description'
         ));
@@ -222,39 +186,41 @@ class SedotTinjaGuestController extends Controller
     public function status(Request $request)
         {
             // Ambil semua tahun dari data untuk filter
-            $years = SedotTinja::selectRaw('YEAR(created_at) as year')
+            $years = Silalad::selectRaw('YEAR(created_at) as year')
                 ->distinct()
                 ->orderBy('year', 'desc')
                 ->pluck('year');
 
-            // Query dasar histori
-            $historyQuery = SedotTinja::query();
+            // Histori & hasil pencarian sama-sama wajib disaring berdasarkan nomor
+            // telepon yang dipakai saat mendaftar. Tanpa nomor telepon, keduanya
+            // tetap kosong - supaya halaman ini tidak jadi daftar publik seluruh
+            // pemesanan pelanggan lain.
+            $result = collect();
+            $history = collect();
 
-            // Filter histori berdasarkan tahun
-            if ($request->filled('year')) {
-                $historyQuery->whereYear('created_at', $request->year);
-            }
-
-            // Filter histori berdasarkan bulan
-            if ($request->filled('month')) {
-                $historyQuery->whereMonth('created_at', $request->month);
-            }
-
-            $history = $historyQuery->orderBy('created_at', 'desc')->paginate(10, ['*'], 'history_page');
-
-            // Query hasil pencarian khusus
-            $result = collect(); // default kosong
             if ($request->filled('nomor_telepon_pelanggan')) {
-                $result = SedotTinja::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
+                $historyQuery = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan);
+
+                if ($request->filled('year')) {
+                    $historyQuery->whereYear('created_at', $request->year);
+                }
+
+                if ($request->filled('month')) {
+                    $historyQuery->whereMonth('created_at', $request->month);
+                }
+
+                $history = $historyQuery->orderBy('created_at', 'desc')->paginate(10, ['*'], 'history_page');
+
+                $result = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
                     ->orderBy('created_at', 'desc')
                     ->get();
             }
 
-            return view('guest.pages.sedot-tinja.status', [
+            return view('guest.pages.silalad.status', [
                 'result'      => $result,
                 'history'     => $history,
                 'years'       => $years,
-                'page_title'  => 'Cek Status Sedot Tinja',
+                'page_title'  => 'Cek Status SILALAD',
             ]);
         }
 

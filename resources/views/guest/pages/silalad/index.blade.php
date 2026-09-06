@@ -1,16 +1,16 @@
-@extends('guest.layouts.sedottinja')
+@extends('guest.layouts.silalad')
 
 @section('content')
 <div class="min-h-screen">
   
   {{-- Slider/Hero --}}
   <section class="relative">
-    <img src="{{ asset('storage/galeri-armada/gambar9.jpg') }}" class="w-full h-[280px] md:h-[470px] object-cover" alt="Sedot Tinja">
+    <img src="{{ asset('storage/galeri-armada/gambar9.jpg') }}" class="w-full h-[280px] md:h-[470px] object-cover" alt="SILALAD">
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="absolute inset-0 flex items-center justify-center">
       <div class="text-center text-white px-4">
         <p class="uppercase tracking-wider text-sm mb-2">UPTD PALD</p>
-        <h1 class="text-2xl md:text-4xl font-bold mb-3">Layanan Sedot Tinja</h1>
+        <h1 class="text-2xl md:text-4xl font-bold mb-3">Layanan SILALAD</h1>
         <p class="uppercase tracking-wider font-bold mb-2">SILALAD (Sistem Informasi Layanan Limbah Domestik)</p>
         <p class="max-w-2xl mx-auto opacity-90">Layanan resmi PUPR untuk pengelolaan air limbah domestik yang aman & higienis.</p>
       </div>
@@ -26,8 +26,8 @@
         <div class="text-blue-600 text-5xl mr-4">🛡</div>
         <div>
           <h3 class="text-lg font-bold mb-2">Daftar</h3>
-          <p class="text-sm text-gray-600 mb-4">Pesan layanan sedot tinja secara online dengan mudah dan cepat.</p>
-          <a href="{{ route('guest.sedot-tinja.create') }}" 
+          <p class="text-sm text-gray-600 mb-4">Pesan layanan SILALAD secara online dengan mudah dan cepat.</p>
+          <a href="{{ route('guest.silalad.create') }}" 
             class="inline-block bg-blue-600 text-white text-center font-semibold px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition">
             Mulai Pesanan
           </a>
@@ -117,7 +117,7 @@
     <div class="max-w-4xl mx-auto px-4">
       <h2 class="text-3xl font-bold mb-2 text-center text-gray-800">Tarif Layanan</h2>
       <p class="text-center text-gray-600 mb-6">
-        Tarif Resmi Layanan Sedot Tinja UPTD Pengelolaan Air Limbah Domestik.
+        Tarif Resmi Layanan SILALAD UPTD Pengelolaan Air Limbah Domestik.
       </p>
 
       <div class="overflow-x-auto rounded-2xl shadow-lg border border-gray-200">
@@ -218,7 +218,7 @@
 
   {{-- Tombol Mulai Pesanan --}}
   <div class="text-center mt-4 mb-6">
-    <a href="{{ route('guest.sedot-tinja.create') }}" 
+    <a href="{{ route('guest.silalad.create') }}" 
       class="inline-flex items-center gap-3 px-8 py-4 
               bg-blue-600 text-white text-xl font-bold rounded-2xl 
               shadow-lg hover:bg-blue-700 hover:shadow-xl 

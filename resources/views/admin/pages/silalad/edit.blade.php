@@ -7,7 +7,7 @@
         <h1 class="text-2xl font-bold mb-4">{{ $page_title }}</h1>
         <p class="mb-6 text-gray-600">{{ $page_description }}</p>
 
-        <form action="{{ route('admin.sedot-tinja.update-status', $data->id) }}" 
+        <form action="{{ route('admin.silalad.update-status', $data->id) }}" 
             method="POST" 
             class="bg-white p-6 border rounded-lg shadow-md space-y-4">
             @csrf
@@ -181,7 +181,7 @@
                         class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-lg">
                     Simpan
                 </button>
-                <a href="{{ route('admin.sedot-tinja.data-pesanan') }}" 
+                <a href="{{ route('admin.silalad.data-pesanan') }}" 
                 class="text-blue-600 hover:underline">
                     Batal
                 </a>

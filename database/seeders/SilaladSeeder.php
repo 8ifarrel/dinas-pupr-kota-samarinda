@@ -5,13 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SedotTinjaSeeder extends Seeder
+class SilaladSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('sedot_tinja')->insert([
+        DB::table('silalad')->insert([
             [
-                'kode_booking' => 'STJ-' . date('Y') . '-001',
+                'kode_booking' => 'SIL-' . date('Y') . '-001',
                 'nama_pelanggan' => 'Budi Santoso',
                 'nomor_telepon_pelanggan' => '081234567890',
                 'alamat' => 'Jl. Mawar No.10, Samarinda',
@@ -35,7 +35,7 @@ class SedotTinjaSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'kode_booking' => 'STJ-' . date('Y') . '-002',
+                'kode_booking' => 'SIL-' . date('Y') . '-002',
                 'nama_pelanggan' => 'Siti Aminah',
                 'nomor_telepon_pelanggan' => '082134567891',
                 'alamat' => 'Jl. Melati No.25, Samarinda',

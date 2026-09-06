@@ -18,7 +18,7 @@
     <!-- Filter Section -->
     <div class="card p-4 mb-4">
         <h5 class="card-title mb-3">Filter Laporan</h5>
-        <form method="GET" action="{{ route('admin.sedot-tinja.dataTerkonfirmasi') }}" 
+        <form method="GET" action="{{ route('admin.silalad.dataTerkonfirmasi') }}" 
               class="flex flex-wrap items-end gap-4">
 
             <!-- Pilih Bulan -->
@@ -58,7 +58,7 @@
             <!-- Tombol Filter -->
             <div class="flex gap-2">
                 <button type="submit" class="btn btn-primary px-4">Filter</button>
-                <a href="{{ route('admin.sedot-tinja.dataTerkonfirmasi') }}" class="btn btn-secondary px-4">Reset</a>
+                <a href="{{ route('admin.silalad.dataTerkonfirmasi') }}" class="btn btn-secondary px-4">Reset</a>
             </div>
         </form>
     </div>
@@ -96,9 +96,9 @@
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ route('admin.sedot-tinja.show', $pesanan->id) }}" class="action-btn" title="Detail"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('admin.sedot-tinja.edit', $pesanan->id) }}" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
-                        <form action="{{ route('admin.sedot-tinja.destroy', $pesanan->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.silalad.show', $pesanan->id) }}" class="action-btn" title="Detail"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('admin.silalad.edit', $pesanan->id) }}" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form action="{{ route('admin.silalad.destroy', $pesanan->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="action-btn delete-btn" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
@@ -108,7 +108,7 @@
                     </div>
                 </td>
                 <td>
-                    <a href="{{ route('admin.sedot-tinja.print', $pesanan->id) }}" target="_blank" class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></a>
+                    <a href="{{ route('admin.silalad.print', $pesanan->id) }}" target="_blank" class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></a>
                 </td>
             </tr>
             @empty

@@ -1,4 +1,4 @@
-@extends('guest.layouts.sedottinja')
+@extends('guest.layouts.silalad')
 
 @section('content')
 <div class="min-h-screen py-10 px-4 bg-gray-50">
@@ -8,7 +8,7 @@
     <div class="bg-white rounded-2xl shadow p-6">
       <h2 class="text-xl font-bold mb-4 text-center">Cek Status Layanan</h2>
 
-      <form method="GET" action="{{ route('guest.sedot-tinja.status') }}" class="space-y-4">
+      <form method="GET" action="{{ route('guest.silalad.status') }}" class="space-y-4">
         <div>
           <label for="nomor_telepon_pelanggan" class="block text-sm font-medium text-gray-700 mb-1">
             Nomor Telepon
@@ -37,6 +37,7 @@
                   <th class="px-3 py-2 text-left">Tanggal</th>
                   <th class="px-3 py-2 text-left">Nama</th>
                   <th class="px-3 py-2 text-left">Status</th>
+                  <th class="px-3 py-2 text-left">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,6 +61,12 @@
                         </span>
                       @endif
                     </td>
+                    <td class="px-3 py-2">
+                      <a href="{{ route('guest.silalad.show', $item->id) }}?telepon={{ urlencode($item->nomor_telepon_pelanggan) }}"
+                         class="text-blue-600 hover:underline">
+                        Lihat Detail
+                      </a>
+                    </td>
                   </tr>
                 @endforeach
               </tbody>
@@ -74,7 +81,8 @@
       <h2 class="text-xl font-bold mb-4 text-center">Histori Pendaftaran</h2>
 
       {{-- Filter --}}
-      <form method="GET" action="{{ route('guest.sedot-tinja.status') }}" class="flex flex-wrap gap-3 mb-4">
+      <form method="GET" action="{{ route('guest.silalad.status') }}" class="flex flex-wrap gap-3 mb-4">
+        <input type="hidden" name="nomor_telepon_pelanggan" value="{{ request('nomor_telepon_pelanggan') }}">
         <select name="year" class="border rounded-lg px-3 py-2">
           <option value="">Pilih Tahun</option>
           @foreach($years as $year)

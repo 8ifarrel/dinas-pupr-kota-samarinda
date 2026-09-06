@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SedotTinja extends Model
+class Silalad extends Model
 {
     use HasFactory;
 
-    protected $table = 'sedot_tinja';
+    protected $table = 'silalad';
 
     protected $fillable = [
         'kode_booking',
@@ -47,7 +47,7 @@ class SedotTinja extends Model
 
             $nextNumber = $last ? ((int) substr($last->kode_booking, -3)) + 1 : 1;
 
-            $model->kode_booking = 'STJ-' . $tahun . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+            $model->kode_booking = 'SIL-' . $tahun . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
         });
     }
 }

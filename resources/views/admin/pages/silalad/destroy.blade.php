@@ -11,7 +11,7 @@
         <p><strong>{{ $data->nama }}</strong> (Tanggal Pesan: {{ $data->created_at->format('d-m-Y') }})</p>
     </div>
 
-    <form action="{{ route('admin.sedot-tinja.destroy', $data->id) }}" method="POST" class="flex items-center gap-4">
+    <form action="{{ route('admin.silalad.destroy', $data->id) }}" method="POST" class="flex items-center gap-4">
         @csrf
         @method('DELETE')
 
@@ -20,7 +20,7 @@
             Ya, Hapus
         </button>
 
-        <a href="{{ route('admin.sedot-tinja.data-pesanan') }}" 
+        <a href="{{ route('admin.silalad.data-pesanan') }}" 
            class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded shadow">
             Batal
         </a>

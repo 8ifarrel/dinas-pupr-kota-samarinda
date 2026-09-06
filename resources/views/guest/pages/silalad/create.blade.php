@@ -1,4 +1,4 @@
-@extends('guest.layouts.sedottinja')
+@extends('guest.layouts.silalad')
 
 @section('styles')
 <style>
@@ -84,7 +84,7 @@
 <div class="min-h-screen py-10 px-4 bg-gray-50">
   <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow p-8">
 
-    <h1 class="text-2xl font-bold mb-6 text-center">Form Pendaftaran Layanan Sedot Tinja</h1>
+    <h1 class="text-2xl font-bold mb-6 text-center">Form Pendaftaran Layanan SILALAD</h1>
 
     <!-- Stepper -->
     <div id="stepper" class="flex justify-between mb-8">
@@ -103,7 +103,7 @@
     </div>
 
     <!-- Form -->
-    <form id="sedotTinjaForm" method="POST" action="{{ route('guest.sedot-tinja.store') }}">
+    <form id="silaladForm" method="POST" action="{{ route('guest.silalad.store') }}">
       @csrf
 
       <!-- STEP 1 -->

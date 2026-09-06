@@ -10,7 +10,7 @@
     </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="description" content="{{ $meta_description ?? 'Layanan Sedot Tinja - PUPR Samarinda' }}" />
+    <meta name="description" content="{{ $meta_description ?? 'Layanan SILALAD - PUPR Samarinda' }}" />
 
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,11 +38,11 @@
 
     @include('guest.components.navbar')
 
-    {{-- 1. Navbar khusus Sedot Tinja --}}
-    @include('guest.components.navbar-sedottinja')
+    {{-- 1. Navbar khusus SILALAD --}}
+    @include('guest.components.navbar-silalad')
 
     {{-- 2. Flash message (validasi / status) --}}
-    @include('guest.components.flash-message')
+    @include('guest.components.alert')
 
     {{-- 3. Konten Utama --}}
     <main class="flex-grow">

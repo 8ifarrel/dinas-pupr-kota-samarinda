@@ -1,9 +1,9 @@
 <!-- @extends('admin.layout')
-@section('title', 'Riwayat Laporan Sedot Tinja')
+@section('title', 'Riwayat Laporan SILALAD')
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-2xl font-bold mb-6">Riwayat Laporan Sedot Tinja</h1>
+    <h1 class="text-2xl font-bold mb-6">Riwayat Laporan SILALAD</h1>
 
     {{-- Pesan sukses --}}
     @if(session('success'))
@@ -39,11 +39,11 @@
                             </span>
                         </td>
                         <td class="border px-4 py-2 text-center space-x-2">
-                            <a href="{{ route('admin.sedot-tinja.show', $item->id) }}" 
+                            <a href="{{ route('admin.silalad.show', $item->id) }}" 
                                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">Lihat</a>
-                            <a href="{{ route('admin.sedot-tinja.edit', $item->id) }}" 
+                            <a href="{{ route('admin.silalad.edit', $item->id) }}" 
                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm">Edit</a>
-                            <form action="{{ route('admin.sedot-tinja.destroy', $item->id) }}" 
+                            <form action="{{ route('admin.silalad.destroy', $item->id) }}" 
                                   method="POST" class="inline"
                                   onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                 @csrf

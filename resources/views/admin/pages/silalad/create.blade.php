@@ -6,7 +6,7 @@
 <div class="main-content">
     <h2 class="mb-4">{{ $page_title }}</h2>
 
-    <form action="{{ route('admin.sedot-tinja.store') }}" method="POST" class="custom-form">
+    <form action="{{ route('admin.silalad.store') }}" method="POST" class="custom-form">
         @csrf
 
         <div class="row g-3">
@@ -126,7 +126,7 @@
             <!-- Tombol -->
             <div class="col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('admin.sedot-tinja.data-pesanan') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.silalad.data-pesanan') }}" class="btn btn-secondary">Batal</a>
             </div>
         </div>
     </form>

@@ -305,7 +305,7 @@
                 <a href="#"><i class="fas fa-road"></i> Jalan Peduli</a>
                 <ul class="submenu">
                     <li><a href="#">Drainase & Irigasi</a></li>
-                    <li><a href="#" class="active">Sedot Tinja</a></li>
+                    <li><a href="#" class="active">SILALAD</a></li>
                 </ul>
             </li>
             <li><a href="#"><i class="fas fa-clipboard-list"></i> Data Pesanan</a></li>
@@ -318,7 +318,7 @@
     <div class="main-content">
         <div class="header">
             <div class="breadcrumb">
-                <a href="#">Dashboard</a> > <a href="#">Sedot Tinja</a> > <a href="#">@yield('title')</a>
+                <a href="#">Dashboard</a> > <a href="#">SILALAD</a> > <a href="#">@yield('title')</a>
             </div>
             <div class="user-info">
                 <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'Admin') }}&background=3498db&color=fff" alt="Admin">

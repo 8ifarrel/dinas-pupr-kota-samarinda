@@ -12,7 +12,7 @@
     <div class="filter-section mb-4">
         <div class="month-filter">
             <span>Bulan & Tahun</span>
-            <form method="GET" action="{{ route('admin.sedot-tinja.riwayat-pesanan') }}" class="d-flex align-items-center">
+            <form method="GET" action="{{ route('admin.silalad.riwayat-pesanan') }}" class="d-flex align-items-center">
                 <select name="bulan">
                     <option value="">-- Pilih Bulan --</option>
                     @for ($i = 1; $i <= 12; $i++)
@@ -28,7 +28,7 @@
                     @endfor
                 </select>
                 <button type="submit" class="submit-btn">Filter</button>
-                <a href="{{ route('admin.sedot-tinja.riwayat-pesanan') }}" class="submit-btn reset-btn">Reset</a>
+                <a href="{{ route('admin.silalad.riwayat-pesanan') }}" class="submit-btn reset-btn">Reset</a>
             </form>
         </div>
     </div>
@@ -61,13 +61,13 @@
                         </td>
                         <td>{{ $item->updated_at->format('d M Y H:i') }}</td>
                         <td class="action-buttons">
-                            <a href="{{ route('admin.sedot-tinja.show', $item->id) }}" class="action-btn" title="Detail">
+                            <a href="{{ route('admin.silalad.show', $item->id) }}" class="action-btn" title="Detail">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.sedot-tinja.edit', $item->id) }}" class="action-btn edit-btn" title="Edit">
+                            <a href="{{ route('admin.silalad.edit', $item->id) }}" class="action-btn edit-btn" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="{{ route('admin.sedot-tinja.destroy', $item->id) }}" method="POST" class="d-inline"
+                            <form action="{{ route('admin.silalad.destroy', $item->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('Yakin ingin hapus pesanan ini?')">
                                 @csrf
                                 @method('DELETE')

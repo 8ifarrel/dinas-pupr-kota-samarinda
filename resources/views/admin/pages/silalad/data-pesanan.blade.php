@@ -35,7 +35,7 @@
 
         {{-- Buat Pesanan Baru --}}
         <div class="mb-3">
-            <a href="{{ route('admin.sedot-tinja.create') }}" 
+            <a href="{{ route('admin.silalad.create') }}" 
             class="btn btn-primary" 
             style="width: auto; padding: 8px 16px; display: inline-flex; align-items: center;">
                 <i class="fas fa-plus mr-2"></i> Buat Pesanan
@@ -73,12 +73,12 @@
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.sedot-tinja.show', $pesanan) }}" class="action-btn" title="show">
+                                <a href="{{ route('admin.silalad.show', $pesanan) }}" class="action-btn" title="show">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('admin.sedot-tinja.print', $pesanan) }}" class="action-btn print-btn" title="Print">
+                                <a href="{{ route('admin.silalad.print', $pesanan) }}" class="action-btn print-btn" title="Print">
                                     <i class="fas fa-print"></i>
                                 </a>
                             </td>

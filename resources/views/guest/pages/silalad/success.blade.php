@@ -1,4 +1,4 @@
-@extends('guest.layouts.sedottinja')
+@extends('guest.layouts.silalad')
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-10 px-4">
@@ -21,12 +21,12 @@
       </p>
     @else
       <p class="text-gray-600 mb-6">
-        Terima kasih telah mendaftar layanan Sedot Tinja. Tim kami akan segera menghubungi Anda untuk konfirmasi lebih lanjut.
+        Terima kasih telah mendaftar layanan SILALAD. Tim kami akan segera menghubungi Anda untuk konfirmasi lebih lanjut.
       </p>
     @endif
 
     {{-- Tombol cek status --}}
-    <a href="{{ route('guest.sedot-tinja.status') }}" 
+    <a href="{{ route('guest.silalad.status') }}" 
        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold inline-block mb-4">
       Cek Status Pendaftaran
     </a>
@@ -48,7 +48,7 @@
     </p>
     
     {{-- Link kembali ke beranda --}}
-    <a href="{{ route('guest.sedot-tinja.index') }}" 
+    <a href="{{ route('guest.silalad.index') }}" 
        class="block mt-4 text-sm text-blue-600 hover:underline">
       Kembali ke Beranda
     </a>
