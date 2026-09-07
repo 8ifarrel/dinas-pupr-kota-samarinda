@@ -47,6 +47,9 @@
               <li><code>rt</code>, <code>nomor_bangunan</code> — wajib, angka</li>
               <li><code>latitude</code>, <code>longitude</code> — opsional, titik lokasi bangunan</li>
               <li><code>setuju</code> — opsional, <code>true</code>/<code>false</code>, persetujuan biaya tambahan</li>
+              <li><code>tanggal_diharapkan</code> — <strong>wajib</strong>, format <code>YYYY-MM-DD</code>, tidak boleh
+                tanggal lampau. Ini tanggal pengerjaan yang <em>diminta pelanggan</em>, bukan jadwal yang mengikat;
+                jadwal yang ditetapkan UPTD ada di <code>petugas.tanggal_pelaksanaan</code> pada respons.</li>
               <li><code>skm_nilai</code> — opsional, penilaian layanan 1-5</li>
               <li><code>skm_kritik</code>, <code>skm_saran</code> — opsional</li>
             </ul>
@@ -54,14 +57,14 @@
         </ul>
       </li>
       <li>Kirim request. Respon sukses mengembalikan <code>id_pesanan</code>, <code>kode_booking</code>, status awal
-        <em>Belum dikerjakan</em>, dan <code>detail_url</code> untuk memantau pesanan.
+        <em>Menunggu konfirmasi</em>, dan <code>detail_url</code> untuk memantau pesanan.
       </li>
       <li>Pantau satu pesanan lewat <code class="bg-gray-100 px-2 py-0.5 rounded">GET
           {{ url('/api/silalad/pesanan/{id}') }}</code> memakai header yang sama.</li>
       <li>Ambil seluruh pesanan milik satu nomor telepon lewat
         <code class="bg-gray-100 px-2 py-0.5 rounded">GET
           {{ url('/api/silalad/pesanan/status') }}?nomor_telepon_pelanggan=08xxxx</code>, opsional ditambah
-        <code>&amp;status=Sedang dikerjakan</code>.
+        <code>&amp;status=Dijadwalkan</code> (nilai yang sah: {{ implode(', ', \App\Models\Silalad::STATUS) }}).
       </li>
     </ol>
 

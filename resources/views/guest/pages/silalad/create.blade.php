@@ -148,6 +148,23 @@
               placeholder="Contoh: Septic tank sudah penuh dan mulai berbau">{{ old('detail_laporan') }}</textarea>
           </div>
 
+          {{-- Tanggal yang diminta pelanggan. Wajib diisi, tapi tetap bukan
+               pemesanan slot: aplikasi tidak menyimpan kuota harian maupun
+               ketersediaan armada, jadi tanggal ini permintaan - bukan janji.
+               Keterangan di bawahnya menegaskan itu supaya pelanggan tidak
+               menganggapnya sudah pasti. --}}
+          <div class="space-y-1.5">
+            <label for="tanggal_diharapkan" class="block text-sm font-medium text-gray-900">Tanggal Pengerjaan</label>
+            <input type="date" id="tanggal_diharapkan" name="tanggal_diharapkan" min="{{ now()->toDateString() }}"
+              value="{{ old('tanggal_diharapkan') }}" required
+              class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <p class="text-xs text-gray-500">Kapan Anda ingin dikerjakan? Tim kami tetap menghubungi Anda untuk
+              menyepakati waktu pastinya.</p>
+            @error('tanggal_diharapkan')
+              <p class="text-red-600 text-sm">{{ $message }}</p>
+            @enderror
+          </div>
+
           <div class="space-y-1.5">
             <label for="kabkota_id" class="block text-sm font-medium text-gray-900">Kabupaten/Kota</label>
             <select id="kabkota_id" name="kabkota_id"

@@ -43,7 +43,10 @@
       <p><strong>JUMLAH RIT:</strong> <span class="isian">{{ $item->jumlah_rit ?: '......' }}</span></p>
     </div>
 
-    <p style="margin-top:32px;">Samarinda, {{ ($item->tanggal_jalan ?? now())->translatedFormat('d F Y') }}</p>
+    {{-- tanggal_pelaksanaan, bukan tanggal simpan admin - surat ini
+         ditandatangani bersama pelanggan di lokasi, jadi tanggalnya harus
+         tanggal penyedotan benar-benar terjadi. --}}
+    <p style="margin-top:32px;">Samarinda, {{ ($item->tanggal_pelaksanaan ?? now())->translatedFormat('d F Y') }}</p>
 
     <div class="ttd-dua">
       <div>

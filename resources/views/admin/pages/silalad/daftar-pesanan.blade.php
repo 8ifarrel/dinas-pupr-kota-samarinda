@@ -14,7 +14,7 @@
         @php
           $selCls = 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5';
           $bulanNama = [1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'];
-          $statusList = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
+          $statusList = \App\Models\Silalad::STATUS;
         @endphp
         <div>
           <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
@@ -83,7 +83,8 @@
               <td>
                 @php
                   $badge = match ($item->status_pengerjaan) {
-                      'Sudah dikerjakan' => 'bg-green-100 text-green-800',
+                      'Selesai' => 'bg-green-100 text-green-800',
+                      'Dijadwalkan' => 'bg-indigo-100 text-indigo-800',
                       'Sedang dikerjakan' => 'bg-blue-100 text-blue-800',
                       'Dibatalkan' => 'bg-red-100 text-red-800',
                       default => 'bg-yellow-100 text-yellow-800',

@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Validator;
  */
 class SilaladPesananController extends Controller
 {
-  private const STATUS = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
+  private const STATUS = Silalad::STATUS;
 
   public function store(Request $request)
   {
@@ -41,6 +41,9 @@ class SilaladPesananController extends Controller
       'alamat_detail' => 'nullable|string|max:255',
       'layanan' => 'nullable|string|max:50',
       'detail_laporan' => 'nullable|string',
+      // Tanggal pengerjaan yang diminta pelanggan - wajib, sama seperti
+      // formulir web, supaya kualitas datanya tidak berbeda antar jalur.
+      'tanggal_diharapkan' => 'required|date|after_or_equal:today',
       'jenis_bangunan' => 'required|string|max:20',
       'jenis_bangunan_lainnya' => 'nullable|string|max:100',
       'rt' => 'required|numeric',
@@ -53,6 +56,8 @@ class SilaladPesananController extends Controller
       'skm_saran' => 'nullable|string',
     ], [
       'nomor_telepon_pelanggan.regex' => 'Nomor telepon harus diawali 08 dan terdiri dari 10-15 digit.',
+      'tanggal_diharapkan.required' => 'Tanggal pengerjaan wajib diisi.',
+      'tanggal_diharapkan.after_or_equal' => 'Tanggal pengerjaan tidak boleh tanggal yang sudah lewat.',
     ]);
 
     if ($validator->fails()) {
@@ -96,6 +101,7 @@ class SilaladPesananController extends Controller
         'alamat_detail' => $request->input('alamat_detail'),
         'layanan' => $request->input('layanan'),
         'detail_laporan' => $request->input('detail_laporan'),
+        'tanggal_diharapkan' => $request->input('tanggal_diharapkan'),
         'kabkota_id' => $wilayah['kabkota_id'],
         'kecamatan_id' => $wilayah['kecamatan_id'],
         'kelurahan_id' => $wilayah['kelurahan_id'],
@@ -223,6 +229,9 @@ class SilaladPesananController extends Controller
       'alamat_detail' => $pesanan->alamat_detail,
       'layanan' => $pesanan->layanan,
       'detail_laporan' => $pesanan->detail_laporan,
+      // Permintaan pelanggan; jadwal yang ditetapkan UPTD ada di
+      // petugas.tanggal_pelaksanaan.
+      'tanggal_diharapkan' => optional($pesanan->tanggal_diharapkan)->toDateString(),
       'jenis_bangunan' => $pesanan->jenis_bangunan,
       'kabkota' => $pesanan->kabkota_id,
       'kecamatan' => $this->namaKecamatan($pesanan->kecamatan_id),
@@ -242,8 +251,13 @@ class SilaladPesananController extends Controller
         'nomor_spk' => $pesanan->nomor_spk,
         'nama_operator' => $pesanan->nama_operator,
         'nomor_kendaraan' => $pesanan->nomor_kendaraan,
+        // Jadwal yang ditetapkan UPTD - inilah tanggal yang mengikat, bukan
+        // tanggal_diharapkan milik pelanggan di atas. Sebelum "Selesai" ini
+        // tanggal rencana; sesudahnya jadi tanggal pekerjaan benar-benar
+        // dilakukan - satu kolom yang sama, karena aplikasi belum membedakan
+        // rencana dari realisasi.
+        'tanggal_pelaksanaan' => optional($pesanan->tanggal_pelaksanaan)->toDateString(),
         'jumlah_rit' => $pesanan->jumlah_rit,
-        'tanggal_pengerjaan' => optional($pesanan->tanggal_jalan)->toDateString(),
       ],
       'alasan_batal' => $pesanan->alasan_batal,
 

@@ -25,7 +25,8 @@ use Carbon\Carbon;
  */
 class SilaladStatistikLaporanAdminController extends Controller
 {
-  public const STATUS = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
+  /** @deprecated Daftar status kini tunggal di Silalad::STATUS. */
+  public const STATUS = Silalad::STATUS;
 
   /** Berapa jenis bangunan teratas yang ditampilkan sendiri-sendiri; sisanya digabung jadi "Lainnya". */
   private const MAKS_JENIS_BANGUNAN = 5;
@@ -49,10 +50,14 @@ class SilaladStatistikLaporanAdminController extends Controller
     $now = Carbon::now();
     $total = $pesanan->count();
     $perStatus = $pesanan->countBy('status_pengerjaan');
-    $totalSelesai = (int) ($perStatus['Sudah dikerjakan'] ?? 0);
-    $totalBerjalan = (int) ($perStatus['Sedang dikerjakan'] ?? 0);
-    $belumDiproses = (int) ($perStatus['Belum dikerjakan'] ?? 0);
-    $dibatalkan = (int) ($perStatus['Dibatalkan'] ?? 0);
+    $totalSelesai = (int) ($perStatus[Silalad::SELESAI] ?? 0);
+    // "Sedang berjalan" mencakup dua tahap: sudah dijadwalkan tapi armada
+    // belum turun, dan armada yang sedang menyedot di lokasi. Keduanya sama-
+    // sama pekerjaan yang belum tuntas, jadi dijumlahkan jadi satu KPI.
+    $totalBerjalan = (int) ($perStatus[Silalad::DIJADWALKAN] ?? 0)
+      + (int) ($perStatus[Silalad::DIKERJAKAN] ?? 0);
+    $belumDiproses = (int) ($perStatus[Silalad::MENUNGGU] ?? 0);
+    $dibatalkan = (int) ($perStatus[Silalad::DIBATALKAN] ?? 0);
 
     // Jenis bangunan paling sering muncul, sisanya dikelompokkan "Lainnya".
     $jenisTerlaris = $pesanan->countBy('jenis_bangunan')

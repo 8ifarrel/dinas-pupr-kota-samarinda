@@ -23,14 +23,15 @@
     </div>
     <div class="bg-white rounded-lg shadow-lg border p-5">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-gray-500">Sedang Dikerjakan</span>
+        <span class="text-xs text-gray-500">Sedang Berjalan</span>
         <i class="fa-solid fa-spinner text-indigo-500"></i>
       </div>
       <div class="text-2xl font-bold text-gray-900 mt-2">{{ $total_berjalan }}</div>
+      <div class="text-xs text-gray-400 mt-1">dijadwalkan &amp; dikerjakan</div>
     </div>
     <div class="bg-white rounded-lg shadow-lg border p-5">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-gray-500">Sudah Dikerjakan</span>
+        <span class="text-xs text-gray-500">Selesai</span>
         <i class="fa-solid fa-circle-check text-green-500"></i>
       </div>
       <div class="text-2xl font-bold text-gray-900 mt-2">{{ $total_selesai }}</div>
@@ -38,7 +39,7 @@
     </div>
     <div class="bg-white rounded-lg shadow-lg border p-5">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-gray-500">Belum Dikerjakan</span>
+        <span class="text-xs text-gray-500">Menunggu Konfirmasi</span>
         <i class="fa-solid fa-clock text-yellow-500"></i>
       </div>
       <div class="text-2xl font-bold text-gray-900 mt-2">{{ $belum_diproses }}</div>
@@ -205,9 +206,9 @@
           'Oktober', 'November', 'Desember'
         ];
 
-        var statusKeys = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
-        var statusLabel = ['Belum Dikerjakan', 'Sedang Dikerjakan', 'Sudah Dikerjakan', 'Dibatalkan'];
-        var statusColor = ['#eab308', '#3b82f6', '#22c55e', '#ef4444'];
+        var statusKeys = @json(\App\Models\Silalad::STATUS);
+        var statusLabel = statusKeys;
+        var statusColor = ['#eab308', '#6366f1', '#3b82f6', '#22c55e', '#ef4444'];
 
         // Warna jenis bangunan: sebanyak entri dinamis + satu warna abu-abu untuk "Lainnya" di posisi terakhir.
         var jenisPalette = ['#3b82f6', '#14b8a6', '#f97316', '#a855f7', '#ec4899', '#9ca3af'];

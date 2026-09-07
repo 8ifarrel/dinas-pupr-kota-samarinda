@@ -568,8 +568,9 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
         ->name('admin.silalad.skm.index');
       Route::get('/{silalad}/edit', [SilaladAdminController::class, 'edit'])
         ->name('admin.silalad.edit');
-      Route::put('/{silalad}/update-status', [SilaladAdminController::class, 'updateStatus'])
-        ->name('admin.silalad.update-status');
+      Route::post('/{silalad}/slot/{slug}', [SilaladAdminController::class, 'simpanSlot'])
+        ->whereIn('slug', array_keys(SilaladAdminController::SLOT_SLUG))
+        ->name('admin.silalad.slot.simpan');
       Route::put('/{silalad}', [SilaladAdminController::class, 'update'])
         ->name('admin.silalad.update');
       Route::delete('/{silalad}', [SilaladAdminController::class, 'destroy'])

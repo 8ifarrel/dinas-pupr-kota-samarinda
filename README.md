@@ -39,23 +39,80 @@ Sekaligus dengan pemindahan ini, seluruh penamaan kode (`SedotTinja`) diganti ja
 
 Branch sumber menyediakan tiga surat (Surat Pesanan, Surat Perintah Kerja, Surat Jalan) yang tidak pernah bisa dipakai: rutenya dikomentari dan mayoritas datanya tidak punya kolom di tabel. Ketiganya dihidupkan kembali di sini, karena setelah ditelusuri **ketiga surat itu mewakili tiga tahap berbeda** dari satu pekerjaan, bukan tiga varian dokumen yang sama.
 
-| Tahap | Data yang dicatat | Surat |
+Statusnya **lima**, satu tahap per baris:
+
+| Status | Artinya | Wajib diisi | Surat yang terbit |
+|---|---|---|---|
+| `Menunggu konfirmasi` | Masuk, belum disentuh UPTD | — | — |
+| `Dijadwalkan` | Dikonfirmasi, operator & tanggal ditetapkan | nomor SPK, operator, nomor kendaraan, tanggal perintah | Surat Pesanan + Surat Perintah Kerja |
+| `Sedang dikerjakan` | Armada di lokasi | — | — |
+| `Selesai` | Sudah disedot | jumlah rit | Surat Jalan |
+| `Dibatalkan` | Tidak jadi dikerjakan | alasan pembatalan | — |
+
+Rancangan lama memakai empat status (`Belum dikerjakan`, `Sedang dikerjakan`, `Sudah dikerjakan`, `Dibatalkan`) dan punya dua kelemahan. Pertama, `Belum dikerjakan` menampung dua keadaan yang jauh berbeda — pesanan yang baru masuk dan belum dilihat siapa pun, serta pesanan yang sudah dikonfirmasi dan tinggal ditunggu jadwalnya; keduanya tampil sama sehingga pesanan terlantar tidak bisa dibedakan. Kedua, `Sedang dikerjakan` lama sebenarnya bermakna *"sudah ditugaskan"* (validasinya mewajibkan operator, kendaraan, dan tanggal perintah), bukan armada yang sedang menyedot. Karena itu migrasinya memetakan `Sedang dikerjakan` lama ke `Dijadwalkan`, bukan ke status bernama sama.
+
+### Riwayat Tindak Lanjut: satu tahap, satu modal
+
+Halaman edit tidak lagi punya dropdown status + satu form besar dengan seksi yang tampil-sembunyi. Sejak diminta meniru pola **Hantu Banyu**, tiap tahap punya kartu sendiri di garis waktu "Riwayat Tindak Lanjut", dan diisi lewat modalnya masing-masing:
+
+| Tahap | Isi modal | Surat yang terbit |
 |---|---|---|
-| Survei kelayakan | jarak tangki ke mobil tinja, tangki bisa disedot atau tidak, nomor SPK | Surat Pesanan |
-| Penugasan | operator, nomor & kapasitas kendaraan, tanggal perintah | Surat Perintah Kerja |
-| Pelaksanaan | jumlah rit, tanggal pengerjaan | Surat Jalan |
+| `Menunggu konfirmasi` | — (terisi otomatis saat pesanan dibuat, tidak ada data untuk diedit) | — |
+| `Dijadwalkan` | nomor SPK, operator, nomor & kapasitas kendaraan, tanggal pelaksanaan (+ checkbox), jarak tangki, bisa/tidaknya disedot | Surat Pesanan + Surat Perintah Kerja |
+| `Sedang dikerjakan` | — (konfirmasi saja, tidak ada data tambahan) | — |
+| `Selesai` | jumlah rit | Surat Jalan |
+| `Dibatalkan` | alasan pembatalan | — |
 
-Statusnya tetap **empat** seperti rancangan branch sumber (`Belum dikerjakan`, `Sedang dikerjakan`, `Sudah dikerjakan`, `Dibatalkan`) — yang ditambahkan bukan statusnya, melainkan data yang menempel di tiap perpindahan status:
+**Tahap diisi berurutan** — hanya tahap tepat setelah tahap terjauh yang sudah terisi yang boleh dibuka (ikon `+`); tahap sesudahnya tampil terkunci (ikon gembok) sampai tahap sebelumnya diisi. **Tahap yang sudah terisi tetap boleh diedit** (ikon pensil) kapan saja — mengoreksinya memperbarui baris yang sama di `silalad_tindak_lanjut`, bukan menambah baris baru (`updateOrCreate` per `(silalad_id, status)`, persis pola `HantuBanyuLaporanTindakLanjut`). `Dibatalkan` ada di luar urutan utama: boleh diisi kapan saja selama pesanan belum `Selesai`, dan begitu terisi, mengunci progres tahap-tahap lain (pesanan yang batal tidak boleh lanjut dijadwalkan/dikerjakan) — tapi tahap yang sudah terisi sebelumnya tetap boleh dikoreksi.
 
-- **→ Sedang dikerjakan** wajib mengisi operator, nomor kendaraan, dan tanggal perintah, karena tanpa ketiganya Surat Perintah Kerja tidak ada artinya.
-- **→ Sudah dikerjakan** wajib mengisi jumlah rit, karena tarif layanan ini dihitung per rit sehingga angka itu jadi dasar penagihan.
-- **→ Dibatalkan** wajib mengisi alasan pembatalan.
+Kolom `silalad.status_pengerjaan` **disinkronkan otomatis** tiap kali satu tahap disimpan: `Dibatalkan` bila sudah terisi, atau tahap utama terjauh yang sudah terisi. Ini sengaja dipertahankan sebagai kolom tersimpan (bukan dihitung on-the-fly seperti `status_terkini` milik Hantu Banyu) supaya seluruh kode yang sudah membaca kolom ini — filter di Daftar Pesanan, agregat Statistik Laporan, pencarian status guest, gerbang cetak surat (`suratPenugasanTerbit()`, dsb.) — tidak perlu diubah sama sekali.
 
-Surat yang syaratnya belum terpenuhi tidak bisa dicetak (tombolnya nonaktif berikut alasannya, dan rutenya sendiri menolak dengan `404`). Surat Pesanan sengaja dikecualikan — boleh dicetak kapan saja dengan bagian yang belum terisi tampil bergaris titik-titik, karena surat itu memang untuk dibawa dan dilengkapi tulisan tangan saat petugas ke lokasi.
+Rutenya juga berubah bentuk: satu `PUT .../update-status` yang menerima semua kolom sekaligus diganti `POST .../slot/{slug}`, satu per tahap. Nilai asli `Silalad::STATUS` berspasi ("Sedang dikerjakan") sehingga tidak nyaman jadi segmen URL — dipetakan ke slug pendek di `SilaladAdminController::SLOT_SLUG` (`dijadwalkan`, `sedang-dikerjakan`, `selesai`, `dibatalkan`). Validasi jadi lebih sederhana dari sebelumnya: karena tiap modal cuma mengirim field milik tahapnya sendiri, tidak perlu lagi menghitung "field mana yang wajib berdasarkan tahap tujuan" seperti pada rancangan form-tunggal sebelumnya — cukup wajibkan field itu langsung, karena request memang hanya terkirim saat tahap itu yang sedang diisi.
 
-**Riwayat status tidak pernah ditimpa.** Tiap perpindahan status menambah satu baris di `silalad_tindak_lanjut` (pola yang sama dipakai `hantu_banyu_laporan_tindak_lanjut`), lengkap dengan waktu dan keterangannya — admin boleh menulis keterangan sendiri, atau dibiarkan terisi otomatis dari data yang baru diisi. Riwayat ini ditampilkan di halaman edit admin, di halaman detail pesanan milik pelanggan, dan di balasan API. Kolom `silalad.status_pengerjaan` tetap dipertahankan sebagai status terkini supaya penyaringan dan statistik tidak perlu menelusuri riwayat tiap kali.
+Tabel `silalad_tindak_lanjut` punya kunci unik `(silalad_id, status)` — basis data ikut menjaga asumsi "satu baris per status" yang sudah dipegang aplikasi lewat `updateOrCreate`, bukan cuma dipercaya dari sisi kode. Sudah diverifikasi tidak ada data lama yang melanggar sebelum constraint ini ditambahkan.
 
-> **Catatan:** pembagian tiga tahap di atas adalah rekonstruksi dari isi template surat bawaan branch sumber, bukan hasil wawancara dengan UPTD. Kemungkinan terbesar melesetnya: bisa jadi tidak ada kunjungan survei terpisah, dan jarak tangki diukur petugas saat datang menyedot. Karena itu **tidak ada urutan pengisian yang dipaksakan** — seluruh isian survei boleh dikosongkan atau diisi belakangan; yang diwajibkan hanya data yang benar-benar dibutuhkan surat pada tahap tersebut. Nomor SPK juga tidak dibuat otomatis: kotak isiannya menyediakan tombol usulan berformat `001/UPTD/IX/2026`, tapi admin bebas mengetik format lain karena aturan penomoran resminya milik UPTD.
+### Data contoh (seeder)
+
+`SilaladSeeder` (dijalankan lewat `DatabaseSeeder`) mengisi sembilan pesanan yang saling konsisten secara kronologis dan logis, bukan sekadar baris acak — mencakup kelima status termasuk kedua jalur pembatalan (langsung dari "Menunggu konfirmasi" tanpa pernah dijadwalkan, dan setelah dijadwalkan karena kendala di lapangan), satu contoh dari luar Samarinda (wilayahnya tersimpan sebagai nama, bukan id — lihat `normalisasiWilayah()`), serta kedua varian tanggal pelaksanaan (mengikuti permintaan pelanggan lewat checkbox, dan yang ditentukan admin sendiri karena tanggal yang diminta sudah penuh). Aturan yang dijaga: riwayat tiap pesanan hanya berisi tahap yang benar-benar dicapai dengan timestamp yang maju secara kronologis (tidak pernah baris tahap berikutnya bertanggal lebih awal dari tahap sebelumnya), data operasional (SPK, operator, dst.) hanya ada pada pesanan yang memang sudah mencapai "Dijadwalkan", pekerjaan yang sudah "Selesai"/"Sedang dikerjakan" tidak pernah bertanggal pelaksanaan di masa depan, dan rating/kritik/saran hanya diisi untuk pesanan yang sudah lebih jauh dari sekadar "Menunggu konfirmasi" — pelanggan yang laporannya belum disentuh wajar belum punya sesuatu untuk dinilai. Ditulis lewat `DB::table()` langsung (bukan `Silalad::create()`), supaya setiap timestamp — termasuk baris riwayat "Menunggu konfirmasi" yang biasanya dibuat otomatis oleh *boot hook* model — bisa diatur mundur sesuai cerita tiap pesanan, bukan ikut memakai waktu seeder itu sendiri dijalankan.
+
+### Empat tanggal, empat arti berbeda
+
+Ada empat kolom tanggal di tabel `silalad`, dan sengaja dipisah supaya tidak ada satu kolom pun menanggung dua makna sekaligus — kesalahan yang sempat terjadi di draf awal fitur ini, sebelum disadari saat meninjau isi Surat Perintah Kerja:
+
+| Kolom | Diisi oleh | Arti |
+|---|---|---|
+| `tanggal_diharapkan` | pelanggan, saat mendaftar | tanggal yang **diminta** pelanggan |
+| `tanggal_pelaksanaan` | admin, di seksi Penugasan | tanggal penyedotan **dijadwalkan** (lalu jadi tanggal ia **benar-benar dilaksanakan**) |
+| `tanggal_pesanan` | otomatis (`now()`) | tanggal terbit Surat Pesanan |
+| `tanggal_perintah` | otomatis (`now()`) | tanggal terbit Surat Perintah Kerja |
+
+**`tanggal_diharapkan`** — wajib diisi di formulir web maupun API, tidak boleh tanggal lampau (timezone aplikasi `Asia/Makassar`, sama dengan timezone pengguna). Sifatnya **permintaan, bukan pemesanan slot**: aplikasi ini tidak menyimpan kuota harian maupun ketersediaan armada, jadi tidak ada yang bisa dipakai untuk menjanjikan tanggal. Kolomnya nullable meski isiannya wajib — pesanan yang dibuat sebelum fitur ini ada tetap sah, tampil sebagai "Tidak dicantumkan".
+
+**`tanggal_pelaksanaan`** — satu-satunya tanggal yang keputusannya di tangan admin. Di modal tahap `Dijadwalkan` ada checkbox **"Sama seperti tanggal yang diajukan pelanggan"**, bawaan tercentang: saat tercentang, kotak tanggalnya dinonaktifkan dan nilainya diambil server dari `tanggal_diharapkan` (bukan dari kotak yang dinonaktifkan itu — kotak yang disabled tidak ikut terkirim). Admin melepas centang hanya bila pelanggan tidak bisa diladeni sesuai permintaannya, lalu memilih tanggal sendiri. Wajib terisi begitu pesanan mencapai tahap `Dijadwalkan`. Nilai inilah yang tercetak di Surat Jalan (bagian tanda tangan bersama petugas & pelanggan), bukan tanggal admin menyimpan form.
+
+**`tanggal_pesanan`** dan **`tanggal_perintah`** — tanggal terbit dua surat administratif, diisi otomatis dengan `now()` **satu kali saja** saat pesanan pertama kali mencapai tahap `Dijadwalkan`, lalu tidak pernah ditimpa lagi walau admin menyimpan ulang form untuk mengubah data lain (mis. kapasitas kendaraan). Sebelumnya `tanggal_perintah` sempat diisi manual dan salah kaprah dipakai sebagai "tanggal dijadwalkan" di riwayat status maupun balasan API — padahal templat SPK hanya memuat tanggal itu di baris tanda tangan Kepala UPTD, bukan sebagai jadwal pengerjaan. Kolom `tanggal_jalan` yang dulu dipakai untuk hal serupa sudah digantikan `tanggal_pelaksanaan` (nilai lamanya tetap tersimpan sebagai arsip, tidak dihapus).
+
+Di balasan API, tiga tanggal yang relevan bagi pelanggan/klien muncul sebagai `tanggal_diharapkan` dan `petugas.tanggal_pelaksanaan` — tanggal terbit surat tidak diekspos karena bukan informasi yang berguna bagi pihak luar.
+
+### Surat
+
+| Data yang dicatat | Surat |
+|---|---|
+| operator, nomor & kapasitas kendaraan, nomor SPK | Surat Perintah Kerja |
+| jarak tangki ke mobil tinja, tangki bisa disedot atau tidak | Surat Pesanan |
+| jumlah rit, tanggal pelaksanaan | Surat Jalan |
+
+Branch sumber menyediakan ketiganya tapi tidak pernah bisa dipakai: rutenya dikomentari dan mayoritas datanya tidak punya kolom di tabel.
+
+Surat Pesanan dan Surat Perintah Kerja **sama-sama terbit saat pesanan dijadwalkan**. Surat Pesanan lalu dibawa petugas ke lapangan: jarak tangki dan status "bisa disedot" dibiarkan bergaris titik-titik untuk diisi tulisan tangan di lokasi, dan boleh dicatat ke sistem menyusul. Kesimpulan itu dibaca dari isi templatnya sendiri — Surat Pesanan **memuat Nomor SPK**, jadi SPK sudah terbit sebelum surat ini dipakai; kolom pertamanya mengukur *"jarak tangki septik dengan mobil tinja"*, yang baru bisa diketahui setelah armada parkir di lokasi; dan penanda tangannya adalah **Pemohon**, yaitu pelanggan. **Tidak ada kunjungan survei terpisah.**
+
+Surat yang syaratnya belum terpenuhi tidak bisa dicetak: tombolnya nonaktif berikut alasannya, dan rutenya sendiri menolak dengan `404`. Satu pengecualian — pesanan yang **dibatalkan setelah SPK-nya terbit** tetap boleh mencetak ulang Surat Pesanan dan SPK, karena kedua surat itu sudah benar-benar diterbitkan dan jadi arsip UPTD (`Silalad::suratPenugasanTerbit()`).
+
+**Satu baris per tahap di `silalad_tindak_lanjut`**, bukan satu baris per aksi simpan — mengoreksi tahap yang sudah terisi memperbarui baris yang sama (`updated_at`-nya berubah, ditampilkan sebagai "· diubah …" di garis waktu), bukan menumpuk baris baru. Keterangannya selalu dirangkai otomatis dari data yang baru diisi (`keteranganBawaan()`), admin tidak menuliskannya sendiri. Riwayat ini ditampilkan di halaman edit admin (sebagai kartu "Riwayat Tindak Lanjut", lihat di atas) dan di halaman detail pesanan milik pelanggan serta balasan API dalam bentuk yang lebih ringkas (daftar status+waktu+keterangan, tanpa mekanisme modal). Kolom `silalad.status_pengerjaan` tetap dipertahankan sebagai status terkini supaya penyaringan dan statistik tidak perlu menelusuri riwayat tiap kali.
+
+Daftar status tunggal di **`Silalad::STATUS`**. Sebelumnya daftar yang sama disalin di empat controller terpisah, sehingga satu perubahan alur harus disapu ke 16 berkas. Kelas warna badge sengaja **tidak** ikut dipusatkan ke model: Tailwind hanya memindai `resources/`, jadi kelas yang ditulis di `app/` akan terbuang saat build.
+
+> **Catatan:** pembagian tahap di atas adalah rekonstruksi dari isi template surat bawaan branch sumber, bukan hasil wawancara dengan UPTD. Nomor SPK tidak dibuat otomatis: kotak isiannya menyediakan tombol usulan berformat `001/UPTD/IX/2026`, tapi admin bebas mengetik format lain karena aturan penomoran resminya milik UPTD. Satu hal yang masih perlu dikonfirmasi: apakah operator melapor balik ke kantor di hari pengerjaan — kalau tidak ada jalur pelaporan itu, status `Sedang dikerjakan` tidak akan pernah terpakai dan pesanan akan loncat dari `Dijadwalkan` langsung ke `Selesai`.
 
 ## API SILALAD
 
@@ -78,7 +135,7 @@ Daftar ini adalah cacat yang ditemukan pada branch `pkl-umkt/form-sedot-tinja`, 
 
 - **(Sudah diperbaiki saat pemindahan)** Panel admin fitur ini sama sekali tidak menampilkan isi apa pun (halaman kosong tanpa error) — layout admin di `main` menyediakan slot `@yield('document.body')`, sedangkan seluruh halaman admin fitur ini ditulis memakai nama slot `@section('content')` yang berbeda dan tidak pernah dirender. Semua halaman admin fitur ini disamakan memakai `document.body`, mengikuti konvensi fitur lain.
 - **(Sudah diperbaiki saat pemindahan)** Setiap halaman publik fitur ini pasti gagal (error 500) karena layout-nya sendiri memuat komponen `guest.components.flash-message` yang tidak pernah benar-benar dibuat. Layout khusus itu (beserta navbar duplikatnya) sudah dihapus — halaman publik fitur ini sekarang memakai layout utama situs (`guest.layouts.main`) yang sama dengan fitur lain, sehingga navbar, footer, dan gaya tampilannya konsisten dengan seluruh situs.
-- **(Sudah diperbaiki saat pemindahan)** Form edit pesanan di admin mengirim datanya ke rute yang salah (`update-status`, yang cuma menerima kolom status) padahal formnya berisi 15+ field. Akibatnya, setiap kali admin mengedit nama/alamat/dsb. lewat form ini, seluruh perubahan selain status pengerjaan hilang diam-diam tanpa pesan error apa pun. Halaman ini kemudian ditata ulang: seluruh data yang diisi pelanggan kini ditampilkan **hanya untuk dibaca** (tidak bisa diubah admin), dan satu-satunya yang benar-benar bisa diubah adalah status pengerjaan — sehingga formnya memang sekarang menuju `update-status`, kali ini sesuai isi formnya.
+- **(Sudah diperbaiki saat pemindahan)** Form edit pesanan di admin mengirim datanya ke rute yang salah (`update-status`, yang cuma menerima kolom status) padahal formnya berisi 15+ field. Akibatnya, setiap kali admin mengedit nama/alamat/dsb. lewat form ini, seluruh perubahan selain status pengerjaan hilang diam-diam tanpa pesan error apa pun. Halaman ini kemudian ditata ulang: seluruh data yang diisi pelanggan kini ditampilkan **hanya untuk dibaca** (tidak bisa diubah admin), dan yang benar-benar bisa diubah adalah data tiap tahap pengerjaan (lihat [Riwayat Tindak Lanjut](#riwayat-tindak-lanjut-satu-tahap-satu-modal)) — rute `update-status` itu sendiri sudah tidak dipakai lagi, digantikan `POST .../slot/{slug}` satu per tahap.
 - **(Sudah diperbaiki saat pemindahan)** Form "Buat Pesanan Baru" di admin memakai nama field yang sama sekali tidak cocok dengan yang divalidasi controller (`kabupaten`/`kecamatan`/`kelurahan`/`nomor_rumah`/`rw` vs yang sebenarnya `kabkota_id`/`kecamatan_id`/`kelurahan_id`/`nomor_bangunan`) — submit apa pun dari form ini pasti gagal validasi total. Form sempat ditulis ulang dengan nama field yang benar, lalu dihapus seluruhnya karena pesanan memang selalu berasal dari pelanggan (lewat formulir publik atau API), bukan dibuat manual oleh admin.
 - **(Sudah diperbaiki saat pemindahan)** Status `Dibatalkan` diperlakukan sebagai status sah di seluruh kode (validasi, filter, dropdown, badge), padahal kolom `status_pengerjaan` di tabel hanya berupa `ENUM` dengan tiga nilai — tanpa `Dibatalkan`. Akibatnya, membatalkan pesanan lewat panel admin selalu gagal di tingkat basis data. Ditambahkan migrasi yang melebarkan `ENUM` tersebut menjadi empat nilai.
 - **(Sudah diperbaiki saat pemindahan)** Pesanan berstatus `Dibatalkan` tampil dengan badge hijau seperti pesanan selesai, karena tidak punya cabang warnanya sendiri dan jatuh ke nilai bawaan. Sekarang ditandai merah di seluruh tampilan.
@@ -105,6 +162,7 @@ Daftar ini adalah cacat yang ditemukan pada branch `pkl-umkt/form-sedot-tinja`, 
 - **Kolom `rating` & `saran_masukan` di tabel `silalad` kini menyimpan data yang sama dengan tabel `skm`.** Penilaian pelanggan direkap ke tabel `skm` bersama (id layanan `6`, kritik & saran terpisah) supaya halaman Survei Kepuasan bentuknya seragam dengan fitur lain, sementara penulisan ke dua kolom lama itu sengaja dibiarkan apa adanya agar data lama tetap utuh. Bila ke depan ingin dirapikan, kedua kolom itulah yang perlu dipensiunkan — bukan tabel `skm`-nya.
 - **Nama operator dan kendaraan masih berupa isian teks bebas**, belum ada tabel master petugas maupun armada. Cukup untuk kebutuhan surat, tapi konsekuensinya penulisan nama yang berbeda-beda (mis. "Budi" vs "Budi S.") akan menyulitkan bila nanti ingin merekap kinerja per operator atau per kendaraan.
 - **Rute `PUT /e-panel/silalad/{silalad}` (`admin.silalad.update`) kini tidak dipakai tampilan mana pun**, sisa dari masa ketika admin masih bisa menyunting seluruh data pesanan. Sengaja belum dihapus karena berada di luar cakupan perapian tampilan, tapi perlu diputuskan nasibnya: rute ini menerima pembaruan seluruh kolom pesanan, jadi sebaiknya dihapus bila memang tidak akan dipakai lagi.
+- **Kolom `silalad.tanggal_jalan` sudah tidak dipakai** — perannya sebagai "tanggal Surat Jalan" digantikan `tanggal_pelaksanaan` (lihat [Empat tanggal, empat arti berbeda](#empat-tanggal-empat-arti-berbeda)), yang lebih tepat karena mewakili tanggal penyedotan benar-benar terjadi, bukan tanggal admin menyimpan form. Kolomnya sengaja tidak dihapus: nilai lama pesanan yang sudah selesai sebelum perubahan ini sudah disalin ke `tanggal_pelaksanaan` lewat migrasi, tapi kolom `tanggal_jalan` dibiarkan sebagai arsip.
 
 ## Tampilan
 

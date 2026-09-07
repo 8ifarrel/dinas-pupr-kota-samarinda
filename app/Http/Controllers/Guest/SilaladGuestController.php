@@ -30,10 +30,14 @@ class SilaladGuestController extends Controller
         $meta_description = "SILALAD - layanan sedot tinja UPTD Pengelolaan Air Limbah Domestik Dinas PUPR Kota Samarinda.";
         $page_title = "SILALAD";
 
+        // Kunci array dipertahankan supaya view beranda tidak perlu diubah.
+        // "sedang_dikerjakan" kini mencakup pesanan yang sudah dijadwalkan
+        // maupun yang armadanya sedang di lokasi - dari sisi pelanggan
+        // keduanya sama-sama pesanan yang sedang ditangani.
         $statistik = [
-            'belum_dikerjakan' => Silalad::where('status_pengerjaan', 'Belum dikerjakan')->count(),
-            'sedang_dikerjakan' => Silalad::where('status_pengerjaan', 'Sedang dikerjakan')->count(),
-            'sudah_dikerjakan' => Silalad::where('status_pengerjaan', 'Sudah dikerjakan')->count(),
+            'belum_dikerjakan' => Silalad::where('status_pengerjaan', Silalad::MENUNGGU)->count(),
+            'sedang_dikerjakan' => Silalad::whereIn('status_pengerjaan', [Silalad::DIJADWALKAN, Silalad::DIKERJAKAN])->count(),
+            'sudah_dikerjakan' => Silalad::where('status_pengerjaan', Silalad::SELESAI)->count(),
         ];
 
         return view('guest.pages.silalad.index', compact(
@@ -75,6 +79,10 @@ class SilaladGuestController extends Controller
             'alamat_detail'            => 'nullable|string|max:255',
             'layanan'                  => 'nullable|string|max:50',
             'detail_laporan'           => 'nullable|string',
+            // Tanggal pengerjaan yang diminta pelanggan. Tidak boleh tanggal
+            // yang sudah lewat; timezone aplikasi (Asia/Makassar) sama dengan
+            // timezone pengguna, jadi "today" memang hari ini menurut mereka.
+            'tanggal_diharapkan'       => 'required|date|after_or_equal:today',
             'kabkota_id'               => 'required|string|max:50',
             'kecamatan_id'             => 'required|string|max:50',
             'kelurahan_id'             => 'required|string|max:50',
@@ -101,6 +109,8 @@ class SilaladGuestController extends Controller
             'jenis_bangunan.required' => 'Jenis bangunan wajib dipilih.',
             'rt.required' => 'RT wajib diisi.',
             'nomor_bangunan.required' => 'Nomor rumah wajib diisi.',
+            'tanggal_diharapkan.required' => 'Tanggal pengerjaan wajib diisi.',
+            'tanggal_diharapkan.after_or_equal' => 'Tanggal pengerjaan tidak boleh tanggal yang sudah lewat.',
         ]);
 
         // Kritik & saran dikirim terpisah dari SKM (Survei Kepuasan
@@ -237,7 +247,7 @@ class SilaladGuestController extends Controller
             // sendiri, bukan dari seluruh pelanggan lain - supaya pilihan
             // tahun yang tampil memang relevan dengan riwayat orang ini.
             $years = collect();
-            $statusList = ['Belum dikerjakan', 'Sedang dikerjakan', 'Sudah dikerjakan', 'Dibatalkan'];
+            $statusList = Silalad::STATUS;
 
             if ($request->filled('nomor_telepon_pelanggan')) {
                 $years = Silalad::where('nomor_telepon_pelanggan', $request->nomor_telepon_pelanggan)
