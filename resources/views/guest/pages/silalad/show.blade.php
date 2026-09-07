@@ -83,6 +83,33 @@
           </dl>
         </div>
 
+        {{-- Perjalanan pesanan, bukan cuma status terakhirnya --}}
+        <div>
+          <h4 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-2">Perkembangan Pesanan</h4>
+          <ol class="relative border-s border-gray-200 ms-2 border rounded-lg border-t-0 border-e-0 border-b-0 pt-1">
+            @foreach ($riwayat as $jejak)
+              @php
+                $titik = match ($jejak->status) {
+                    'Belum dikerjakan' => 'bg-yellow-400',
+                    'Sedang dikerjakan' => 'bg-blue-500',
+                    'Dibatalkan' => 'bg-red-500',
+                    default => 'bg-green-500',
+                };
+              @endphp
+              <li class="mb-5 ms-5 last:mb-1">
+                <span class="absolute w-3 h-3 rounded-full mt-1.5 -start-1.5 border border-white {{ $titik }}"></span>
+                <p class="text-sm font-semibold text-gray-900">{{ $jejak->status }}</p>
+                <time class="block text-xs text-gray-500 mb-1">
+                  {{ $jejak->created_at->translatedFormat('d F Y, H:i') }} WITA
+                </time>
+                @if ($jejak->keterangan)
+                  <p class="text-sm text-gray-600">{{ $jejak->keterangan }}</p>
+                @endif
+              </li>
+            @endforeach
+          </ol>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           {{-- Data Pelanggan --}}
           <div>

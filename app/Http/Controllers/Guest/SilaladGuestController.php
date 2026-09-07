@@ -213,8 +213,13 @@ class SilaladGuestController extends Controller
         $namaKecamatan = optional(Kecamatan::find($data->kecamatan_id))->nama ?? $data->kecamatan_id;
         $namaKelurahan = optional(Kelurahan::find($data->kelurahan_id))->nama ?? $data->kelurahan_id;
 
+        // Riwayat status supaya pelanggan bisa melihat perjalanan pesanannya,
+        // bukan cuma status terakhir.
+        $riwayat = $data->tindakLanjut()->orderBy('created_at')->orderBy('id')->get();
+
         return view('guest.pages.silalad.show', compact(
             'data',
+            'riwayat',
             'page_title',
             'meta_description',
             'namaKecamatan',

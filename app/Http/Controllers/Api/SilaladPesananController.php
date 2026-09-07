@@ -236,6 +236,28 @@ class SilaladPesananController extends Controller
         : null,
       'setuju_biaya_tambahan' => (bool) $pesanan->setuju,
       'dibuat_pada' => $pesanan->created_at?->isoFormat('DD MMMM YYYY, HH:mm') . ' WITA',
+
+      // Penugasan & pelaksanaan - kosong selama pesanan belum ditangani.
+      'petugas' => [
+        'nomor_spk' => $pesanan->nomor_spk,
+        'nama_operator' => $pesanan->nama_operator,
+        'nomor_kendaraan' => $pesanan->nomor_kendaraan,
+        'jumlah_rit' => $pesanan->jumlah_rit,
+        'tanggal_pengerjaan' => optional($pesanan->tanggal_jalan)->toDateString(),
+      ],
+      'alasan_batal' => $pesanan->alasan_batal,
+
+      // Perjalanan status, terlama lebih dulu.
+      'riwayat_status' => $pesanan->tindakLanjut()
+        ->orderBy('created_at')
+        ->orderBy('id')
+        ->get()
+        ->map(fn($jejak) => [
+          'status' => $jejak->status,
+          'keterangan' => $jejak->keterangan,
+          'waktu' => $jejak->created_at?->isoFormat('DD MMMM YYYY, HH:mm') . ' WITA',
+        ])
+        ->all(),
     ];
   }
 

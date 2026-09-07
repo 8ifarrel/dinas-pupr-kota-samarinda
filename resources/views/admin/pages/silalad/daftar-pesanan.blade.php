@@ -97,7 +97,7 @@
               <td>
                 <div class="flex gap-1.5">
                   <a href="{{ route('admin.silalad.edit', $item) }}"
-                    class="flex justify-center items-center w-9 h-9 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg text-sm">
+                    class="flex justify-center items-center w-9 h-9 text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-sm">
                     <i class="fa-solid fa-pencil"></i>
                   </a>
                   <form action="{{ route('admin.silalad.destroy', $item) }}" method="POST"

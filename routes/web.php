@@ -576,6 +576,12 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
         ->name('admin.silalad.destroy');
       Route::get('/{silalad}/print', [SilaladAdminController::class, 'print'])
         ->name('admin.silalad.print');
+      Route::get('/{silalad}/surat-pesanan', [SilaladAdminController::class, 'printSuratPesanan'])
+        ->name('admin.silalad.surat-pesanan');
+      Route::get('/{silalad}/surat-perintah-kerja', [SilaladAdminController::class, 'printSuratPerintahKerja'])
+        ->name('admin.silalad.surat-perintah-kerja');
+      Route::get('/{silalad}/surat-jalan', [SilaladAdminController::class, 'printSuratJalan'])
+        ->name('admin.silalad.surat-jalan');
     });
 
     /**
