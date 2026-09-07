@@ -1,10 +1,10 @@
 # Website Dinas PUPR Kota Samarinda — Branch `hantu-banyu`
 
-> Arsip riwayat pengembangan fitur **Hantu Banyu** (layanan pengaduan Drainase & Irigasi). Fiturnya sudah sepenuhnya tergabung ke `main` dengan penamaan final — branch ini tidak lagi dikembangkan. Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
+> Pengembangan lanjutan fitur **Hantu Banyu** (layanan pengaduan Drainase & Irigasi). Fitur ini sebelumnya sudah tergabung penuh ke `main` dengan penamaan final, tapi ada penyesuaian lanjutan yang perlu dikerjakan sehingga branch ini dibuka kembali. Untuk gambaran umum seluruh website beserta cara instalasi, lihat [README di branch `main`](../../tree/main#readme).
 
 ## Tentang Branch Ini
 
-Fitur Hantu Banyu sudah final dan tergabung penuh ke `main`. Kode di branch ini sudah disamakan dengan `main` (penamaan `HantuBanyu*` yang konsisten) sehingga README ini bisa mendokumentasikan API dan strukturnya secara akurat. Branch ini disimpan sebagai tempat dokumentasi fitur, **bukan sebagai tempat melanjutkan pengembangan** — perbaikan bug atau fitur lanjutan tetap dikerjakan lewat branch baru dari `main`.
+Fitur Hantu Banyu sempat ditandai final dan tergabung penuh ke `main`, dengan branch ini disimpan murni sebagai dokumentasi (kode sudah disamakan dengan `main`, penamaan `HantuBanyu*` sudah konsisten). Status itu kini dicabut sementara: branch ini **kembali aktif dikembangkan langsung** untuk mengerjakan penyesuaian lanjutan pada fitur Hantu Banyu. Setelah penyesuaian selesai diuji, gabungkan kembali ke `main` dan pulihkan catatan "final" di README `main` maupun di README ini.
 
 ## Cakupan Fitur
 
@@ -65,7 +65,7 @@ Hanya bisa diakses super admin yang sudah login lewat web (bukan lewat `X-API-KE
 
 `POST /api/hantu-banyu-keys/validate` bisa diakses siapa saja, untuk menguji apakah suatu kunci masih valid.
 
-> **Jangan melanjutkan pengembangan di branch ini.** Branch ini murni tempat dokumentasi fitur yang sudah final. Bila ke depan ada perbaikan bug atau pengembangan lanjutan untuk fitur Hantu Banyu, buat branch baru dari `main`, kerjakan dan uji di sana, baru gabungkan kembali ke `main` setelah selesai.
+> **Branch ini sedang dikembangkan kembali.** Berbeda dari konvensi biasa (fitur final dikerjakan lanjut lewat branch baru dari `main`), penyesuaian Hantu Banyu kali ini dikerjakan langsung di branch `hantu-banyu` yang sudah ada — karena isinya memang sudah identik dengan `main` sebelum dibuka kembali, jadi tidak ada kode yang tercecer. Setelah selesai diuji, gabungkan ke `main` lalu pulihkan catatan status final di kedua README.
 
 ## Instalasi & Menjalankan
 
