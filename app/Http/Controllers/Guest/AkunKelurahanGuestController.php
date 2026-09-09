@@ -13,12 +13,10 @@ class AkunKelurahanGuestController extends Controller
 
   public function edit()
   {
-    // Guard mengembalikan kontrak Authenticatable, yang tidak mengenal metode
-    // Eloquent. Model sebenarnya baru ditentukan config/auth.php saat aplikasi
-    // berjalan, sehingga penganalisis statis perlu diberi tahu lewat anotasi.
-    // Rute ini dijaga middleware AuthenticateKelurahan, jadi tidak akan null.
-    /** @var \App\Models\UserKelurahan $akun */
-    $akun = Auth::guard('kelurahan')->user();
+    // Halaman ini khusus akun kelurahan. Admin UPTD juga bisa masuk ke area
+    // Hantu Banyu sisi guest, tapi akunnya dikelola di E-Panel - bukan di
+    // sini - jadi rutenya ditutup untuk mereka.
+    $akun = $this->akunKelurahan();
     $akun->loadMissing('kelurahan');
 
     return view('guest.pages.hantu-banyu.akun.edit', [
@@ -31,8 +29,7 @@ class AkunKelurahanGuestController extends Controller
 
   public function update(Request $request)
   {
-    /** @var \App\Models\UserKelurahan $akun */
-    $akun = Auth::guard('kelurahan')->user();
+    $akun = $this->akunKelurahan();
 
     $validated = $request->validate([
       'name' => ['required', 'string', 'max:255', Rule::unique('users_kelurahan', 'name')->ignore($akun->id)],
@@ -60,5 +57,21 @@ class AkunKelurahanGuestController extends Controller
     return redirect()
       ->route('guest.hantu-banyu.akun.edit')
       ->with('success', 'Akun berhasil diperbarui.');
+  }
+
+  /**
+   * Akun kelurahan yang sedang login.
+   *
+   * Rutenya dijaga middleware AuthenticateKelurahan, tapi middleware itu kini
+   * juga meloloskan admin - jadi di sini tetap harus dipastikan bahwa yang
+   * masuk memang akun kelurahan, bukan sekadar "ada yang login".
+   */
+  private function akunKelurahan(): \App\Models\UserKelurahan
+  {
+    $akun = Auth::guard('kelurahan')->user();
+
+    abort_unless($akun instanceof \App\Models\UserKelurahan, 404);
+
+    return $akun;
   }
 }

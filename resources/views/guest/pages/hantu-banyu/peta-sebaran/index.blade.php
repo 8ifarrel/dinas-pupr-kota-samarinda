@@ -375,92 +375,16 @@
   <div class="py-4 px-2 md:px-8">
     <div>
       <!-- Breadcrumb Navigation -->
-      <nav aria-label="Breadcrumb" class="mb-1">
-        <!-- Small/XS Mobile: Back link + Current page only -->
-        <div class="md:hidden flex items-center">
-          <a href="{{ route('guest.hantu-banyu.pengaduan.index') }}"
-            class="inline-flex items-center text-blue-600 hover:underline">
-            <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
-            <div class="underline">Kembali</div>
-          </a>
-          <span class="mx-2 text-gray-400">|</span>
-          <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
-            Lihat jalur lengkap
-            <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 10 6">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 1 4 4 4-4" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Small Mobile: Truncated breadcrumbs -->
-        <ol class="hidden md:inline-flex items-center text-sm">
-          <li class="inline-flex items-center">
-            <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
-              Beranda
-            </a>
-          </li>
-          <li>
-            <div class="flex items-center">
-              <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 9 4-4-4-4" />
-              </svg>
-              <a href="#" class="text-blue-600 underline">
-                Layanan
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="flex items-center">
-              <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 9 4-4-4-4" />
-              </svg>
-              <a href="{{ route('guest.hantu-banyu.index') }}" class="text-blue-600 underline">
-                Hantu Banyu
-              </a>
-            </div>
-          </li>
-          <li aria-current="page">
-            <div class="flex items-center">
-              <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m1 9 4-4-4-4" />
-              </svg>
-              <span class="text-gray-500 font-medium">
-                <span>Peta Sebaran Hantu Banyu</span>
-              </span>
-            </div>
-          </li>
-        </ol>
-
-        <!-- Mobile breadcrumb dots menu -->
-        <div class="md:hidden mt-1">
-          <div id="breadcrumb-dropdown"
-            class="hidden z-50 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
-            <ol class="py-2 text-sm text-gray-700">
-              <li>
-                <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
-              </li>
-              <li>
-                <a href="{{ route('guest.hantu-banyu.index') }}" class="block px-4 py-2 hover:bg-gray-100">Hantu
-                  Banyu</a>
-              </li>
-              <li>
-                <span class="block px-4 py-2 font-semibold text-gray-600">Peta Sebaran Hantu Banyu</span>
-              </li>
-            </ol>
-          </div>
-        </div>
-      </nav>
+      <x-guest.breadcrumb
+        :back-href="route('guest.hantu-banyu.pengaduan.index')"
+        class="mb-1"
+        :items="[
+          ['label' => 'Beranda', 'href' => route('guest.beranda.index')],
+          ['label' => 'Layanan', 'href' => '#'],
+          ['label' => 'Hantu Banyu', 'href' => route('guest.hantu-banyu.index')],
+          ['label' => 'Peta Sebaran Hantu Banyu'],
+        ]"
+      />
       <h1 class="text-2xl md:text-3xl font-bold mb-1">{{ $page_title }}</h1>
       <p class="mb-4 text-gray-600">{{ $meta_description }}</p>
     </div>
@@ -535,27 +459,6 @@
 @section('document.end')
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <!-- Pastikan Font Awesome sudah di-load di layout utama -->
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Breadcrumb dropdown functionality for mobile
-      const breadcrumbButton = document.getElementById('breadcrumb-menu-button');
-      const breadcrumbDropdown = document.getElementById('breadcrumb-dropdown');
-
-      if (breadcrumbButton && breadcrumbDropdown) {
-        breadcrumbButton.addEventListener('click', function() {
-          breadcrumbDropdown.classList.toggle('hidden');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!breadcrumbButton.contains(e.target) && !breadcrumbDropdown.contains(e.target)) {
-            breadcrumbDropdown.classList.add('hidden');
-          }
-        });
-      }
-    });
-  </script>
 
   <script>
     // --- Deklarasi jenisList di awal agar global ---

@@ -12,6 +12,7 @@ class SusunanOrganisasi extends Model
 
   protected $fillable = [
     'nama_susunan_organisasi',
+    'singkatan_susunan_organisasi',
     'id_susunan_organisasi_parent',
     'slug_susunan_organisasi',
     'tupoksi_susunan_organisasi',

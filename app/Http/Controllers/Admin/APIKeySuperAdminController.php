@@ -28,9 +28,14 @@ class APIKeySuperAdminController extends Controller
     ]);
   }
 
+  // Halaman "hantu-banyu" dan "akun-kelurahan" memakai kerangka Blade yang
+  // sama (admin.pages.super-admin.api-key.index/create) - lihat berkas itu.
+  // Jalan Peduli sengaja tidak ikut, tetap punya berkas Blade sendiri.
+
   public function indexHantuBanyu()
   {
-    return view('admin.pages.super-admin.api-key.hantu-banyu.index', [
+    return view('admin.pages.super-admin.api-key.index', [
+      'provider' => 'hantu-banyu',
       'page_title' => 'API Key Hantu Banyu',
       'page_description' => 'Kelola API Key yang digunakan untuk mengirim laporan Hantu Banyu lewat API.',
     ]);
@@ -38,7 +43,8 @@ class APIKeySuperAdminController extends Controller
 
   public function createHantuBanyu()
   {
-    return view('admin.pages.super-admin.api-key.hantu-banyu.create', [
+    return view('admin.pages.super-admin.api-key.create', [
+      'provider' => 'hantu-banyu',
       'page_title' => 'Buat API Key Hantu Banyu',
       'page_description' => 'Tambah API Key baru untuk mengakses API Hantu Banyu.',
     ]);
@@ -46,7 +52,8 @@ class APIKeySuperAdminController extends Controller
 
   public function indexAkunKelurahan()
   {
-    return view('admin.pages.super-admin.api-key.akun-kelurahan.index', [
+    return view('admin.pages.super-admin.api-key.index', [
+      'provider' => 'akun-kelurahan',
       'page_title' => 'API Key Akun Kelurahan',
       'page_description' => 'Kelola API Key yang digunakan untuk membaca dan memverifikasi akun kelurahan lewat API.',
     ]);
@@ -54,7 +61,8 @@ class APIKeySuperAdminController extends Controller
 
   public function createAkunKelurahan()
   {
-    return view('admin.pages.super-admin.api-key.akun-kelurahan.create', [
+    return view('admin.pages.super-admin.api-key.create', [
+      'provider' => 'akun-kelurahan',
       'page_title' => 'Buat API Key Akun Kelurahan',
       'page_description' => 'Tambah API Key baru untuk mengakses API akun kelurahan.',
     ]);

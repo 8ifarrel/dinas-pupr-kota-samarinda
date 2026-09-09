@@ -51,12 +51,18 @@
             id="dropdown-user">
             <div class="px-4 py-3" role="none">
 
+              {{-- Format disamakan dengan dropdown "Akun Saya" di sisi guest
+                   Hantu Banyu: baris atas singkatan unit (atau "Super Admin"),
+                   baris bawah kategori peran yang ringkas. --}}
+              @php
+                $labelAdminNavbar = \App\Support\Shared\LabelAdminNavbar::untuk(Auth::user());
+              @endphp
               <p class="text-sm text-gray-900 font-semibold" role="none">
-                {{ Auth::user()->fullname }}
+                {{ $labelAdminNavbar['singkatan'] }}
               </p>
 
               <p class="text-sm text-gray-900" role="none">
-                {{ Auth::user()->susunanOrganisasi->nama_susunan_organisasi ?? 'Super Admin' }}
+                {{ $labelAdminNavbar['kategori'] }}
               </p>
             </div>
             <ul class="py-1" role="none">

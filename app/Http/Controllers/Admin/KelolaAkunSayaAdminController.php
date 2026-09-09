@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\Shared\ValidasiKekuatanPassword;
 use Illuminate\Http\Request;
 use App\Models\SusunanOrganisasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Password;
 
 class KelolaAkunSayaAdminController extends Controller
 {
@@ -53,46 +52,10 @@ class KelolaAkunSayaAdminController extends Controller
         'exists:susunan_organisasi,id_susunan_organisasi'
       ],
       'old_password' => ['required'],
-      'password' => [
-        'required',
-        'string',
-        Password::min(12)->letters()->numbers()->uncompromised(),
-        'confirmed',
-        function ($attribute, $value, $fail) use ($request, $user) {
-          if ($request->name && Str::contains(Str::lower($value), Str::lower($request->name))) {
-            $fail('Password tidak boleh mengandung username.');
-          }
-          if ($request->fullname && Str::contains(Str::lower($value), Str::lower(str_replace(' ', '', $request->fullname)))) {
-            $fail('Password tidak boleh mengandung nama lengkap.');
-          }
-          if ($request->id_susunan_organisasi) {
-            $so = SusunanOrganisasi::find($request->id_susunan_organisasi);
-            if ($so && $so->nama_susunan_organisasi) {
-              $namaSO = Str::lower(str_replace(' ', '', $so->nama_susunan_organisasi));
-              if (Str::contains(Str::lower($value), $namaSO)) {
-                $fail('Password tidak boleh mengandung nama susunan organisasi.');
-              }
-            }
-          }
-          if (in_array($request->password, config('weak_local_passwords'))) {
-            $fail('Password ini terlalu mudah ditebak. Silakan pilih yang lebih kuat.');
-          }
-        },
-      ],
+      'password' => ValidasiKekuatanPassword::aturan($request),
     ];
 
-    $messages = [
-      'name.unique' => 'Username sudah digunakan.',
-      'name.regex' => 'Username hanya boleh berisi huruf, angka, titik, strip (-), dan underscore (_).',
-      'name.not_regex' => 'Username tidak boleh mengandung spasi.',
-      'password.min' => 'Password minimal 12 karakter.',
-      'password.letters' => 'Password harus mengandung minimal satu huruf.',
-      'password.numbers' => 'Password harus mengandung minimal satu angka.',
-      'password.confirmed' => 'Konfirmasi password tidak sama.',
-      'password.uncompromised' => 'Password ini tercatat pernah digunakan di situs lain yang mengalami insiden kebocoran data, silakan gunakan password lain.',
-    ];
-
-    $validated = $request->validate($rules, $messages);
+    $validated = $request->validate($rules, ValidasiKekuatanPassword::pesan());
 
     if (!Hash::check($request->old_password, $user->password)) {
       return back()->withErrors(['old_password' => 'Password lama salah.'])->withInput();

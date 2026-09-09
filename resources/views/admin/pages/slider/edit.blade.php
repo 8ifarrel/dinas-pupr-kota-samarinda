@@ -111,185 +111,24 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/shared/crop-uploader.js'])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.slider-viewer-wrapper');
-      const input = document.getElementById('foto_slider');
-      const preview = document.getElementById('slider-preview');
-      const placeholder = wrapper.querySelector('.slider-placeholder');
-      const removeBtn = document.getElementById('remove-slider-btn');
-      const revertBtn = document.getElementById('revert-slider-btn');
-      const editBtn = document.getElementById('edit-slider-button');
-      const cropperModalSlider = document.getElementById('cropperModalSlider');
-      const imageToCropSlider = document.getElementById('image-to-crop-slider');
-      const cropSliderConfirmBtn = document.getElementById('crop-slider-confirm-btn');
-      const cropSliderCancelBtn = document.getElementById('crop-slider-cancel-btn');
-      let cropperSlider = null;
-      let lastSliderFile = null;
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-      // --- HISTORY: always start with original image if exists ---
-      let sliderHistory = [];
-      let sliderHistoryPointer = -1;
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
-        preview.src : null;
-      if (originalImageSrc) {
-        sliderHistory = [originalImageSrc];
-        sliderHistoryPointer = 0;
-      }
-
-      function pushSliderHistory(src) {
-        if (sliderHistoryPointer < sliderHistory.length - 1) sliderHistory = sliderHistory.slice(0,
-          sliderHistoryPointer + 1);
-        sliderHistory.push(src);
-        sliderHistoryPointer = sliderHistory.length - 1;
-        updateRevertSliderBtn();
-      }
-
-      function updateRevertSliderBtn() {
-        if (sliderHistoryPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-        }
-      }
-
-      function setSliderPreviewAndHistory(src, isInitial = false) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        if (!isInitial) pushSliderHistory(src);
-        if (viewer) viewer.update();
-      }
-      // Inisialisasi preview dan history pada halaman edit
-      if (originalImageSrc) {
-        setSliderPreviewAndHistory(originalImageSrc, true);
-        updateRevertSliderBtn();
-      }
-      if (input) input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastSliderFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCropSlider.src = ev.target.result;
-            cropperModalSlider.classList.remove('hidden');
-            if (cropperSlider) cropperSlider.destroy();
-            cropperSlider = new Cropper(imageToCropSlider, {
-              viewMode: 1,
-              autoCropArea: 1,
-              aspectRatio: 2.368 / 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-      if (editBtn) editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCropSlider.src = preview.src;
-          cropperModalSlider.classList.remove('hidden');
-          if (cropperSlider) cropperSlider.destroy();
-          cropperSlider = new Cropper(imageToCropSlider, {
-            viewMode: 1,
-            autoCropArea: 1,
-            aspectRatio: 2.368 / 1
-          });
-        }
-      });
-      if (cropSliderConfirmBtn) cropSliderConfirmBtn.addEventListener('click', function() {
-        if (cropperSlider) {
-          cropperSlider.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastSliderFile ? lastSliderFile.name :
-              'cropped_slider.jpg', {
-                type: blob.type
-              });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setSliderPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropperSlider.destroy();
-            cropperSlider = null;
-            cropperModalSlider.classList.add('hidden');
-          }, lastSliderFile ? lastSliderFile.type : 'image/jpeg');
-        }
-      });
-      if (cropSliderCancelBtn) cropSliderCancelBtn.addEventListener('click', function() {
-        cropperModalSlider.classList.add('hidden');
-        if (cropperSlider) {
-          cropperSlider.destroy();
-          cropperSlider = null;
-        }
-        input.value = '';
-      });
-      if (removeBtn) removeBtn.addEventListener('click', function() {
-        setSliderPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      });
-      if (revertBtn) revertBtn.addEventListener('click', function() {
-        if (sliderHistoryPointer > 0) {
-          sliderHistoryPointer--;
-          const prevSrc = sliderHistory[sliderHistoryPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
-          }
-          updateRevertSliderBtn();
-        }
-      });
-      if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-      }
-      if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
-        return false;
+      window.initCropUploader({
+        wrapperSelector: '.slider-viewer-wrapper',
+        inputSelector: '#foto_slider',
+        previewSelector: '#slider-preview',
+        placeholderSelector: '.slider-placeholder',
+        removeBtnSelector: '#remove-slider-btn',
+        revertBtnSelector: '#revert-slider-btn',
+        editBtnSelector: '#edit-slider-button',
+        modalSelector: '#cropperModalSlider',
+        imageToCropSelector: '#image-to-crop-slider',
+        confirmBtnSelector: '#crop-slider-confirm-btn',
+        cancelBtnSelector: '#crop-slider-cancel-btn',
+        aspectRatio: 2.368 / 1,
+        fileNamePrefix: 'cropped_slider',
       });
     });
   </script>

@@ -16,44 +16,6 @@
       <div class="absolute inset-0 bg-gradient-to-b from-brand-blue/70 via-white/10 to-white"></div>
     </div>
 
-    {{-- Akun kelurahan (pojok kanan atas hero) --}}
-    @auth('kelurahan')
-      @php $akunKel = Auth::guard('kelurahan')->user(); @endphp
-      <div class="absolute top-4 right-4 sm:top-6 sm:right-6 z-20">
-        <button data-dropdown-toggle="dropdownAkunKelurahan" data-dropdown-placement="bottom-end" type="button"
-          class="inline-flex items-center gap-2 text-brand-blue bg-white font-semibold rounded-xl text-sm px-3 py-2 shadow-lg hover:shadow-xl active:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/40 focus-visible:ring-offset-2">
-          <i class="fa-solid fa-circle-user"></i>
-          <span class="hidden sm:inline">Akun Saya</span>
-          <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
-        <div id="dropdownAkunKelurahan"
-          class="z-50 hidden bg-white text-gray-700 divide-y divide-gray-100 rounded-lg shadow-lg border w-60">
-          <div class="px-4 py-3">
-            <p class="text-sm font-semibold text-gray-900 truncate">{{ $akunKel->fullname }}</p>
-            <p class="text-xs text-gray-500 truncate">
-              Kelurahan {{ optional($akunKel->kelurahan)->nama ?? '-' }}
-            </p>
-          </div>
-          <ul class="py-1 text-sm">
-            <li>
-              <a href="{{ route('guest.hantu-banyu.akun.edit') }}"
-                class="block px-4 py-2 hover:bg-gray-100">Kelola Akun</a>
-            </li>
-            <li>
-              <form method="POST" action="{{ route('guest.hantu-banyu.logout') }}">
-                @csrf
-                <button type="submit" class="w-full text-left block px-4 py-2 text-red-600 hover:bg-gray-100">
-                  Logout
-                </button>
-              </form>
-            </li>
-          </ul>
-        </div>
-      </div>
-    @endauth
-
     {{-- Main Card --}}
     <div class="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 md:px-8 lg:gap-6 3xl:gap-10">
       <div class="text-center">
@@ -84,11 +46,16 @@
             justify-center gap-3
           "
         >
-          <a href="{{ route('guest.hantu-banyu.pengaduan.create') }}"
-            class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-semibold text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue shadow-lg transition">
-            Buat Pengaduan
-            <i class="fa-solid fa-paper-plane ms-1.5"></i>
-          </a>
+          {{-- Membuat laporan hanya untuk akun kelurahan dan admin unit
+               pengelola layanan ini; admin unit lain tetap bisa melihat
+               seluruh data lewat tombol-tombol di sebelahnya. --}}
+          @if ($boleh_kelola)
+            <a href="{{ route('guest.hantu-banyu.pengaduan.create') }}"
+              class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-semibold text-white rounded-lg bg-brand-blue hover:bg-brand-yellow hover:text-brand-blue shadow-lg transition">
+              Buat Pengaduan
+              <i class="fa-solid fa-paper-plane ms-1.5"></i>
+            </a>
+          @endif
           <a href="{{ route('guest.hantu-banyu.pengaduan.index') }}"
             class="inline-flex justify-center items-center px-4 py-2 3xl:py-3 3xl:px-6 text-sm 2xl:text-base font-medium text-brand-blue rounded-lg border border-brand-blue hover:bg-brand-blue hover:text-white shadow-lg transition">
             Lihat Semua Pengaduan
@@ -176,6 +143,9 @@
   <section class="py-6 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-16">
     <div class="text-center space-y-1.5 pb-5 lg:pb-10">
       <h2 class="text-3xl lg:text-4xl font-bold">Statistik Pengaduan</h2>
+      {{-- Penegas wilayah yang sedang ditampilkan: satu kelurahan untuk akun
+           kelurahan, seluruh kota untuk admin UPTD. --}}
+      <p class="text-gray-500 text-base lg:text-lg">{{ $statistik_subjudul }}</p>
     </div>
 
 {{--
@@ -303,29 +273,66 @@
     </div>
   </div>
 
-  {{-- ===================== Kecamatan (bar, bulan + tahun) ===================== --}}
-  <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-      <div>
-        <h3 class="font-semibold text-gray-900">Sebaran Laporan per Kecamatan</h3>
+  {{-- ===================== Kecamatan (bar, bulan + tahun) =====================
+       Hanya untuk admin UPTD. Bagi akun kelurahan, grafik ini selalu berisi
+       satu batang saja (kecamatan tempat kelurahannya berada), jadi tidak
+       memberi informasi apa pun. --}}
+  @if ($tampilkan_kecamatan)
+    <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div>
+          <h3 class="font-semibold text-gray-900">Sebaran Laporan per Kecamatan</h3>
+        </div>
+        <div class="flex gap-2">
+          <select id="kecMonth" class="{{ $selectCls }}"></select>
+          <select id="kecYear" class="{{ $selectCls }}">
+            @foreach ($years as $y)
+              <option value="{{ $y }}">{{ $y }}</option>
+            @endforeach
+          </select>
+        </div>
       </div>
-      <div class="flex gap-2">
-        <select id="kecMonth" class="{{ $selectCls }}"></select>
-        <select id="kecYear" class="{{ $selectCls }}">
-          @foreach ($years as $y)
-            <option value="{{ $y }}">{{ $y }}</option>
-          @endforeach
-        </select>
+      <div class="relative" style="height: {{ max(288, $kecamatan_list->count() * 34) }}px">
+        <canvas id="chartKecamatan"></canvas>
+        <div id="nodataKec"
+          class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+          Tidak ada data pada periode ini
+        </div>
       </div>
     </div>
-    <div class="relative" style="height: {{ max(288, $kecamatan_list->count() * 34) }}px">
-      <canvas id="chartKecamatan"></canvas>
-      <div id="nodataKec"
-        class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
-        Tidak ada data pada periode ini
+  @endif
+
+  {{-- ===================== Sebaran per Kelurahan (bar, kecamatan + bulan + tahun)
+       Melengkapi tampilan admin supaya sama dengan statistik di E-Panel. --}}
+  @if ($tampilkan_kelurahan)
+    <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div>
+          <h3 class="font-semibold text-gray-900">Sebaran Laporan per Kelurahan</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <select id="kelKecamatan" class="{{ $selectCls }}">
+            @foreach ($kelurahan_map as $namaKec => $daftarKel)
+              <option value="{{ $namaKec }}">{{ $namaKec }}</option>
+            @endforeach
+          </select>
+          <select id="kelMonth" class="{{ $selectCls }}"></select>
+          <select id="kelYear" class="{{ $selectCls }}">
+            @foreach ($years as $y)
+              <option value="{{ $y }}">{{ $y }}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+      <div class="relative" id="kelChartWrap" style="height: 288px">
+        <canvas id="chartKelurahan"></canvas>
+        <div id="nodataKel"
+          class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+          Tidak ada data pada periode ini
+        </div>
       </div>
     </div>
-  </div>
+  @endif
 @endif
   </section>
 @endsection
@@ -334,284 +341,21 @@
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer>
   </script>
 
+  {{--
+    Grafik statistik dirender oleh resources/js/hantu-banyu/statistik-chart.js
+    (dipakai bersama dengan halaman statistik E-Panel) - lihat berkas itu
+    untuk logikanya. Datanya dioper lewat atribut data-* di bawah supaya
+    skrip itu tidak perlu tahu apa pun tentang controller/halaman ini.
+  --}}
   @if ($total > 0)
-    @vite('resources/js/chartjs.js')
+    @vite(['resources/js/chartjs.js', 'resources/js/hantu-banyu/statistik-chart.js'])
+    <div id="statistik-hantu-banyu-data" class="hidden"
+      data-by-ym="{{ json_encode($by_ym) }}"
+      data-kecamatan-list="{{ json_encode($kecamatan_list) }}"
+      data-kelurahan-map="{{ json_encode($kelurahan_map) }}"
+      data-now-year="{{ $now_year }}"
+      data-now-month="{{ $now_month }}"
+      data-now-quarter="{{ $now_quarter }}"
+    ></div>
   @endif
-{{--
-  Script grafik statistik Hantu Banyu.
-  Pastikan Chart.js sudah dimuat (@vite('resources/js/chartjs.js')) sebelum ini.
---}}
-@if ($total > 0)
-  <script>
-    window.addEventListener('load', function() {
-      if (!window.Chart) return;
-
-      Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
-      Chart.defaults.color = '#6b7280';
-
-      var byYM = @json($by_ym);
-      var kecList = @json($kecamatan_list);
-      var nowYear = {{ $now_year }},
-        nowMonth = {{ $now_month }},
-        nowQuarter = {{ $now_quarter }};
-
-      var bulanNama = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-        'Oktober', 'November', 'Desember'
-      ];
-      var kuartalNama = ['Kuartal I', 'Kuartal II', 'Kuartal III', 'Kuartal IV'];
-
-      var diprosesKeys = ['diterima', 'menunggu_survei', 'sudah_disurvei', 'menunggu_jadwal_pengerjaan',
-        'sedang_dikerjakan'
-      ];
-      var diprosesLabel = ['Diterima', 'Menunggu Survei', 'Sudah Disurvei', 'Menunggu Jadwal Pengerjaan',
-        'Sedang Dikerjakan'
-      ];
-      var diprosesColor = ['#3b82f6', '#ec4899', '#a855f7', '#f97316', '#6366f1'];
-
-      var jenisKeys = ['belum_diklasifikasikan', 'darurat', 'biasa', 'rutin'];
-      var jenisLabel = ['Belum Diklasifikasikan', 'Penanganan Darurat', 'Penanganan Biasa', 'Pemeliharaan Rutin'];
-      var jenisColor = ['#9ca3af', '#ef4444', '#14b8a6', '#3b82f6'];
-
-      function cell(y, m) {
-        return (byYM[y] && byYM[y][m]) || {
-          masuk: 0,
-          status: {},
-          jenis: {},
-          kecamatan: {}
-        };
-      }
-
-      function num(o, k) {
-        return (o && o[k]) ? o[k] : 0;
-      }
-
-      function sum(arr) {
-        return arr.reduce(function(a, b) {
-          return a + b;
-        }, 0);
-      }
-
-      function toggleNoData(id, empty) {
-        var el = document.getElementById(id);
-        el.style.display = empty ? 'flex' : 'none';
-      }
-
-      // Isi dropdown bulan
-      ['diprosesMonth', 'jenisMonth', 'kecMonth'].forEach(function(id) {
-        var sel = document.getElementById(id);
-        bulanNama.forEach(function(nama, i) {
-          var opt = document.createElement('option');
-          opt.value = i + 1;
-          opt.textContent = nama;
-          sel.appendChild(opt);
-        });
-      });
-
-      // Set nilai default
-      document.getElementById('masukQuarter').value = nowQuarter;
-      document.getElementById('masukYear').value = nowYear;
-      ['diprosesMonth', 'jenisMonth', 'kecMonth'].forEach(function(id) {
-        document.getElementById(id).value = nowMonth;
-      });
-      ['diprosesYear', 'jenisYear', 'kecYear'].forEach(function(id) {
-        document.getElementById(id).value = nowYear;
-      });
-
-      var doughnutOpts = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right'
-          }
-        }
-      };
-
-      // ---------- Laporan Masuk ----------
-      var chartMasuk = new Chart(document.getElementById('chartMasuk'), {
-        type: 'bar',
-        data: {
-          labels: [],
-          datasets: [{
-              label: 'Belum diproses',
-              data: [],
-              backgroundColor: '#E63846',
-              borderRadius: 4
-            },
-            {
-              label: 'Sedang diproses',
-              data: [],
-              backgroundColor: '#F9A11A',
-              borderRadius: 4
-            },
-            {
-              label: 'Selesai',
-              data: [],
-              backgroundColor: '#9EDE73',
-              borderRadius: 4
-            },
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              stacked: true
-            },
-            y: {
-              stacked: true,
-              beginAtZero: true,
-              ticks: {
-                precision: 0
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      });
-
-      function renderMasuk() {
-        var q = parseInt(document.getElementById('masukQuarter').value, 10);
-        var y = parseInt(document.getElementById('masukYear').value, 10);
-        var start = (q - 1) * 3 + 1;
-        var months = [start, start + 1, start + 2];
-        var pending = [],
-          proses = [],
-          selesai = [];
-        months.forEach(function(m) {
-          var st = cell(y, m).status;
-          pending.push(num(st, 'pending'));
-          proses.push(diprosesKeys.reduce(function(a, k) {
-            return a + num(st, k);
-          }, 0));
-          selesai.push(num(st, 'selesai'));
-        });
-        chartMasuk.data.labels = months.map(function(m) {
-          return bulanNama[m - 1];
-        });
-        chartMasuk.data.datasets[0].data = pending;
-        chartMasuk.data.datasets[1].data = proses;
-        chartMasuk.data.datasets[2].data = selesai;
-        chartMasuk.update();
-
-        var totalP = sum(pending) + sum(proses) + sum(selesai);
-        toggleNoData('nodataMasuk', totalP === 0);
-      }
-
-      // ---------- Laporan sedang Diproses ----------
-      var chartDiproses = new Chart(document.getElementById('chartDiproses'), {
-        type: 'doughnut',
-        data: {
-          labels: diprosesLabel,
-          datasets: [{
-            data: [],
-            backgroundColor: diprosesColor
-          }]
-        },
-        options: doughnutOpts
-      });
-
-      function renderDiproses() {
-        var m = parseInt(document.getElementById('diprosesMonth').value, 10);
-        var y = parseInt(document.getElementById('diprosesYear').value, 10);
-        var st = cell(y, m).status;
-        var data = diprosesKeys.map(function(k) {
-          return num(st, k);
-        });
-        chartDiproses.data.datasets[0].data = data;
-        chartDiproses.update();
-        toggleNoData('nodataDiproses', sum(data) === 0);
-      }
-
-      // ---------- Jenis Laporan ----------
-      var chartJenis = new Chart(document.getElementById('chartJenis'), {
-        type: 'doughnut',
-        data: {
-          labels: jenisLabel,
-          datasets: [{
-            data: [],
-            backgroundColor: jenisColor
-          }]
-        },
-        options: doughnutOpts
-      });
-
-      function renderJenis() {
-        var m = parseInt(document.getElementById('jenisMonth').value, 10);
-        var y = parseInt(document.getElementById('jenisYear').value, 10);
-        var jn = cell(y, m).jenis;
-        var data = jenisKeys.map(function(k) {
-          return num(jn, k);
-        });
-        chartJenis.data.datasets[0].data = data;
-        chartJenis.update();
-        toggleNoData('nodataJenis', sum(data) === 0);
-      }
-
-      // ---------- Kecamatan ----------
-      var chartKec = new Chart(document.getElementById('chartKecamatan'), {
-        type: 'bar',
-        data: {
-          labels: kecList,
-          datasets: [{
-            label: 'Jumlah laporan',
-            data: [],
-            backgroundColor: '#223468',
-            borderRadius: 4
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              beginAtZero: true,
-              ticks: {
-                precision: 0
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              display: false
-            }
-          }
-        }
-      });
-
-      function renderKec() {
-        var m = parseInt(document.getElementById('kecMonth').value, 10);
-        var y = parseInt(document.getElementById('kecYear').value, 10);
-        var kc = cell(y, m).kecamatan;
-        var data = kecList.map(function(nama) {
-          return num(kc, nama);
-        });
-        chartKec.data.datasets[0].data = data;
-        chartKec.update();
-        toggleNoData('nodataKec', sum(data) === 0);
-      }
-
-      // Listeners
-      document.getElementById('masukQuarter').addEventListener('change', renderMasuk);
-      document.getElementById('masukYear').addEventListener('change', renderMasuk);
-      document.getElementById('diprosesMonth').addEventListener('change', renderDiproses);
-      document.getElementById('diprosesYear').addEventListener('change', renderDiproses);
-      document.getElementById('jenisMonth').addEventListener('change', renderJenis);
-      document.getElementById('jenisYear').addEventListener('change', renderJenis);
-      document.getElementById('kecMonth').addEventListener('change', renderKec);
-      document.getElementById('kecYear').addEventListener('change', renderKec);
-
-      renderMasuk();
-      renderDiproses();
-      renderJenis();
-      renderKec();
-    });
-  </script>
-@endif
 @endsection

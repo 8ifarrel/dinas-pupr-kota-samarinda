@@ -16,6 +16,7 @@ class LoginAdminController extends Controller
     $page_title = "Login Admin";
     return view('admin.pages.login.index', [
       'page_title' => $page_title,
+      'meta_description' => 'Halaman login untuk mengelola website ' . config('app.nama_dinas') . '.',
     ]);
   }
 

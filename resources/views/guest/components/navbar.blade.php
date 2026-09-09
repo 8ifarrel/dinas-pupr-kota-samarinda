@@ -25,6 +25,79 @@
     </div>
 
     <div class="ms-auto lg:ms-0 flex lg:order-2 items-center gap-2 lg:gap-3 rtl:space-x-reverse">
+      {{-- Akun yang sedang login lewat Hantu Banyu (kelurahan atau admin).
+           Session-nya berlaku lintas halaman, jadi tombolnya dipasang di
+           navbar bersama - bukan hanya di halaman Hantu Banyu - supaya
+           tetap terlihat & bisa logout dari halaman guest mana pun. --}}
+      @php
+        $akunKelNavbar = \Illuminate\Support\Facades\Auth::guard('kelurahan')->user();
+        if (!$akunKelNavbar instanceof \App\Models\UserKelurahan) {
+          $akunKelNavbar = null;
+        } elseif ($akunKelNavbar) {
+          $akunKelNavbar->loadMissing('kelurahan.kecamatan');
+        }
+
+        $akunAdminNavbar = \Illuminate\Support\Facades\Auth::guard('web')->user();
+        if (!$akunAdminNavbar instanceof \App\Models\User) {
+          $akunAdminNavbar = null;
+        } elseif ($akunAdminNavbar) {
+          $akunAdminNavbar->loadMissing('susunanOrganisasi');
+        }
+
+        // Singkatan unit organisasi admin, mis. "UPTD PSDI" / "Bidang SDA".
+        // Super admin tidak bernaung di unit mana pun, jadi diberi label sendiri.
+        if ($akunAdminNavbar) {
+          $labelAdminNavbar = \App\Support\Shared\LabelAdminNavbar::untuk($akunAdminNavbar);
+          $singkatanAdminNavbar = $labelAdminNavbar['singkatan'];
+          $kategoriAdminNavbar = $labelAdminNavbar['kategori'];
+        }
+      @endphp
+      @if ($akunKelNavbar || $akunAdminNavbar)
+        <div class="relative">
+          <button data-dropdown-toggle="dropdownAkunSaya" data-dropdown-placement="bottom-end" type="button"
+            class="self-center inline-flex items-center gap-2 text-brand-blue bg-white font-semibold rounded-xl text-sm px-3 py-2 lg:px-4 lg:py-2 shadow focus:outline-none focus:ring-4 focus:ring-yellow-300">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="hidden sm:inline">Akun Saya</span>
+            <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <div id="dropdownAkunSaya"
+            class="z-50 hidden bg-white text-gray-700 divide-y divide-gray-100 rounded-lg shadow-lg border w-60">
+            <div class="px-4 py-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">
+                {{ $akunKelNavbar ? $akunKelNavbar->fullname : $singkatanAdminNavbar }}
+              </p>
+              <p class="text-xs text-gray-500 truncate">
+                {{ $akunKelNavbar ? 'Operator Kelurahan' : $kategoriAdminNavbar }}
+              </p>
+            </div>
+            <ul class="py-1 text-sm">
+              @if ($akunKelNavbar)
+                <li>
+                  <a href="{{ route('guest.hantu-banyu.akun.edit') }}"
+                    class="block px-4 py-2 hover:bg-gray-100">Kelola Akun</a>
+                </li>
+              @else
+                {{-- Admin mengelola akunnya lewat E-Panel, bukan di sini. --}}
+                <li>
+                  <a href="{{ route('admin.hantu-banyu.index') }}" class="block px-4 py-2 hover:bg-gray-100">
+                    Buka E-Panel
+                  </a>
+                </li>
+              @endif
+              <li>
+                <form method="POST" action="{{ route('guest.hantu-banyu.logout') }}">
+                  @csrf
+                  <button type="submit" class="w-full text-left block px-4 py-2 text-red-600 hover:bg-gray-100">
+                    Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      @endif
       <a type="button" href="{{ route('guest.portal.index') }}"
         class="self-center text-brand-blue bg-brand-yellow focus:ring-4 focus:outline-none focus:ring-yellow-300 font-semibold rounded-xl text-sm px-3 py-2 lg:px-4 lg:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Portal

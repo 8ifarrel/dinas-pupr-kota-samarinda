@@ -115,17 +115,6 @@
           modalEl.__flowbiteModal.show();
         }
       });
-
-      document.body.addEventListener('click', function(e) {
-        var hideBtn = e.target.closest('[data-modal-hide]');
-        if (hideBtn) {
-          var modalId = hideBtn.getAttribute('data-modal-hide');
-          var modalEl = document.getElementById(modalId);
-          if (window.Modal && modalEl && modalEl.__flowbiteModal) {
-            modalEl.__flowbiteModal.hide();
-          }
-        }
-      });
     });
   </script>
 @endsection

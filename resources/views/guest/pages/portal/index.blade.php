@@ -1,5 +1,7 @@
 @extends('guest.layouts.portal')
 
+@section('lottie', 'ya')
+
 @section('slot')
   <img src="{{ asset('image/background/portal.jpg') }}" alt="Portal"
     class="fixed top-0 left-0 w-full h-full object-cover opacity-50 -z-10">

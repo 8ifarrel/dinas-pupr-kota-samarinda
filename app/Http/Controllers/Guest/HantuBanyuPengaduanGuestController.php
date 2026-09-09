@@ -13,10 +13,11 @@ use App\Models\HantuBanyuLaporan;
 use App\Models\HantuBanyuLaporanFoto;
 use App\Models\HantuBanyuLaporanTindakLanjut;
 use App\Models\SKM;
+use App\Models\UserKelurahan;
+use App\Support\HantuBanyu\VerifikasiKoordinatKelurahan;
 use Spatie\Browsershot\Browsershot;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
@@ -26,28 +27,59 @@ class HantuBanyuPengaduanGuestController extends Controller
   public int $layanan_id = 5;
   public int $struktur_organisasi_id = 10;
 
+  private const TIPE_KELURAHAN = 'kelurahan';
+  private const TIPE_ADMIN = 'admin';
+
   public function create()
   {
     $meta_description = "Temukan semua berita terbaru terkait infrastruktur dan kegiatan dari Dinas PUPR Kota Samarinda.";
     $page_subtitle = "Layanan Umum";
     $page_title = "Buat Laporan Hantu Banyu";
 
-    // Kecamatan & kelurahan dikunci ke wilayah akun kelurahan yang login.
-    // Anotasi diperlukan karena guard mengembalikan kontrak Authenticatable,
-    // sedangkan model sebenarnya baru ditentukan config/auth.php saat berjalan.
-    // Rute ini dijaga middleware AuthenticateKelurahan, jadi tidak akan null.
-    /** @var \App\Models\UserKelurahan $akun */
-    $akun = Auth::guard('kelurahan')->user();
-    $akun->loadMissing('kelurahan.kecamatan');
+    // Akun kelurahan: kecamatan & kelurahan dikunci ke wilayahnya sendiri.
+    // Admin UPTD: bebas memilih, jadi butuh daftar seluruh kelurahan.
+    $akun = $this->akunKelurahan();
+    $adalahAdmin = !$akun && Auth::guard('web')->check();
 
     return view('guest.pages.hantu-banyu.pengaduan.create', [
       'meta_description' => $meta_description,
       'page_title' => $page_title,
       'page_subtitle' => $page_subtitle,
       'page_context' => $this->page_context,
-      'akunKelurahan' => $akun->kelurahan,
-      'akunKecamatan' => optional($akun->kelurahan)->kecamatan,
+      'akunKelurahan' => optional($akun)->kelurahan,
+      'akunKecamatan' => optional(optional($akun)->kelurahan)->kecamatan,
+      'adalahAdmin' => $adalahAdmin,
+      'daftarKelurahan' => $adalahAdmin
+        ? Kelurahan::with('kecamatan')->orderBy('nama')->get(['id', 'nama', 'kecamatan_id'])
+        : collect(),
     ]);
+  }
+
+  /** Akun kelurahan yang login beserta relasi wilayahnya, atau null bila admin. */
+  private function akunKelurahan(): ?UserKelurahan
+  {
+    $akun = Auth::guard('kelurahan')->user();
+
+    if (!$akun instanceof UserKelurahan) {
+      return null;
+    }
+
+    $akun->loadMissing('kelurahan.kecamatan');
+
+    return $akun;
+  }
+
+  /**
+   * Kelurahan yang boleh dilihat/diisi akun ini.
+   *
+   * null berarti TIDAK dibatasi (admin) - jadi pemanggil harus memakai
+   * `when($id, ...)` alih-alih menganggap null sebagai "tidak ada wilayah".
+   */
+  private function kelurahanId(): ?int
+  {
+    $akun = Auth::guard('kelurahan')->user();
+
+    return $akun instanceof UserKelurahan ? (int) $akun->kelurahan_id : null;
   }
 
   public function store(Request $request)
@@ -80,7 +112,11 @@ class HantuBanyuPengaduanGuestController extends Controller
       'nama_lengkap' => 'required|string|max:100',
       'alamat' => 'required|string',
       'nomor_telepon' => 'required|regex:/^08[0-9]{8,13}$/',
-      'kecamatan_id' => 'required|exists:kecamatan,id',
+      // Kecamatan tidak pernah dipercaya dari form: nilainya selalu ditimpa
+      // dari kelurahan yang dipilih. Bagi admin isian ini hanya diisi
+      // otomatis oleh JavaScript, jadi tidak layak jadi syarat wajib.
+      'kecamatan_id' => (!$this->akunKelurahan() && Auth::guard('web')->check())
+        ? 'nullable|exists:kecamatan,id' : 'required|exists:kecamatan,id',
       'kelurahan_id' => 'required|exists:kelurahan,id',
       'nama_jalan' => 'required|string|max:150',
       'longitude' => ['required', 'regex:/^[-+]?\d{1,3}\.\d{7}$/'],
@@ -96,29 +132,41 @@ class HantuBanyuPengaduanGuestController extends Controller
     ], $messages);
 
     // ------------------------------------------------------------------
-    // Kunci wilayah: akun kelurahan hanya boleh melaporkan lokasi di
-    // dalam kelurahannya sendiri.
+    // Wilayah laporan.
+    //
+    // Akun kelurahan terkunci di kelurahannya sendiri: pilihan apa pun yang
+    // dikirim form diabaikan. Admin UPTD boleh melapor atas nama kelurahan
+    // mana pun, jadi pilihannya dipakai apa adanya - tapi tetap harus
+    // kelurahan yang sungguh ada, dan titik koordinatnya tetap diverifikasi
+    // terhadap kelurahan yang dipilih itu.
     // ------------------------------------------------------------------
-    /** @var \App\Models\UserKelurahan $akun */
-    $akun = Auth::guard('kelurahan')->user();
-    $akun->loadMissing('kelurahan.kecamatan');
-    $kelAkun = $akun->kelurahan;
+    $akunKelurahan = $this->akunKelurahan();
 
-    if (!$kelAkun) {
-      return back()->withInput()
-        ->withErrors(['kelurahan_id' => 'Akun Anda belum terhubung ke kelurahan manapun. Hubungi admin.']);
+    if ($akunKelurahan) {
+      $kelSasaran = $akunKelurahan->kelurahan;
+
+      if (!$kelSasaran) {
+        return back()->withInput()
+          ->withErrors(['kelurahan_id' => 'Akun Anda belum terhubung ke kelurahan manapun. Hubungi admin.']);
+      }
+    } else {
+      $kelSasaran = Kelurahan::with('kecamatan')->find($validated['kelurahan_id']);
+
+      if (!$kelSasaran) {
+        return back()->withInput()
+          ->withErrors(['kelurahan_id' => 'Kelurahan yang dipilih tidak ditemukan.']);
+      }
     }
 
-    // Abaikan pilihan dari form, paksa ke wilayah akun.
-    $validated['kelurahan_id'] = $kelAkun->id;
-    $validated['kecamatan_id'] = $kelAkun->kecamatan_id;
+    $validated['kelurahan_id'] = $kelSasaran->id;
+    $validated['kecamatan_id'] = $kelSasaran->kecamatan_id;
 
     // Verifikasi titik koordinat lewat reverse-geocode.
-    $lokasiValid = $this->koordinatDiKelurahan(
+    $lokasiValid = VerifikasiKoordinatKelurahan::koordinatDiKelurahan(
       $validated['latitude'],
       $validated['longitude'],
-      $kelAkun->nama,
-      optional($kelAkun->kecamatan)->nama ?? ''
+      $kelSasaran->nama,
+      optional($kelSasaran->kecamatan)->nama ?? ''
     );
 
     if ($lokasiValid === null) {
@@ -129,15 +177,17 @@ class HantuBanyuPengaduanGuestController extends Controller
 
     if (!$lokasiValid) {
       return back()->withInput()->withErrors([
-        'koordinat' => 'Titik lokasi berada di luar Kelurahan ' . $kelAkun->nama
-          . '. Anda hanya dapat melaporkan lokasi yang berada di dalam kelurahan Anda.',
+        'koordinat' => 'Titik lokasi berada di luar Kelurahan ' . $kelSasaran->nama
+          . ($akunKelurahan
+            ? '. Anda hanya dapat melaporkan lokasi yang berada di dalam kelurahan Anda.'
+            : '. Pilih titik yang berada di dalam kelurahan tersebut, atau ganti kelurahannya.'),
       ]);
     }
 
-    // Simpan pelapor (asal kelurahan mengikuti akun kelurahan yang login)
+    // Simpan pelapor (asal kelurahan mengikuti wilayah laporan)
     $pelapor = HantuBanyuPelapor::create([
       'nama_lengkap' => $validated['nama_lengkap'],
-      'kelurahan_asal_id' => $kelAkun->id,
+      'kelurahan_asal_id' => $kelSasaran->id,
       'alamat' => $validated['alamat'],
       'nomor_telepon' => $validated['nomor_telepon'],
     ]);
@@ -145,6 +195,8 @@ class HantuBanyuPengaduanGuestController extends Controller
     // Simpan laporan
     $laporan = HantuBanyuLaporan::create([
       'pelapor_id' => $pelapor->id,
+      'dibuat_oleh_tipe' => $akunKelurahan ? self::TIPE_KELURAHAN : self::TIPE_ADMIN,
+      'dibuat_oleh_user_id' => $akunKelurahan ? null : Auth::guard('web')->id(),
       'nama_jalan' => $validated['nama_jalan'],
       'kecamatan_id' => $validated['kecamatan_id'],
       'kelurahan_id' => $validated['kelurahan_id'],
@@ -218,8 +270,9 @@ class HantuBanyuPengaduanGuestController extends Controller
       ->select(DB::raw('MAX(id) as id'))
       ->groupBy('laporan_id');
 
-    // Setiap akun kelurahan hanya melihat laporan di kelurahannya.
-    $kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+    // Akun kelurahan hanya melihat laporan di kelurahannya; admin melihat
+    // seluruh kelurahan (kelurahanId null = tidak dibatasi).
+    $kelurahanId = $this->kelurahanId();
 
     // Query to get all reports with their latest status.
     // Laporan yang terhapus sengaja TIDAK ditampilkan di sini. Admin pun tidak
@@ -253,6 +306,33 @@ class HantuBanyuPengaduanGuestController extends Controller
       $query->where('tl.jenis', $jenisFilter);
     }
 
+    // Asal pembuat laporan: operator kelurahan atau admin UPTD.
+    $pelaporFilter = $request->input('pelapor_filter', '');
+    if (in_array($pelaporFilter, [self::TIPE_KELURAHAN, self::TIPE_ADMIN], true)) {
+      $query->where('hantu_banyu_laporan.dibuat_oleh_tipe', $pelaporFilter);
+    } else {
+      $pelaporFilter = '';
+    }
+
+    // Rentang tanggal laporan masuk. Batas akhir memakai satu hari penuh
+    // supaya laporan yang masuk sore hari di tanggal itu tetap ikut terjaring.
+    $tanggalDari = $this->tanggalValid($request->input('tanggal_dari'));
+    $tanggalSampai = $this->tanggalValid($request->input('tanggal_sampai'));
+
+    // Rentang terbalik (dari > sampai) ditukar, bukan ditolak - pemakainya
+    // jelas bermaksud rentang yang sama.
+    if ($tanggalDari && $tanggalSampai && $tanggalDari->gt($tanggalSampai)) {
+      [$tanggalDari, $tanggalSampai] = [$tanggalSampai, $tanggalDari];
+    }
+
+    if ($tanggalDari) {
+      $query->where('hantu_banyu_laporan.created_at', '>=', $tanggalDari->copy()->startOfDay());
+    }
+
+    if ($tanggalSampai) {
+      $query->where('hantu_banyu_laporan.created_at', '<=', $tanggalSampai->copy()->endOfDay());
+    }
+
     // Sort options (default to latest)
     $sortOption = $request->input('sort', 'latest');
     if ($sortOption === 'oldest') {
@@ -278,8 +358,29 @@ class HantuBanyuPengaduanGuestController extends Controller
       'search_query' => $request->input('search_query', ''),
       'status_filter' => $request->input('status_filter', ''),
       'jenis_filter' => $request->input('jenis_filter', ''),
+      'pelapor_filter' => $pelaporFilter,
+      'tanggal_dari' => $tanggalDari?->toDateString() ?? '',
+      'tanggal_sampai' => $tanggalSampai?->toDateString() ?? '',
       'sort_option' => $sortOption,
     ]);
+  }
+
+  /**
+   * Terima tanggal dari form (format Y-m-d milik <input type="date">).
+   * Isian ngawur diperlakukan sebagai "tidak difilter", bukan error -
+   * filter tanggal bukan bagian yang layak menggagalkan seluruh halaman.
+   */
+  private function tanggalValid(?string $nilai): ?Carbon
+  {
+    if (!$nilai) {
+      return null;
+    }
+
+    try {
+      return Carbon::createFromFormat('Y-m-d', $nilai);
+    } catch (\Throwable) {
+      return null;
+    }
   }
 
   public function show($id)
@@ -296,8 +397,8 @@ class HantuBanyuPengaduanGuestController extends Controller
       // Sejalan dengan index(): laporan terhapus tidak dibuka untuk publik.
     ])->findOrFail($id);
 
-    // Akun kelurahan hanya boleh membuka laporan di kelurahannya.
-    $kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+    // Akun kelurahan hanya boleh membuka laporan di kelurahannya; admin bebas.
+    $kelurahanId = $this->kelurahanId();
     abort_unless(!$kelurahanId || (int) $laporan->kelurahan_id === (int) $kelurahanId, 404);
 
     $page_title = "Detail Pengaduan Hantu Banyu";
@@ -390,120 +491,6 @@ class HantuBanyuPengaduanGuestController extends Controller
 
       return back()->with('error', 'Bukti pengaduan gagal dibuat. Silakan coba lagi beberapa saat lagi.');
     }
-  }
-
-  /**
-   * Apakah koordinat berada di dalam kelurahan tersebut?
-   *
-   * @return bool|null true/false bila terverifikasi; null bila geocoder tidak
-   *                   dapat dihubungi, sehingga pemanggil bisa membedakan
-   *                   "lokasi salah" dari "belum bisa diperiksa".
-   */
-  private function koordinatDiKelurahan($lat, $lon, string $namaKelurahan, string $namaKecamatan = ''): ?bool
-  {
-    $alamat = $this->reverseGeocode($lat, $lon);
-
-    if ($alamat === null) {
-      return null;
-    }
-
-    $kelurahanGeo = $alamat['village'] ?? $alamat['neighbourhood'] ?? $alamat['hamlet'] ?? '';
-    $kecamatanGeo = $alamat['city_district'] ?? $alamat['municipality'] ?? $alamat['county'] ?? $alamat['suburb'] ?? '';
-
-    if ($kelurahanGeo !== '') {
-      return $this->namaCocok($kelurahanGeo, $namaKelurahan);
-    }
-
-    if ($kecamatanGeo !== '') {
-      return $this->namaCocok($kecamatanGeo, $namaKecamatan);
-    }
-
-    return false;
-  }
-
-  /**
-   * Reverse-geocode koordinat menjadi array "address" dari Nominatim,
-   * atau null bila gagal.
-   */
-  private function reverseGeocode($lat, $lon): ?array
-  {
-    try {
-      $res = Http::withHeaders([
-        'User-Agent' => 'dinas-pupr-kota-samarinda/1.0 (hantu-banyu)',
-      ])->timeout(8)->get(rtrim(config('services.nominatim.base_url'), '/') . '/reverse', [
-        'format' => 'jsonv2',
-        'lat' => $lat,
-        'lon' => $lon,
-        'addressdetails' => 1,
-        'accept-language' => 'id',
-      ]);
-
-      if (!$res->ok()) {
-        return null;
-      }
-
-      $alamat = $res->json('address');
-
-      return is_array($alamat) ? $alamat : null;
-    } catch (\Throwable $e) {
-      Log::warning('Hantu Banyu reverse-geocode gagal: ' . $e->getMessage());
-
-      return null;
-    }
-  }
-
-  /**
-   * Bandingkan nama wilayah dari geocoder dengan nama wilayah di basis data.
-   * Toleran terhadap variasi penulisan (mis. "Sei/Sungai Dama",
-   * "Simpang Tiga (Loa Janan Ilir)").
-   */
-  private function namaCocok(string $dariGeocoder, string $dariDb): bool
-  {
-    if ($dariGeocoder === '' || $dariDb === '') {
-      return false;
-    }
-
-    $a = $this->variasiNama($dariGeocoder);
-    $b = $this->variasiNama($dariDb);
-
-    foreach ($a as $x) {
-      foreach ($b as $y) {
-        if ($x === $y) {
-          return true;
-        }
-        if (strlen($x) >= 4 && strlen($y) >= 4 && (str_contains($x, $y) || str_contains($y, $x))) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Pecah sebuah nama wilayah menjadi beberapa varian ternormalisasi
-   * (huruf kecil, tanpa spasi/tanda baca, "sei" -> "sungai").
-   *
-   * @return array<int,string>
-   */
-  private function variasiNama(string $nama): array
-  {
-    $nama = strtolower(trim($nama));
-    $potongan = preg_split('/[\/()]+/', $nama) ?: [];
-    $potongan[] = $nama;
-
-    $hasil = [];
-    foreach ($potongan as $p) {
-      $p = trim($p);
-      $p = preg_replace('/\bsei\b/', 'sungai', $p);
-      $p = preg_replace('/^(kelurahan|desa|kecamatan)\s+/', '', $p);
-      $p = preg_replace('/[^a-z0-9]+/', '', $p);
-      if ($p !== '') {
-        $hasil[$p] = true;
-      }
-    }
-
-    return array_keys($hasil);
   }
 
   public function result($id, Request $request)

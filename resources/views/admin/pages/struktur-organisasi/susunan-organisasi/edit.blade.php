@@ -369,7 +369,9 @@
   @vite([
    'resources/js/quill.js',
    'resources/js/viewerjs.js',
-   'resources/js/cropperjs.js'
+   'resources/js/cropperjs.js',
+   'resources/js/shared/crop-uploader.js',
+   'resources/js/shared/rich-text-editor.js'
   ])
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -435,372 +437,69 @@
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // === COPY DARI create.blade.js UNTUK SEMUA FITUR CROP, REMOVE, ADD, REVERT, ETC ===
+      // === Upload+crop foto - lihat resources/js/shared/crop-uploader.js.
+      // Slider (multi input dinamis) di bawah tetap ditulis manual karena
+      // strukturnya beda (banyak input sekaligus, bukan satu field tetap).
+
+      // Field organigram/ikon wajib diisi HANYA saat gambar sedang
+      // diganti/dihapus dari yang sudah ada (ditandai tombol "kembalikan"
+      // ikut muncul) - kalau dibiarkan seperti semula, tidak perlu upload
+      // ulang. Dipantau lewat perubahan class tombol revert, supaya tidak
+      // bergantung pada tombol mana persisnya yang memicu perubahan itu.
+      function syncRequiredWithRevertBtn(inputSelector, revertBtnSelector) {
+        const inputEl = document.querySelector(inputSelector);
+        const revertBtn = document.querySelector(revertBtnSelector);
+        if (!inputEl || !revertBtn) return;
+
+        function sync() {
+          if (revertBtn.classList.contains('hidden')) {
+            inputEl.removeAttribute('required');
+          } else {
+            inputEl.setAttribute('required', 'required');
+          }
+        }
+
+        sync();
+        new MutationObserver(sync).observe(revertBtn, { attributes: true, attributeFilter: ['class'] });
+      }
 
       // --- ORGANIGRAM ---
-      const wrapper = document.querySelector('.foto-viewer-wrapper');
-      const input = document.getElementById('foto_organigram');
-      const preview = document.getElementById('foto-preview');
-      const placeholder = wrapper.querySelector('.foto-placeholder');
-      const removeBtn = document.getElementById('remove-foto-btn');
-      const revertBtn = document.getElementById('revert-foto-btn');
-      const editBtn = document.getElementById('edit-image-button');
-      const cropperModal = document.getElementById('cropperModal');
-      const imageToCrop = document.getElementById('image-to-crop');
-      const cropConfirmBtn = document.getElementById('crop-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-      // --- HISTORY: always start with original image if exists ---
-      let imageHistory = [];
-      let historyPointer = -1;
-      // Ambil original image dari preview src (jika ada)
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
-        preview.src : null;
-      if (originalImageSrc) {
-        imageHistory = [originalImageSrc];
-        historyPointer = 0;
-      }
-
-      function pushHistory(src) {
-        if (historyPointer < imageHistory.length - 1) imageHistory = imageHistory.slice(0, historyPointer + 1);
-        imageHistory.push(src);
-        historyPointer = imageHistory.length - 1;
-        updateRevertBtn();
-      }
-
-      function updateRevertBtn() {
-        if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-          // Tampilkan kembali required pada organigram jika ada history
-          if (input) input.setAttribute('required', 'required');
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-          // Hilangkan required pada organigram jika sudah di-revert ke awal
-          if (input) input.removeAttribute('required');
-        }
-      }
-
-      function setPreviewAndHistory(src, isInitial = false) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        if (!isInitial) pushHistory(src);
-        if (viewer) viewer.update();
-      }
-      // Inisialisasi preview dan history pada halaman edit
-      if (originalImageSrc) {
-        setPreviewAndHistory(originalImageSrc, true);
-        updateRevertBtn();
-      }
-      if (input) input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
+      window.initCropUploader({
+        wrapperSelector: '.foto-viewer-wrapper',
+        inputSelector: '#foto_organigram',
+        previewSelector: '#foto-preview',
+        placeholderSelector: '.foto-placeholder',
+        removeBtnSelector: '#remove-foto-btn',
+        revertBtnSelector: '#revert-foto-btn',
+        editBtnSelector: '#edit-image-button',
+        modalSelector: '#cropperModal',
+        imageToCropSelector: '#image-to-crop',
+        confirmBtnSelector: '#crop-confirm-btn',
+        cancelBtnSelector: '#crop-cancel-btn',
+        fileNamePrefix: 'cropped',
       });
-      if (editBtn) editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1
-          });
-        }
-      });
-      if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-      if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-      if (removeBtn) removeBtn.addEventListener('click', function() {
-        setPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-        // Jangan reset imageHistory, agar revert tetap bisa ke original
-      });
-      if (revertBtn) revertBtn.addEventListener('click', function() {
-        if (historyPointer > 0) {
-          historyPointer--;
-          const prevSrc = imageHistory[historyPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
-          }
-          updateRevertBtn();
-        }
-      });
-      if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-      }
-      if (preview) preview.addEventListener('click', function(ev) {
-        // Fix: prevent file input click, only show viewer if image is visible
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          ev.preventDefault();
-          ev.stopPropagation();
-          if (viewer) viewer.show();
-          return false;
-        }
-      }, true);
+      // Ekstra: field organigram wajib diisi HANYA saat gambar sedang
+      // diganti/dihapus dari yang sudah ada (revertBtn ikut muncul) - kalau
+      // dibiarkan seperti semula (tidak diubah), tidak perlu upload ulang.
+      syncRequiredWithRevertBtn('#foto_organigram', '#revert-foto-btn');
 
       // --- IKON ---
-      const ikonWrapper = document.querySelector('.ikon-viewer-wrapper');
-      const ikonInput = document.getElementById('ikon_jabatan');
-      const ikonPreview = document.getElementById('ikon-preview');
-      const ikonPlaceholder = ikonWrapper ? ikonWrapper.querySelector('.ikon-placeholder') : null;
-      const removeIkonBtn = document.getElementById('remove-ikon-btn');
-      const revertIkonBtn = document.getElementById('revert-ikon-btn');
-      const editIkonBtn = document.getElementById('edit-ikon-button');
-      const cropperModalIkon = document.getElementById('cropperModalIkon');
-      const imageToCropIkon = document.getElementById('image-to-crop-ikon');
-      const cropIkonConfirmBtn = document.getElementById('crop-ikon-confirm-btn');
-      const cropIkonCancelBtn = document.getElementById('crop-ikon-cancel-btn');
-      let cropperIkon = null;
-      let lastIkonFile = null;
-      // --- HISTORY: always start with original image if exists ---
-      let ikonHistory = [];
-      let ikonHistoryPointer = -1;
-      let ikonOriginalImageSrc = ikonPreview && ikonPreview.src && !ikonPreview.classList.contains('hidden') &&
-        ikonPreview.src !== '#' ? ikonPreview.src : null;
-      if (ikonOriginalImageSrc) {
-        ikonHistory = [ikonOriginalImageSrc];
-        ikonHistoryPointer = 0;
-      }
-      let ikonViewer = null;
-      if (ikonWrapper && window.Viewer) {
-        ikonViewer = new Viewer(ikonWrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-
-      function pushIkonHistory(src) {
-        if (ikonHistoryPointer < ikonHistory.length - 1) ikonHistory = ikonHistory.slice(0, ikonHistoryPointer + 1);
-        ikonHistory.push(src);
-        ikonHistoryPointer = ikonHistory.length - 1;
-        updateRevertIkonBtn();
-      }
-
-      function updateRevertIkonBtn() {
-        if (ikonHistoryPointer > 0) {
-          revertIkonBtn.classList.remove('hidden');
-          revertIkonBtn.style.display = '';
-          // Tampilkan kembali required pada ikon jika ada history
-          if (ikonInput) ikonInput.setAttribute('required', 'required');
-        } else {
-          revertIkonBtn.classList.add('hidden');
-          revertIkonBtn.style.display = 'none';
-          // Hilangkan required pada ikon jika sudah di-revert ke awal
-          if (ikonInput) ikonInput.removeAttribute('required');
-        }
-      }
-
-      function setIkonPreviewAndHistory(src, isInitial = false) {
-        ikonPreview.src = src;
-        ikonPreview.classList.remove('hidden');
-        if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-        removeIkonBtn.classList.remove('hidden');
-        removeIkonBtn.style.display = '';
-        editIkonBtn.classList.remove('hidden');
-        editIkonBtn.style.display = '';
-        if (!isInitial) pushIkonHistory(src);
-        if (window.Viewer && ikonWrapper) {
-          if (!ikonWrapper.viewer) ikonWrapper.viewer = new Viewer(ikonWrapper, {
-            navbar: false,
-            toolbar: true
-          });
-          else ikonWrapper.viewer.update();
-        }
-      }
-      // Inisialisasi preview dan history pada halaman edit
-      if (ikonOriginalImageSrc) {
-        setIkonPreviewAndHistory(ikonOriginalImageSrc, true);
-        updateRevertIkonBtn();
-      }
-      if (ikonInput) ikonInput.addEventListener('change', function() {
-        if (ikonInput.files && ikonInput.files[0]) {
-          lastIkonFile = ikonInput.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCropIkon.src = ev.target.result;
-            cropperModalIkon.classList.remove('hidden');
-            if (cropperIkon) cropperIkon.destroy();
-            cropperIkon = new Cropper(imageToCropIkon, {
-              viewMode: 1,
-              autoCropArea: 1,
-              aspectRatio: 1, // 1:1 ratio
-            });
-          };
-          reader.readAsDataURL(ikonInput.files[0]);
-        }
+      window.initCropUploader({
+        wrapperSelector: '.ikon-viewer-wrapper',
+        inputSelector: '#ikon_jabatan',
+        previewSelector: '#ikon-preview',
+        placeholderSelector: '.ikon-placeholder',
+        removeBtnSelector: '#remove-ikon-btn',
+        revertBtnSelector: '#revert-ikon-btn',
+        editBtnSelector: '#edit-ikon-button',
+        modalSelector: '#cropperModalIkon',
+        imageToCropSelector: '#image-to-crop-ikon',
+        confirmBtnSelector: '#crop-ikon-confirm-btn',
+        cancelBtnSelector: '#crop-ikon-cancel-btn',
+        aspectRatio: 1,
+        fileNamePrefix: 'cropped_ikon',
       });
-      if (editIkonBtn) editIkonBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !== '#') {
-          imageToCropIkon.src = ikonPreview.src;
-          cropperModalIkon.classList.remove('hidden');
-          if (cropperIkon) cropperIkon.destroy();
-          cropperIkon = new Cropper(imageToCropIkon, {
-            viewMode: 1,
-            autoCropArea: 1,
-            aspectRatio: 1, // 1:1 ratio
-          });
-        }
-      });
-      if (cropIkonConfirmBtn) cropIkonConfirmBtn.addEventListener('click', function() {
-        if (cropperIkon) {
-          cropperIkon.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastIkonFile ? lastIkonFile.name : 'cropped_ikon.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            ikonInput.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setIkonPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropperIkon.destroy();
-            cropperIkon = null;
-            cropperModalIkon.classList.add('hidden');
-          }, lastIkonFile ? lastIkonFile.type : 'image/jpeg');
-        }
-      });
-      if (cropIkonCancelBtn) cropIkonCancelBtn.addEventListener('click', function() {
-        cropperModalIkon.classList.add('hidden');
-        if (cropperIkon) {
-          cropperIkon.destroy();
-          cropperIkon = null;
-        }
-      });
-      if (removeIkonBtn) removeIkonBtn.addEventListener('click', function() {
-        setIkonPreviewAndHistory('#');
-        ikonPreview.classList.add('hidden');
-        if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-        removeIkonBtn.classList.add('hidden');
-        removeIkonBtn.style.display = 'none';
-        editIkonBtn.classList.add('hidden');
-        editIkonBtn.style.display = 'none';
-        // Jangan reset ikonHistory, agar revert tetap bisa ke original
-      });
-      if (revertIkonBtn) revertIkonBtn.addEventListener('click', function() {
-        if (ikonHistoryPointer > 0) {
-          ikonHistoryPointer--;
-          const prevSrc = ikonHistory[ikonHistoryPointer];
-          if (prevSrc && prevSrc !== '#') {
-            ikonPreview.src = prevSrc;
-            ikonPreview.classList.remove('hidden');
-            if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-            removeIkonBtn.classList.remove('hidden');
-            removeIkonBtn.style.display = '';
-            editIkonBtn.classList.remove('hidden');
-            editIkonBtn.style.display = '';
-          } else {
-            ikonPreview.src = '#';
-            ikonPreview.classList.add('hidden');
-            if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-            removeIkonBtn.classList.add('hidden');
-            removeIkonBtn.style.display = 'none';
-            editIkonBtn.classList.add('hidden');
-            editIkonBtn.style.display = 'none';
-          }
-          updateRevertIkonBtn();
-        }
-      });
-      if (ikonPreview) ikonPreview.addEventListener('click', function(ev) {
-        // Fix: prevent file input click, only show viewer if image is visible
-        if (!ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !== '#') {
-          ev.preventDefault();
-          ev.stopPropagation();
-          if (ikonViewer) ikonViewer.show();
-          return false;
-        }
-      }, true);
+      syncRequiredWithRevertBtn('#ikon_jabatan', '#revert-ikon-btn');
 
       // --- SLIDER MULTI INPUT ---
       const sliderInputList = document.getElementById('slider-input-list');
@@ -1185,24 +884,11 @@
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var quillTupoksi = new Quill('#quill-editor-tupoksi', {
-        theme: 'snow',
+      window.initRichTextEditor({
+        selector: '#quill-editor-tupoksi',
         placeholder: 'Tulis tupoksi susunan organisasi di sini...',
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ['clean']
-          ]
-        }
-      });
-      var isiTupoksi = document.getElementById('tupoksi_susunan_organisasi').value;
-      if (isiTupoksi) {
-        quillTupoksi.clipboard.dangerouslyPasteHTML(isiTupoksi);
-      }
-      document.getElementById('form-susunan-organisasi').addEventListener('submit', function(e) {
-        document.getElementById('tupoksi_susunan_organisasi').value = quillTupoksi.root.innerHTML;
+        hiddenInputSelector: '#tupoksi_susunan_organisasi',
+        formSelector: '#form-susunan-organisasi',
       });
     });
   </script>

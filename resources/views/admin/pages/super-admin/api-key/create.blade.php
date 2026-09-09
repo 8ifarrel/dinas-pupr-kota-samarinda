@@ -1,3 +1,13 @@
+{{--
+  Kerangka halaman "Buat API Key", dipakai bersama oleh provider
+  "akun-kelurahan" dan "hantu-banyu" (Jalan Peduli sengaja punya berkasnya
+  sendiri, tidak ikut memakai kerangka ini).
+
+  Variabel wajib dari controller:
+  - $provider     slug provider ('akun-kelurahan' atau 'hantu-banyu'),
+                   dipakai untuk menyusun nama route & endpoint API.
+  - $page_title/$page_description  teks judul & deskripsi halaman.
+--}}
 @extends('admin.layout')
 
 @section('document.head')
@@ -9,8 +19,8 @@
 @section('document.body')
   <div class="bg-white rounded-lg shadow p-6">
     <div class="mb-6">
-      <h2 class="text-2xl font-bold">Buat API Key Hantu Banyu</h2>
-      <p class="text-gray-600 mt-2">Buat API key baru untuk mengakses API Hantu Banyu.</p>
+      <h2 class="text-2xl font-bold">{{ $page_title }}</h2>
+      <p class="text-gray-600 mt-2">{{ $page_description }}</p>
     </div>
 
     <form id="createApiKeyForm">
@@ -35,7 +45,7 @@
         <button type="submit" class="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
           <i class="fa-solid fa-plus mr-2"></i>Buat API Key
         </button>
-        <a href="{{ route('admin.super.api-key.hantu-banyu.index') }}"
+        <a href="{{ route('admin.super.api-key.' . $provider . '.index') }}"
            class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">
           <i class="fa-solid fa-arrow-left mr-2"></i>Kembali
         </a>
@@ -106,6 +116,10 @@
 
 @section('document.end')
   <script>
+    // Provider dioper dari controller (bukan dari input pengguna), dipakai
+    // untuk menyusun URL endpoint API di bawah: /api/{provider}-keys.
+    const apiKeyProvider = @json($provider);
+
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('createApiKeyForm');
 
@@ -125,7 +139,7 @@
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Membuat API Key...';
 
         $.ajax({
-          url: '/api/hantu-banyu-keys',
+          url: `/api/${apiKeyProvider}-keys`,
           type: 'POST',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -182,7 +196,7 @@
 
     // Navigation functions
     function goToIndex() {
-      window.location.href = '{{ route("admin.super.api-key.hantu-banyu.index") }}';
+      window.location.href = `{{ route('admin.super.api-key.' . $provider . '.index') }}`;
     }
 
     function createAnother() {

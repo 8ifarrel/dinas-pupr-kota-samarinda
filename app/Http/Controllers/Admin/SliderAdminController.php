@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
+use App\Support\Shared\UploadGambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -114,24 +115,10 @@ class SliderAdminController extends Controller
     $slider->is_visible = $request->input('is_visible');
     $slider->nomor_urut_slider = Slider::max('nomor_urut_slider') + 1;
 
-    // Mirip susunan organisasi: handle filepond/cropper (json string) atau file biasa
-    if ($request->hasFile('foto_slider')) {
-      $file = $request->file('foto_slider');
-      $slug = Str::slug($request->input('judul_slider'));
-      $ext = $file->getClientOriginalExtension();
-      $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
-      $file->storeAs("public/Slider", "{$slug}-{$slider->nomor_urut_slider}.{$ext}");
-      $slider->foto_slider = $path;
-    } else {
-      $fotoSliderData = json_decode($request->input('foto_slider'), true);
-      if (isset($fotoSliderData['fileUrl'])) {
-        $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
-        $slug = Str::slug($request->input('judul_slider'));
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
-        Storage::disk('public')->move($tempFilePath, $path);
-        $slider->foto_slider = $path;
-      }
+    $slug = Str::slug($request->input('judul_slider'));
+    $baru = UploadGambar::simpan($request, 'foto_slider', "Slider/{$slug}-{$slider->nomor_urut_slider}");
+    if ($baru !== null) {
+      $slider->foto_slider = $baru;
     }
 
     $slider->save();
@@ -164,32 +151,10 @@ class SliderAdminController extends Controller
     $slider->judul_slider = $request->input('judul_slider');
     $slider->is_visible = $request->input('is_visible');
 
-    // Mirip susunan organisasi: handle filepond/cropper (json string) atau file biasa
-    if ($request->hasFile('foto_slider')) {
-      // Hapus lama jika ada
-      if ($slider->foto_slider && Storage::disk('public')->exists($slider->foto_slider)) {
-        Storage::disk('public')->delete($slider->foto_slider);
-      }
-      $file = $request->file('foto_slider');
-      $slug = Str::slug($request->input('judul_slider'));
-      $ext = $file->getClientOriginalExtension();
-      $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
-      $file->storeAs("public/Slider", "{$slug}-{$slider->nomor_urut_slider}.{$ext}");
-      $slider->foto_slider = $path;
-    } elseif ($request->filled('foto_slider')) {
-      $fotoSliderData = json_decode($request->input('foto_slider'), true);
-      if (isset($fotoSliderData['fileUrl'])) {
-        // Hapus lama jika ada
-        if ($slider->foto_slider && Storage::disk('public')->exists($slider->foto_slider)) {
-          Storage::disk('public')->delete($slider->foto_slider);
-        }
-        $tempFilePath = str_replace('/storage/', '', $fotoSliderData['fileUrl']);
-        $slug = Str::slug($request->input('judul_slider'));
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $path = "Slider/{$slug}-{$slider->nomor_urut_slider}.{$ext}";
-        Storage::disk('public')->move($tempFilePath, $path);
-        $slider->foto_slider = $path;
-      }
+    $slug = Str::slug($request->input('judul_slider'));
+    $baru = UploadGambar::simpan($request, 'foto_slider', "Slider/{$slug}-{$slider->nomor_urut_slider}", $slider->foto_slider);
+    if ($baru !== null) {
+      $slider->foto_slider = $baru;
     }
 
     $slider->save();

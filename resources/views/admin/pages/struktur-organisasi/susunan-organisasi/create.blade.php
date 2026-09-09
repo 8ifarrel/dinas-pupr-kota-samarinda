@@ -313,418 +313,68 @@
   @vite([
     'resources/js/quill.js',
     'resources/js/viewerjs.js',
-    'resources/js/cropperjs.js'
+    'resources/js/cropperjs.js',
+    'resources/js/shared/crop-uploader.js',
+    'resources/js/shared/rich-text-editor.js'
   ])
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var quillTupoksi = new Quill('#quill-editor-tupoksi', {
-        theme: 'snow',
+      window.initRichTextEditor({
+        selector: '#quill-editor-tupoksi',
         placeholder: 'Tulis tupoksi susunan organisasi di sini...',
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ['clean']
-          ]
-        }
-      });
-      var isiTupoksi = document.getElementById('tupoksi_susunan_organisasi').value;
-      if (isiTupoksi) {
-        quillTupoksi.clipboard.dangerouslyPasteHTML(isiTupoksi);
-      }
-      document.getElementById('form-susunan-organisasi').addEventListener('submit', function(e) {
-        document.getElementById('tupoksi_susunan_organisasi').value = quillTupoksi.root.innerHTML;
+        hiddenInputSelector: '#tupoksi_susunan_organisasi',
+        formSelector: '#form-susunan-organisasi',
       });
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.foto-viewer-wrapper');
-      const input = document.getElementById('foto_organigram');
-      const preview = document.getElementById('foto-preview');
-      const placeholder = wrapper.querySelector('.foto-placeholder');
-      const removeBtn = document.getElementById('remove-foto-btn');
-      const revertBtn = document.getElementById('revert-foto-btn');
-      const editBtn = document.getElementById('edit-image-button');
-
-      const cropperModal = document.getElementById('cropperModal');
-      const imageToCrop = document.getElementById('image-to-crop');
-      const cropConfirmBtn = document.getElementById('crop-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false,
-        });
-      }
-
-      let imageHistory = [];
-      let historyPointer = -1;
-
-      function pushHistory(src) {
-        if (historyPointer < imageHistory.length - 1) {
-          imageHistory = imageHistory.slice(0, historyPointer + 1);
-        }
-        imageHistory.push(src);
-        historyPointer = imageHistory.length - 1;
-        updateRevertBtn();
-      }
-
-      function updateRevertBtn() {
-        if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-        }
-      }
-
-      function setPreviewAndHistory(src) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        pushHistory(src);
-        if (viewer) viewer.update();
-      }
-
-      input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1,
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
+      window.initCropUploader({
+        wrapperSelector: '.foto-viewer-wrapper',
+        inputSelector: '#foto_organigram',
+        previewSelector: '#foto-preview',
+        placeholderSelector: '.foto-placeholder',
+        removeBtnSelector: '#remove-foto-btn',
+        revertBtnSelector: '#revert-foto-btn',
+        editBtnSelector: '#edit-image-button',
+        modalSelector: '#cropperModal',
+        imageToCropSelector: '#image-to-crop',
+        confirmBtnSelector: '#crop-confirm-btn',
+        cancelBtnSelector: '#crop-cancel-btn',
+        fileNamePrefix: 'cropped',
       });
 
-      editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1,
-          });
-        }
-      });
-
-      cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-
-      cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-
-      removeBtn.addEventListener('click', function() {
-        setPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      });
-
-      revertBtn.addEventListener('click', function() {
-        if (historyPointer > 0) {
-          historyPointer--;
-          const prevSrc = imageHistory[historyPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
+      // Ekstra: cegah klik pada gambar pratinjau (untuk membesarkan lewat
+      // Viewer.js) ikut memicu label membuka dialog pilih berkas.
+      const fotoWrapper = document.querySelector('.foto-viewer-wrapper');
+      const fotoLabel = fotoWrapper ? fotoWrapper.querySelector('label') : null;
+      if (fotoLabel) {
+        fotoLabel.addEventListener('mousedown', function(e) {
+          if (
+            e.target.classList.contains('foto-preview') &&
+            !e.target.classList.contains('hidden')
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
           }
-          updateRevertBtn();
-        }
-      });
-
-      if (preview.classList.contains('hidden') || !preview.src || preview.src === '#') {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
+        }, true);
       }
-
-      preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          viewer.show();
-        }
-        return false;
-      });
-
-      wrapper.querySelector('label').addEventListener('mousedown', function(e) {
-        if (
-          e.target.classList.contains('foto-preview') &&
-          !e.target.classList.contains('hidden')
-        ) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-      }, true);
 
       // === IKON ===
-      const ikonWrapper = document.querySelector('.ikon-viewer-wrapper');
-      const ikonInput = document.getElementById('ikon_jabatan');
-      const ikonPreview = document.getElementById('ikon-preview');
-      const ikonPlaceholder = ikonWrapper ? ikonWrapper.querySelector('.ikon-placeholder') : null;
-      const removeIkonBtn = document.getElementById('remove-ikon-btn');
-      const revertIkonBtn = document.getElementById('revert-ikon-btn');
-      const editIkonBtn = document.getElementById('edit-ikon-button');
-
-      const cropperModalIkon = document.getElementById('cropperModalIkon');
-      const imageToCropIkon = document.getElementById('image-to-crop-ikon');
-      const cropIkonConfirmBtn = document.getElementById('crop-ikon-confirm-btn');
-      const cropIkonCancelBtn = document.getElementById('crop-ikon-cancel-btn');
-      let cropperIkon = null;
-      let lastIkonFile = null;
-
-      let ikonHistory = [];
-      let ikonHistoryPointer = -1;
-
-      let ikonViewer = null;
-      if (ikonWrapper && window.Viewer) {
-        ikonViewer = new Viewer(ikonWrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false,
-        });
-      }
-
-      function pushIkonHistory(src) {
-        if (ikonHistoryPointer < ikonHistory.length - 1) {
-          ikonHistory = ikonHistory.slice(0, ikonHistoryPointer + 1);
-        }
-        ikonHistory.push(src);
-        ikonHistoryPointer = ikonHistory.length - 1;
-        updateRevertIkonBtn();
-      }
-
-      function updateRevertIkonBtn() {
-        if (ikonHistoryPointer > 0) {
-          revertIkonBtn.classList.remove('hidden');
-          revertIkonBtn.style.display = '';
-        } else {
-          revertIkonBtn.classList.add('hidden');
-          revertIkonBtn.style.display = 'none';
-        }
-      }
-
-      if (
-        !ikonPreview ||
-        ikonPreview.classList.contains('hidden') ||
-        !ikonPreview.src ||
-        ikonPreview.src === '#'
-      ) {
-        editIkonBtn.classList.add('hidden');
-        editIkonBtn.style.display = 'none';
-      } else {
-        editIkonBtn.classList.remove('hidden');
-        editIkonBtn.style.display = '';
-      }
-
-      function setIkonPreviewAndHistory(src) {
-        ikonPreview.src = src;
-        ikonPreview.classList.remove('hidden');
-        if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-        removeIkonBtn.classList.remove('hidden');
-        removeIkonBtn.style.display = '';
-        editIkonBtn.classList.remove('hidden');
-        editIkonBtn.style.display = '';
-        pushIkonHistory(src);
-        if (window.Viewer && ikonWrapper) {
-          if (!ikonWrapper.viewer) {
-            ikonWrapper.viewer = new Viewer(ikonWrapper, {
-              navbar: false,
-              toolbar: true
-            });
-          } else {
-            ikonWrapper.viewer.update();
-          }
-        }
-      }
-
-      if (ikonInput) {
-        ikonInput.addEventListener('change', function() {
-          if (ikonInput.files && ikonInput.files[0]) {
-            lastIkonFile = ikonInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              imageToCropIkon.src = ev.target.result;
-              cropperModalIkon.classList.remove('hidden');
-              if (cropperIkon) cropperIkon.destroy();
-              cropperIkon = new Cropper(imageToCropIkon, {
-                viewMode: 1,
-                autoCropArea: 1,
-                aspectRatio: 1, // 1:1 ratio
-              });
-            };
-            reader.readAsDataURL(ikonInput.files[0]);
-          }
-        });
-      }
-
-      if (editIkonBtn) {
-        editIkonBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (!ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !== '#') {
-            imageToCropIkon.src = ikonPreview.src;
-            cropperModalIkon.classList.remove('hidden');
-            if (cropperIkon) cropperIkon.destroy();
-            cropperIkon = new Cropper(imageToCropIkon, {
-              viewMode: 1,
-              autoCropArea: 1,
-              aspectRatio: 1, // 1:1 ratio
-            });
-          }
-        });
-      }
-
-      cropIkonConfirmBtn.addEventListener('click', function() {
-        if (cropperIkon) {
-          cropperIkon.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastIkonFile ? lastIkonFile.name : 'cropped_ikon.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            ikonInput.files = dataTransfer.files;
-
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setIkonPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-
-            cropperIkon.destroy();
-            cropperIkon = null;
-            cropperModalIkon.classList.add('hidden');
-          }, lastIkonFile ? lastIkonFile.type : 'image/jpeg');
-        }
-      });
-
-      cropIkonCancelBtn.addEventListener('click', function() {
-        cropperModalIkon.classList.add('hidden');
-        if (cropperIkon) {
-          cropperIkon.destroy();
-          cropperIkon = null;
-        }
-      });
-
-      removeIkonBtn.addEventListener('click', function() {
-        setIkonPreviewAndHistory('#');
-        ikonPreview.classList.add('hidden');
-        if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-        removeIkonBtn.classList.add('hidden');
-        removeIkonBtn.style.display = 'none';
-        editIkonBtn.classList.add('hidden');
-        editIkonBtn.style.display = 'none';
-      });
-
-      revertIkonBtn.addEventListener('click', function() {
-        if (ikonHistoryPointer > 0) {
-          ikonHistoryPointer--;
-          const prevSrc = ikonHistory[ikonHistoryPointer];
-          if (prevSrc && prevSrc !== '#') {
-            ikonPreview.src = prevSrc;
-            ikonPreview.classList.remove('hidden');
-            if (ikonPlaceholder) ikonPlaceholder.classList.add('hidden');
-            removeIkonBtn.classList.remove('hidden');
-            removeIkonBtn.style.display = '';
-            editIkonBtn.classList.remove('hidden');
-            editIkonBtn.style.display = '';
-          } else {
-            ikonPreview.src = '#';
-            ikonPreview.classList.add('hidden');
-            if (ikonPlaceholder) ikonPlaceholder.classList.remove('hidden');
-            removeIkonBtn.classList.add('hidden');
-            removeIkonBtn.style.display = 'none';
-            editIkonBtn.classList.add('hidden');
-            editIkonBtn.style.display = 'none';
-          }
-          updateRevertIkonBtn();
-        }
-      });
-
-      ikonPreview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (ikonViewer && !ikonPreview.classList.contains('hidden') && ikonPreview.src && ikonPreview.src !==
-          '#') {
-          ikonViewer.show();
-        }
-        return false;
+      window.initCropUploader({
+        wrapperSelector: '.ikon-viewer-wrapper',
+        inputSelector: '#ikon_jabatan',
+        previewSelector: '#ikon-preview',
+        placeholderSelector: '.ikon-placeholder',
+        removeBtnSelector: '#remove-ikon-btn',
+        revertBtnSelector: '#revert-ikon-btn',
+        editBtnSelector: '#edit-ikon-button',
+        modalSelector: '#cropperModalIkon',
+        imageToCropSelector: '#image-to-crop-ikon',
+        confirmBtnSelector: '#crop-ikon-confirm-btn',
+        cancelBtnSelector: '#crop-ikon-cancel-btn',
+        aspectRatio: 1,
+        fileNamePrefix: 'cropped_ikon',
       });
 
       // == SLIDER MULTI INPUT ==

@@ -8,7 +8,7 @@ use App\Models\SusunanOrganisasi;
 use App\Models\KepalaDinas;
 use App\Models\KepalaDinasRiwayatPendidikan;
 use App\Models\KepalaDinasJenjangKarir;
-use Illuminate\Support\Facades\Storage;
+use App\Support\Shared\UploadGambar;
 use Illuminate\Support\Str;
 
 class KepalaDinasAdminController extends Controller
@@ -62,31 +62,11 @@ class KepalaDinasAdminController extends Controller
     }
 
     // Update foto
-    if ($request->hasFile('foto')) {
-      // Hapus foto lama jika ada
-      if ($susunan->foto && Storage::disk('public')->exists($susunan->foto)) {
-        Storage::disk('public')->delete($susunan->foto);
-      }
-      $file = $request->file('foto');
-      $slugNama = Str::slug($susunan->nama_susunan_organisasi);
-      $newFileName = 'pegawai/kepala-dinas/' . $slugNama . '.' . $file->getClientOriginalExtension();
-      $file->storeAs('public/pegawai/kepala-dinas', $slugNama . '.' . $file->getClientOriginalExtension());
-      $susunan->foto = $newFileName;
+    $slugNama = Str::slug($susunan->nama_susunan_organisasi);
+    $baru = UploadGambar::simpan($request, 'foto', "pegawai/kepala-dinas/{$slugNama}", $susunan->foto);
+    if ($baru !== null) {
+      $susunan->foto = $baru;
       $susunan->save();
-    } elseif ($request->filled('foto')) {
-      $fotoData = json_decode($request->input('foto'), true);
-      if (isset($fotoData['fileUrl'])) {
-        // Hapus foto lama jika ada
-        if ($susunan->foto && Storage::disk('public')->exists($susunan->foto)) {
-          Storage::disk('public')->delete($susunan->foto);
-        }
-        $tempFilePath = str_replace('/storage/', '', $fotoData['fileUrl']);
-        $slugNama = Str::slug($susunan->nama_susunan_organisasi);
-        $newFileName = 'pegawai/kepala-dinas/' . $slugNama . '.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        Storage::disk('public')->move($tempFilePath, $newFileName);
-        $susunan->foto = $newFileName;
-        $susunan->save();
-      }
     }
 
     // Update deskripsi jabatan and tupoksi jabatan

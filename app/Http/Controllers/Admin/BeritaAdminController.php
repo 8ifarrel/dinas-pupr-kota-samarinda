@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\BeritaKategori;
 use App\Models\BeritaFotoTambahan;
+use App\Support\Shared\UploadGambar;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -64,22 +65,8 @@ class BeritaAdminController extends Controller
 
     $slug = Str::slug($request->judul_berita);
     $uuid = Str::uuid();
-    $fotoPath = null;
-
-    if ($request->hasFile('foto_berita')) {
-      $file = $request->file('foto_berita');
-      $ext = $file->getClientOriginalExtension();
-      $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . $ext;
-      $file->storeAs('public/Berita/' . now()->format('Y-m') . '/' . now()->format('d'), $uuid . '.' . $ext);
-    } else {
-      $fotoBeritaData = json_decode($request->input('foto_berita'), true);
-      if (isset($fotoBeritaData['fileUrl'])) {
-        $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid . '.' . $ext;
-        Storage::disk('public')->move($tempFilePath, $fotoPath);
-      }
-    }
+    $tujuanFoto = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $uuid;
+    $fotoPath = UploadGambar::simpan($request, 'foto_berita', $tujuanFoto);
 
     Berita::create([
       'uuid_berita' => $uuid,
@@ -146,27 +133,10 @@ class BeritaAdminController extends Controller
     $berita = Berita::findOrFail($id);
     $slug = Str::slug($request->judul_berita);
 
-    if ($request->hasFile('foto_berita')) {
-      if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
-        Storage::disk('public')->delete($berita->foto_berita);
-      }
-      $file = $request->file('foto_berita');
-      $ext = $file->getClientOriginalExtension();
-      $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $berita->uuid_berita . '.' . $ext;
-      $file->storeAs('public/Berita/' . now()->format('Y-m') . '/' . now()->format('d'), $berita->uuid_berita . '.' . $ext);
-      $berita->foto_berita = $fotoPath;
-    } elseif ($request->filled('foto_berita')) {
-      $fotoBeritaData = json_decode($request->input('foto_berita'), true);
-      if (isset($fotoBeritaData['fileUrl'])) {
-        if ($berita->foto_berita && Storage::disk('public')->exists($berita->foto_berita)) {
-          Storage::disk('public')->delete($berita->foto_berita);
-        }
-        $tempFilePath = str_replace('/storage/', '', $fotoBeritaData['fileUrl']);
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $fotoPath = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $berita->uuid_berita . '.' . $ext;
-        Storage::disk('public')->move($tempFilePath, $fotoPath);
-        $berita->foto_berita = $fotoPath;
-      }
+    $tujuanFoto = 'Berita/' . now()->format('Y-m') . '/' . now()->format('d') . '/' . $berita->uuid_berita;
+    $fotoBaru = UploadGambar::simpan($request, 'foto_berita', $tujuanFoto, $berita->foto_berita);
+    if ($fotoBaru !== null) {
+      $berita->foto_berita = $fotoBaru;
     }
 
     $berita->update([

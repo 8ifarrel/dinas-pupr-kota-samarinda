@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
+use App\Support\Shared\UploadGambar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -47,27 +48,10 @@ class PartnerAdminController extends Controller
     $partner->nama_partner = $request->input('nama_partner');
     $partner->url_partner = $request->input('url_partner');
 
-    // Mirip struktur organisasi: handle filepond/cropper (json string) atau file biasa
-    if ($request->hasFile('foto_partner')) {
-      // Jika upload file biasa (tanpa filepond/cropper)
-      $file = $request->file('foto_partner');
-      $slug = Str::slug($request->input('nama_partner'));
-      $ext = $file->getClientOriginalExtension();
-      $path = "partner/{$slug}." . $ext;
-      $file->storeAs("public/partner", "{$slug}.{$ext}");
-      $partner->foto_partner = $path;
-    } else {
-      // Jika upload via filepond/cropper (json string)
-      $fotoPartnerData = json_decode($request->input('foto_partner'), true);
-      if (isset($fotoPartnerData['fileUrl'])) {
-        $tempFilePath = str_replace('/storage/', '', $fotoPartnerData['fileUrl']);
-        $slug = Str::slug($request->input('nama_partner'));
-        // Gunakan nextId jika ingin urut, atau slug agar konsisten
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $path = "partner/{$slug}.{$ext}";
-        Storage::disk('public')->move($tempFilePath, $path);
-        $partner->foto_partner = $path;
-      }
+    $slug = Str::slug($request->input('nama_partner'));
+    $baru = UploadGambar::simpan($request, 'foto_partner', "partner/{$slug}");
+    if ($baru !== null) {
+      $partner->foto_partner = $baru;
     }
 
     $partner->save();
@@ -100,32 +84,10 @@ class PartnerAdminController extends Controller
     $partner->nama_partner = $request->input('nama_partner');
     $partner->url_partner = $request->input('url_partner');
 
-    // Mirip struktur organisasi: handle filepond/cropper (json string) atau file biasa
-    if ($request->hasFile('foto_partner')) {
-      // Hapus lama jika ada
-      if ($partner->foto_partner && Storage::disk('public')->exists($partner->foto_partner)) {
-        Storage::disk('public')->delete($partner->foto_partner);
-      }
-      $file = $request->file('foto_partner');
-      $slug = Str::slug($request->input('nama_partner'));
-      $ext = $file->getClientOriginalExtension();
-      $path = "partner/{$slug}.{$ext}";
-      $file->storeAs("public/partner", "{$slug}.{$ext}");
-      $partner->foto_partner = $path;
-    } elseif ($request->filled('foto_partner')) {
-      $fotoPartnerData = json_decode($request->input('foto_partner'), true);
-      if (isset($fotoPartnerData['fileUrl'])) {
-        // Hapus lama jika ada
-        if ($partner->foto_partner && Storage::disk('public')->exists($partner->foto_partner)) {
-          Storage::disk('public')->delete($partner->foto_partner);
-        }
-        $tempFilePath = str_replace('/storage/', '', $fotoPartnerData['fileUrl']);
-        $slug = Str::slug($request->input('nama_partner'));
-        $ext = pathinfo($tempFilePath, PATHINFO_EXTENSION);
-        $path = "partner/{$slug}.{$ext}";
-        Storage::disk('public')->move($tempFilePath, $path);
-        $partner->foto_partner = $path;
-      }
+    $slug = Str::slug($request->input('nama_partner'));
+    $baru = UploadGambar::simpan($request, 'foto_partner', "partner/{$slug}", $partner->foto_partner);
+    if ($baru !== null) {
+      $partner->foto_partner = $baru;
     }
 
     $partner->save();

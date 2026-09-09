@@ -31,6 +31,10 @@ export default defineConfig({
 
                 "resources/js/chartjs.js",
                 "resources/js/chartjs-plugin-datalabels.js",
+                "resources/js/hantu-banyu/statistik-chart.js",
+                "resources/js/shared/flowbite-modal.js",
+                "resources/js/shared/crop-uploader.js",
+                "resources/js/shared/rich-text-editor.js",
                 "resources/js/splide-autoscroll.js",
                 "resources/js/toggle-password-visibility.js",
                 "resources/js/clock.js",

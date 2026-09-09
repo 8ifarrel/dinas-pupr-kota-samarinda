@@ -13,93 +13,15 @@
         <div>
           <div class="space-y-4">
             <!-- Mobile-friendly breadcrumbs with responsive design -->
-            <nav aria-label="Breadcrumb">
-              <!-- Small/XS Mobile: Back link + Current page only -->
-              <div class="md:hidden flex items-center">
-                <a href="{{ route('guest.hantu-banyu.index') }}"
-                  class="inline-flex items-center text-blue-600 hover:underline">
-                  <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
-                  <div class="underline">Kembali</div>
-                </a>
-                <span class="mx-2 text-gray-400">|</span>
-                <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
-                  Lihat jalur lengkap
-                  <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m1 1 4 4 4-4" />
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Small Mobile: Truncated breadcrumbs -->
-              <ol class="hidden md:inline-flex items-center text-sm">
-                <li class="inline-flex items-center">
-                  <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
-                    Beranda
-                  </a>
-                </li>
-                <li>
-                  <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 9 4-4-4-4" />
-                    </svg>
-                    <a href="#" class="text-blue-600 underline">
-                      Layanan Umum
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 9 4-4-4-4" />
-                    </svg>
-                    <a href="{{ route('guest.hantu-banyu.index') }}" class="text-blue-600 underline">
-                      Hantu Banyu
-                    </a>
-                  </div>
-                </li>
-                <li aria-current="page">
-                  <div class="flex items-center">
-                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 9 4-4-4-4" />
-                    </svg>
-                    <span class="text-gray-500 font-medium">
-                      <span>Lihat Pengaduan Hantu Banyu</span>
-                    </span>
-                  </div>
-                </li>
-              </ol>
-
-              <!-- Mobile breadcrumb dots menu (optional) -->
-              <div class="md:hidden mt-1">
-                <div id="breadcrumb-dropdown"
-                  class="hidden z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
-                  <ol class="py-2 text-sm text-gray-700">
-                    <li>
-                      <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
-                    </li>
-                    <li>
-                      <a href="{{ route('guest.hantu-banyu.index') }}"
-                        class="block px-4 py-2 hover:bg-gray-100">Hantu
-                        Banyu</a>
-                    </li>
-                    <li>
-                      <span class="block px-4 py-2 font-semibold text-gray-600">Lihat Pengaduan Hantu Banyu</span>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </nav>
+            <x-guest.breadcrumb
+              :back-href="route('guest.hantu-banyu.index')"
+              :items="[
+                ['label' => 'Beranda', 'href' => route('guest.beranda.index')],
+                ['label' => 'Layanan Umum', 'href' => '#'],
+                ['label' => 'Hantu Banyu', 'href' => route('guest.hantu-banyu.index')],
+                ['label' => 'Lihat Pengaduan Hantu Banyu'],
+              ]"
+            />
             <h1 class="text-2xl xs:text-3xl font-bold text-gray-900">Lihat Pengaduan Hantu Banyu</h1>
           </div>
         </div>
@@ -182,6 +104,41 @@
                         <option value="biasa" {{ $jenis_filter === 'biasa' ? 'selected' : '' }}>Biasa</option>
                         <option value="rutin" {{ $jenis_filter === 'rutin' ? 'selected' : '' }}>Rutin</option>
                       </select>
+                    </div>
+
+                    <div>
+                      <label for="pelapor_filter" class="block font-medium text-gray-700 mb-1">
+                        Pelapor
+                      </label>
+                      <select id="pelapor_filter" name="pelapor_filter"
+                        class="block w-full pl-3 pr-10 py-3 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 rounded-md shadow-sm text-base">
+                        <option value="" {{ $pelapor_filter === '' ? 'selected' : '' }}>Semua Pelapor</option>
+                        <option value="kelurahan" {{ $pelapor_filter === 'kelurahan' ? 'selected' : '' }}>
+                          Operator Kelurahan
+                        </option>
+                        <option value="admin" {{ $pelapor_filter === 'admin' ? 'selected' : '' }}>
+                          {{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <span class="block font-medium text-gray-700 mb-1">Tanggal Pengaduan</span>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label for="tanggal_dari" class="block text-sm text-gray-500 mb-1">Dari</label>
+                          <input type="date" name="tanggal_dari" id="tanggal_dari" value="{{ $tanggal_dari }}"
+                            class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base py-3">
+                        </div>
+                        <div>
+                          <label for="tanggal_sampai" class="block text-sm text-gray-500 mb-1">Sampai</label>
+                          <input type="date" name="tanggal_sampai" id="tanggal_sampai" value="{{ $tanggal_sampai }}"
+                            class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-base py-3">
+                        </div>
+                      </div>
+                      <p class="text-xs text-gray-500 mt-1">
+                        Boleh diisi salah satu saja, mis. hanya "Dari" untuk melihat pengaduan sejak tanggal itu.
+                      </p>
                     </div>
 
                     <div>
@@ -334,6 +291,10 @@
                       class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Jenis
                     </th>
+                    <th scope="col"
+                      class="px-1.5 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Pelapor
+                    </th>
                     <th scope="col" class="relative pl-1.5 pr-3 py-2 w-px whitespace-nowrap">
                       <span class="sr-only">Detail</span>
                     </th>
@@ -392,6 +353,16 @@
                           {{ $item->jenis === 'darurat' ? 'Darurat' : '' }}
                           {{ $item->jenis === 'biasa' ? 'Biasa' : '' }}
                           {{ $item->jenis === 'rutin' ? 'Rutin' : '' }}
+                        </span>
+                      </td>
+                      <td class="px-1.5 py-2">
+                        {{-- Asal pembuat laporan: operator kelurahan setempat atau admin UPTD. --}}
+                        <span
+                          class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap
+                          {{ $item->dibuat_oleh_tipe === 'admin' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700' }}">
+                          <i
+                            class="fa-solid {{ $item->dibuat_oleh_tipe === 'admin' ? 'fa-user-shield' : 'fa-building-user' }} fa-xs"></i>
+                          {{ $item->label_pelapor }}
                         </span>
                       </td>
                       <td class="pl-1.5 pr-3 py-2 w-px whitespace-nowrap text-right text-sm font-medium">
@@ -481,6 +452,12 @@
                             {{ $item->jenis === 'darurat' ? 'Darurat' : '' }}
                             {{ $item->jenis === 'biasa' ? 'Biasa' : '' }}
                             {{ $item->jenis === 'rutin' ? 'Rutin' : '' }}
+                          </dd>
+
+                          <dt class="text-gray-500 font-medium text-end pe-2 w-[55.16px]">Pelapor</dt>
+                          <dd
+                            class="font-medium {{ $item->dibuat_oleh_tipe === 'admin' ? 'text-amber-800' : 'text-slate-700' }}">
+                            {{ $item->label_pelapor }}
                           </dd>
 
                           <dt class="text-gray-500 font-medium text-end pe-2 w-[55.16px]">Waktu Masuk</dt>
@@ -729,23 +706,6 @@
 
       // Update accordions state when resizing - but don't force collapse
       window.addEventListener('resize', setupMobileAccordions);
-
-      // Breadcrumb dropdown functionality for mobile
-      const breadcrumbButton = document.getElementById('breadcrumb-menu-button');
-      const breadcrumbDropdown = document.getElementById('breadcrumb-dropdown');
-
-      if (breadcrumbButton && breadcrumbDropdown) {
-        breadcrumbButton.addEventListener('click', function() {
-          breadcrumbDropdown.classList.toggle('hidden');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!breadcrumbButton.contains(e.target) && !breadcrumbDropdown.contains(e.target)) {
-            breadcrumbDropdown.classList.add('hidden');
-          }
-        });
-      }
     });
   </script>
 

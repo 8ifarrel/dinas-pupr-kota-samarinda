@@ -1,28 +1,12 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('guest.layouts.portal')
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
+@section('title'){{ $page_title }} | Hantu Banyu {{ config('app.nama_dinas') }}@endsection
 
-  <title>
-    {{ $page_title }} | Hantu Banyu {{ config('app.nama_dinas') }}
-  </title>
-
-  <meta name="description" content="{{ $meta_description }}" />
+@section('meta-extra')
   <meta name="robots" content="noindex, nofollow">
+@endsection
 
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon/favicon-16x16.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon/favicon-32x32.png') }}">
-  <link rel="apple-touch-icon" href="{{ asset('image/favicon/apple-touch-icon.png') }}">
-  <link rel="manifest" href="{{ asset('image/favicon/site.webmanifest') }}">
-  <link rel="shortcut icon" href="{{ asset('image/favicon/favicon.ico') }}">
-
-  @vite('resources/css/app.css')
-</head>
-
-<body>
+@section('slot')
   <div class="w-screen min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 py-10">
     <div class="w-full sm:max-w-xs sm:mx-auto">
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -39,9 +23,10 @@
                 <img src="{{ config('app.logo_dinas') }}" alt="{{ config('app.nama_dinas') }}" class="h-11" />
               </a>
             </div>
-            <p class="text-lg font-semibold text-brand-blue">Login Akun Kelurahan</p>
+            <p class="text-lg font-semibold text-brand-blue">Login Hantu Banyu</p>
             <p class="text-sm text-gray-500 mt-2 leading-relaxed">
-              Masuk dengan akun kelurahan untuk mengakses layanan Hantu Banyu Dinas PUPR Kota Samarinda.
+              Masuk dengan <b>akun kelurahan</b> untuk melapor di wilayah Anda sendiri, atau dengan
+              <b>akun admin E-Panel</b> untuk mengakses seluruh kelurahan.
             </p>
           </div>
 
@@ -64,7 +49,7 @@
             <div class="flex flex-col gap-2">
               <label for="name" class="font-semibold text-xs text-gray-400">Username</label>
               <input type="text" name="name" id="name" value="{{ old('name') }}" autofocus required
-                autocomplete="username" placeholder="username kelurahan"
+                autocomplete="username" placeholder="username kelurahan atau admin"
                 class="border border-gray-300 focus:border-blue-500 focus:border-2 rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none" />
             </div>
 
@@ -93,6 +78,4 @@
       </p>
     </div>
   </div>
-</body>
-
-</html>
+@endsection

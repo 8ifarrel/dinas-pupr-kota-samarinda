@@ -13,6 +13,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 1,
         'nama_susunan_organisasi' => 'Kepala Dinas',
+        'singkatan_susunan_organisasi' => 'Kadis',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'kepala-dinas',
         'tupoksi_susunan_organisasi' => '<div>-</div>',
@@ -26,6 +27,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 2,
         'nama_susunan_organisasi' => 'Sekretariat',
+        'singkatan_susunan_organisasi' => 'Sekretariat',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'sekretariat',
         'tupoksi_susunan_organisasi' => null,
@@ -78,6 +80,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 6,
         'nama_susunan_organisasi' => 'Bidang Sumber Daya Air',
+        'singkatan_susunan_organisasi' => 'Bidang SDA',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-sumber-daya-air',
         'tupoksi_susunan_organisasi' => null,
@@ -91,6 +94,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 7,
         'nama_susunan_organisasi' => 'Bidang Bina Marga',
+        'singkatan_susunan_organisasi' => 'Bidang BM',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-bina-marga',
         'tupoksi_susunan_organisasi' => null,
@@ -104,6 +108,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 8,
         'nama_susunan_organisasi' => 'Bidang Cipta Karya',
+        'singkatan_susunan_organisasi' => 'Bidang CK',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-cipta-karya',
         'tupoksi_susunan_organisasi' => null,
@@ -117,6 +122,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 9,
         'nama_susunan_organisasi' => 'Bidang Bina Konstruksi',
+        'singkatan_susunan_organisasi' => 'Bidang BK',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-bina-konstruksi',
         'tupoksi_susunan_organisasi' => null,
@@ -130,6 +136,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 10,
         'nama_susunan_organisasi' => 'Bidang Tata Ruang',
+        'singkatan_susunan_organisasi' => 'Bidang TR',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-tata-ruang',
         'tupoksi_susunan_organisasi' => null,
@@ -143,6 +150,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 11,
         'nama_susunan_organisasi' => 'Bidang Pertanahan',
+        'singkatan_susunan_organisasi' => 'Bidang Pertanahan',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'bidang-pertanahan',
         'tupoksi_susunan_organisasi' => null,
@@ -156,6 +164,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 12,
         'nama_susunan_organisasi' => 'UPTD Pengelolaan Air Limbah Domestik',
+        'singkatan_susunan_organisasi' => 'UPTD PALD',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'uptd-pengelolaan-air-limbah-domestik',
         'tupoksi_susunan_organisasi' => null,
@@ -169,6 +178,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 13,
         'nama_susunan_organisasi' => 'UPTD Pemeliharaan Jalan dan Jembatan',
+        'singkatan_susunan_organisasi' => 'UPTD PJJ',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'uptd-pemeliharaan-jalan-dan-jembatan',
         'tupoksi_susunan_organisasi' => null,
@@ -182,6 +192,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 14,
         'nama_susunan_organisasi' => 'UPTD Pemeliharaan Saluran Drainase dan Irigasi',
+        'singkatan_susunan_organisasi' => 'UPTD PSDI',
         'id_susunan_organisasi_parent' => 1,
         'slug_susunan_organisasi' => 'uptd-pemeliharaan-saluran-drainase-dan-irigasi',
         'tupoksi_susunan_organisasi' => null,

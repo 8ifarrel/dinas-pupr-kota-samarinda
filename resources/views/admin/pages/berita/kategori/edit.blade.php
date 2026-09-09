@@ -105,183 +105,24 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/shared/crop-uploader.js'])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.ikon-viewer-wrapper');
-      const input = document.getElementById('ikon_berita_kategori');
-      const preview = document.getElementById('ikon-preview');
-      const placeholder = wrapper.querySelector('.ikon-placeholder');
-      const removeBtn = document.getElementById('remove-ikon-btn');
-      const revertBtn = document.getElementById('revert-ikon-btn');
-      const editBtn = document.getElementById('edit-ikon-button');
-      const cropperModal = document.getElementById('cropperModalIkon');
-      const imageToCrop = document.getElementById('image-to-crop-ikon');
-      const cropConfirmBtn = document.getElementById('crop-ikon-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-ikon-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-      // --- HISTORY: always start with original image if exists ---
-      let ikonHistory = [];
-      let ikonHistoryPointer = -1;
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
-        preview.src : null;
-      if (originalImageSrc) {
-        ikonHistory = [originalImageSrc];
-        ikonHistoryPointer = 0;
-      }
-
-      function pushIkonHistory(src) {
-        if (ikonHistoryPointer < ikonHistory.length - 1) ikonHistory = ikonHistory.slice(0, ikonHistoryPointer + 1);
-        ikonHistory.push(src);
-        ikonHistoryPointer = ikonHistory.length - 1;
-        updateRevertIkonBtn();
-      }
-
-      function updateRevertIkonBtn() {
-        if (ikonHistoryPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-        }
-      }
-
-      function setIkonPreviewAndHistory(src, isInitial = false) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        if (!isInitial) pushIkonHistory(src);
-        if (viewer) viewer.update();
-      }
-      // Inisialisasi preview dan history pada halaman edit
-      if (originalImageSrc) {
-        setIkonPreviewAndHistory(originalImageSrc, true);
-        updateRevertIkonBtn();
-      }
-      if (input) input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1,
-              aspectRatio: 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-      if (editBtn) editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1,
-            aspectRatio: 1
-          });
-        }
-      });
-      if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_ikon.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setIkonPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-      if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-      if (removeBtn) removeBtn.addEventListener('click', function() {
-        setIkonPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      });
-      if (revertBtn) revertBtn.addEventListener('click', function() {
-        if (ikonHistoryPointer > 0) {
-          ikonHistoryPointer--;
-          const prevSrc = ikonHistory[ikonHistoryPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
-          }
-          updateRevertIkonBtn();
-        }
-      });
-      if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-      }
-      if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
-        return false;
+      window.initCropUploader({
+        wrapperSelector: '.ikon-viewer-wrapper',
+        inputSelector: '#ikon_berita_kategori',
+        previewSelector: '#ikon-preview',
+        placeholderSelector: '.ikon-placeholder',
+        removeBtnSelector: '#remove-ikon-btn',
+        revertBtnSelector: '#revert-ikon-btn',
+        editBtnSelector: '#edit-ikon-button',
+        modalSelector: '#cropperModalIkon',
+        imageToCropSelector: '#image-to-crop-ikon',
+        confirmBtnSelector: '#crop-ikon-confirm-btn',
+        cancelBtnSelector: '#crop-ikon-cancel-btn',
+        aspectRatio: 1,
+        fileNamePrefix: 'cropped_ikon',
       });
     });
   </script>

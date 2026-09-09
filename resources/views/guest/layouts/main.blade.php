@@ -14,15 +14,9 @@
     {{ $page_title ? $page_title . ' |' : '' }} Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
   </title>
 
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('image/favicon/favicon-16x16.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('image/favicon/favicon-32x32.png') }}">
-  <link rel="apple-touch-icon" href="{{ asset('image/favicon/apple-touch-icon.png') }}">
-  <link rel="manifest" href="{{ asset('image/favicon/site.webmanifest') }}">
-  <link rel="shortcut icon" href="{{ asset('image/favicon/favicon.ico') }}">
-  <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('image/favicon/android-chrome-192x192.png') }}">
-  <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('image/favicon/android-chrome-512x512.png') }}">
+  <x-favicon-links />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   @vite('resources/css/app.css')
 
   @yield('document.start')
@@ -40,6 +34,7 @@
   @vite('resources/js/app.js')
   @vite('resources/js/clock.js')
   @vite('resources/js/navbar-guest.js')
+  @vite('resources/js/shared/flowbite-modal.js')
 
   @yield('document.end')
 </body>

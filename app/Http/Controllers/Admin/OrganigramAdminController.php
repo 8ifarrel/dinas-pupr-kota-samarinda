@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StrukturOrganisasiDiagram;
-use Illuminate\Support\Facades\Storage;
+use App\Support\Shared\UploadGambar;
 
 class OrganigramAdminController extends Controller
 {
@@ -51,18 +51,10 @@ class OrganigramAdminController extends Controller
 
     $organigram = StrukturOrganisasiDiagram::findOrFail($id);
 
-    $fotoData = json_decode($request->input('foto_organigram'), true);
-    if (isset($fotoData['fileUrl'])) {
-      $tempFilePath = str_replace('/storage/', '', $fotoData['fileUrl']);
-      $newFileName = 'Organigram/' . now()->format('Y-m') . '/' . now()->format('d') . '/organigram.' . pathinfo($tempFilePath, PATHINFO_EXTENSION);
-
-      // Hapus file lama jika ada
-      if ($organigram->diagram_struktur_organisasi && Storage::disk('public')->exists($organigram->diagram_struktur_organisasi)) {
-        Storage::disk('public')->delete($organigram->diagram_struktur_organisasi);
-      }
-
-      Storage::disk('public')->move($tempFilePath, $newFileName);
-      $organigram->diagram_struktur_organisasi = $newFileName;
+    $tujuan = 'Organigram/' . now()->format('Y-m') . '/' . now()->format('d') . '/organigram';
+    $baru = UploadGambar::simpan($request, 'foto_organigram', $tujuan, $organigram->diagram_struktur_organisasi);
+    if ($baru !== null) {
+      $organigram->diagram_struktur_organisasi = $baru;
       $organigram->save();
     }
 

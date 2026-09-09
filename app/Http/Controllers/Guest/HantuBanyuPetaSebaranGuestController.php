@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HantuBanyuLaporan;
+use App\Models\UserKelurahan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,9 @@ class HantuBanyuPetaSebaranGuestController extends Controller
       ->groupBy('laporan_id');
 
     // Setiap akun kelurahan hanya melihat laporan di kelurahannya.
-    $kelurahanId = optional(Auth::guard('kelurahan')->user())->kelurahan_id;
+    // Akun kelurahan hanya melihat sebaran di wilayahnya; admin melihat semua.
+    $akunKelurahan = Auth::guard('kelurahan')->user();
+    $kelurahanId = $akunKelurahan instanceof UserKelurahan ? (int) $akunKelurahan->kelurahan_id : null;
 
     // Query laporan dengan status & jenis terbaru
     $laporan = HantuBanyuLaporan::with([

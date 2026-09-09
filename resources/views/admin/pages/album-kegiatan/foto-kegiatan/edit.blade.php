@@ -73,121 +73,24 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/shared/crop-uploader.js'])
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.foto-viewer-wrapper');
-      const input = wrapper.querySelector('.foto-input');
-      const preview = wrapper.querySelector('.foto-preview');
-      const placeholder = wrapper.querySelector('.foto-placeholder');
-      const removeBtn = wrapper.querySelector('.remove-foto-btn');
-      const editBtn = wrapper.querySelector('.edit-foto-button');
-      const cropperModal = document.getElementById('cropperModalFotoKegiatan');
-      const imageToCrop = document.getElementById('image-to-crop-foto-kegiatan');
-      const cropConfirmBtn = document.getElementById('crop-foto-kegiatan-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-foto-kegiatan-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-      let viewer = null;
-
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-
-      function setPreview(src) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        editBtn.classList.remove('hidden');
-        if (viewer) viewer.update();
-      }
-      function resetPreview() {
-        preview.src = '#';
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        editBtn.classList.add('hidden');
-      }
-
-      input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
+      // Halaman ini tidak punya tombol "kembalikan" (revert) - foto lama
+      // langsung digantikan begitu foto baru dikonfirmasi, tanpa riwayat.
+      window.initCropUploader({
+        wrapperSelector: '.foto-viewer-wrapper',
+        inputSelector: '.foto-viewer-wrapper .foto-input',
+        previewSelector: '.foto-viewer-wrapper .foto-preview',
+        placeholderSelector: '.foto-placeholder',
+        removeBtnSelector: '.foto-viewer-wrapper .remove-foto-btn',
+        editBtnSelector: '.foto-viewer-wrapper .edit-foto-button',
+        modalSelector: '#cropperModalFotoKegiatan',
+        imageToCropSelector: '#image-to-crop-foto-kegiatan',
+        confirmBtnSelector: '#crop-foto-kegiatan-confirm-btn',
+        cancelBtnSelector: '#crop-foto-kegiatan-cancel-btn',
+        fileNamePrefix: 'cropped_foto_kegiatan',
       });
-      editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1
-          });
-        }
-      });
-      cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_foto_kegiatan.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setPreview(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-      cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-      removeBtn.addEventListener('click', function() {
-        resetPreview();
-        input.value = '';
-      });
-      preview.addEventListener('click', function(ev) {
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          ev.preventDefault();
-          ev.stopPropagation();
-          if (viewer) viewer.show();
-          return false;
-        }
-      }, true);
     });
   </script>
 @endsection

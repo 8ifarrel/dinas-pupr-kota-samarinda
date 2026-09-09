@@ -92,205 +92,43 @@
 @section('document.end')
   @vite([
     'resources/js/viewerjs.js',
-    'resources/js/cropperjs.js'
+    'resources/js/cropperjs.js',
+    'resources/js/shared/crop-uploader.js'
   ])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // --- ORGANIGRAM ---
+      window.initCropUploader({
+        wrapperSelector: '.foto-viewer-wrapper',
+        inputSelector: '#foto_organigram',
+        previewSelector: '#foto-preview',
+        placeholderSelector: '.foto-placeholder',
+        removeBtnSelector: '#remove-foto-btn',
+        revertBtnSelector: '#revert-foto-btn',
+        editBtnSelector: '#edit-image-button',
+        modalSelector: '#cropperModal',
+        imageToCropSelector: '#image-to-crop',
+        confirmBtnSelector: '#crop-confirm-btn',
+        cancelBtnSelector: '#crop-cancel-btn',
+        fileNamePrefix: 'cropped',
+      });
+
+      // Ekstra: cegah klik pada gambar pratinjau (untuk membesarkan lewat
+      // Viewer.js) ikut memicu label membuka dialog pilih berkas.
       const wrapper = document.querySelector('.foto-viewer-wrapper');
-      const input = document.getElementById('foto_organigram');
-      const preview = document.getElementById('foto-preview');
-      const placeholder = wrapper.querySelector('.foto-placeholder');
-      const removeBtn = document.getElementById('remove-foto-btn');
-      const revertBtn = document.getElementById('revert-foto-btn');
-      const editBtn = document.getElementById('edit-image-button');
-      const cropperModal = document.getElementById('cropperModal');
-      const imageToCrop = document.getElementById('image-to-crop');
-      const cropConfirmBtn = document.getElementById('crop-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-      // --- HISTORY: always start with original image if exists ---
-      let imageHistory = [];
-      let historyPointer = -1;
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
-        preview.src : null;
-      if (originalImageSrc) {
-        imageHistory = [originalImageSrc];
-        historyPointer = 0;
-      }
-
-      function pushHistory(src) {
-        if (historyPointer < imageHistory.length - 1) imageHistory = imageHistory.slice(0, historyPointer + 1);
-        imageHistory.push(src);
-        historyPointer = imageHistory.length - 1;
-        updateRevertBtn();
-      }
-
-      function updateRevertBtn() {
-        if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-        }
-      }
-
-      function setPreviewAndHistory(src, isInitial = false) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        if (!isInitial) pushHistory(src);
-        if (viewer) viewer.update();
-      }
-
-      preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          viewer.show();
-        }
-        return false;
-      });
-
-      if (originalImageSrc) {
-        setPreviewAndHistory(originalImageSrc, true);
-        updateRevertBtn();
-      }
-      if (input) input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-      if (editBtn) editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1
-          });
-        }
-      });
-      if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-      if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-      if (removeBtn) removeBtn.addEventListener('click', function() {
-        setPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      });
-      if (revertBtn) revertBtn.addEventListener('click', function() {
-        if (historyPointer > 0) {
-          historyPointer--;
-          const prevSrc = imageHistory[historyPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
+      const label = wrapper.querySelector('label');
+      if (label) {
+        label.addEventListener('mousedown', function(e) {
+          if (
+            e.target.classList.contains('foto-preview') &&
+            !e.target.classList.contains('hidden')
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
           }
-          updateRevertBtn();
-        }
-      });
-      if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
+        }, true);
       }
-      preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          viewer.show()
-        };
-        return false;
-      });
-      wrapper.querySelector('label').addEventListener('mousedown', function(e) {
-        if (
-          e.target.classList.contains('foto-preview') &&
-          !e.target.classList.contains('hidden')
-        ) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-      }, true);
     });
   </script>
 @endsection

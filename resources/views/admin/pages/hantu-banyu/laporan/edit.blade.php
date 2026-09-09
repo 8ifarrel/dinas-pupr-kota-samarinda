@@ -49,6 +49,18 @@
     </a>
   </div>
 
+  @unless ($boleh_kelola)
+    {{-- Terang-terangan menjelaskan mengapa tidak ada tombol isi tahap,
+         supaya tidak terbaca sebagai halaman yang rusak. --}}
+    <div class="mb-5 flex items-start gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+      <i class="fa-solid fa-circle-info mt-0.5"></i>
+      <span>
+        Anda membuka laporan ini dalam <b>mode lihat saja</b>. Pengisian tindak lanjut hanya dapat
+        dilakukan oleh {{ $nama_unit_pengelola }}.
+      </span>
+    </div>
+  @endunless
+
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     {{-- Kolom kiri --}}
     <div class="lg:col-span-2 space-y-6">
@@ -95,7 +107,9 @@
 
         <ol class="relative border-s border-gray-200 ml-3">
           @foreach ($daftar_status as $s)
-            @php $row = $slot[$s]; $isi = $row !== null; $bisa = $editable[$s] ?? false; @endphp
+            {{-- Admin di luar unit pengelola boleh membaca seluruh linimasa,
+                 tapi tidak boleh mengisinya - $bisa dimatikan untuk mereka. --}}
+            @php $row = $slot[$s]; $isi = $row !== null; $bisa = $boleh_kelola && ($editable[$s] ?? false); @endphp
             <li class="mb-6 ms-6">
               <span class="absolute flex items-center justify-center w-6 h-6 rounded-full -start-3 ring-4 ring-white {{ $isi ? ($statusBadge[$s] ?? 'bg-gray-100 text-gray-800') : 'bg-gray-100 text-gray-400' }}">
                 <i class="fa-solid {{ $isi ? 'fa-circle-check' : 'fa-circle' }} text-[10px]"></i>
@@ -121,6 +135,12 @@
                       title="{{ $isi ? 'Edit tahap' : 'Isi tahap' }}">
                       <i class="fa-solid {{ $isi ? 'fa-pencil' : 'fa-plus' }} text-xs"></i>
                     </button>
+                  @elseif (!$boleh_kelola)
+                    {{-- Terkunci karena wewenang, bukan karena urutan tahap. --}}
+                    <span class="flex items-center justify-center w-8 h-8 rounded-md text-gray-300 cursor-not-allowed"
+                      title="Hanya {{ $nama_unit_pengelola }} yang dapat mengisi tahap ini">
+                      <i class="fa-solid fa-eye text-xs"></i>
+                    </span>
                   @else
                     <span
                       class="flex items-center justify-center w-8 h-8 rounded-md text-gray-300 cursor-not-allowed"
@@ -148,6 +168,8 @@
                 @endif
               @elseif ($bisa)
                 <p class="text-sm text-gray-400 italic mt-2">Belum diisi &mdash; klik <i class="fa-solid fa-plus text-[10px]"></i> untuk mengisi tahap ini.</p>
+              @elseif (!$boleh_kelola)
+                <p class="text-sm text-gray-300 italic mt-2">Belum diisi.</p>
               @else
                 <p class="text-sm text-gray-300 italic mt-2">Terkunci &mdash; selesaikan tahap sebelumnya dulu.</p>
               @endif
@@ -249,8 +271,10 @@
     </div>
   </div>
 
-  {{-- ================= MODAL: isi / edit tiap tahap ================= --}}
-  @foreach ($daftar_status as $s)
+  {{-- ================= MODAL: isi / edit tiap tahap =================
+       Tidak dirender sama sekali untuk admin yang hanya boleh melihat -
+       lebih baik formnya tidak ada daripada ada tapi ditolak saat dikirim. --}}
+  @foreach ($boleh_kelola ? $daftar_status : [] as $s)
     @continue(!($editable[$s] ?? false))
     @php $row = $slot[$s]; $slotError = $errors->any() && old('_slot') === $s; @endphp
     <div id="slotModal-{{ $s }}" tabindex="-1" aria-hidden="true"
@@ -364,25 +388,16 @@
         });
       }
 
+      // Cache di properti yang sama (__flowbiteModal) dengan
+      // resources/js/shared/flowbite-modal.js, supaya modal yang dibuka di
+      // sini (lewat validasi gagal) tetap bisa ditutup lewat tombol
+      // [data-modal-hide] yang delegasinya ditangani modul itu.
       function modalOf(id) {
         var el = document.getElementById(id);
         if (!window.Modal || !el) return null;
-        el.__m = el.__m || new window.Modal(el);
-        return el.__m;
+        el.__flowbiteModal = el.__flowbiteModal || new window.Modal(el);
+        return el.__flowbiteModal;
       }
-
-      document.body.addEventListener('click', function(e) {
-        var toggle = e.target.closest('[data-modal-toggle]');
-        if (toggle) {
-          var m = modalOf(toggle.getAttribute('data-modal-toggle'));
-          if (m) m.show();
-        }
-        var hide = e.target.closest('[data-modal-hide]');
-        if (hide) {
-          var m2 = modalOf(hide.getAttribute('data-modal-hide'));
-          if (m2) m2.hide();
-        }
-      });
 
       @if ($errors->any() && in_array(old('_slot'), $daftar_status, true))
         var errModal = modalOf('slotModal-{{ old('_slot') }}');

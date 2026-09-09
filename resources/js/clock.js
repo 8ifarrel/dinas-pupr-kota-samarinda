@@ -1,7 +1,3 @@
-/*
- * Special thanks to Bang Ucup Informatika Unmul 2020
- */
-
 (function startClock() {
   const elementsJam = document.getElementsByClassName("current-time");
 

@@ -6,10 +6,10 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 use App\Http\Middleware\RecordStatistikPengunjung;
 use App\Http\Middleware\VerifyApiKey;
-use App\Http\Middleware\ApiSuperAdminAuth;
 use App\Http\Middleware\ValidateSignedAccess;
 use App\Http\Middleware\AuthenticateKelurahan;
 use App\Http\Middleware\RedirectIfAuthenticatedKelurahan;
+use App\Http\Middleware\HantuBanyuPengelola;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -42,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'validate.signed.access' => ValidateSignedAccess::class,
             'auth.kelurahan' => AuthenticateKelurahan::class,
             'guest.kelurahan' => RedirectIfAuthenticatedKelurahan::class,
+            'hantu-banyu.kelola' => HantuBanyuPengelola::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -34,36 +34,14 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/quill.js'])
+  @vite(['resources/js/quill.js', 'resources/js/shared/rich-text-editor.js'])
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var quill = new Quill('#quill-editor', {
-        theme: 'snow',
+      window.initRichTextEditor({
+        selector: '#quill-editor',
         placeholder: 'Tulis sejarah Dinas PUPR Kota Samarinda di sini...',
-        modules: {
-          toolbar: [
-            [{
-              header: [1, 2, false]
-            }],
-            ['bold', 'italic', 'underline'],
-            [{
-              list: 'ordered'
-            }, {
-              list: 'bullet'
-            }],
-            ['clean']
-          ]
-        }
-      });
-
-      // Isi value awal dari database
-      var isiSejarah = document.getElementById('deskripsi_sejarah_dinas_pupr_kota_samarinda').value;
-      if (isiSejarah) {
-        quill.clipboard.dangerouslyPasteHTML(isiSejarah);
-      }
-
-      document.getElementById('form-sejarah-dinas').addEventListener('submit', function(e) {
-        document.getElementById('deskripsi_sejarah_dinas_pupr_kota_samarinda').value = quill.root.innerHTML;
+        hiddenInputSelector: '#deskripsi_sejarah_dinas_pupr_kota_samarinda',
+        formSelector: '#form-sejarah-dinas',
       });
     });
   </script>

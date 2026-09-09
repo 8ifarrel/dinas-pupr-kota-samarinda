@@ -39,12 +39,48 @@
 
 @section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
-    <div class="flex justify-end mb-4">
-      <button type="button" id="btnUnduhPdf"
-        class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
-        <i class="fa-solid fa-file-pdf"></i>
-        <span class="whitespace-nowrap">Unduh PDF Laporan</span>
-      </button>
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-4">
+      {{-- Penyaring tambahan di luar kotak pencarian bawaan DataTables:
+           rentang tanggal masuk dan asal pembuat laporan. Keduanya bekerja
+           di sisi peramban terhadap baris yang sudah dimuat. --}}
+      <div class="flex flex-wrap items-end gap-3">
+        <div>
+          <label for="filterTanggalDari" class="block text-xs font-medium text-gray-600 mb-1">Masuk dari</label>
+          <input type="date" id="filterTanggalDari"
+            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+          <label for="filterTanggalSampai" class="block text-xs font-medium text-gray-600 mb-1">sampai</label>
+          <input type="date" id="filterTanggalSampai"
+            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div>
+          <label for="filterDibuatOleh" class="block text-xs font-medium text-gray-600 mb-1">Dibuat oleh</label>
+          <select id="filterDibuatOleh"
+            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+            <option value="">Semua pelapor</option>
+            <option value="kelurahan">Operator Kelurahan</option>
+            <option value="admin">{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</option>
+          </select>
+        </div>
+        <button type="button" id="btnResetFilter"
+          class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
+          Reset
+        </button>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button type="button" id="btnUnduhExcel"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-excel"></i>
+          <span class="whitespace-nowrap">Unduh Excel</span>
+        </button>
+        <button type="button" id="btnUnduhPdf"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="whitespace-nowrap">Unduh PDF Laporan</span>
+        </button>
+      </div>
     </div>
 
     <div class="relative overflow-x-auto text-sm md:text-base">
@@ -53,6 +89,7 @@
           <tr>
             <th>No.</th>
             <th>Pelapor</th>
+            <th>Dibuat Oleh</th>
             <th>Lokasi</th>
             <th>Waktu Masuk</th>
             <th>Status Terkini</th>
@@ -69,6 +106,15 @@
             <tr>
               <td>{{ $item->id }}</td>
               <td>{{ $item->pelapor->nama_lengkap ?? '-' }}</td>
+              {{-- data-tipe dipakai penyaring "Dibuat oleh" di atas tabel. --}}
+              <td data-tipe="{{ $item->dibuat_oleh_tipe }}">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium {{ $item->dibuat_oleh_tipe === 'admin' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700' }}">
+                  <i
+                    class="fa-solid {{ $item->dibuat_oleh_tipe === 'admin' ? 'fa-user-shield' : 'fa-building-user' }} fa-xs"></i>
+                  {{ $item->label_pelapor }}
+                </span>
+              </td>
               <td>
                 <div class="font-medium text-gray-900">{{ $item->nama_jalan }}</div>
                 <div class="text-xs text-gray-500">
@@ -94,8 +140,10 @@
                 </span>
               </td>
               <td>
-                <a href="{{ route('admin.hantu-banyu.laporan.edit', $item->id) }}" class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
-                    <i class="fa-solid fa-pencil"></i>
+                <a href="{{ route('admin.hantu-banyu.laporan.edit', $item->id) }}"
+                  title="{{ $boleh_kelola ? 'Kelola laporan' : 'Lihat laporan' }}"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid {{ $boleh_kelola ? 'fa-clipboard-list' : 'fa-eye' }}"></i>
                 </a>
               </td>
             </tr>
@@ -105,6 +153,7 @@
           <tr>
             <th>No.</th>
             <th>Pelapor</th>
+            <th>Dibuat Oleh</th>
             <th>Lokasi</th>
             <th>Waktu Masuk</th>
             <th>Status Terkini</th>
@@ -116,7 +165,9 @@
     </div>
   </div>
 
-  {{-- Modal: Unduh PDF Laporan --}}
+  {{-- Modal unduh laporan. Dipakai bersama oleh tombol PDF dan Excel:
+       pilihan periodenya sama persis, hanya berkas hasilnya yang berbeda,
+       jadi tidak perlu dua modal yang isinya kembar. --}}
   @php
     $bulanNama = [
         1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
@@ -128,7 +179,8 @@
     <div class="bg-white rounded-lg shadow-xl w-full max-w-lg max-h-full overflow-y-auto">
       <div class="flex items-center justify-between p-4 border-b">
         <h3 class="text-lg font-semibold text-gray-900">
-          <i class="fa-solid fa-file-pdf text-red-600 mr-1"></i> Unduh PDF Laporan
+          <i id="modalIkon" class="fa-solid fa-file-pdf text-red-600 mr-1"></i>
+          <span id="modalJudul">Unduh PDF Laporan</span>
         </h3>
         <button type="button" data-tutup-modal
           class="text-gray-400 hover:bg-gray-100 hover:text-gray-900 rounded-lg p-1.5 inline-flex items-center">
@@ -136,7 +188,9 @@
         </button>
       </div>
 
-      <form method="GET" action="{{ route('admin.hantu-banyu.laporan.unduh-pdf') }}" class="p-4 space-y-4">
+      <form method="GET" id="formUnduh" data-aksi-pdf="{{ route('admin.hantu-banyu.laporan.unduh-pdf') }}"
+        data-aksi-excel="{{ route('admin.hantu-banyu.laporan.unduh-excel') }}"
+        action="{{ route('admin.hantu-banyu.laporan.unduh-pdf') }}" class="p-4 space-y-4">
         <p class="text-sm text-gray-600">
           Setiap laporan dicetak pada satu halaman A4 dan digabung menjadi satu berkas PDF. PDF ini menyertakan
           riwayat tindak lanjut.
@@ -222,7 +276,7 @@
         <div class="flex justify-end gap-2 pt-2 border-t">
           <button type="button" data-tutup-modal
             class="px-4 py-2 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">Batal</button>
-          <button type="submit"
+          <button type="submit" id="modalTombolUnduh"
             class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700">
             <i class="fa-solid fa-download"></i> Unduh
           </button>
@@ -235,24 +289,92 @@
 @section('document.end')
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      $('#laporan').DataTable({
-        order: [[3, 'desc']],
+      // Kolom: 0 No, 1 Pelapor, 2 Dibuat Oleh, 3 Lokasi, 4 Waktu Masuk,
+      //        5 Status, 6 Jenis, 7 Kelola
+      const tabel = $('#laporan').DataTable({
+        order: [[4, 'desc']],
         columnDefs: [{
           orderable: false,
-          targets: [6]
+          targets: [7]
         }]
       });
 
-      // --- Modal Unduh PDF Laporan ---
+      // --- Penyaring tanggal masuk & asal pembuat laporan ---
+      const inpDari = document.getElementById('filterTanggalDari');
+      const inpSampai = document.getElementById('filterTanggalSampai');
+      const selDibuatOleh = document.getElementById('filterDibuatOleh');
+
+      // Waktu masuk disimpan sebagai detik epoch di data-order milik selnya,
+      // jadi perbandingannya tidak bergantung pada format tampilan.
+      function batasEpoch(nilai, akhirHari) {
+        if (!nilai) return null;
+        const t = new Date(nilai + (akhirHari ? 'T23:59:59' : 'T00:00:00'));
+        return isNaN(t.getTime()) ? null : Math.floor(t.getTime() / 1000);
+      }
+
+      $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        if (settings.nTable !== document.getElementById('laporan')) return true;
+
+        const baris = tabel.row(dataIndex).node();
+        const dari = batasEpoch(inpDari.value, false);
+        const sampai = batasEpoch(inpSampai.value, true);
+        const tipe = selDibuatOleh.value;
+
+        if (dari !== null || sampai !== null) {
+          const selWaktu = baris.cells[4];
+          const epoch = parseInt(selWaktu.getAttribute('data-order'), 10);
+          if (!isNaN(epoch)) {
+            if (dari !== null && epoch < dari) return false;
+            if (sampai !== null && epoch > sampai) return false;
+          }
+        }
+
+        if (tipe && baris.cells[2].getAttribute('data-tipe') !== tipe) return false;
+
+        return true;
+      });
+
+      [inpDari, inpSampai, selDibuatOleh].forEach(function(el) {
+        el.addEventListener('change', function() {
+          tabel.draw();
+        });
+      });
+
+      document.getElementById('btnResetFilter').addEventListener('click', function() {
+        inpDari.value = '';
+        inpSampai.value = '';
+        selDibuatOleh.value = '';
+        tabel.draw();
+      });
+
+      // --- Modal Unduh Laporan (PDF / Excel) ---
       const modal = document.getElementById('modalUnduhPdf');
       const openBtn = document.getElementById('btnUnduhPdf');
+      const openBtnExcel = document.getElementById('btnUnduhExcel');
+      const formUnduh = document.getElementById('formUnduh');
+      const modalJudul = document.getElementById('modalJudul');
+      const modalIkon = document.getElementById('modalIkon');
+      const modalTombol = document.getElementById('modalTombolUnduh');
       const groups = {
         rentang: document.getElementById('grp-rentang'),
         tahun: document.getElementById('grp-tahun'),
         bulan: document.getElementById('grp-bulan'),
       };
 
-      function openModal() {
+      // Satu modal untuk dua format: yang berubah hanya tujuan form,
+      // judul, dan warna tombolnya.
+      function openModal(format) {
+        const excel = format === 'excel';
+
+        formUnduh.action = excel ? formUnduh.dataset.aksiExcel : formUnduh.dataset.aksiPdf;
+        modalJudul.textContent = excel ? 'Unduh Excel Laporan' : 'Unduh PDF Laporan';
+        modalIkon.className = excel ?
+          'fa-solid fa-file-excel text-green-700 mr-1' :
+          'fa-solid fa-file-pdf text-red-600 mr-1';
+        modalTombol.className = excel ?
+          'inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-green-700 text-white hover:bg-green-800' :
+          'inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700';
+
         modal.classList.remove('hidden');
         modal.classList.add('flex');
       }
@@ -274,7 +396,8 @@
         });
       }
 
-      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (openBtn) openBtn.addEventListener('click', () => openModal('pdf'));
+      if (openBtnExcel) openBtnExcel.addEventListener('click', () => openModal('excel'));
       modal.querySelectorAll('[data-tutup-modal]').forEach(b => b.addEventListener('click', closeModal));
       modal.addEventListener('click', function(e) {
         if (e.target === modal) closeModal();

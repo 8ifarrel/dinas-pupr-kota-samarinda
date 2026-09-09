@@ -7,92 +7,16 @@
 @section('document.body')
   <div class="py-5 md:py-12 px-6 lg:px-24 3xl:px-48">
     <!-- Mobile-friendly breadcrumbs with responsive design -->
-    <nav aria-label="Breadcrumb" class="max-w-[940px] mx-auto mb-2.5">
-      <!-- Small/XS Mobile: Back link + Current page only -->
-      <div class="md:hidden flex items-center">
-        <a href="{{ route('guest.hantu-banyu.index') }}"
-          class="inline-flex items-center text-blue-600 hover:underline">
-          <i class="fa-solid fa-caret-left fa-sm mb-0.5"></i>
-          <div class="underline">Kembali</div>
-        </a>
-        <span class="mx-2 text-gray-400">|</span>
-        <button id="breadcrumb-menu-button" type="button" class="text-sm text-gray-500 hover:text-gray-700">
-          Lihat jalur lengkap
-          <svg class="w-2.5 h-2.5 ml-1 inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 1 4 4 4-4" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Small Mobile: Truncated breadcrumbs -->
-      <ol class="hidden md:inline-flex items-center text-sm">
-        <li class="inline-flex items-center">
-          <a href="{{ route('guest.beranda.index') }}" class="text-blue-600 underline">
-            Beranda
-          </a>
-        </li>
-        <li>
-          <div class="flex items-center">
-            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 6 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 9 4-4-4-4" />
-            </svg>
-            <a href="#" class="text-blue-600 underline">
-              Layanan
-            </a>
-          </div>
-        </li>
-        <li>
-          <div class="flex items-center">
-            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 6 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 9 4-4-4-4" />
-            </svg>
-            <a href="{{ route('guest.hantu-banyu.index') }}" class="text-blue-600 underline">
-              Hantu Banyu
-            </a>
-          </div>
-        </li>
-        <li aria-current="page">
-          <div class="flex items-center">
-            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 6 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 9 4-4-4-4" />
-            </svg>
-            <span class="text-gray-500 font-medium">
-              <span>Formulir Pengaduan Hantu Banyu</span>
-            </span>
-          </div>
-        </li>
-      </ol>
-
-      <!-- Mobile breadcrumb dots menu (optional) -->
-      <div class="md:hidden mt-1">
-        <div id="breadcrumb-dropdown"
-          class="hidden z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto min-w-44">
-          <ol class="py-2 text-sm text-gray-700">
-            <li>
-              <a href="{{ route('guest.beranda.index') }}" class="block px-4 py-2 hover:bg-gray-100">Beranda</a>
-            </li>
-            <li>
-              <a href="#" class="block px-4 py-2 hover:bg-gray-100">Layanan</a>
-            </li>
-            <li>
-              <a href="{{ route('guest.hantu-banyu.index') }}" class="block px-4 py-2 hover:bg-gray-100">Hantu
-                Banyu</a>
-            </li>
-            <li>
-              <span class="block px-4 py-2 font-semibold text-gray-600">Formulir Pengaduan Hantu Banyu</span>
-            </li>
-          </ol>
-        </div>
-      </div>
-    </nav>
+    <x-guest.breadcrumb
+      :back-href="route('guest.hantu-banyu.index')"
+      class="max-w-[940px] mx-auto mb-2.5"
+      :items="[
+        ['label' => 'Beranda', 'href' => route('guest.beranda.index')],
+        ['label' => 'Layanan', 'href' => '#'],
+        ['label' => 'Hantu Banyu', 'href' => route('guest.hantu-banyu.index')],
+        ['label' => 'Formulir Pengaduan Hantu Banyu'],
+      ]"
+    />
 
     <div class="max-w-[940px] mx-auto border shadow-lg p-4 sm:p-8 rounded-lg space-y-8">
       {{-- Header --}}
@@ -367,47 +291,102 @@
                     </p>
                   </div>
 
-                  <p class="text-sm text-gray-600 flex items-start gap-1.5">
-                    <i class="fa-solid fa-lock text-gray-500 mt-0.5"></i>
-                    <span>
-                      Kecamatan dan kelurahan terkunci sesuai akun Anda. Anda hanya dapat melaporkan lokasi
-                      yang berada di dalam <b>Kelurahan {{ optional($akunKelurahan)->nama ?? '-' }}</b>.
-                    </span>
-                  </p>
+                  @if ($adalahAdmin)
+                    <p class="text-sm text-gray-600 flex items-start gap-1.5">
+                      <i class="fa-solid fa-user-shield text-gray-500 mt-0.5"></i>
+                      <span>
+                        Anda masuk sebagai <b>{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</b>, jadi dapat
+                        melapor atas nama kelurahan mana pun. Pilih kelurahannya lebih dulu — titik lokasi tetap
+                        harus berada di dalam kelurahan yang dipilih.
+                      </span>
+                    </p>
 
-                  <div class="flex flex-col md:flex-row gap-4">
-                    <div class="space-y-1 flex-1">
-                      <label for="laporan__kecamatan" class="block text-sm font-medium text-gray-900 required">
-                        Kecamatan
-                      </label>
-                      <select id="laporan__kecamatan"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
-                        disabled>
-                        <option selected>{{ optional($akunKecamatan)->nama ?? '-' }}</option>
-                      </select>
-                      <input type="hidden" name="kecamatan_id" value="{{ optional($akunKecamatan)->id }}">
-                      <p id="laporan__kecamatan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
-                        Terkunci sesuai akun kelurahan Anda.
-                      </p>
-                      <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
-                    </div>
-
-                    <div class="space-y-1 flex-1">
+                    <div class="space-y-1">
                       <label for="laporan__kelurahan" class="block text-sm font-medium text-gray-900 required">
                         Kelurahan
                       </label>
-                      <select id="laporan__kelurahan"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
-                        disabled>
-                        <option selected>{{ optional($akunKelurahan)->nama ?? '-' }}</option>
+                      {{-- Kecamatan mengikuti kelurahan yang dipilih, jadi tidak perlu
+                           dropdown sendiri: nilainya diisi otomatis lewat data-kecamatan. --}}
+                      <select id="laporan__kelurahan" name="kelurahan_id"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-50">
+                        <option value="">-- Pilih kelurahan --</option>
+                        @foreach ($daftarKelurahan as $kel)
+                          <option value="{{ $kel->id }}" data-kecamatan="{{ $kel->kecamatan_id }}"
+                            data-kecamatan-nama="{{ optional($kel->kecamatan)->nama }}"
+                            {{ old('kelurahan_id') == $kel->id ? 'selected' : '' }}>
+                            {{ $kel->nama }} ({{ optional($kel->kecamatan)->nama }})
+                          </option>
+                        @endforeach
                       </select>
-                      <input type="hidden" name="kelurahan_id" value="{{ optional($akunKelurahan)->id }}">
+                      <input type="hidden" name="kecamatan_id" id="laporan__kecamatan_id"
+                        value="{{ old('kecamatan_id') }}">
                       <p id="laporan__kelurahan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
-                        Terkunci sesuai akun kelurahan Anda.
+                        Kecamatan mengikuti kelurahan yang Anda pilih.
                       </p>
                       <p class="text-xs text-red-600 mt-1 hidden" id="error_kelurahan_id"></p>
+                      <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
                     </div>
-                  </div>
+
+                    <script>
+                      // Kecamatan selalu ikut kelurahan yang dipilih - tidak ada
+                      // keadaan di mana keduanya boleh berbeda.
+                      document.addEventListener('DOMContentLoaded', function() {
+                        var selKel = document.getElementById('laporan__kelurahan');
+                        var inpKec = document.getElementById('laporan__kecamatan_id');
+                        if (!selKel || !inpKec) return;
+
+                        function sinkronKecamatan() {
+                          var opt = selKel.options[selKel.selectedIndex];
+                          inpKec.value = opt ? (opt.getAttribute('data-kecamatan') || '') : '';
+                        }
+
+                        selKel.addEventListener('change', sinkronKecamatan);
+                        sinkronKecamatan();
+                      });
+                    </script>
+                  @else
+                    <p class="text-sm text-gray-600 flex items-start gap-1.5">
+                      <i class="fa-solid fa-lock text-gray-500 mt-0.5"></i>
+                      <span>
+                        Kecamatan dan kelurahan terkunci sesuai akun Anda. Anda hanya dapat melaporkan lokasi
+                        yang berada di dalam <b>Kelurahan {{ optional($akunKelurahan)->nama ?? '-' }}</b>.
+                      </span>
+                    </p>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                      <div class="space-y-1 flex-1">
+                        <label for="laporan__kecamatan" class="block text-sm font-medium text-gray-900 required">
+                          Kecamatan
+                        </label>
+                        <select id="laporan__kecamatan"
+                          class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
+                          disabled>
+                          <option selected>{{ optional($akunKecamatan)->nama ?? '-' }}</option>
+                        </select>
+                        <input type="hidden" name="kecamatan_id" value="{{ optional($akunKecamatan)->id }}">
+                        <p id="laporan__kecamatan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
+                          Terkunci sesuai akun kelurahan Anda.
+                        </p>
+                        <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
+                      </div>
+
+                      <div class="space-y-1 flex-1">
+                        <label for="laporan__kelurahan" class="block text-sm font-medium text-gray-900 required">
+                          Kelurahan
+                        </label>
+                        <select id="laporan__kelurahan"
+                          class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 cursor-not-allowed"
+                          disabled>
+                          <option selected>{{ optional($akunKelurahan)->nama ?? '-' }}</option>
+                        </select>
+                        <input type="hidden" name="kelurahan_id" value="{{ optional($akunKelurahan)->id }}">
+                        <p id="laporan__kelurahan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
+                          Terkunci sesuai akun kelurahan Anda.
+                        </p>
+                        <p class="text-xs text-red-600 mt-1 hidden" id="error_kelurahan_id"></p>
+                      </div>
+                    </div>
+                  @endif
 
                   <div class="space-y-1.5">
                     <label for="laporan__nama_jalan" class="block text-sm font-medium text-gray-900 required">
@@ -1873,25 +1852,6 @@
           // But we could add visual feedback that the URL isn't valid yet
         }
       });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // Breadcrumb dropdown functionality for mobile
-      const breadcrumbButton = document.getElementById('breadcrumb-menu-button');
-      const breadcrumbDropdown = document.getElementById('breadcrumb-dropdown');
-
-      if (breadcrumbButton && breadcrumbDropdown) {
-        breadcrumbButton.addEventListener('click', function() {
-          breadcrumbDropdown.classList.toggle('hidden');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!breadcrumbButton.contains(e.target) && !breadcrumbDropdown.contains(e.target)) {
-            breadcrumbDropdown.classList.add('hidden');
-          }
-        });
-      }
     });
 
     document.addEventListener('DOMContentLoaded', function() {

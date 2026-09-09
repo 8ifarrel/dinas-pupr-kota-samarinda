@@ -190,203 +190,33 @@
 @endsection
 
 @section('document.end')
-  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/quill.js'])
+  @vite(['resources/js/cropperjs.js', 'resources/js/viewerjs.js', 'resources/js/quill.js', 'resources/js/shared/crop-uploader.js', 'resources/js/shared/rich-text-editor.js'])
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const wrapper = document.querySelector('.foto-viewer-wrapper');
-      const input = document.getElementById('foto');
-      const preview = document.getElementById('foto-preview');
-      const placeholder = wrapper.querySelector('.foto-placeholder');
-      const removeBtn = document.getElementById('remove-foto-btn');
-      const revertBtn = document.getElementById('revert-foto-btn');
-      const editBtn = document.getElementById('edit-foto-button');
-      const cropperModal = document.getElementById('cropperModalFoto');
-      const imageToCrop = document.getElementById('image-to-crop-foto');
-      const cropConfirmBtn = document.getElementById('crop-foto-confirm-btn');
-      const cropCancelBtn = document.getElementById('crop-foto-cancel-btn');
-      let cropper = null;
-      let lastFile = null;
-      let viewer = null;
-      if (wrapper && window.Viewer) {
-        viewer = new Viewer(wrapper, {
-          navbar: false,
-          toolbar: true,
-          title: false,
-          tooltip: false,
-          movable: false,
-          zoomable: true,
-          scalable: false,
-          transition: true,
-          fullscreen: false
-        });
-      }
-      let imageHistory = [];
-      let historyPointer = -1;
-      let originalImageSrc = preview && preview.src && !preview.classList.contains('hidden') && preview.src !== '#' ?
-        preview.src : null;
-      if (originalImageSrc) {
-        imageHistory = [originalImageSrc];
-        historyPointer = 0;
-      }
-
-      function pushHistory(src) {
-        if (historyPointer < imageHistory.length - 1) imageHistory = imageHistory.slice(0, historyPointer + 1);
-        imageHistory.push(src);
-        historyPointer = imageHistory.length - 1;
-        updateRevertBtn();
-      }
-
-      function updateRevertBtn() {
-        if (historyPointer > 0) {
-          revertBtn.classList.remove('hidden');
-          revertBtn.style.display = '';
-        } else {
-          revertBtn.classList.add('hidden');
-          revertBtn.style.display = 'none';
-        }
-      }
-
-      function setPreviewAndHistory(src, isInitial = false) {
-        preview.src = src;
-        preview.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-        removeBtn.classList.remove('hidden');
-        removeBtn.disabled = false;
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-        if (!isInitial) pushHistory(src);
-        if (viewer) viewer.update();
-      }
-      if (originalImageSrc) {
-        setPreviewAndHistory(originalImageSrc, true);
-        updateRevertBtn();
-      }
-      if (input) input.addEventListener('change', function() {
-        if (input.files && input.files[0]) {
-          lastFile = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function(ev) {
-            imageToCrop.src = ev.target.result;
-            cropperModal.classList.remove('hidden');
-            if (cropper) cropper.destroy();
-            cropper = new Cropper(imageToCrop, {
-              viewMode: 1,
-              autoCropArea: 1,
-              aspectRatio: 1
-            });
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
-      if (editBtn) editBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (!preview.classList.contains('hidden') && preview.src && preview.src !== '#') {
-          imageToCrop.src = preview.src;
-          cropperModal.classList.remove('hidden');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imageToCrop, {
-            viewMode: 1,
-            autoCropArea: 1,
-            aspectRatio: 1
-          });
-        }
-      });
-      if (cropConfirmBtn) cropConfirmBtn.addEventListener('click', function() {
-        if (cropper) {
-          cropper.getCroppedCanvas().toBlob(function(blob) {
-            const croppedFile = new File([blob], lastFile ? lastFile.name : 'cropped_foto.jpg', {
-              type: blob.type
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            input.files = dataTransfer.files;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-              setPreviewAndHistory(ev.target.result);
-            };
-            reader.readAsDataURL(croppedFile);
-            cropper.destroy();
-            cropper = null;
-            cropperModal.classList.add('hidden');
-          }, lastFile ? lastFile.type : 'image/jpeg');
-        }
-      });
-      if (cropCancelBtn) cropCancelBtn.addEventListener('click', function() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        input.value = '';
-      });
-      if (removeBtn) removeBtn.addEventListener('click', function() {
-        setPreviewAndHistory('#');
-        preview.classList.add('hidden');
-        placeholder.classList.remove('hidden');
-        removeBtn.classList.add('hidden');
-        removeBtn.disabled = true;
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      });
-      if (revertBtn) revertBtn.addEventListener('click', function() {
-        if (historyPointer > 0) {
-          historyPointer--;
-          const prevSrc = imageHistory[historyPointer];
-          if (prevSrc && prevSrc !== '#') {
-            preview.src = prevSrc;
-            preview.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-            removeBtn.classList.remove('hidden');
-            removeBtn.disabled = false;
-            editBtn.classList.remove('hidden');
-            editBtn.style.display = '';
-          } else {
-            preview.src = '#';
-            preview.classList.add('hidden');
-            placeholder.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            removeBtn.disabled = true;
-            editBtn.classList.add('hidden');
-            editBtn.style.display = 'none';
-          }
-          updateRevertBtn();
-        }
-      });
-      if (preview && (preview.classList.contains('hidden') || !preview.src || preview.src === '#')) {
-        editBtn.classList.add('hidden');
-        editBtn.style.display = 'none';
-      } else {
-        editBtn.classList.remove('hidden');
-        editBtn.style.display = '';
-      }
-      if (preview) preview.addEventListener('click', function(ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        if (viewer && !preview.classList.contains('hidden') && preview.src && preview.src !== '#') viewer.show();
-        return false;
+      window.initCropUploader({
+        wrapperSelector: '.foto-viewer-wrapper',
+        inputSelector: '#foto',
+        previewSelector: '#foto-preview',
+        placeholderSelector: '.foto-placeholder',
+        removeBtnSelector: '#remove-foto-btn',
+        revertBtnSelector: '#revert-foto-btn',
+        editBtnSelector: '#edit-foto-button',
+        modalSelector: '#cropperModalFoto',
+        imageToCropSelector: '#image-to-crop-foto',
+        confirmBtnSelector: '#crop-foto-confirm-btn',
+        cancelBtnSelector: '#crop-foto-cancel-btn',
+        aspectRatio: 1,
+        fileNamePrefix: 'cropped_foto',
       });
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      var quillTupoksi = new Quill('#quill-editor-tupoksi', {
-        theme: 'snow',
+      window.initRichTextEditor({
+        selector: '#quill-editor-tupoksi',
         placeholder: 'Tulis tupoksi jabatan di sini...',
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ['clean']
-          ]
-        }
-      });
-      var isiTupoksi = document.getElementById('tupoksi_susunan_organisasi').value;
-      if (isiTupoksi) {
-        quillTupoksi.clipboard.dangerouslyPasteHTML(isiTupoksi);
-      }
-      document.getElementById('form-kepala-dinas').addEventListener('submit', function(e) {
-        document.getElementById('tupoksi_susunan_organisasi').value = quillTupoksi.root.innerHTML;
+        hiddenInputSelector: '#tupoksi_susunan_organisasi',
+        formSelector: '#form-kepala-dinas',
       });
     });
   </script>

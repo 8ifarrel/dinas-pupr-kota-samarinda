@@ -19,6 +19,16 @@ class LoginKelurahanGuestController extends Controller
     ]);
   }
 
+  /**
+   * Halaman ini menerima dua macam akun: akun kelurahan dan akun admin
+   * E-Panel. Keduanya dicoba dengan kredensial yang sama persis, akun
+   * kelurahan lebih dulu karena merekalah pemakai utama halaman ini.
+   *
+   * Karena kedua guard berbagi session yang sama, admin yang login di sini
+   * sekaligus login di E-Panel - dan sebaliknya. Itu memang yang diinginkan:
+   * satu kali login untuk dua sisi aplikasi.
+   */
+
   public function login(Request $request)
   {
     $credentials = $request->validate([
@@ -31,11 +41,13 @@ class LoginKelurahanGuestController extends Controller
 
     $remember = $request->boolean('remember');
 
-    if (Auth::guard('kelurahan')->attempt($credentials, $remember)) {
-      $request->session()->regenerate();
+    foreach (['kelurahan', 'web'] as $guard) {
+      if (Auth::guard($guard)->attempt($credentials, $remember)) {
+        $request->session()->regenerate();
 
-      return redirect()
-        ->intended(route('guest.hantu-banyu.index'));
+        return redirect()
+          ->intended(route('guest.hantu-banyu.index'));
+      }
     }
 
     return back()
@@ -43,9 +55,17 @@ class LoginKelurahanGuestController extends Controller
       ->withErrors(['name' => 'Username atau kata sandi salah.']);
   }
 
+  /**
+   * Keluar dari kedua guard sekaligus.
+   *
+   * Untuk admin ini berarti keluar juga dari E-Panel, konsekuensi wajar dari
+   * satu session yang dipakai bersama - sama seperti login yang berlaku di
+   * kedua sisi.
+   */
   public function logout(Request $request)
   {
     Auth::guard('kelurahan')->logout();
+    Auth::guard('web')->logout();
 
     $request->session()->invalidate();
     $request->session()->regenerateToken();

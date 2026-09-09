@@ -272,9 +272,14 @@ Route::prefix('hantu-banyu')->group(function () {
     Route::put('/akun', [AkunKelurahanGuestController::class, 'update'])
       ->name('guest.hantu-banyu.akun.update');
 
+    // Membuat laporan adalah aksi pengelolaan: akun kelurahan boleh (di
+    // wilayahnya sendiri), tapi dari sisi admin hanya unit pemilik layanan
+    // dan super admin. Admin lain tetap bisa melihat seluruh halaman lain.
     Route::get('/pengaduan/buat', [HantuBanyuPengaduanGuestController::class, 'create'])
+      ->middleware('hantu-banyu.kelola')
       ->name('guest.hantu-banyu.pengaduan.create');
     Route::post('/pengaduan/kirim', [HantuBanyuPengaduanGuestController::class, 'store'])
+      ->middleware('hantu-banyu.kelola')
       ->name('guest.hantu-banyu.pengaduan.store');
 
     Route::get('/pengaduan/bukti-pengaduan/{id}', [HantuBanyuPengaduanGuestController::class, 'pdf'])
@@ -502,6 +507,8 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->name('admin.hantu-banyu.laporan.index');
         Route::get('/unduh-pdf', [HantuBanyuLaporanAdminController::class, 'unduhPdf'])
           ->name('admin.hantu-banyu.laporan.unduh-pdf');
+        Route::get('/unduh-excel', [HantuBanyuLaporanAdminController::class, 'unduhExcel'])
+          ->name('admin.hantu-banyu.laporan.unduh-excel');
         Route::get('/{id}', [HantuBanyuLaporanAdminController::class, 'edit'])
           ->whereNumber('id')
           ->name('admin.hantu-banyu.laporan.edit');
@@ -509,7 +516,10 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->whereNumber('id')
           ->name('admin.hantu-banyu.laporan.pdf');
 
+        // Seluruh admin boleh melihat laporan Hantu Banyu, tapi hanya unit
+        // pemilik layanan (dan super admin) yang boleh menindaklanjutinya.
         Route::post('/{id}/slot/{status}', [HantuBanyuLaporanAdminController::class, 'simpanSlot'])
+          ->middleware('hantu-banyu.kelola')
           ->whereNumber('id')->whereIn('status', HantuBanyuLaporanAdminController::STATUS)
           ->name('admin.hantu-banyu.laporan.slot.simpan');
       });

@@ -10,11 +10,26 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\HantuBanyuLaporan;
 use App\Models\HantuBanyuLaporanTindakLanjut;
 use App\Models\HantuBanyuLaporanTindakLanjutFoto;
+use App\Models\User;
+use App\Support\HantuBanyu\OtorisasiPengelola;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Spatie\Browsershot\Browsershot;
 
 class HantuBanyuLaporanAdminController extends Controller
 {
+  /** Instance dibuat sekali per siklus request, supaya query unit pemilik tidak dijalankan dua kali. */
+  private ?OtorisasiPengelola $otorisasi = null;
+
+  private function otorisasi(): OtorisasiPengelola
+  {
+    return $this->otorisasi ??= new OtorisasiPengelola();
+  }
+
   /** Tahap penanganan, berurutan sesuai alur kerja (juga nilai enum di migration). */
   public const STATUS = [
     'pending',
@@ -63,6 +78,7 @@ class HantuBanyuLaporanAdminController extends Controller
       'page_description' => 'Kelola seluruh laporan pengaduan drainase dan irigasi: lihat detail dan perbarui tindak lanjutnya.',
       'laporan' => $laporan,
       'tahun_opsi' => $tahunOpsi,
+      'boleh_kelola' => $this->otorisasi()->bolehKelola(),
     ]);
   }
 
@@ -83,53 +99,12 @@ class HantuBanyuLaporanAdminController extends Controller
       'bulan_tahun' => ['nullable', 'integer', 'between:2000,2100'],
     ]);
 
-    $bulanNama = [
-      1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
-      7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
-    ];
+    $query = $this->queryLaporanLengkap();
 
-    $query = HantuBanyuLaporan::with([
-      'pelapor.kelurahanAsal',
-      'kecamatan',
-      'kelurahan',
-      'foto',
-      'tindakLanjut.foto',
-    ])->orderBy('created_at', 'asc')->orderBy('id', 'asc');
+    [$judulRentang, $namaBerkasRentang, $galat] = $this->filterPeriode($data, $query);
 
-    $judulRentang = 'Semua Laporan';
-    $namaBerkasRentang = 'Semua';
-
-    if ($data['mode'] === 'rentang') {
-      $dari = $this->wajibTanggal($data['dari_bulan'] ?? null, $data['dari_tahun'] ?? null, 'awal');
-      $sampai = $this->wajibTanggal($data['sampai_bulan'] ?? null, $data['sampai_tahun'] ?? null, 'akhir');
-      if (!$dari || !$sampai) {
-        return back()->with('error', 'Lengkapi bulan dan tahun untuk rentang yang dipilih.');
-      }
-      if ($dari->gt($sampai)) {
-        [$dari, $sampai] = [$sampai->copy()->startOfMonth(), $dari->copy()->endOfMonth()];
-      }
-      $query->whereBetween('created_at', [$dari, $sampai]);
-      $judulRentang = 'Periode ' . $bulanNama[(int) $dari->month] . ' ' . $dari->year
-        . ' – ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year;
-      $namaBerkasRentang = $bulanNama[(int) $dari->month] . ' ' . $dari->year
-        . ' sd ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year;
-    } elseif ($data['mode'] === 'tahun') {
-      $tahun = $data['tahun'] ?? null;
-      if (!$tahun) {
-        return back()->with('error', 'Pilih tahun terlebih dahulu.');
-      }
-      $query->whereYear('created_at', $tahun);
-      $judulRentang = 'Tahun ' . $tahun;
-      $namaBerkasRentang = 'Tahun ' . $tahun;
-    } elseif ($data['mode'] === 'bulan') {
-      $bulan = $data['bulan'] ?? null;
-      $tahun = $data['bulan_tahun'] ?? null;
-      if (!$bulan || !$tahun) {
-        return back()->with('error', 'Pilih bulan dan tahun terlebih dahulu.');
-      }
-      $query->whereYear('created_at', $tahun)->whereMonth('created_at', $bulan);
-      $judulRentang = $bulanNama[(int) $bulan] . ' ' . $tahun;
-      $namaBerkasRentang = $bulanNama[(int) $bulan] . ' ' . $tahun;
+    if ($galat) {
+      return back()->with('error', $galat);
     }
 
     $laporan = $query->get();
@@ -151,6 +126,221 @@ class HantuBanyuLaporanAdminController extends Controller
     ])->render();
 
     return $this->unduhHtmlSebagaiPdf($html, '[Hantu Banyu] Rekap Laporan - ' . $namaBerkasRentang . '.pdf');
+  }
+
+  /**
+   * Unduh rekap laporan sebagai berkas Excel (.xlsx), satu baris per laporan.
+   *
+   * Pilihan periodenya sama persis dengan unduhan PDF - keduanya memakai
+   * filterPeriode() yang sama supaya isinya tidak pernah berbeda untuk
+   * pilihan yang sama.
+   */
+  public function unduhExcel(Request $request)
+  {
+    $data = $request->validate([
+      'mode' => ['required', 'in:semua,rentang,tahun,bulan'],
+      'dari_bulan' => ['nullable', 'integer', 'between:1,12'],
+      'dari_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'sampai_bulan' => ['nullable', 'integer', 'between:1,12'],
+      'sampai_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'bulan' => ['nullable', 'integer', 'between:1,12'],
+      'bulan_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+    ]);
+
+    $query = $this->queryLaporanLengkap();
+
+    [$judulRentang, $namaBerkasRentang, $galat] = $this->filterPeriode($data, $query);
+
+    if ($galat) {
+      return back()->with('error', $galat);
+    }
+
+    $laporan = $query->get();
+
+    if ($laporan->isEmpty()) {
+      return back()->with('error', 'Tidak ada laporan pada rentang waktu yang dipilih.');
+    }
+
+    $laporan->each(function ($l) {
+      $l->status_terkini = $this->statusTerkini($l->tindakLanjut);
+      $l->jenis_laporan = optional($l->tindakLanjut->first())->jenis ?? 'belum_diklasifikasikan';
+    });
+
+    return $this->kirimExcel($laporan, $judulRentang, '[Hantu Banyu] Rekap Laporan - ' . $namaBerkasRentang . '.xlsx');
+  }
+
+  /**
+   * Susun berkas .xlsx dari koleksi laporan lalu kirim sebagai unduhan.
+   *
+   * Berkas ditulis ke aliran keluaran langsung (bukan berkas sementara di
+   * disk) supaya tidak meninggalkan sampah kalau unduhannya dibatalkan.
+   */
+  private function kirimExcel($laporan, string $judulRentang, string $namaBerkas)
+  {
+    $statusLabel = [
+      'pending' => 'Menunggu Verifikasi',
+      'diterima' => 'Diterima',
+      'menunggu_survei' => 'Menunggu Survei',
+      'sudah_disurvei' => 'Sudah Disurvei',
+      'menunggu_jadwal_pengerjaan' => 'Menunggu Jadwal Pengerjaan',
+      'sedang_dikerjakan' => 'Sedang Dikerjakan',
+      'selesai' => 'Selesai',
+    ];
+    $jenisLabel = [
+      'belum_diklasifikasikan' => 'Belum Diklasifikasikan',
+      'darurat' => 'Penanganan Darurat',
+      'biasa' => 'Penanganan Biasa',
+      'rutin' => 'Pemeliharaan Rutin',
+    ];
+
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('Rekap Laporan');
+
+    $judul = 'Rekap Laporan Hantu Banyu — ' . $judulRentang;
+    $sheet->setCellValue('A1', $judul);
+    $sheet->mergeCells('A1:M1');
+    $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14);
+
+    $sheet->setCellValue('A2', 'Dicetak pada ' . Carbon::now()->translatedFormat('d F Y H:i') . ' WITA');
+    $sheet->mergeCells('A2:M2');
+    $sheet->getStyle('A2')->getFont()->setItalic(true)->setSize(10);
+
+    $kepala = [
+      'No. Laporan', 'Tanggal Masuk', 'Jam', 'Dibuat Oleh', 'Nama Pelapor', 'Nomor Telepon',
+      'Kecamatan', 'Kelurahan', 'Nama Jalan', 'Detail Lokasi', 'Latitude', 'Longitude',
+      'Status Terkini', 'Jenis', 'Deskripsi Pengaduan',
+    ];
+
+    $baris = 4;
+    foreach ($kepala as $i => $judulKolom) {
+      $sheet->setCellValue([$i + 1, $baris], $judulKolom);
+    }
+    $sheet->getStyle('A4:O4')->getFont()->setBold(true);
+    $sheet->freezePane('A5');
+
+    foreach ($laporan as $l) {
+      $baris++;
+      $status = $l->status_terkini;
+      $jenis = $l->jenis_laporan;
+
+      $nilai = [
+        $l->id,
+        Carbon::parse($l->created_at)->translatedFormat('d F Y'),
+        Carbon::parse($l->created_at)->format('H:i'),
+        $l->label_pelapor,
+        optional($l->pelapor)->nama_lengkap ?? '-',
+        optional($l->pelapor)->nomor_telepon ?? '-',
+        optional($l->kecamatan)->nama ?? '-',
+        optional($l->kelurahan)->nama ?? '-',
+        $l->nama_jalan,
+        $l->detail_lokasi,
+        $l->latitude,
+        $l->longitude,
+        $statusLabel[$status] ?? '-',
+        $jenisLabel[$jenis] ?? '-',
+        $l->deskripsi_pengaduan,
+      ];
+
+      foreach ($nilai as $i => $isi) {
+        // Nomor telepon (kolom ke-6) ditulis sebagai teks apa adanya supaya
+        // angka 0 di depannya tidak dipangkas Excel.
+        if ($i + 1 === 6) {
+          $sheet->setCellValueExplicit([$i + 1, $baris], (string) $isi, DataType::TYPE_STRING);
+          continue;
+        }
+
+        $sheet->setCellValue([$i + 1, $baris], $isi);
+      }
+    }
+
+    foreach (range('A', 'O') as $kolom) {
+      $sheet->getColumnDimension($kolom)->setAutoSize(true);
+    }
+    // Kolom teks panjang lebih enak dibaca dengan lebar tetap + bungkus baris.
+    foreach (['J', 'O'] as $kolom) {
+      $sheet->getColumnDimension($kolom)->setAutoSize(false);
+      $sheet->getColumnDimension($kolom)->setWidth(45);
+      $sheet->getStyle($kolom . '5:' . $kolom . $baris)->getAlignment()->setWrapText(true);
+    }
+
+    $writer = new Xlsx($spreadsheet);
+
+    return response()->streamDownload(function () use ($writer) {
+      $writer->save('php://output');
+    }, $namaBerkas, [
+      'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ]);
+  }
+
+  /** Query laporan lengkap dengan seluruh relasi yang dibutuhkan rekap. */
+  private function queryLaporanLengkap()
+  {
+    return HantuBanyuLaporan::with([
+      'pelapor.kelurahanAsal',
+      'kecamatan',
+      'kelurahan',
+      'foto',
+      'tindakLanjut.foto',
+    ])->orderBy('created_at', 'asc')->orderBy('id', 'asc');
+  }
+
+  /**
+   * Terapkan pilihan periode (semua/rentang/tahun/bulan) pada query rekap.
+   *
+   * @param  array<string,mixed>  $data  hasil validasi permintaan
+   * @return array{0:string,1:string,2:?string} [judul rentang, nama berkas, pesan galat]
+   */
+  private function filterPeriode(array $data, $query): array
+  {
+    $bulanNama = [
+      1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
+      7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+    ];
+
+    if ($data['mode'] === 'rentang') {
+      $dari = $this->wajibTanggal($data['dari_bulan'] ?? null, $data['dari_tahun'] ?? null, 'awal');
+      $sampai = $this->wajibTanggal($data['sampai_bulan'] ?? null, $data['sampai_tahun'] ?? null, 'akhir');
+      if (!$dari || !$sampai) {
+        return ['', '', 'Lengkapi bulan dan tahun untuk rentang yang dipilih.'];
+      }
+      if ($dari->gt($sampai)) {
+        [$dari, $sampai] = [$sampai->copy()->startOfMonth(), $dari->copy()->endOfMonth()];
+      }
+      $query->whereBetween('created_at', [$dari, $sampai]);
+
+      return [
+        'Periode ' . $bulanNama[(int) $dari->month] . ' ' . $dari->year
+          . ' - ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year,
+        $bulanNama[(int) $dari->month] . ' ' . $dari->year
+          . ' sd ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year,
+        null,
+      ];
+    }
+
+    if ($data['mode'] === 'tahun') {
+      $tahun = $data['tahun'] ?? null;
+      if (!$tahun) {
+        return ['', '', 'Pilih tahun terlebih dahulu.'];
+      }
+      $query->whereYear('created_at', $tahun);
+
+      return ['Tahun ' . $tahun, 'Tahun ' . $tahun, null];
+    }
+
+    if ($data['mode'] === 'bulan') {
+      $bulan = $data['bulan'] ?? null;
+      $tahun = $data['bulan_tahun'] ?? null;
+      if (!$bulan || !$tahun) {
+        return ['', '', 'Pilih bulan dan tahun terlebih dahulu.'];
+      }
+      $query->whereYear('created_at', $tahun)->whereMonth('created_at', $bulan);
+
+      return [$bulanNama[(int) $bulan] . ' ' . $tahun, $bulanNama[(int) $bulan] . ' ' . $tahun, null];
+    }
+
+    return ['Semua Laporan', 'Semua', null];
   }
 
   /**
@@ -254,6 +444,10 @@ class HantuBanyuLaporanAdminController extends Controller
       'status_terkini' => $this->statusTerkini($laporan->tindakLanjut),
       'jenis_laporan' => optional($laporan->tindakLanjut->first())->jenis ?? 'belum_diklasifikasikan',
       'editable' => $this->slotEditable($laporan->tindakLanjut),
+      // Seluruh admin boleh membaca halaman ini; hanya unit pengelola
+      // (dan super admin) yang boleh mengisi tindak lanjutnya.
+      'boleh_kelola' => $this->otorisasi()->bolehKelola(),
+      'nama_unit_pengelola' => $this->otorisasi()->namaUnitPemilik(),
     ]);
   }
 
