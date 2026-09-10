@@ -39,10 +39,31 @@
 
 @section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-4">
-      {{-- Penyaring tambahan di luar kotak pencarian bawaan DataTables:
-           rentang tanggal masuk dan asal pembuat laporan. Keduanya bekerja
-           di sisi peramban terhadap baris yang sudah dimuat. --}}
+    {{-- Zona unduh rekap. Sengaja dipisah dari penyaring tabel di bawahnya
+         karena periode berkasnya dipilih sendiri di dalam modal, tidak
+         mengikuti penyaring tabel. --}}
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-gray-200">
+      <p class="text-xs text-gray-500 max-w-md">
+        Rentang periode unduhan dipilih saat menekan tombol &mdash; terpisah dari penyaring tabel di bawah.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" id="btnUnduhExcel"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-excel"></i>
+          <span class="whitespace-nowrap">Unduh Excel</span>
+        </button>
+        <button type="button" id="btnUnduhPdf"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="whitespace-nowrap">Unduh PDF Laporan</span>
+        </button>
+      </div>
+    </div>
+
+    {{-- Penyaring sisi-peramban terhadap baris tabel yang sudah dimuat:
+         rentang tanggal masuk dan asal pembuat laporan. --}}
+    <div class="mb-4">
+      <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Saring tabel</p>
       <div class="flex flex-wrap items-end gap-3">
         <div>
           <label for="filterTanggalDari" class="block text-xs font-medium text-gray-600 mb-1">Masuk dari</label>
@@ -66,19 +87,6 @@
         <button type="button" id="btnResetFilter"
           class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
           Reset
-        </button>
-      </div>
-
-      <div class="flex flex-wrap gap-2">
-        <button type="button" id="btnUnduhExcel"
-          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
-          <i class="fa-solid fa-file-excel"></i>
-          <span class="whitespace-nowrap">Unduh Excel</span>
-        </button>
-        <button type="button" id="btnUnduhPdf"
-          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
-          <i class="fa-solid fa-file-pdf"></i>
-          <span class="whitespace-nowrap">Unduh PDF Laporan</span>
         </button>
       </div>
     </div>
