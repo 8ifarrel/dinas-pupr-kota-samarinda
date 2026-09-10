@@ -56,33 +56,30 @@
 
     {{-- Penyaring sisi-peramban terhadap baris tabel yang sudah dimuat:
          rentang tanggal masuk dan asal pembuat laporan. --}}
-    <div class="mb-4">
-      <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Saring tabel</p>
-      <div class="flex flex-wrap items-end gap-3">
-        <div>
-          <label for="filterTanggalDari" class="block text-xs font-medium text-gray-600 mb-1">Masuk dari</label>
-          <input type="date" id="filterTanggalDari"
-            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-          <label for="filterTanggalSampai" class="block text-xs font-medium text-gray-600 mb-1">sampai</label>
-          <input type="date" id="filterTanggalSampai"
-            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
-        </div>
-        <div>
-          <label for="filterDibuatOleh" class="block text-xs font-medium text-gray-600 mb-1">Dibuat oleh</label>
-          <select id="filterDibuatOleh"
-            class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
-            <option value="">Semua pelapor</option>
-            <option value="kelurahan">Operator Kelurahan</option>
-            <option value="admin">{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</option>
-          </select>
-        </div>
-        <button type="button" id="btnResetFilter"
-          class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
-          Reset
-        </button>
+    <div class="flex flex-wrap items-end gap-3 mb-4">
+      <div>
+        <label for="filterTanggalDari" class="block text-xs font-medium text-gray-600 mb-1">Masuk dari</label>
+        <input type="date" id="filterTanggalDari"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
       </div>
+      <div>
+        <label for="filterTanggalSampai" class="block text-xs font-medium text-gray-600 mb-1">sampai</label>
+        <input type="date" id="filterTanggalSampai"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+        <label for="filterDibuatOleh" class="block text-xs font-medium text-gray-600 mb-1">Dibuat oleh</label>
+        <select id="filterDibuatOleh"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+          <option value="">Semua pelapor</option>
+          <option value="kelurahan">Operator Kelurahan</option>
+          <option value="admin">{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</option>
+        </select>
+      </div>
+      <button type="button" id="btnResetFilter"
+        class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
+        Reset
+      </button>
     </div>
 
     <div class="relative overflow-x-auto text-sm md:text-base">
