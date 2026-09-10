@@ -39,25 +39,19 @@
 
 @section('document.body')
   <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
-    {{-- Zona unduh rekap. Sengaja dipisah dari penyaring tabel di bawahnya
-         karena periode berkasnya dipilih sendiri di dalam modal, tidak
-         mengikuti penyaring tabel. --}}
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-4 mb-4 border-b border-gray-200">
-      <p class="text-xs text-gray-500 max-w-md">
-        Rentang periode unduhan dipilih saat menekan tombol &mdash; terpisah dari penyaring tabel di bawah.
-      </p>
-      <div class="flex flex-wrap gap-2">
-        <button type="button" id="btnUnduhExcel"
-          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
-          <i class="fa-solid fa-file-excel"></i>
-          <span class="whitespace-nowrap">Unduh Excel</span>
-        </button>
-        <button type="button" id="btnUnduhPdf"
-          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
-          <i class="fa-solid fa-file-pdf"></i>
-          <span class="whitespace-nowrap">Unduh PDF Laporan</span>
-        </button>
-      </div>
+    {{-- Zona unduh rekap, dipisah dari penyaring tabel di bawahnya karena
+         periode berkasnya dipilih sendiri di dalam modal. --}}
+    <div class="flex flex-wrap gap-2 pb-4 mb-4 border-b border-gray-200">
+      <button type="button" id="btnUnduhExcel"
+        class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
+        <i class="fa-solid fa-file-excel"></i>
+        <span class="whitespace-nowrap">Unduh Excel</span>
+      </button>
+      <button type="button" id="btnUnduhPdf"
+        class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span class="whitespace-nowrap">Unduh PDF Laporan</span>
+      </button>
     </div>
 
     {{-- Penyaring sisi-peramban terhadap baris tabel yang sudah dimuat:
