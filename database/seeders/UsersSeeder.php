@@ -19,9 +19,18 @@ class UsersSeeder extends Seeder
 {
   public function run(): void
   {
-    // Bcrypt sengaja lambat; seluruh akun dummy memakai kata sandi yang sama,
-    // jadi cukup di-hash sekali daripada sekali per akun.
-    $sandiAdmin = Hash::make('admin123');
+    $sandiAdminPlain = (string) config('seeding.password_admin');
+    $sandiSuperAdminPlain = (string) config('seeding.password_super_admin');
+
+    if ($sandiAdminPlain === '' || $sandiSuperAdminPlain === '') {
+      throw new \RuntimeException(
+        'Isi SEEDER_PASSWORD_ADMIN dan SEEDER_PASSWORD_SUPER_ADMIN di .env sebelum menjalankan seeder ini.'
+      );
+    }
+
+    // Bcrypt sengaja lambat; seluruh akun admin unit memakai kata sandi yang
+    // sama, jadi cukup di-hash sekali daripada sekali per akun.
+    $sandiAdmin = Hash::make($sandiAdminPlain);
 
     DB::table('users')->insert([
       'id' => 1,
@@ -30,7 +39,7 @@ class UsersSeeder extends Seeder
       'name' => 'super_admin',
       'email' => null,
       'email_verified_at' => null,
-      'password' => Hash::make('SayaMakanAyam@910910'),
+      'password' => Hash::make($sandiSuperAdminPlain),
       'is_super_admin' => 1,
       'remember_token' => null,
       'created_at' => now(),

@@ -13,18 +13,27 @@ class UsersKelurahanSeeder extends Seeder
    * Dummy akun kelurahan.
    *
    * Setiap kelurahan (lihat KelurahanSeeder) mendapat satu akun dengan
-   * username "kelurahan_<slug nama>" dan kata sandi "kelurahan123".
-   * Bila ada nama kelurahan yang menghasilkan slug sama, id kelurahan
-   * ditambahkan sebagai pembeda agar kolom "name" tetap unik.
+   * username "kelurahan_<slug nama>" dan kata sandi dari
+   * config('seeding.password_kelurahan'). Bila ada nama kelurahan yang
+   * menghasilkan slug sama, id kelurahan ditambahkan sebagai pembeda agar
+   * kolom "name" tetap unik.
    */
   public function run()
   {
     $now = now();
     $dipakai = [];
 
+    $sandiPlain = (string) config('seeding.password_kelurahan');
+
+    if ($sandiPlain === '') {
+      throw new \RuntimeException(
+        'Isi SEEDER_PASSWORD_KELURAHAN di .env sebelum menjalankan seeder ini.'
+      );
+    }
+
     // Bcrypt sengaja lambat; seluruh akun dummy memakai kata sandi yang sama,
     // jadi cukup di-hash sekali daripada sekali per kelurahan.
-    $sandi = Hash::make('kelurahan123');
+    $sandi = Hash::make($sandiPlain);
 
     $rows = DB::table('kelurahan')
       ->orderBy('id')
