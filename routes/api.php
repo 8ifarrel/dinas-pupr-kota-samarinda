@@ -100,7 +100,7 @@ Route::prefix('hantu-banyu-keys')->middleware(['web'])->group(function () {
 Route::prefix('hantu-banyu/laporan')->middleware('auth.apikey:hantu-banyu')->group(function () {
   Route::post('/upload', [HantuBanyuLaporanController::class, 'store'])
     ->name('api.hantu-banyu-laporan.store');
-  Route::get('/{id}', [HantuBanyuLaporanController::class, 'show'])
+  Route::get('/{kode}', [HantuBanyuLaporanController::class, 'show'])
     ->name('api.hantu-banyu-laporan.show');
 });
 

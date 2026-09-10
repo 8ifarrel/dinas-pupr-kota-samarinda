@@ -129,7 +129,7 @@
               $jenis = $item->jenis_laporan;
             @endphp
             <tr>
-              <td>{{ $item->id }}</td>
+              <td class="whitespace-nowrap font-medium">{{ $item->kode }}</td>
               <td>{{ $item->pelapor->nama_lengkap ?? '-' }}</td>
               {{-- data-tipe dipakai penyaring "Dibuat oleh" di atas tabel. --}}
               <td data-tipe="{{ $item->dibuat_oleh_tipe }}">
@@ -166,7 +166,7 @@
                 </span>
               </td>
               <td>
-                <a href="{{ route('admin.hantu-banyu.laporan.edit', $item->id) }}"
+                <a href="{{ route('admin.hantu-banyu.laporan.edit', $item->kode) }}"
                   title="{{ $boleh_kelola ? 'Kelola laporan' : 'Lihat laporan' }}"
                   class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
                     <i class="fa-solid {{ $boleh_kelola ? 'fa-clipboard-list' : 'fa-eye' }}"></i>

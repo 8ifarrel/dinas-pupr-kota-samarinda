@@ -262,7 +262,7 @@
         <span class="stamp">Dicetak {{ $dicetak_pada }}</span>
       </div>
 
-      <h1 class="laporan-title">Laporan Nomor {{ $item->id }}</h1>
+      <h1 class="laporan-title">Laporan Nomor {{ $item->kode }}</h1>
       <div class="meta">
         Waktu masuk: {{ $item->created_at->translatedFormat('d F Y, H.i') }} WITA
         &nbsp;&bull;&nbsp;

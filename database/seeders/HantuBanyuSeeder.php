@@ -153,6 +153,18 @@ class HantuBanyuSeeder extends Seeder
   /** Akun admin yang dicatat sebagai pembuat laporan contoh dari sisi UPTD. */
   private ?int $adminId = null;
 
+  /** Nomor urut terakhir per tahun, dipakai menyusun kode HB-YYYY-NNNN saat seeding. */
+  private array $urutanKodePerTahun = [];
+
+  /** Nomor laporan berikutnya untuk tahun pada $dilaporkan (urutan reset tiap tahun). */
+  private function kodeLaporan($dilaporkan): string
+  {
+    $tahun = (int) $dilaporkan->format('Y');
+    $this->urutanKodePerTahun[$tahun] = ($this->urutanKodePerTahun[$tahun] ?? 0) + 1;
+
+    return sprintf('HB-%d-%04d', $tahun, $this->urutanKodePerTahun[$tahun]);
+  }
+
   public function run(): void
   {
     // Ambil kelurahan beserta kecamatan induknya sekaligus. Seluruh 66
@@ -222,6 +234,15 @@ class HantuBanyuSeeder extends Seeder
       }
     }
 
+    // Simpan penghitung nomor laporan per tahun supaya laporan sungguhan
+    // berikutnya (lewat web/API) melanjutkan urutan, bukan mengulang dari 1.
+    foreach ($this->urutanKodePerTahun as $tahun => $terakhir) {
+      DB::table('hantu_banyu_laporan_counter')->updateOrInsert(
+        ['tahun' => $tahun],
+        ['terakhir' => $terakhir]
+      );
+    }
+
     $this->command?->getOutput()->writeln("\r  Geocoding selesai." . str_repeat(' ', 40));
   }
 
@@ -247,7 +268,7 @@ class HantuBanyuSeeder extends Seeder
 
     $dilaporkan = now()->subDays($daysAgo)->setTime(8, 45);
 
-    [$pelaporId, $laporanId] = $this->buatPelaporDanLaporan(
+    [$pelaporId, $laporanId, $kode] = $this->buatPelaporDanLaporan(
       $wilayah,
       $globalIndex,
       $titik,
@@ -259,8 +280,8 @@ class HantuBanyuSeeder extends Seeder
       self::STATUS[$tahapTercapai] === 'selesai'
     );
 
-    $this->fotoLaporan($laporanId, $dilaporkan);
-    $this->tindakLanjut($laporanId, $jenis, $tahapTercapai, $dilaporkan, $titik['jalan'], $wilayah->kelurahan_nama);
+    $this->fotoLaporan($laporanId, $kode, $dilaporkan);
+    $this->tindakLanjut($laporanId, $kode, $jenis, $tahapTercapai, $dilaporkan, $titik['jalan'], $wilayah->kelurahan_nama);
   }
 
   /**
@@ -287,7 +308,7 @@ class HantuBanyuSeeder extends Seeder
     // Ditutup beberapa minggu setelah masuk - jauh sebelum "sekarang", jadi tidak akan pernah di masa depan.
     $ditutup = $dilaporkan->copy()->addDays(random_int(14, 45));
 
-    [$pelaporId, $laporanId] = $this->buatPelaporDanLaporan(
+    [$pelaporId, $laporanId, $kode] = $this->buatPelaporDanLaporan(
       $wilayah,
       $globalIndex,
       $titik,
@@ -304,7 +325,7 @@ class HantuBanyuSeeder extends Seeder
       '{kelurahan}' => $wilayah->kelurahan_nama,
     ]);
 
-    $this->fotoLaporan($laporanId, $dilaporkan);
+    $this->fotoLaporan($laporanId, $kode, $dilaporkan);
 
     DB::table('hantu_banyu_laporan_tindak_lanjut')->insert([
       'laporan_id' => $laporanId,
@@ -329,7 +350,7 @@ class HantuBanyuSeeder extends Seeder
     DB::table('hantu_banyu_laporan_tindak_lanjut_foto')->insert([
       'tindak_lanjut_id' => $tindakLanjutId,
       'foto' => DummyMedia::gambar(
-        "hantu-banyu/{$laporanId}/tindak_lanjut/{$nama}",
+        "hantu-banyu/{$kode}/tindak_lanjut/{$nama}",
         1280,
         960,
         'SELESAI (TUTUP LANGSUNG)',
@@ -373,7 +394,10 @@ class HantuBanyuSeeder extends Seeder
       'updated_at' => $dilaporkan,
     ]);
 
+    $kode = $this->kodeLaporan($dilaporkan);
+
     $laporanId = DB::table('hantu_banyu_laporan')->insertGetId([
+      'kode' => $kode,
       'pelapor_id' => $pelaporId,
       // Sebagian kecil laporan dicatat sebagai buatan admin UPTD, bukan
       // operator kelurahan - supaya kolom & filter "Pelapor" punya kedua
@@ -392,11 +416,11 @@ class HantuBanyuSeeder extends Seeder
       'updated_at' => $dilaporkan,
     ]);
 
-    return [$pelaporId, $laporanId];
+    return [$pelaporId, $laporanId, $kode];
   }
 
   /** Foto kondisi lokasi yang diunggah pelapor saat membuat laporan. */
-  private function fotoLaporan(int $laporanId, $waktu): void
+  private function fotoLaporan(int $laporanId, string $kode, $waktu): void
   {
     for ($i = 1; $i <= 2; $i++) {
       $nama = 'foto_' . $waktu->format('YmdHis') . '_' . $i . '.png';
@@ -404,10 +428,10 @@ class HantuBanyuSeeder extends Seeder
       DB::table('hantu_banyu_laporan_foto')->insert([
         'laporan_id' => $laporanId,
         'foto' => DummyMedia::gambar(
-          "hantu-banyu/{$laporanId}/foto_laporan/{$nama}",
+          "hantu-banyu/{$kode}/foto_laporan/{$nama}",
           1280,
           960,
-          'LAPORAN ' . $laporanId . ' - FOTO ' . $i,
+          'LAPORAN ' . $kode . ' - FOTO ' . $i,
           'hantu-banyu'
         ),
         'created_at' => $waktu,
@@ -417,7 +441,7 @@ class HantuBanyuSeeder extends Seeder
   }
 
   /** Isi tahap penanganan secara berurutan sampai tahap yang sudah dicapai. */
-  private function tindakLanjut(int $laporanId, string $jenis, int $tahapTercapai, $waktuLaporan, string $jalan, string $kelurahanNama): void
+  private function tindakLanjut(int $laporanId, string $kode, string $jenis, int $tahapTercapai, $waktuLaporan, string $jalan, string $kelurahanNama): void
   {
     for ($tahap = 0; $tahap <= $tahapTercapai; $tahap++) {
       $status = self::STATUS[$tahap];
@@ -446,7 +470,7 @@ class HantuBanyuSeeder extends Seeder
       DB::table('hantu_banyu_laporan_tindak_lanjut_foto')->insert([
         'tindak_lanjut_id' => $tindakLanjutId,
         'foto' => DummyMedia::gambar(
-          "hantu-banyu/{$laporanId}/tindak_lanjut/{$nama}",
+          "hantu-banyu/{$kode}/tindak_lanjut/{$nama}",
           1280,
           960,
           strtoupper(str_replace('_', ' ', $status)),

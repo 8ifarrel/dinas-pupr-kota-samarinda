@@ -28,7 +28,7 @@
           <div
             class="relative flex-1 bg-gray-50 border rounded p-2 flex items-center justify-between hover:text-gray-700">
             <p id="nomorPengaduan" class="text-lg font-mono font-medium text-center select-all mx-auto">
-              {{ $laporan->id }}</p>
+              {{ $laporan->kode }}</p>
             <button id="copyButton" onclick="copyToClipboard()" class="text-gray-500 hover:text-gray-700 rounded-full transition-colors flex items-center gap-1 absolute right-2 cursor-pointer" title="Salin Kode">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -48,7 +48,7 @@
           <p class="text-gray-600 mb-3">
             Jika bukti pengaduan tidak terunduh secara otomatis, silakan tekan tombol di bawah ini.
           </p>
-          <a href="{{ URL::temporarySignedRoute('guest.hantu-banyu.pengaduan.pdf', now()->addMinutes(15), ['id' => $laporan->id]) }}"
+          <a href="{{ URL::temporarySignedRoute('guest.hantu-banyu.pengaduan.pdf', now()->addMinutes(15), ['kode' => $laporan->kode]) }}"
             target="_blank"
             class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-blue rounded hover:bg-brand-yellow hover:text-brand-blue">
             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -85,7 +85,7 @@
       document.body.appendChild(downloadFrame);
 
       // Set the iframe source to the PDF route with signature preserved
-      downloadFrame.src = @js(URL::temporarySignedRoute('guest.hantu-banyu.pengaduan.pdf', now()->addMinutes(30), ['id' => $laporan->id]));
+      downloadFrame.src = @js(URL::temporarySignedRoute('guest.hantu-banyu.pengaduan.pdf', now()->addMinutes(30), ['kode' => $laporan->kode]));
 
       // Remove iframe after a delay to ensure download starts
       setTimeout(() => {

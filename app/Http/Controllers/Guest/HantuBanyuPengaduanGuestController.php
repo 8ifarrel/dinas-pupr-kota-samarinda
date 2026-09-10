@@ -224,8 +224,8 @@ class HantuBanyuPengaduanGuestController extends Controller
         $ext = $file->getClientOriginalExtension();
         $now = now();
         $namaFoto = "foto{$i}_" . $now->format('HisdmY') . ".{$ext}";
-        $path = "hantu-banyu/{$laporan->id}/foto_laporan/{$namaFoto}";
-        $file->storeAs("public/hantu-banyu/{$laporan->id}/foto_laporan", $namaFoto);
+        $path = "hantu-banyu/{$laporan->kode}/foto_laporan/{$namaFoto}";
+        $file->storeAs("public/hantu-banyu/{$laporan->kode}/foto_laporan", $namaFoto);
         HantuBanyuLaporanFoto::create([
           'laporan_id' => $laporan->id,
           'foto' => $path,
@@ -252,7 +252,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     $url = URL::temporarySignedRoute(
       'guest.hantu-banyu.pengaduan.result',
       now()->addMinutes(15), // URL expires in 15 minutes
-      ['id' => $laporan->id]
+      ['kode' => $laporan->kode]
     );
 
     // Redirect to the signed URL
@@ -291,7 +291,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     if ($request->filled('search_query')) {
       $searchQuery = $request->input('search_query');
       $query->where(function ($q) use ($searchQuery) {
-        $q->where('hantu_banyu_laporan.id', 'LIKE', "%$searchQuery%")
+        $q->where('hantu_banyu_laporan.kode', 'LIKE', "%$searchQuery%")
           ->orWhere('nama_jalan', 'LIKE', "%$searchQuery%");
       });
     }
@@ -383,7 +383,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     }
   }
 
-  public function show($id)
+  public function show($kode)
   {
     $laporan = HantuBanyuLaporan::with([
       'pelapor',
@@ -395,7 +395,7 @@ class HantuBanyuPengaduanGuestController extends Controller
       },
       'tindakLanjut.foto'
       // Sejalan dengan index(): laporan terhapus tidak dibuka untuk publik.
-    ])->findOrFail($id);
+    ])->where('kode', $kode)->firstOrFail();
 
     // Akun kelurahan hanya boleh membuka laporan di kelurahannya; admin bebas.
     $kelurahanId = $this->kelurahanId();
@@ -414,7 +414,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     ]);
   }
 
-  public function pdf(Request $request, $id)
+  public function pdf(Request $request, $kode)
   {
     // Fetch the report with related data
     $laporan = HantuBanyuLaporan::with([
@@ -425,14 +425,14 @@ class HantuBanyuPengaduanGuestController extends Controller
       'tindakLanjut' => function ($q) {
         $q->orderBy('created_at', 'asc')->limit(1);
       }
-    ])->findOrFail($id);
+    ])->where('kode', $kode)->firstOrFail();
 
     // Get formatted date and time
     $tanggal_laporan = Carbon::parse($laporan->created_at)->format('d F Y');
     $waktu_laporan = Carbon::parse($laporan->created_at)->format('H:i');
 
     // Generate the report URL for QR code
-    $show_url = route('guest.hantu-banyu.pengaduan.show', ['id' => $laporan->id]);
+    $show_url = route('guest.hantu-banyu.pengaduan.show', ['kode' => $laporan->kode]);
 
     // Asal kelurahan pelapor (mengikuti akun kelurahan saat laporan dibuat)
     $kelurahan_akun = optional($laporan->pelapor->kelurahanAsal)->nama ?? '-';
@@ -447,7 +447,7 @@ class HantuBanyuPengaduanGuestController extends Controller
     ])->render();
 
     // Generate PDF filename
-    $filename = '[Hantu Banyu] Bukti Pengaduan Nomor ' . $laporan->id . '.pdf';
+    $filename = '[Hantu Banyu] Bukti Pengaduan Nomor ' . $laporan->kode . '.pdf';
 
     try {
       // Create the temp directory if it doesn't exist
@@ -493,13 +493,13 @@ class HantuBanyuPengaduanGuestController extends Controller
     }
   }
 
-  public function result($id, Request $request)
+  public function result($kode, Request $request)
   {
     $laporan = HantuBanyuLaporan::with([
       'pelapor',
       'kecamatan',
       'kelurahan'
-    ])->findOrFail($id);
+    ])->where('kode', $kode)->firstOrFail();
 
     $meta_description = "Laporan pengaduan drainase dan irigasi berhasil dikirim";
     $page_subtitle = "Hasil Pengaduan";

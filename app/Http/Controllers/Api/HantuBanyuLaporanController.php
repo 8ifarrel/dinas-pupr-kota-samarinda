@@ -117,11 +117,11 @@ class HantuBanyuLaporanController extends Controller
         }
 
         $namaFoto = "foto{$i}_" . now()->format('HisdmY') . '.' . $file->getClientOriginalExtension();
-        $file->storeAs("public/hantu-banyu/{$laporan->id}/foto_laporan", $namaFoto);
+        $file->storeAs("public/hantu-banyu/{$laporan->kode}/foto_laporan", $namaFoto);
 
         HantuBanyuLaporanFoto::create([
           'laporan_id' => $laporan->id,
-          'foto' => "hantu-banyu/{$laporan->id}/foto_laporan/{$namaFoto}",
+          'foto' => "hantu-banyu/{$laporan->kode}/foto_laporan/{$namaFoto}",
         ]);
 
         $i++;
@@ -144,12 +144,12 @@ class HantuBanyuLaporanController extends Controller
         'success' => true,
         'message' => 'Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut.',
         'data' => [
-          'id_laporan' => $laporan->id,
+          'nomor_laporan' => $laporan->kode,
           'status' => 'pending',
           'kecamatan' => optional($kelurahan->kecamatan)->nama,
           'kelurahan' => $kelurahan->nama,
           'jumlah_foto' => $laporan->foto()->count(),
-          'detail_url' => route('api.hantu-banyu-laporan.show', $laporan->id),
+          'detail_url' => route('api.hantu-banyu-laporan.show', $laporan->kode),
         ],
       ], 201);
     } catch (\Exception $e) {
@@ -166,10 +166,10 @@ class HantuBanyuLaporanController extends Controller
     }
   }
 
-  public function show($id)
+  public function show($kode)
   {
     try {
-      $laporan = HantuBanyuLaporan::with(['kecamatan', 'kelurahan', 'foto'])->findOrFail($id);
+      $laporan = HantuBanyuLaporan::with(['kecamatan', 'kelurahan', 'foto'])->where('kode', $kode)->firstOrFail();
 
       $tindakLanjut = $laporan->tindakLanjut()->orderByDesc('created_at')->first();
 
@@ -177,7 +177,7 @@ class HantuBanyuLaporanController extends Controller
         'success' => true,
         'message' => 'Data laporan berhasil diambil.',
         'data' => [
-          'id_laporan' => $laporan->id,
+          'nomor_laporan' => $laporan->kode,
           'nama_jalan' => $laporan->nama_jalan,
           'detail_lokasi' => $laporan->detail_lokasi,
           'deskripsi_pengaduan' => $laporan->deskripsi_pengaduan,

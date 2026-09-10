@@ -282,18 +282,18 @@ Route::prefix('hantu-banyu')->group(function () {
       ->middleware('hantu-banyu.kelola')
       ->name('guest.hantu-banyu.pengaduan.store');
 
-    Route::get('/pengaduan/bukti-pengaduan/{id}', [HantuBanyuPengaduanGuestController::class, 'pdf'])
+    Route::get('/pengaduan/bukti-pengaduan/{kode}', [HantuBanyuPengaduanGuestController::class, 'pdf'])
       ->middleware('validate.signed.access')
       ->name('guest.hantu-banyu.pengaduan.pdf');
 
-    Route::get('/pengaduan/hasil/{id}', [HantuBanyuPengaduanGuestController::class, 'result'])
+    Route::get('/pengaduan/hasil/{kode}', [HantuBanyuPengaduanGuestController::class, 'result'])
       ->middleware('validate.signed.access')
       ->name('guest.hantu-banyu.pengaduan.result');
 
     Route::get('/pengaduan/lihat', [HantuBanyuPengaduanGuestController::class, 'index'])
       ->name('guest.hantu-banyu.pengaduan.index');
 
-    Route::get('/pengaduan/lihat/{id}', [HantuBanyuPengaduanGuestController::class, 'show'])
+    Route::get('/pengaduan/lihat/{kode}', [HantuBanyuPengaduanGuestController::class, 'show'])
       ->name('guest.hantu-banyu.pengaduan.show');
 
     Route::get('/peta-sebaran', [HantuBanyuPetaSebaranGuestController::class, 'index'])
@@ -509,18 +509,18 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->name('admin.hantu-banyu.laporan.unduh-pdf');
         Route::get('/unduh-excel', [HantuBanyuLaporanAdminController::class, 'unduhExcel'])
           ->name('admin.hantu-banyu.laporan.unduh-excel');
-        Route::get('/{id}', [HantuBanyuLaporanAdminController::class, 'edit'])
-          ->whereNumber('id')
+        Route::get('/{kode}', [HantuBanyuLaporanAdminController::class, 'edit'])
+          ->where('kode', 'HB-\d{4}-\d{4,}')
           ->name('admin.hantu-banyu.laporan.edit');
-        Route::get('/{id}/pdf', [HantuBanyuLaporanAdminController::class, 'unduhPdfSatu'])
-          ->whereNumber('id')
+        Route::get('/{kode}/pdf', [HantuBanyuLaporanAdminController::class, 'unduhPdfSatu'])
+          ->where('kode', 'HB-\d{4}-\d{4,}')
           ->name('admin.hantu-banyu.laporan.pdf');
 
         // Seluruh admin boleh melihat laporan Hantu Banyu, tapi hanya unit
         // pemilik layanan (dan super admin) yang boleh menindaklanjutinya.
-        Route::post('/{id}/slot/{status}', [HantuBanyuLaporanAdminController::class, 'simpanSlot'])
+        Route::post('/{kode}/slot/{status}', [HantuBanyuLaporanAdminController::class, 'simpanSlot'])
           ->middleware('hantu-banyu.kelola')
-          ->whereNumber('id')->whereIn('status', HantuBanyuLaporanAdminController::STATUS)
+          ->where('kode', 'HB-\d{4}-\d{4,}')->whereIn('status', HantuBanyuLaporanAdminController::STATUS)
           ->name('admin.hantu-banyu.laporan.slot.simpan');
       });
 

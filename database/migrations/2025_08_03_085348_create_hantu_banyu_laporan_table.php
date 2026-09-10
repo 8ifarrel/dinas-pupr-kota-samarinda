@@ -15,6 +15,10 @@ return new class extends Migration
 
     Schema::create('hantu_banyu_laporan', function (Blueprint $table) {
       $table->id();
+      // Nomor laporan yang ditampilkan ke pengguna & dipakai di URL/API
+      // (format HB-YYYY-NNNN, urutan reset tiap tahun). `id` di atas murni
+      // kunci internal - tidak pernah ditampilkan atau dipakai di rute/API.
+      $table->string('kode', 20)->unique();
       $table->unsignedBigInteger('pelapor_id')->unique()->index();
       $table->foreign('pelapor_id')->references('id')->on('hantu_banyu_pelapor');
       $table->string('nama_jalan', 150);

@@ -637,7 +637,7 @@
 
           // Set links
           document.getElementById('modal-gmaps-link').href = gmapsUrl;
-          document.getElementById('modal-detail-link').href = `/hantu-banyu/pengaduan/lihat/${lap.id}`;
+          document.getElementById('modal-detail-link').href = `/hantu-banyu/pengaduan/lihat/${lap.kode}`;
 
           // Trigger the modal using the hidden button
           document.getElementById('modal-trigger-btn').click();

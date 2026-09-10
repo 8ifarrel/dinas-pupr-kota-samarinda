@@ -304,7 +304,7 @@
                   @forelse($laporan as $item)
                     <tr class="hover:bg-gray-50">
                       <td class="pl-3 pr-1.5 py-2 whitespace-nowrap text-center">
-                        <div class="text-sm font-medium text-gray-900">{{ $item->id }}</div>
+                        <div class="text-sm font-medium text-gray-900">{{ $item->kode }}</div>
                       </td>
                       <td class="px-1.5 py-2">
                         <div class="text-sm text-gray-900">
@@ -366,7 +366,7 @@
                         </span>
                       </td>
                       <td class="pl-1.5 pr-3 py-2 w-px whitespace-nowrap text-right text-sm font-medium">
-                        <a href="{{ route('guest.hantu-banyu.pengaduan.show', $item->id) }}"
+                        <a href="{{ route('guest.hantu-banyu.pengaduan.show', $item->kode) }}"
                           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition">
                           <span>Lihat Detail & Foto</span>
                           <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -397,7 +397,7 @@
                   <div class="border-b">
                     <button type="button" class="accordion-header w-full flex justify-between items-center px-4 py-3">
                       <div class="flex flex-col items-start">
-                        <span class="font-medium text-gray-900">{{ $item->id }}</span>
+                        <span class="font-medium text-gray-900">{{ $item->kode }}</span>
                         <span class="text-sm text-gray-600 truncate">{{ $item->nama_jalan }}</span>
                       </div>
                       <div class="flex items-center gap-2">
@@ -477,7 +477,7 @@
                         </dl>
 
                         <div class="flex justify-end items-center mt-3">
-                          <a href="{{ route('guest.hantu-banyu.pengaduan.show', $item->id) }}"
+                          <a href="{{ route('guest.hantu-banyu.pengaduan.show', $item->kode) }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-brand-blue bg-white text-brand-blue font-semibold hover:bg-brand-blue hover:text-white transition text-sm">
                             <span>Lihat Detail & Foto</span>
                             <svg class="ml-1 w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">

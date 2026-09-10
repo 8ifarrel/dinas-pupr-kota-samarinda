@@ -226,7 +226,7 @@ class HantuBanyuLaporanAdminController extends Controller
       $jenis = $l->jenis_laporan;
 
       $nilai = [
-        $l->id,
+        $l->kode,
         Carbon::parse($l->created_at)->translatedFormat('d F Y'),
         Carbon::parse($l->created_at)->format('H:i'),
         $l->label_pelapor,
@@ -347,7 +347,7 @@ class HantuBanyuLaporanAdminController extends Controller
    * Unduh satu laporan spesifik sebagai PDF (memakai template rekap yang sama,
    * lengkap dengan riwayat tindak lanjut).
    */
-  public function unduhPdfSatu($id)
+  public function unduhPdfSatu($kode)
   {
     $laporan = HantuBanyuLaporan::with([
       'pelapor.kelurahanAsal',
@@ -355,19 +355,19 @@ class HantuBanyuLaporanAdminController extends Controller
       'kelurahan',
       'foto',
       'tindakLanjut.foto',
-    ])->findOrFail($id);
+    ])->where('kode', $kode)->firstOrFail();
 
     $laporan->status_terkini = $this->statusTerkini($laporan->tindakLanjut);
     $laporan->jenis_laporan = optional($laporan->tindakLanjut->first())->jenis ?? 'belum_diklasifikasikan';
 
     $html = view('admin.pages.hantu-banyu.laporan.pdf', [
       'laporan' => collect([$laporan]),
-      'judul_rentang' => 'Laporan Nomor ' . $laporan->id,
+      'judul_rentang' => 'Laporan Nomor ' . $laporan->kode,
       'daftar_status' => self::STATUS,
       'dicetak_pada' => Carbon::now()->translatedFormat('d F Y H:i') . ' WITA',
     ])->render();
 
-    return $this->unduhHtmlSebagaiPdf($html, '[Hantu Banyu] Laporan Nomor ' . $laporan->id . '.pdf');
+    return $this->unduhHtmlSebagaiPdf($html, '[Hantu Banyu] Laporan Nomor ' . $laporan->kode . '.pdf');
   }
 
   /** Render HTML menjadi PDF A4 lewat Browsershot lalu kirim sebagai unduhan. */
@@ -418,7 +418,7 @@ class HantuBanyuLaporanAdminController extends Controller
     return $sisi === 'akhir' ? $c->endOfMonth() : $c->startOfMonth();
   }
 
-  public function edit($id)
+  public function edit($kode)
   {
     $laporan = HantuBanyuLaporan::with([
       'pelapor.kelurahanAsal',
@@ -426,7 +426,7 @@ class HantuBanyuLaporanAdminController extends Controller
       'kelurahan',
       'foto',
       'tindakLanjut.foto',
-    ])->findOrFail($id);
+    ])->where('kode', $kode)->firstOrFail();
 
     // Petakan setiap tahap ke barisnya (null bila belum diisi)
     $slot = [];
@@ -435,7 +435,7 @@ class HantuBanyuLaporanAdminController extends Controller
     }
 
     return view('admin.pages.hantu-banyu.laporan.edit', [
-      'page_title' => 'Laporan Nomor ' . $laporan->id,
+      'page_title' => 'Laporan Nomor ' . $laporan->kode,
       'page_description' => 'Rincian laporan dan linimasa tindak lanjut per tahap.',
       'laporan' => $laporan,
       'slot' => $slot,
@@ -455,11 +455,11 @@ class HantuBanyuLaporanAdminController extends Controller
    * Isi / perbarui satu tahap. Membuat baris bila belum ada, memperbarui bila
    * sudah ada. Perubahan "jenis penanganan" disinkronkan ke seluruh tahap.
    */
-  public function simpanSlot(Request $request, $id, $status)
+  public function simpanSlot(Request $request, $kode, $status)
   {
     abort_unless(in_array($status, self::STATUS, true), 404);
 
-    $laporan = HantuBanyuLaporan::with('tindakLanjut')->findOrFail($id);
+    $laporan = HantuBanyuLaporan::with('tindakLanjut')->where('kode', $kode)->firstOrFail();
 
     abort_unless(
       $this->slotEditable($laporan->tindakLanjut)[$status] ?? false,
@@ -506,12 +506,12 @@ class HantuBanyuLaporanAdminController extends Controller
       }
     }
 
-    $this->simpanFoto($request, $laporan->id, $row);
+    $this->simpanFoto($request, $laporan->kode, $row);
 
     $laporan->touch();
 
     return redirect()
-      ->route('admin.hantu-banyu.laporan.edit', $laporan->id)
+      ->route('admin.hantu-banyu.laporan.edit', $laporan->kode)
       ->with('success', 'Tahap berhasil disimpan.');
   }
 
@@ -559,13 +559,13 @@ class HantuBanyuLaporanAdminController extends Controller
     return $map;
   }
 
-  private function simpanFoto(Request $request, int $laporanId, HantuBanyuLaporanTindakLanjut $tindak): void
+  private function simpanFoto(Request $request, string $laporanKode, HantuBanyuLaporanTindakLanjut $tindak): void
   {
     if (!$request->hasFile('foto')) {
       return;
     }
 
-    $dir = "hantu-banyu/{$laporanId}/tindak_lanjut";
+    $dir = "hantu-banyu/{$laporanKode}/tindak_lanjut";
     foreach ($request->file('foto') as $file) {
       if (!$file || !$file->isValid()) {
         continue;

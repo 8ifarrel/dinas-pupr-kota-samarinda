@@ -135,7 +135,7 @@
         ['label' => 'Layanan', 'href' => '#'],
         ['label' => 'Hantu Banyu', 'href' => route('guest.hantu-banyu.index')],
         ['label' => 'Lihat Pengaduan Hantu Banyu', 'href' => route('guest.hantu-banyu.pengaduan.index')],
-        ['label' => 'Detail Pengaduan Nomor ' . $laporan->id],
+        ['label' => 'Detail Pengaduan Nomor ' . $laporan->kode],
       ]"
     />
 
@@ -170,7 +170,7 @@
           </div>
         </div>
         <div class="mt-3 pt-3 border-t border-gray-100 text-gray-500">
-          <b>Nomor Pengaduan</b>: {{ $laporan->id }} <span class="mx-0.5">•</span> <b>Dilaporkan</b>:
+          <b>Nomor Pengaduan</b>: {{ $laporan->kode }} <span class="mx-0.5">•</span> <b>Dilaporkan</b>:
           {{ \Carbon\Carbon::parse($laporan->created_at)->translatedFormat('d F Y H:i') }} WITA
         </div>
       </div>

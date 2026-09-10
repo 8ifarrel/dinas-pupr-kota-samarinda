@@ -46,6 +46,10 @@ class HantuBanyuPetaSebaranGuestController extends Controller
       )
       ->get();
 
+    // `id` internal tidak perlu ikut ke payload peta di sisi peramban -
+    // tautan detail memakai `kode`.
+    $laporan->makeHidden('id');
+
     // Untuk filter status unik
     $statusList = DB::table('hantu_banyu_laporan_tindak_lanjut')
       ->select('status')

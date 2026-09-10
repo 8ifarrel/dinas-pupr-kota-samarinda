@@ -43,7 +43,7 @@
       class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 rounded-lg px-3 py-2">
       <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Laporan
     </a>
-    <a href="{{ route('admin.hantu-banyu.laporan.pdf', $laporan->id) }}"
+    <a href="{{ route('admin.hantu-banyu.laporan.pdf', $laporan->kode) }}"
       class="inline-flex items-center gap-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2">
       <i class="fa-solid fa-file-pdf"></i> Unduh PDF
     </a>
@@ -188,7 +188,7 @@
         <dl class="space-y-2 text-sm">
           <div>
             <dt class="text-gray-500">Nomor Pengaduan</dt>
-            <dd class="font-medium text-gray-900">{{ $laporan->id }}</dd>
+            <dd class="font-medium text-gray-900">{{ $laporan->kode }}</dd>
           </div>
           <div>
             <dt class="text-gray-500">Status Terkini</dt>
@@ -296,7 +296,7 @@
             </button>
           </div>
 
-          <form method="POST" action="{{ route('admin.hantu-banyu.laporan.slot.simpan', [$laporan->id, $s]) }}"
+          <form method="POST" action="{{ route('admin.hantu-banyu.laporan.slot.simpan', [$laporan->kode, $s]) }}"
             enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="_slot" value="{{ $s }}">

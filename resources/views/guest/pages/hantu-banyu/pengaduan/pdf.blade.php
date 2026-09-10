@@ -186,7 +186,7 @@
         <div class="subtitle">Sistem Informasi Pemeliharaan Saluran Drainase dan Irigasi</div>
         <div class="title">Bukti Pengaduan Hantu Banyu</div>
         <div style="display: flex; flex-direction: row; align-items: flex-end; gap: 5px; justify-content: center;">
-          <div class="report-id"><span style="font-weight: normal;">Nomor pengaduan:</span> {{ $laporan->id }}</div>
+          <div class="report-id"><span style="font-weight: normal;">Nomor pengaduan:</span> {{ $laporan->kode }}</div>
           <span>•</span>
           <div class="report-id"><span style="font-weight: normal;">Waktu masuk:</span> {{ $tanggal_laporan }}
             ({{ $waktu_laporan }})</div>

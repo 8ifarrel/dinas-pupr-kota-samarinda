@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class HantuBanyuLaporan extends Model
 {
@@ -13,6 +15,49 @@ class HantuBanyuLaporan extends Model
   public const LABEL_ADMIN = 'Admin UPTD PSDI';
 
   protected $table = 'hantu_banyu_laporan';
+
+  /** `kode` (HB-YYYY-NNNN), bukan `id`, yang dipakai pada URL & route-model-binding. */
+  public function getRouteKeyName(): string
+  {
+    return 'kode';
+  }
+
+  /** Beri nomor laporan otomatis saat dibuat, kalau belum diisi pemanggil. */
+  protected static function booted(): void
+  {
+    static::creating(function (self $laporan): void {
+      if (blank($laporan->kode)) {
+        $laporan->kode = self::kodeBerikutnya($laporan->created_at ?: now());
+      }
+    });
+  }
+
+  /**
+   * Nomor laporan berikutnya untuk tahun pada $waktu, format HB-YYYY-NNNN.
+   * Urutan reset tiap tahun. Baris penghitung dikunci selama transaksi
+   * supaya tidak ada dua laporan yang mendapat nomor sama; index unik pada
+   * kolom `kode` menjadi penjaga terakhir bila tetap terjadi.
+   */
+  public static function kodeBerikutnya($waktu): string
+  {
+    $tahun = (int) Carbon::parse($waktu)->year;
+
+    return DB::transaction(function () use ($tahun) {
+      $terakhir = (int) (DB::table('hantu_banyu_laporan_counter')
+        ->where('tahun', $tahun)
+        ->lockForUpdate()
+        ->value('terakhir') ?? 0);
+
+      $berikut = $terakhir + 1;
+
+      DB::table('hantu_banyu_laporan_counter')->updateOrInsert(
+        ['tahun' => $tahun],
+        ['terakhir' => $berikut]
+      );
+
+      return sprintf('HB-%d-%04d', $tahun, $berikut);
+    });
+  }
 
   protected $fillable = [
     'pelapor_id',

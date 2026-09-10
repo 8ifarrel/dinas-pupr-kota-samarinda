@@ -41,6 +41,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 3,
         'nama_susunan_organisasi' => 'Subbagian Program',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 2,
         'slug_susunan_organisasi' => 'subbagian-program',
         'tupoksi_susunan_organisasi' => null,
@@ -54,6 +55,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 4,
         'nama_susunan_organisasi' => 'Subbagian Umum dan Kepegawaian',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 2,
         'slug_susunan_organisasi' => 'subbagian-umum-dan-kepegawaian',
         'tupoksi_susunan_organisasi' => null,
@@ -67,6 +69,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 5,
         'nama_susunan_organisasi' => 'Subbagian Keuangan',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 2,
         'slug_susunan_organisasi' => 'subbagian-keuangan',
         'tupoksi_susunan_organisasi' => null,
@@ -206,6 +209,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 15,
         'nama_susunan_organisasi' => 'Subbagian Tata Usaha UPTD Pengelolaan Air dan Limbah Domestik',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 12,
         'slug_susunan_organisasi' => 'subbagian-tata-usaha-uptd-pengelolaan-air-dan-limbah-domestik',
         'tupoksi_susunan_organisasi' => null,
@@ -219,6 +223,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 16,
         'nama_susunan_organisasi' => 'Subbagian Tata Usaha UPTD Pemeliharaan Jalan dan Jembatan',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 13,
         'slug_susunan_organisasi' => 'subbagian-tata-usaha-uptd-pemeliharaan-jalan-dan-jembatan',
         'tupoksi_susunan_organisasi' => null,
@@ -232,6 +237,7 @@ class SusunanOrganisasiSeeder extends Seeder
       [
         'id_susunan_organisasi' => 17,
         'nama_susunan_organisasi' => 'Subbagian Tata Usaha UPTD Pemeliharaan Saluran Drainase dan Irigasi',
+        'singkatan_susunan_organisasi' => null,
         'id_susunan_organisasi_parent' => 14,
         'slug_susunan_organisasi' => 'subbagian-tata-usaha-uptd-pemeliharaan-saluran-drainase-dan-irigasi',
         'tupoksi_susunan_organisasi' => null,
