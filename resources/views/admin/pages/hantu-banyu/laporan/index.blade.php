@@ -76,6 +76,32 @@
           <option value="admin">{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</option>
         </select>
       </div>
+
+      {{-- Penyaring multi-pilih: satu baris terpilih menyaring baris yang
+           status/jenisnya termasuk pilihan itu. Kosong = tidak menyaring. --}}
+      @foreach ([['kelas' => 'filterStatus', 'label' => 'Status terkini', 'opsi' => $statusLabels], ['kelas' => 'filterJenis', 'label' => 'Jenis', 'opsi' => $jenisLabels]] as $f)
+        <div>
+          <span class="block text-xs font-medium text-gray-600 mb-1">{{ $f['label'] }}</span>
+          <div class="relative" data-multifilter>
+            <button type="button" data-multifilter-toggle
+              class="h-10 min-w-[9rem] px-3 inline-flex items-center justify-between gap-2 border border-gray-300 bg-white text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+              <span data-multifilter-teks>Semua</span>
+              <i class="fa-solid fa-chevron-down fa-xs text-gray-400"></i>
+            </button>
+            <div data-multifilter-panel
+              class="hidden absolute left-0 z-30 mt-1 w-56 max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg p-1">
+              @foreach ($f['opsi'] as $key => $labelOpsi)
+                <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="{{ $key }}"
+                    class="{{ $f['kelas'] }} rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>{{ $labelOpsi }}</span>
+                </label>
+              @endforeach
+            </div>
+          </div>
+        </div>
+      @endforeach
+
       <button type="button" id="btnResetFilter"
         class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
         Reset
@@ -124,7 +150,8 @@
                 {{ $item->created_at->translatedFormat('d M Y') }}<br>
                 <span class="text-xs text-gray-500">{{ $item->created_at->translatedFormat('H.i') }} WITA</span>
               </td>
-              <td>
+              {{-- data-status / data-jenis dipakai penyaring multi-pilih di atas tabel. --}}
+              <td data-status="{{ $status }}">
                 @if ($status)
                   <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium {{ $statusBadge[$status] ?? 'bg-gray-100 text-gray-800' }}">
                     {{ $statusLabels[$status] ?? ucwords(str_replace('_', ' ', $status)) }}
@@ -133,7 +160,7 @@
                   <span class="text-xs text-gray-400">Belum ada</span>
                 @endif
               </td>
-              <td>
+              <td data-jenis="{{ $jenis }}">
                 <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium {{ $jenisBadge[$jenis] ?? 'bg-gray-100 text-gray-800' }}">
                   {{ $jenisLabels[$jenis] ?? ucwords(str_replace('_', ' ', $jenis)) }}
                 </span>
@@ -311,6 +338,13 @@
         return isNaN(t.getTime()) ? null : Math.floor(t.getTime() / 1000);
       }
 
+      // Nilai (value) kotak centang yang tercentang untuk sebuah kelas.
+      function nilaiTercentang(kelas) {
+        return Array.from(document.querySelectorAll('.' + kelas + ':checked')).map(function(c) {
+          return c.value;
+        });
+      }
+
       $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
         if (settings.nTable !== document.getElementById('laporan')) return true;
 
@@ -318,6 +352,8 @@
         const dari = batasEpoch(inpDari.value, false);
         const sampai = batasEpoch(inpSampai.value, true);
         const tipe = selDibuatOleh.value;
+        const status = nilaiTercentang('filterStatus');
+        const jenis = nilaiTercentang('filterJenis');
 
         if (dari !== null || sampai !== null) {
           const selWaktu = baris.cells[4];
@@ -329,6 +365,8 @@
         }
 
         if (tipe && baris.cells[2].getAttribute('data-tipe') !== tipe) return false;
+        if (status.length && status.indexOf(baris.cells[5].getAttribute('data-status')) === -1) return false;
+        if (jenis.length && jenis.indexOf(baris.cells[6].getAttribute('data-jenis')) === -1) return false;
 
         return true;
       });
@@ -339,10 +377,58 @@
         });
       });
 
+      // --- Penyaring multi-pilih (Status terkini & Jenis) ---
+      const multifilters = Array.from(document.querySelectorAll('[data-multifilter]')).map(function(wrap) {
+        const toggle = wrap.querySelector('[data-multifilter-toggle]');
+        const panel = wrap.querySelector('[data-multifilter-panel]');
+        const teks = wrap.querySelector('[data-multifilter-teks]');
+        const kotak = Array.from(wrap.querySelectorAll('input[type="checkbox"]'));
+
+        function perbaruiTeks() {
+          const dipilih = kotak.filter(function(c) {
+            return c.checked;
+          });
+          if (dipilih.length === 0) teks.textContent = 'Semua';
+          else if (dipilih.length === 1) teks.textContent = dipilih[0].closest('label').querySelector('span').textContent.trim();
+          else teks.textContent = dipilih.length + ' dipilih';
+        }
+
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          panel.classList.toggle('hidden');
+        });
+        kotak.forEach(function(c) {
+          c.addEventListener('change', function() {
+            perbaruiTeks();
+            tabel.draw();
+          });
+        });
+
+        return {
+          panel: panel,
+          reset: function() {
+            kotak.forEach(function(c) {
+              c.checked = false;
+            });
+            perbaruiTeks();
+          },
+        };
+      });
+
+      // Tutup panel saat mengeklik di luar tombol/panel-nya.
+      document.addEventListener('click', function(e) {
+        multifilters.forEach(function(mf) {
+          if (!mf.panel.parentElement.contains(e.target)) mf.panel.classList.add('hidden');
+        });
+      });
+
       document.getElementById('btnResetFilter').addEventListener('click', function() {
         inpDari.value = '';
         inpSampai.value = '';
         selDibuatOleh.value = '';
+        multifilters.forEach(function(mf) {
+          mf.reset();
+        });
         tabel.draw();
       });
 
