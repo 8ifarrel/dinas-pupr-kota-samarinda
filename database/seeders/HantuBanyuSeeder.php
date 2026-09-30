@@ -182,14 +182,6 @@ class HantuBanyuSeeder extends Seeder
     // Boleh kosong (mis. database tanpa akun admin) - kolomnya nullable.
     $this->adminId = DB::table('users')->orderBy('id')->value('id');
 
-    $skmTersedia = DB::table('skm')
-      ->join('layanan', 'layanan.id', '=', 'skm.layanan_id')
-      ->where('layanan.nama', 'hantu_banyu')
-      ->orderBy('skm.id')
-      ->pluck('skm.id')
-      ->all();
-    $skmDipakai = 0;
-
     $totalKelurahan = $kelurahanList->count();
 
     foreach ($kelurahanList as $ki => $wilayah) {
@@ -213,7 +205,7 @@ class HantuBanyuSeeder extends Seeder
 
         if ($status === 'selesai') {
           if ($tutupLangsung) {
-            $this->buatLaporanTutupLangsung($wilayah, $ki, $titik, $skmTersedia, $skmDipakai);
+            $this->buatLaporanTutupLangsung($wilayah, $ki, $titik);
             continue;
           }
 
@@ -230,7 +222,7 @@ class HantuBanyuSeeder extends Seeder
           ? 'belum_diklasifikasikan'
           : self::JENIS_TERKLASIFIKASI[($ki + $tahap) % count(self::JENIS_TERKLASIFIKASI)];
 
-        $this->buatLaporanNormal($wilayah, $ki, $tahap, $jenis, $titik, $daysAgo, $skmTersedia, $skmDipakai);
+        $this->buatLaporanNormal($wilayah, $ki, $tahap, $jenis, $titik, $daysAgo);
       }
     }
 
@@ -253,9 +245,7 @@ class HantuBanyuSeeder extends Seeder
     int $tahapTercapai,
     string $jenis,
     array $titik,
-    int $daysAgo,
-    array $skmTersedia,
-    int &$skmDipakai
+    int $daysAgo
   ): void {
     $globalIndex = $ki * count(self::STATUS) + $tahapTercapai;
     $rt = ($globalIndex % 12) + 1;
@@ -274,10 +264,7 @@ class HantuBanyuSeeder extends Seeder
       $titik,
       $detail,
       $deskripsi,
-      $dilaporkan,
-      $skmTersedia,
-      $skmDipakai,
-      self::STATUS[$tahapTercapai] === 'selesai'
+      $dilaporkan
     );
 
     $this->fotoLaporan($laporanId, $kode, $dilaporkan);
@@ -290,7 +277,7 @@ class HantuBanyuSeeder extends Seeder
    * tanpa tahap menengah tercatat. Jenis disinkronkan ke KEDUA baris,
    * meniru perilaku sinkronisasi jenis di controller admin.
    */
-  private function buatLaporanTutupLangsung(object $wilayah, int $ki, array $titik, array $skmTersedia, int &$skmDipakai): void
+  private function buatLaporanTutupLangsung(object $wilayah, int $ki, array $titik): void
   {
     $globalIndex = $ki * count(self::STATUS) + (count(self::STATUS) - 1);
     $rt = ($globalIndex % 12) + 1;
@@ -314,10 +301,7 @@ class HantuBanyuSeeder extends Seeder
       $titik,
       $detail,
       $deskripsi,
-      $dilaporkan,
-      $skmTersedia,
-      $skmDipakai,
-      true
+      $dilaporkan
     );
 
     $keteranganTutup = strtr(self::KETERANGAN_TUTUP_LANGSUNG, [
@@ -368,10 +352,7 @@ class HantuBanyuSeeder extends Seeder
     array $titik,
     string $detail,
     string $deskripsi,
-    $dilaporkan,
-    array $skmTersedia,
-    int &$skmDipakai,
-    bool $sudahSelesai
+    $dilaporkan
   ): array {
     $namaPelapor = self::NAMA_DEPAN[$globalIndex % count(self::NAMA_DEPAN)]
       . ' ' . self::NAMA_BELAKANG[intdiv($globalIndex, count(self::NAMA_DEPAN)) % count(self::NAMA_BELAKANG)];
@@ -387,9 +368,6 @@ class HantuBanyuSeeder extends Seeder
       'kelurahan_asal_id' => $wilayah->kelurahan_id,
       'alamat' => 'RT ' . $rt . ', Kelurahan ' . $wilayah->kelurahan_nama . ', Samarinda',
       'nomor_telepon' => $telepon,
-      // SKM diisi hanya untuk sebagian laporan yang sudah "selesai" - wajar
-      // hanya sebagian warga yang sempat mengisi survei kepuasan.
-      'skm_id' => ($sudahSelesai && $skmDipakai < count($skmTersedia)) ? $skmTersedia[$skmDipakai++] : null,
       'created_at' => $dilaporkan,
       'updated_at' => $dilaporkan,
     ]);

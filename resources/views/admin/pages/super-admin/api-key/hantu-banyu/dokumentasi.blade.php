@@ -28,16 +28,14 @@
           <li><code>detail_lokasi</code> — wajib, patokan lokasi</li>
           <li><code>deskripsi_pengaduan</code> — wajib, uraian kerusakan</li>
           <li><code>foto[]</code> — wajib, minimal 1 berkas, JPG/JPEG/PNG, maksimal 2MB per berkas</li>
-          <li><code>skm_nilai</code> — opsional, penilaian layanan 1-4</li>
-          <li><code>skm_kritik</code>, <code>skm_saran</code> — opsional</li>
         </ul>
       </li>
     </ul>
   </li>
-  <li>Kirim request. Respon sukses mengembalikan <code>id_laporan</code>, status awal
-    <em>pending</em>, dan <code>detail_url</code> untuk memantau laporan.</li>
+  <li>Kirim request. Respon sukses mengembalikan <code>nomor_laporan</code> (format <code>HB-YYYY-NNNN</code>),
+    status awal <em>pending</em>, dan <code>detail_url</code> untuk memantau laporan.</li>
   <li>Pantau laporan lewat <code class="bg-gray-100 px-2 py-0.5 rounded">GET
-      {{ url('/api/hantu-banyu/laporan/{id}') }}</code> memakai header yang sama.</li>
+      {{ url('/api/hantu-banyu/laporan/{kode}') }}</code> memakai header yang sama.</li>
 </ol>
 
 <div class="bg-amber-50 border border-amber-200 text-amber-800 rounded-lg p-3 text-sm">

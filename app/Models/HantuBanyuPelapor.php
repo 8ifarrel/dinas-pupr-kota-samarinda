@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\HantuBanyuLaporan;
 use App\Models\Kelurahan;
-use App\Models\SKM;
 
 class HantuBanyuPelapor extends Model
 {
@@ -21,7 +20,6 @@ class HantuBanyuPelapor extends Model
     'kelurahan_asal_id',
     'alamat',
     'nomor_telepon',
-    'skm_id',
   ];
 
   public function laporan(): HasOne
@@ -32,10 +30,5 @@ class HantuBanyuPelapor extends Model
   public function kelurahanAsal(): BelongsTo
   {
     return $this->belongsTo(Kelurahan::class, 'kelurahan_asal_id');
-  }
-
-  public function skm(): BelongsTo
-  {
-    return $this->belongsTo(SKM::class, 'skm_id');
   }
 }

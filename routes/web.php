@@ -351,8 +351,8 @@ use App\Http\Controllers\Admin\JalanPeduliTindaklanjutiLaporanAdminController;
 use App\Http\Controllers\Admin\APIKeySuperAdminController;
 use App\Http\Controllers\Admin\HantuBanyuAdminController;
 use App\Http\Controllers\Admin\HantuBanyuLaporanAdminController;
+use App\Http\Controllers\Admin\HantuBanyuPemeriksaanBerkalaAdminController;
 use App\Http\Controllers\Admin\HantuBanyuStatistikLaporanAdminController;
-use App\Http\Controllers\Admin\HantuBanyuSKMAdminController;
 
 use App\Http\Controllers\Admin\AkunAdminSuperAdminController;
 use App\Http\Controllers\Admin\AkunKelurahanSuperAdminController;
@@ -529,11 +529,37 @@ Route::prefix('e-panel')->middleware([BlockSearchEngines::class])->group(functio
           ->name('admin.hantu-banyu.statistik-laporan.index');
       });
 
-      Route::prefix('skm')->group(function () {
-        Route::get('/', [HantuBanyuSKMAdminController::class, 'index'])
-          ->name('admin.hantu-banyu.skm.index');
-      });
+      /**
+       * Pemeriksaan Berkala Saluran
+       *
+       * Berdiri sendiri dari pengaduan warga di atas: ini catatan patroli/
+       * pemeriksaan rutin internal UPTD PSDI, murni kebutuhan e-panel -
+       * tidak ada bagian dari fitur ini yang tampil di sisi guest/kelurahan.
+       */
+      Route::prefix('pemeriksaan-berkala')->group(function () {
+        Route::get('/', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'index'])
+          ->name('admin.hantu-banyu.pemeriksaan-berkala.index');
+        Route::get('/unduh-pdf', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'unduhPdf'])
+          ->name('admin.hantu-banyu.pemeriksaan-berkala.unduh-pdf');
+        Route::get('/unduh-excel', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'unduhExcel'])
+          ->name('admin.hantu-banyu.pemeriksaan-berkala.unduh-excel');
 
+        Route::middleware('hantu-banyu.kelola')->group(function () {
+          Route::get('/tambah', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'create'])
+            ->name('admin.hantu-banyu.pemeriksaan-berkala.create');
+          Route::post('/tambah', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'store'])
+            ->name('admin.hantu-banyu.pemeriksaan-berkala.store');
+          Route::get('/{pemeriksaan_berkala}/edit', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'edit'])
+            ->whereNumber('pemeriksaan_berkala')
+            ->name('admin.hantu-banyu.pemeriksaan-berkala.edit');
+          Route::put('/{pemeriksaan_berkala}', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'update'])
+            ->whereNumber('pemeriksaan_berkala')
+            ->name('admin.hantu-banyu.pemeriksaan-berkala.update');
+          Route::delete('/{pemeriksaan_berkala}', [HantuBanyuPemeriksaanBerkalaAdminController::class, 'destroy'])
+            ->whereNumber('pemeriksaan_berkala')
+            ->name('admin.hantu-banyu.pemeriksaan-berkala.destroy');
+        });
+      });
     });
 
     /**

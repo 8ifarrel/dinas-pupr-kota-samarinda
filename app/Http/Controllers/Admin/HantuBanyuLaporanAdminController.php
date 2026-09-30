@@ -84,19 +84,16 @@ class HantuBanyuLaporanAdminController extends Controller
 
   /**
    * Unduh rekap laporan sebagai satu berkas PDF (satu laporan per halaman A4).
-   * Filter: semua / rentang bulan-tahun / satu tahun / satu bulan pada tahun tertentu.
+   * Filter: semua / hari ini / rentang tanggal / satu tahun / satu bulan pada tahun tertentu.
    */
   public function unduhPdf(Request $request)
   {
     $data = $request->validate([
-      'mode' => ['required', 'in:semua,rentang,tahun,bulan'],
-      'dari_bulan' => ['nullable', 'integer', 'between:1,12'],
-      'dari_tahun' => ['nullable', 'integer', 'between:2000,2100'],
-      'sampai_bulan' => ['nullable', 'integer', 'between:1,12'],
-      'sampai_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'mode' => ['required', 'in:semua,hari_ini,rentang,tahun,bulan'],
+      'dari_tanggal' => ['nullable', 'date'],
+      'sampai_tanggal' => ['nullable', 'date'],
       'tahun' => ['nullable', 'integer', 'between:2000,2100'],
-      'bulan' => ['nullable', 'integer', 'between:1,12'],
-      'bulan_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'periode_bulan' => ['nullable', 'date_format:Y-m'],
     ]);
 
     $query = $this->queryLaporanLengkap();
@@ -138,14 +135,11 @@ class HantuBanyuLaporanAdminController extends Controller
   public function unduhExcel(Request $request)
   {
     $data = $request->validate([
-      'mode' => ['required', 'in:semua,rentang,tahun,bulan'],
-      'dari_bulan' => ['nullable', 'integer', 'between:1,12'],
-      'dari_tahun' => ['nullable', 'integer', 'between:2000,2100'],
-      'sampai_bulan' => ['nullable', 'integer', 'between:1,12'],
-      'sampai_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'mode' => ['required', 'in:semua,hari_ini,rentang,tahun,bulan'],
+      'dari_tanggal' => ['nullable', 'date'],
+      'sampai_tanggal' => ['nullable', 'date'],
       'tahun' => ['nullable', 'integer', 'between:2000,2100'],
-      'bulan' => ['nullable', 'integer', 'between:1,12'],
-      'bulan_tahun' => ['nullable', 'integer', 'between:2000,2100'],
+      'periode_bulan' => ['nullable', 'date_format:Y-m'],
     ]);
 
     $query = $this->queryLaporanLengkap();
@@ -299,22 +293,29 @@ class HantuBanyuLaporanAdminController extends Controller
       7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
     ];
 
+    if ($data['mode'] === 'hari_ini') {
+      $hariIni = Carbon::today();
+      $query->whereDate('created_at', $hariIni);
+
+      return ['Hari Ini (' . $hariIni->translatedFormat('d F Y') . ')', 'Hari Ini ' . $hariIni->format('Y-m-d'), null];
+    }
+
     if ($data['mode'] === 'rentang') {
-      $dari = $this->wajibTanggal($data['dari_bulan'] ?? null, $data['dari_tahun'] ?? null, 'awal');
-      $sampai = $this->wajibTanggal($data['sampai_bulan'] ?? null, $data['sampai_tahun'] ?? null, 'akhir');
+      $dari = $data['dari_tanggal'] ?? null;
+      $sampai = $data['sampai_tanggal'] ?? null;
       if (!$dari || !$sampai) {
-        return ['', '', 'Lengkapi bulan dan tahun untuk rentang yang dipilih.'];
+        return ['', '', 'Lengkapi tanggal awal dan akhir untuk rentang yang dipilih.'];
       }
+      $dari = Carbon::parse($dari)->startOfDay();
+      $sampai = Carbon::parse($sampai)->endOfDay();
       if ($dari->gt($sampai)) {
-        [$dari, $sampai] = [$sampai->copy()->startOfMonth(), $dari->copy()->endOfMonth()];
+        [$dari, $sampai] = [$sampai->copy()->startOfDay(), $dari->copy()->endOfDay()];
       }
       $query->whereBetween('created_at', [$dari, $sampai]);
 
       return [
-        'Periode ' . $bulanNama[(int) $dari->month] . ' ' . $dari->year
-          . ' - ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year,
-        $bulanNama[(int) $dari->month] . ' ' . $dari->year
-          . ' sd ' . $bulanNama[(int) $sampai->month] . ' ' . $sampai->year,
+        'Periode ' . $dari->translatedFormat('d F Y') . ' - ' . $sampai->translatedFormat('d F Y'),
+        $dari->format('Y-m-d') . '_sd_' . $sampai->format('Y-m-d'),
         null,
       ];
     }
@@ -330,11 +331,11 @@ class HantuBanyuLaporanAdminController extends Controller
     }
 
     if ($data['mode'] === 'bulan') {
-      $bulan = $data['bulan'] ?? null;
-      $tahun = $data['bulan_tahun'] ?? null;
-      if (!$bulan || !$tahun) {
-        return ['', '', 'Pilih bulan dan tahun terlebih dahulu.'];
+      $periodeBulan = $data['periode_bulan'] ?? null;
+      if (!$periodeBulan) {
+        return ['', '', 'Pilih bulan terlebih dahulu.'];
       }
+      [$tahun, $bulan] = explode('-', $periodeBulan);
       $query->whereYear('created_at', $tahun)->whereMonth('created_at', $bulan);
 
       return [$bulanNama[(int) $bulan] . ' ' . $tahun, $bulanNama[(int) $bulan] . ' ' . $tahun, null];
@@ -393,6 +394,12 @@ class HantuBanyuLaporanAdminController extends Controller
       }
 
       $browsershot
+        // Batas bawaan Browsershot (60 detik proses, 30 detik protokol CDP)
+        // sering kurang untuk rekap "Semua" yang berisi banyak laporan -
+        // rentan gagal acak dengan "Page.printToPDF timed out" saat render
+        // kebetulan lambat (beban CPU, dsb). Dinaikkan supaya konsisten.
+        ->timeout(180)
+        ->protocolTimeout(180)
         ->waitUntilNetworkIdle()
         ->format('A4')
         ->margins(8, 8, 8, 8)
@@ -406,16 +413,6 @@ class HantuBanyuLaporanAdminController extends Controller
       Log::error('PDF Hantu Banyu gagal: ' . $e->getMessage());
       return back()->with('error', 'Gagal membuat PDF. ' . $e->getMessage());
     }
-  }
-
-  /** Bangun Carbon dari (bulan, tahun); $sisi = "awal" -> awal bulan, "akhir" -> akhir bulan. */
-  private function wajibTanggal(?int $bulan, ?int $tahun, string $sisi): ?Carbon
-  {
-    if (!$bulan || !$tahun) {
-      return null;
-    }
-    $c = Carbon::create($tahun, $bulan, 1, 0, 0, 0);
-    return $sisi === 'akhir' ? $c->endOfMonth() : $c->startOfMonth();
   }
 
   public function edit($kode)

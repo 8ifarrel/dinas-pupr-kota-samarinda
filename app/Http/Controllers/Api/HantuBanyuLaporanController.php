@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Guest\HantuBanyuPengaduanGuestController;
 use App\Models\HantuBanyuLaporan;
 use App\Models\HantuBanyuLaporanFoto;
 use App\Models\HantuBanyuLaporanTindakLanjut;
 use App\Models\HantuBanyuPelapor;
 use App\Models\Kelurahan;
-use App\Models\SKM;
 use App\Support\HantuBanyu\VerifikasiKoordinatKelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,9 +40,6 @@ class HantuBanyuLaporanController extends Controller
       'deskripsi_pengaduan' => 'required|string',
       'foto' => 'required|array|min:1',
       'foto.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-      'skm_nilai' => 'nullable|integer|min:1|max:4',
-      'skm_kritik' => 'nullable|string',
-      'skm_saran' => 'nullable|string',
     ]);
 
     if ($validator->fails()) {
@@ -126,17 +121,6 @@ class HantuBanyuLaporanController extends Controller
 
         $i++;
       }
-
-      $skm = SKM::create([
-        'nilai' => $request->input('skm_nilai'),
-        'ip_address' => $request->ip(),
-        'kritik' => trim((string) $request->input('skm_kritik')) ?: null,
-        'saran' => trim((string) $request->input('skm_saran')) ?: null,
-        'layanan_id' => (new HantuBanyuPengaduanGuestController)->layanan_id,
-      ]);
-
-      $pelapor->skm_id = $skm->id;
-      $pelapor->save();
 
       DB::commit();
 

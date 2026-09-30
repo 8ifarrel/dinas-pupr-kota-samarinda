@@ -110,7 +110,6 @@ Hanya bisa diakses super admin yang sudah login lewat web (bukan lewat `X-API-KE
 - **Akun kelurahan hanya melapor di kelurahannya sendiri** - `kelurahan_asal_id` pelapor selalu sama dengan `kelurahan_id` laporan, meniru pengunci wilayah di `HantuBanyuPengaduanGuestController::store()`.
 - **Asal pelapor dibuat beragam** - sekitar satu dari sembilan laporan dicatat sebagai buatan admin UPTD, sisanya operator kelurahan, supaya kolom dan filter "Pelapor" punya kedua macam data untuk diuji. Pemilihannya tetap (berdasarkan urutan, bukan acak) sehingga hasil `db:seed` selalu sama.
 - **Laporan yang berumur lebih dari 5 bulan wajib berstatus "selesai".** Tahap yang belum final selalu berumur di bawah itu; laporan "selesai" sengaja dibuat bervariasi 2-13 bulan (lintas tahun) supaya data tidak terasa seragam. Sekitar 20% kelurahan mendapat satu laporan lama yang ditutup lewat jalur pintas administratif (langsung dari "pending" ke "selesai", tanpa tahap menengah tercatat - hanya dua baris tindak lanjut), sisanya lewat alur normal (semua tahap terisi berurutan).
-- **SKM hanya untuk laporan yang sudah selesai**, dan hanya sejumlah yang tersedia dari `SKMSeeder` - mencerminkan kenyataan bahwa tidak semua warga sempat mengisi survei kepuasan.
 
 Untuk mengumpulkan ulang data geocoding (mis. kalau daftar kelurahan berubah), lihat komentar di kepala `HantuBanyuTitikGeocode.php` dan method `HantuBanyuSeeder::titikUntukKelurahanLive()`.
 

@@ -70,8 +70,10 @@ class DatabaseSeeder extends Seeder
       VisitorsSeeder::class,
       PageVisitsSeeder::class,
 
-      // 12. Hantu Banyu mengacu kelurahan/kecamatan dan SKM.
+      // 12. Hantu Banyu (laporan pengaduan & pemeriksaan berkala) mengacu
+      //     kelurahan/kecamatan.
       HantuBanyuSeeder::class,
+      HantuBanyuPemeriksaanBerkalaSeeder::class,
 
       // 13. Jalan Peduli (dikelola terpisah) sengaja ditempatkan paling akhir.
       //     JalanPeduliLaporanSeeder mengunduh gambar dari picsum.photos saat

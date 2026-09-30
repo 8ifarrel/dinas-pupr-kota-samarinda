@@ -17,9 +17,6 @@ return new class extends Migration {
       $table->text('alamat');
       $table->string('nomor_telepon', 20);
 
-      $table->unsignedBigInteger('skm_id')->nullable();
-      $table->foreign('skm_id')->references('id')->on('skm')->onDelete('set null');
-
       $table->timestamps();
       $table->softDeletes();
     });

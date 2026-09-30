@@ -195,10 +195,6 @@
        pilihan periodenya sama persis, hanya berkas hasilnya yang berbeda,
        jadi tidak perlu dua modal yang isinya kembar. --}}
   @php
-    $bulanNama = [
-        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
-        7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
-    ];
     $selCls = 'border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5';
   @endphp
   <div id="modalUnduhPdf" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4">
@@ -228,8 +224,12 @@
             <span><span class="font-medium">Semua laporan</span></span>
           </label>
           <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="hari_ini" class="mt-1">
+            <span><span class="font-medium">Hari ini</span></span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
             <input type="radio" name="mode" value="rentang" class="mt-1">
-            <span><span class="font-medium">Rentang bulan &amp; tahun</span></span>
+            <span><span class="font-medium">Rentang tanggal, bulan, &amp; tahun</span></span>
           </label>
           <label class="flex items-start gap-2 text-sm">
             <input type="radio" name="mode" value="tahun" class="mt-1">
@@ -237,40 +237,18 @@
           </label>
           <label class="flex items-start gap-2 text-sm">
             <input type="radio" name="mode" value="bulan" class="mt-1">
-            <span><span class="font-medium">Satu bulan tertentu</span></span>
+            <span><span class="font-medium">Satu Bulan</span></span>
           </label>
         </div>
 
         <div id="grp-rentang" class="hidden rounded-lg border border-gray-200 p-3 space-y-3">
           <div>
-            <p class="text-xs font-semibold text-gray-500 mb-1">Dari</p>
-            <div class="flex gap-2">
-              <select name="dari_bulan" class="{{ $selCls }}" disabled>
-                @foreach ($bulanNama as $n => $nm)
-                  <option value="{{ $n }}">{{ $nm }}</option>
-                @endforeach
-              </select>
-              <select name="dari_tahun" class="{{ $selCls }}" disabled>
-                @foreach ($tahun_opsi as $y)
-                  <option value="{{ $y }}">{{ $y }}</option>
-                @endforeach
-              </select>
-            </div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Dari tanggal</label>
+            <input type="date" name="dari_tanggal" lang="id" class="{{ $selCls }}" disabled>
           </div>
           <div>
-            <p class="text-xs font-semibold text-gray-500 mb-1">Sampai</p>
-            <div class="flex gap-2">
-              <select name="sampai_bulan" class="{{ $selCls }}" disabled>
-                @foreach ($bulanNama as $n => $nm)
-                  <option value="{{ $n }}">{{ $nm }}</option>
-                @endforeach
-              </select>
-              <select name="sampai_tahun" class="{{ $selCls }}" disabled>
-                @foreach ($tahun_opsi as $y)
-                  <option value="{{ $y }}">{{ $y }}</option>
-                @endforeach
-              </select>
-            </div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Sampai tanggal</label>
+            <input type="date" name="sampai_tanggal" lang="id" class="{{ $selCls }}" disabled>
           </div>
         </div>
 
@@ -284,19 +262,8 @@
         </div>
 
         <div id="grp-bulan" class="hidden rounded-lg border border-gray-200 p-3">
-          <p class="text-xs font-semibold text-gray-500 mb-1">Bulan &amp; tahun</p>
-          <div class="flex gap-2">
-            <select name="bulan" class="{{ $selCls }}" disabled>
-              @foreach ($bulanNama as $n => $nm)
-                <option value="{{ $n }}">{{ $nm }}</option>
-              @endforeach
-            </select>
-            <select name="bulan_tahun" class="{{ $selCls }}" disabled>
-              @foreach ($tahun_opsi as $y)
-                <option value="{{ $y }}">{{ $y }}</option>
-              @endforeach
-            </select>
-          </div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bulan &amp; tahun</label>
+          <input type="month" name="periode_bulan" lang="id" class="{{ $selCls }}" disabled>
         </div>
 
         <div class="flex justify-end gap-2 pt-2 border-t">
@@ -475,7 +442,7 @@
           const aktif = key === mode;
           el.classList.toggle('hidden', !aktif);
           // Nonaktifkan input pada grup tersembunyi agar tidak ikut terkirim.
-          el.querySelectorAll('select').forEach(s => {
+          el.querySelectorAll('select, input').forEach(s => {
             s.disabled = !aktif;
           });
         });

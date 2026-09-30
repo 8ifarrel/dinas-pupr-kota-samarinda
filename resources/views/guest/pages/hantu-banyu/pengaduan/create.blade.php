@@ -296,54 +296,51 @@
                       <i class="fa-solid fa-user-shield text-gray-500 mt-0.5"></i>
                       <span>
                         Anda masuk sebagai <b>{{ \App\Models\HantuBanyuLaporan::LABEL_ADMIN }}</b>, jadi dapat
-                        melapor atas nama kelurahan mana pun. Pilih kelurahannya lebih dulu — titik lokasi tetap
-                        harus berada di dalam kelurahan yang dipilih.
+                        melapor atas nama kelurahan mana pun. Pilih kecamatan lebih dulu, lalu kelurahannya — titik
+                        lokasi tetap harus berada di dalam kelurahan yang dipilih.
                       </span>
                     </p>
 
-                    <div class="space-y-1">
-                      <label for="laporan__kelurahan" class="block text-sm font-medium text-gray-900 required">
-                        Kelurahan
-                      </label>
-                      {{-- Kecamatan mengikuti kelurahan yang dipilih, jadi tidak perlu
-                           dropdown sendiri: nilainya diisi otomatis lewat data-kecamatan. --}}
-                      <select id="laporan__kelurahan" name="kelurahan_id"
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-50">
-                        <option value="">-- Pilih kelurahan --</option>
-                        @foreach ($daftarKelurahan as $kel)
-                          <option value="{{ $kel->id }}" data-kecamatan="{{ $kel->kecamatan_id }}"
-                            data-kecamatan-nama="{{ optional($kel->kecamatan)->nama }}"
-                            {{ old('kelurahan_id') == $kel->id ? 'selected' : '' }}>
-                            {{ $kel->nama }} ({{ optional($kel->kecamatan)->nama }})
-                          </option>
-                        @endforeach
-                      </select>
-                      <input type="hidden" name="kecamatan_id" id="laporan__kecamatan_id"
-                        value="{{ old('kecamatan_id') }}">
-                      <p id="laporan__kelurahan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
-                        Kecamatan mengikuti kelurahan yang Anda pilih.
-                      </p>
-                      <p class="text-xs text-red-600 mt-1 hidden" id="error_kelurahan_id"></p>
-                      <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
+                    <div class="flex flex-col md:flex-row gap-4">
+                      <div class="space-y-1 flex-1">
+                        <label for="laporan__kecamatan" class="block text-sm font-medium text-gray-900 required">
+                          Kecamatan
+                        </label>
+                        <select id="laporan__kecamatan" name="kecamatan_id"
+                          class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-50">
+                          <option value="" selected disabled>-- Pilih kecamatan --</option>
+                          @foreach ($daftarKecamatan as $kec)
+                            <option value="{{ $kec->id }}" {{ old('kecamatan_id') == $kec->id ? 'selected' : '' }}>
+                              {{ $kec->nama }}
+                            </option>
+                          @endforeach
+                        </select>
+                        <p class="text-xs text-red-600 mt-1 hidden" id="error_kecamatan_id"></p>
+                      </div>
+
+                      <div class="space-y-1 flex-1">
+                        <label for="laporan__kelurahan" class="block text-sm font-medium text-gray-900 required">
+                          Kelurahan
+                        </label>
+                        <select id="laporan__kelurahan" name="kelurahan_id"
+                          class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 bg-gray-100 disabled:cursor-not-allowed"
+                          disabled>
+                          <option value="" selected disabled>Pilih kecamatan terlebih dahulu</option>
+                          {{-- Seluruh kelurahan ditaruh di sini sekali saja; skrip di bawah
+                               langsung menyaringnya ulang sesuai kecamatan terpilih saat
+                               halaman dimuat, sebelum pengguna sempat melihat daftar mentah ini. --}}
+                          @foreach ($daftarKelurahan as $kel)
+                            <option value="{{ $kel->id }}" data-kecamatan="{{ $kel->kecamatan_id }}">
+                              {{ $kel->nama }}
+                            </option>
+                          @endforeach
+                        </select>
+                        <p id="laporan__kelurahan-explanation" class="text-sm text-gray-500 dark:text-gray-400">
+                          Pilih kecamatan terlebih dahulu.
+                        </p>
+                        <p class="text-xs text-red-600 mt-1 hidden" id="error_kelurahan_id"></p>
+                      </div>
                     </div>
-
-                    <script>
-                      // Kecamatan selalu ikut kelurahan yang dipilih - tidak ada
-                      // keadaan di mana keduanya boleh berbeda.
-                      document.addEventListener('DOMContentLoaded', function() {
-                        var selKel = document.getElementById('laporan__kelurahan');
-                        var inpKec = document.getElementById('laporan__kecamatan_id');
-                        if (!selKel || !inpKec) return;
-
-                        function sinkronKecamatan() {
-                          var opt = selKel.options[selKel.selectedIndex];
-                          inpKec.value = opt ? (opt.getAttribute('data-kecamatan') || '') : '';
-                        }
-
-                        selKel.addEventListener('change', sinkronKecamatan);
-                        sinkronKecamatan();
-                      });
-                    </script>
                   @else
                     <p class="text-sm text-gray-600 flex items-start gap-1.5">
                       <i class="fa-solid fa-lock text-gray-500 mt-0.5"></i>
@@ -596,73 +593,6 @@
               <hr>
             </div>
             <div class="space-y-1.5">
-              <p class="block text-sm font-medium text-gray-900">Rating
-                <span class="text-gray-400 font-normal">(opsional)</span>
-              </p>
-              <div class="flex">
-                <div class="flex items-center me-4">
-                  <input id="rating-1" type="radio" value="1" name="skm__rating" data-rating-opsional
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="rating-1"
-                    class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                    Tidak Puas
-                  </label>
-                </div>
-                <div class="flex items-center me-4">
-                  <input id="rating-2" type="radio" value="2" name="skm__rating" data-rating-opsional
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="rating-2"
-                    class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                    Biasa Saja
-                  </label>
-                </div>
-                <div class="flex items-center me-4">
-                  <input id="rating-3" type="radio" value="3" name="skm__rating" data-rating-opsional
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="rating-3"
-                    class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                    Puas
-                  </label>
-                </div>
-                <div class="flex items-center me-4">
-                  <input id="rating-4" type="radio" value="4" name="skm__rating" data-rating-opsional
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                  <label for="rating-4"
-                    class="ms-2 text-xs xs:text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                    Sangat Puas
-                  </label>
-                </div>
-              </div>
-              <p id="skm__rating" class="text-sm text-gray-500 dark:text-gray-400">
-                Gunakan skala 1-4 untuk menilai seberapa puas Anda terhadap aplikasi layanan kami.
-              </p>
-              <p class="text-xs text-red-600 mt-1 hidden" id="error_skm__rating"></p>
-            </div>
-            <div class="space-y-1.5">
-              <label for="skm__kritik" class="block text-sm font-medium text-gray-900">
-                Kritik <span class="text-gray-400 font-normal">(opsional)</span>
-              </label>
-              <textarea id="skm__kritik" name="skm__kritik"
-                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Contoh: Tampilan aplikasi masih membingungkan" rows="2"></textarea>
-              <p id="skm__kritik" class="text-sm text-gray-500 dark:text-gray-400">
-                Masukkan kritik terkait aplikasi layanan ini.
-              </p>
-              <p class="text-xs text-red-600 mt-1 hidden" id="error_skm__kritik"></p>
-            </div>
-            <div class="space-y-1.5">
-              <label for="skm__saran" class="block text-sm font-medium text-gray-900">
-                Saran <span class="text-gray-400 font-normal">(opsional)</span>
-              </label>
-              <textarea id="skm__saran" name="skm__saran"
-                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Contoh: Sediakan buku panduan untuk mengisi formulir ini" rows="2"></textarea>
-              <p id="skm__saran" class="text-sm text-gray-500 dark:text-gray-400">
-                Masukkan saran terkait aplikasi layanan ini.
-              </p>
-              <p class="text-xs text-red-600 mt-1 hidden" id="error_skm__saran"></p>
-            </div>
-            <div class="space-y-1.5">
               <p class="block text-sm font-medium text-gray-900 required">Silakan centang kotak di bawah ini</p>
               <div class="flex items-center ps-4 border border-gray-200 rounded-lg">
                 <input id="bordered-checkbox-2" type="checkbox" value="1" name="bordered-checkbox"
@@ -741,9 +671,11 @@
         });
       }
 
-      // Kecamatan & kelurahan dikunci ke wilayah akun kelurahan yang login.
-      // Tidak ada lagi filter dinamis kecamatan -> kelurahan di sisi klien.
-      const LOKASI_TERKUNCI = true;
+      // Akun kelurahan: kecamatan & kelurahan terkunci ke wilayahnya sendiri
+      // (dropdown dinonaktifkan lewat markup, nilainya dikirim lewat hidden
+      // input). Admin UPTD: bebas memilih lewat dua dropdown yang saling
+      // berurutan - kelurahan disaring ulang tiap kali kecamatan berganti.
+      const LOKASI_TERKUNCI = {{ $adalahAdmin ? 'false' : 'true' }};
       const kecSelect = document.getElementById('laporan__kecamatan');
       const kelSelect = document.getElementById('laporan__kelurahan');
       const namaJalanInput = document.getElementById('laporan__nama_jalan');
@@ -1072,7 +1004,9 @@
         });
       }
 
-      // Helper: pilih kecamatan berdasarkan nama
+      // Helper: pilih kecamatan berdasarkan nama. Memicu event change supaya
+      // dropdown kelurahan ikut disaring ulang (lihat kecSelect.addEventListener
+      // di atas) sebelum selectKelurahanByName() mencari opsi kelurahannya.
       function selectKecamatanByName(name) {
         if (LOKASI_TERKUNCI) return; // kecamatan sudah dikunci ke akun
         const kecSelect = document.getElementById('laporan__kecamatan');
@@ -1084,18 +1018,19 @@
           }
         }
       }
-      // Helper: pilih kelurahan berdasarkan nama
+      // Helper: pilih kelurahan berdasarkan nama. Harus dipanggil setelah
+      // selectKecamatanByName() supaya opsi yang dicari sudah tersaring benar.
       function selectKelurahanByName(name) {
         if (LOKASI_TERKUNCI) return; // kelurahan sudah dikunci ke akun
         const kelSelect = document.getElementById('laporan__kelurahan');
         for (const opt of kelSelect.options) {
           if (opt.text.trim().toLowerCase() === name.trim().toLowerCase()) {
             kelSelect.value = opt.value;
+            kelSelect.dispatchEvent(new Event('change'));
             break;
           }
         }
       }
-
       // === STEPPER VALIDATION LOGIC ===
       function showError(input, message) {
         if (!input) return;
@@ -1324,23 +1259,8 @@
         }
         // Step 2: Konfirmasi
         if (stepIdx === 2) {
-          // Hanya pernyataan persetujuan yang wajib. Rating, kritik, dan saran opsional.
-          const kritik = document.getElementById('skm__kritik');
-          const saran = document.getElementById('skm__saran');
           const cek = document.getElementById('bordered-checkbox-2');
           let valid2 = true;
-
-          // Rating / kritik / saran bersifat opsional -> tidak divalidasi, cukup bersihkan sisa error.
-          const ratingError = document.getElementById('error_skm__rating');
-          if (ratingError) {
-            ratingError.classList.add('hidden');
-            const ratingContainer = document.querySelector('.flex.items-center.me-4')?.parentNode;
-            if (ratingContainer) {
-              ratingContainer.classList.remove('border', 'border-red-500', 'rounded-lg', 'p-2');
-            }
-          }
-          clearError(kritik);
-          clearError(saran);
 
           // Checkbox validation
           const checkboxError = document.getElementById('error_bordered-checkbox');

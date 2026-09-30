@@ -12,7 +12,6 @@ use App\Models\HantuBanyuPelapor;
 use App\Models\HantuBanyuLaporan;
 use App\Models\HantuBanyuLaporanFoto;
 use App\Models\HantuBanyuLaporanTindakLanjut;
-use App\Models\SKM;
 use App\Models\UserKelurahan;
 use App\Support\HantuBanyu\VerifikasiKoordinatKelurahan;
 use Spatie\Browsershot\Browsershot;
@@ -24,7 +23,6 @@ use Illuminate\Support\Facades\URL;
 class HantuBanyuPengaduanGuestController extends Controller
 {
   public string $page_context = 'Hantu Banyu';
-  public int $layanan_id = 5;
   public int $struktur_organisasi_id = 10;
 
   private const TIPE_KELURAHAN = 'kelurahan';
@@ -49,8 +47,11 @@ class HantuBanyuPengaduanGuestController extends Controller
       'akunKelurahan' => optional($akun)->kelurahan,
       'akunKecamatan' => optional(optional($akun)->kelurahan)->kecamatan,
       'adalahAdmin' => $adalahAdmin,
+      'daftarKecamatan' => $adalahAdmin
+        ? Kecamatan::orderBy('nama')->get(['id', 'nama'])
+        : collect(),
       'daftarKelurahan' => $adalahAdmin
-        ? Kelurahan::with('kecamatan')->orderBy('nama')->get(['id', 'nama', 'kecamatan_id'])
+        ? Kelurahan::orderBy('nama')->get(['id', 'nama', 'kecamatan_id'])
         : collect(),
     ]);
   }
@@ -102,9 +103,6 @@ class HantuBanyuPengaduanGuestController extends Controller
       'laporan__foto_input.*.image' => 'File harus berupa gambar JPG, JPEG, atau PNG.',
       'laporan__foto_input.*.mimes' => 'Format foto harus JPG, JPEG, atau PNG.',
       'laporan__foto_input.*.max' => 'Ukuran foto maksimal 2MB.',
-      'skm__rating.required' => 'Rating wajib dipilih.',
-      'skm__kritik.required' => 'Kritik wajib diisi.',
-      'skm__saran.required' => 'Saran wajib diisi.',
       'bordered-checkbox.required' => 'Anda harus menyetujui pernyataan.',
     ];
 
@@ -125,9 +123,6 @@ class HantuBanyuPengaduanGuestController extends Controller
       'deskripsi_pengaduan' => 'required|string',
       'laporan__foto_input' => 'required',
       'laporan__foto_input.*' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-      'skm__rating' => 'nullable|integer|min:1|max:4',
-      'skm__kritik' => 'nullable|string',
-      'skm__saran' => 'nullable|string',
       'bordered-checkbox' => 'required',
     ], $messages);
 
@@ -233,20 +228,6 @@ class HantuBanyuPengaduanGuestController extends Controller
         $i++;
       }
     }
-
-    // Simpan SKM (rating, kritik, saran bersifat opsional)
-    $skmKritik = trim((string) ($validated['skm__kritik'] ?? '')) ?: null;
-    $skmSaran = trim((string) ($validated['skm__saran'] ?? '')) ?: null;
-    $skm = SKM::create([
-      'nilai' => $validated['skm__rating'] ?? null,
-      'ip_address' => $request->ip(),
-      'kritik' => $skmKritik,
-      'saran' => $skmSaran,
-      'layanan_id' => $this->layanan_id,
-    ]);
-    // Update pelapor dengan skm_id
-    $pelapor->skm_id = $skm->id;
-    $pelapor->save();
 
     // Generate the signed URL for the result page
     $url = URL::temporarySignedRoute(

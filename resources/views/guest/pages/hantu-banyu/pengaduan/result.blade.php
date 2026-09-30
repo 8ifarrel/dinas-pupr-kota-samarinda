@@ -65,6 +65,23 @@
           </p>
         </div>
 
+        <!-- Survei Kepuasan -->
+        <div class="py-4 border-b border-gray-300 text-center">
+          <p class="text-gray-600 mb-3">
+            Bantu kami meningkatkan layanan dengan mengisi Survei Kepuasan Masyarakat.
+          </p>
+          <a href="https://e-kianpuas.samarindakota.go.id/survei/form/dinas-pekerjaan-umum-dan-penataan-ruang/6d865904-41d5-4f3c-bfc2-2d7dad38f5b9"
+            target="_blank" rel="noopener"
+            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-brand-blue border border-brand-blue rounded hover:bg-brand-blue hover:text-white">
+            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-3m-1-15l5 5m0 0l-5 5m5-5H10" />
+            </svg>
+            Isi Survei Kepuasan
+          </a>
+        </div>
+
         <!-- Back Button -->
         <div class="pt-4 text-center text-blue-600">
           &larr;

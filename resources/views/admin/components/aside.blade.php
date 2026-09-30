@@ -66,9 +66,9 @@
               Laporan</a>
           </li>
           <li>
-            <a href="{{ route('admin.hantu-banyu.skm.index') }}"
-              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Survei
-              Kepuasan</a>
+            <a href="{{ route('admin.hantu-banyu.pemeriksaan-berkala.index') }}"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Pemeriksaan
+              Berkala</a>
           </li>
         </ul>
       </li>
