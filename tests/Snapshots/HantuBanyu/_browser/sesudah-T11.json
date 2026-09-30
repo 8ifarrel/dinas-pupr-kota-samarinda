@@ -1,0 +1,1828 @@
+{
+ "petaAdmin": {
+  "awal": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4613,
+    117.1321,
+    "#3b82f6"
+   ],
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.4639,
+    117.1363,
+    "#06b6d4"
+   ],
+   [
+    -0.4652,
+    117.1384,
+    "#eab308"
+   ],
+   [
+    -0.4665,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.4691,
+    117.1447,
+    "#f59e42"
+   ],
+   [
+    -0.4704,
+    117.1468,
+    "#3b82f6"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4743,
+    117.1342,
+    "#eab308"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4782,
+    117.1405,
+    "#f59e42"
+   ],
+   [
+    -0.4795,
+    117.1426,
+    "#3b82f6"
+   ],
+   [
+    -0.4808,
+    117.1447,
+    "#6366f1"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4873,
+    117.1363,
+    "#f59e42"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4899,
+    117.1405,
+    "#6366f1"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.4938,
+    117.1468,
+    "#f43f5e"
+   ],
+   [
+    -0.4964,
+    117.1321,
+    "#f59e42"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ],
+   [
+    -0.5003,
+    117.1384,
+    "#06b6d4"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.5029,
+    117.1426,
+    "#f43f5e"
+   ],
+   [
+    -0.5055,
+    117.1468,
+    "#f59e42"
+   ]
+  ],
+  "plusSelesai": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4613,
+    117.1321,
+    "#3b82f6"
+   ],
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.4639,
+    117.1363,
+    "#06b6d4"
+   ],
+   [
+    -0.4652,
+    117.1384,
+    "#eab308"
+   ],
+   [
+    -0.4665,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.4678,
+    117.1426,
+    "#22c55e"
+   ],
+   [
+    -0.4691,
+    117.1447,
+    "#f59e42"
+   ],
+   [
+    -0.4704,
+    117.1468,
+    "#3b82f6"
+   ],
+   [
+    -0.4717,
+    117.13,
+    "#22c55e"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4743,
+    117.1342,
+    "#eab308"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4769,
+    117.1384,
+    "#22c55e"
+   ],
+   [
+    -0.4782,
+    117.1405,
+    "#f59e42"
+   ],
+   [
+    -0.4795,
+    117.1426,
+    "#3b82f6"
+   ],
+   [
+    -0.4808,
+    117.1447,
+    "#6366f1"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4847,
+    117.1321,
+    "#22c55e"
+   ],
+   [
+    -0.486,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.4873,
+    117.1363,
+    "#f59e42"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4899,
+    117.1405,
+    "#6366f1"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.4938,
+    117.1468,
+    "#f43f5e"
+   ],
+   [
+    -0.4951,
+    117.13,
+    "#22c55e"
+   ],
+   [
+    -0.4964,
+    117.1321,
+    "#f59e42"
+   ],
+   [
+    -0.4977,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ],
+   [
+    -0.5003,
+    117.1384,
+    "#06b6d4"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.5029,
+    117.1426,
+    "#f43f5e"
+   ],
+   [
+    -0.5042,
+    117.1447,
+    "#22c55e"
+   ],
+   [
+    -0.5055,
+    117.1468,
+    "#f59e42"
+   ]
+  ],
+  "tanpaPending": [
+   [
+    -0.4613,
+    117.1321,
+    "#3b82f6"
+   ],
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.4639,
+    117.1363,
+    "#06b6d4"
+   ],
+   [
+    -0.4652,
+    117.1384,
+    "#eab308"
+   ],
+   [
+    -0.4665,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.4678,
+    117.1426,
+    "#22c55e"
+   ],
+   [
+    -0.4704,
+    117.1468,
+    "#3b82f6"
+   ],
+   [
+    -0.4717,
+    117.13,
+    "#22c55e"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4743,
+    117.1342,
+    "#eab308"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4769,
+    117.1384,
+    "#22c55e"
+   ],
+   [
+    -0.4795,
+    117.1426,
+    "#3b82f6"
+   ],
+   [
+    -0.4808,
+    117.1447,
+    "#6366f1"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4847,
+    117.1321,
+    "#22c55e"
+   ],
+   [
+    -0.486,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4899,
+    117.1405,
+    "#6366f1"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.4938,
+    117.1468,
+    "#f43f5e"
+   ],
+   [
+    -0.4951,
+    117.13,
+    "#22c55e"
+   ],
+   [
+    -0.4977,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ],
+   [
+    -0.5003,
+    117.1384,
+    "#06b6d4"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.5029,
+    117.1426,
+    "#f43f5e"
+   ],
+   [
+    -0.5042,
+    117.1447,
+    "#22c55e"
+   ]
+  ],
+  "tanpaDarurat": [
+   [
+    -0.4613,
+    117.1321,
+    "#3b82f6"
+   ],
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.4652,
+    117.1384,
+    "#eab308"
+   ],
+   [
+    -0.4665,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.4704,
+    117.1468,
+    "#3b82f6"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4743,
+    117.1342,
+    "#eab308"
+   ],
+   [
+    -0.4769,
+    117.1384,
+    "#22c55e"
+   ],
+   [
+    -0.4808,
+    117.1447,
+    "#6366f1"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4847,
+    117.1321,
+    "#22c55e"
+   ],
+   [
+    -0.486,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4899,
+    117.1405,
+    "#6366f1"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.4938,
+    117.1468,
+    "#f43f5e"
+   ],
+   [
+    -0.4977,
+    117.1342,
+    "#22c55e"
+   ],
+   [
+    -0.5003,
+    117.1384,
+    "#06b6d4"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.5042,
+    117.1447,
+    "#22c55e"
+   ]
+  ],
+  "cariJalanA": [
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ]
+  ],
+  "setelahReset": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4613,
+    117.1321,
+    "#3b82f6"
+   ],
+   [
+    -0.4626,
+    117.1342,
+    "#6366f1"
+   ],
+   [
+    -0.4639,
+    117.1363,
+    "#06b6d4"
+   ],
+   [
+    -0.4652,
+    117.1384,
+    "#eab308"
+   ],
+   [
+    -0.4665,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.4691,
+    117.1447,
+    "#f59e42"
+   ],
+   [
+    -0.4704,
+    117.1468,
+    "#3b82f6"
+   ],
+   [
+    -0.473,
+    117.1321,
+    "#06b6d4"
+   ],
+   [
+    -0.4743,
+    117.1342,
+    "#eab308"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4782,
+    117.1405,
+    "#f59e42"
+   ],
+   [
+    -0.4795,
+    117.1426,
+    "#3b82f6"
+   ],
+   [
+    -0.4808,
+    117.1447,
+    "#6366f1"
+   ],
+   [
+    -0.4821,
+    117.1468,
+    "#06b6d4"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4873,
+    117.1363,
+    "#f59e42"
+   ],
+   [
+    -0.4886,
+    117.1384,
+    "#3b82f6"
+   ],
+   [
+    -0.4899,
+    117.1405,
+    "#6366f1"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.4925,
+    117.1447,
+    "#eab308"
+   ],
+   [
+    -0.4938,
+    117.1468,
+    "#f43f5e"
+   ],
+   [
+    -0.4964,
+    117.1321,
+    "#f59e42"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ],
+   [
+    -0.5003,
+    117.1384,
+    "#06b6d4"
+   ],
+   [
+    -0.5016,
+    117.1405,
+    "#eab308"
+   ],
+   [
+    -0.5029,
+    117.1426,
+    "#f43f5e"
+   ],
+   [
+    -0.5055,
+    117.1468,
+    "#f59e42"
+   ]
+  ],
+  "modal": {
+   "judul": "Jalan Siradj Salman",
+   "kelurahan": "Pelita",
+   "kecamatan": "Samarinda Ilir",
+   "status": "Sudah Disurvei",
+   "statusWarna": "rgb(6, 182, 212)",
+   "jenis": "Darurat",
+   "jenisWarna": "rgb(239, 68, 68)",
+   "detail": "/hantu-banyu/pengaduan/lihat/HB-2026-0004",
+   "gmaps": "https://maps.google.com/maps?q=-0.4639000,117.1363000"
+  }
+ },
+ "tabelAdmin": {
+  "awal": [
+   "HB-2026-0001",
+   "HB-2026-0002",
+   "HB-2026-0003",
+   "HB-2026-0004",
+   "HB-2026-0005",
+   "HB-2026-0006",
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0009",
+   "HB-2026-0010",
+   "HB-2026-0011",
+   "HB-2026-0012",
+   "HB-2026-0013",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0016",
+   "HB-2026-0017",
+   "HB-2026-0018",
+   "HB-2026-0019",
+   "HB-2026-0020",
+   "HB-2026-0021",
+   "HB-2026-0022",
+   "HB-2026-0023",
+   "HB-2026-0024",
+   "HB-2026-0025",
+   "HB-2026-0026",
+   "HB-2026-0027",
+   "HB-2026-0028",
+   "HB-2026-0029",
+   "HB-2026-0030",
+   "HB-2026-0031",
+   "HB-2025-0032",
+   "HB-2025-0033",
+   "HB-2025-0034",
+   "HB-2025-0035",
+   "HB-2025-0036"
+  ],
+  "dari": [
+   "HB-2026-0001",
+   "HB-2026-0002",
+   "HB-2026-0003",
+   "HB-2026-0004",
+   "HB-2026-0005",
+   "HB-2026-0006",
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0009",
+   "HB-2026-0010",
+   "HB-2026-0011",
+   "HB-2026-0012",
+   "HB-2026-0013",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0016",
+   "HB-2026-0017",
+   "HB-2026-0018",
+   "HB-2026-0019",
+   "HB-2026-0020",
+   "HB-2026-0021",
+   "HB-2026-0022",
+   "HB-2026-0023",
+   "HB-2026-0024"
+  ],
+  "rentang": [
+   "HB-2026-0005",
+   "HB-2026-0006",
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0009",
+   "HB-2026-0010",
+   "HB-2026-0011",
+   "HB-2026-0012",
+   "HB-2026-0013",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0016",
+   "HB-2026-0017",
+   "HB-2026-0018",
+   "HB-2026-0019",
+   "HB-2026-0020",
+   "HB-2026-0021",
+   "HB-2026-0022",
+   "HB-2026-0023",
+   "HB-2026-0024"
+  ],
+  "kelurahan": [
+   "HB-2026-0006",
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0010",
+   "HB-2026-0011",
+   "HB-2026-0012",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0016",
+   "HB-2026-0018",
+   "HB-2026-0019",
+   "HB-2026-0020",
+   "HB-2026-0022",
+   "HB-2026-0023",
+   "HB-2026-0024"
+  ],
+  "status": [
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0010",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0020",
+   "HB-2026-0022"
+  ],
+  "jenis": [
+   "HB-2026-0014",
+   "HB-2026-0020"
+  ],
+  "teksMultifilter": [
+   "2 dipilih",
+   "Penanganan Biasa"
+  ],
+  "reset": [
+   "HB-2026-0001",
+   "HB-2026-0002",
+   "HB-2026-0003",
+   "HB-2026-0004",
+   "HB-2026-0005",
+   "HB-2026-0006",
+   "HB-2026-0007",
+   "HB-2026-0008",
+   "HB-2026-0009",
+   "HB-2026-0010",
+   "HB-2026-0011",
+   "HB-2026-0012",
+   "HB-2026-0013",
+   "HB-2026-0014",
+   "HB-2026-0015",
+   "HB-2026-0016",
+   "HB-2026-0017",
+   "HB-2026-0018",
+   "HB-2026-0019",
+   "HB-2026-0020",
+   "HB-2026-0021",
+   "HB-2026-0022",
+   "HB-2026-0023",
+   "HB-2026-0024",
+   "HB-2026-0025",
+   "HB-2026-0026",
+   "HB-2026-0027",
+   "HB-2026-0028",
+   "HB-2026-0029",
+   "HB-2026-0030",
+   "HB-2026-0031",
+   "HB-2025-0032",
+   "HB-2025-0033",
+   "HB-2025-0034",
+   "HB-2025-0035",
+   "HB-2025-0036"
+  ],
+  "cariDanAdmin": [
+   "HB-2026-0017"
+  ],
+  "info": "Showing 1 to 1 of 1 entry (filtered from 36 total entries)",
+  "_msRedraw": 1.51
+ },
+ "autocompletePengaduan": {
+  "normal": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "normalArea": {
+   "kunci": "jua",
+   "area": "Air Putih"
+  },
+  "setelahPilih": {
+   "nilai": "Jalan Juanda",
+   "tampil": false,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "ulangSama": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "permintaanUntukDuaKaliJua": 1,
+  "balapan": {
+   "tampil": true,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "segeraSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "akhirSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "kosong": {
+   "tampil": false,
+   "isi": []
+  }
+ },
+ "autocompletePemeriksaan": {
+  "normal": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "normalArea": {
+   "kunci": "jua",
+   "area": "Air Putih"
+  },
+  "setelahPilih": {
+   "nilai": "Jalan Juanda",
+   "tampil": false,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "ulangSama": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "permintaanUntukDuaKaliJua": 1,
+  "balapan": {
+   "tampil": true,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "segeraSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "akhirSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "kosong": {
+   "tampil": false,
+   "isi": []
+  }
+ },
+ "statistikPublikAdmin": {
+  "awal": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       1,
+       1,
+       1,
+       0,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKecamatan",
+    "labels": [
+     "Samarinda Ilir",
+     "Samarinda Ulu",
+     "Sungai Kunjang"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       2,
+       2,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKelurahan",
+    "labels": [
+     "Pelita",
+     "Sidomulyo"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Juli",
+     "Agustus",
+     "September"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       1,
+       0,
+       1
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       2,
+       2,
+       3
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       1,
+       1,
+       0
+      ]
+     }
+    ]
+   }
+  ],
+  "kpi": [
+   "22\nSelesai",
+   "6\nLaporan Masuk",
+   "2025\nLaporan sedang Diproses"
+  ],
+  "setelahUbah": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       0,
+       0,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKecamatan",
+    "labels": [
+     "Samarinda Ilir",
+     "Samarinda Ulu",
+     "Sungai Kunjang"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       2,
+       1,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKelurahan",
+    "labels": [
+     "Pelita",
+     "Sidomulyo"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Oktober",
+     "November",
+     "Desember"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       0,
+       1,
+       0
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       0,
+       0,
+       3
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       0,
+       1,
+       0
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "statistikEpanel": {
+  "awal": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       1,
+       1,
+       1,
+       0,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKecamatan",
+    "labels": [
+     "Samarinda Ilir",
+     "Samarinda Ulu",
+     "Sungai Kunjang"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       2,
+       2,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKelurahan",
+    "labels": [
+     "Pelita",
+     "Sidomulyo"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Juli",
+     "Agustus",
+     "September"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       1,
+       0,
+       1
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       2,
+       2,
+       3
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       1,
+       1,
+       0
+      ]
+     }
+    ]
+   }
+  ],
+  "kpi": [
+   "22\nSelesai",
+   "6\nLaporan Masuk",
+   "2025\nLaporan sedang Diproses"
+  ],
+  "setelahUbah": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       0,
+       0,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKecamatan",
+    "labels": [
+     "Samarinda Ilir",
+     "Samarinda Ulu",
+     "Sungai Kunjang"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       2,
+       1,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartKelurahan",
+    "labels": [
+     "Pelita",
+     "Sidomulyo"
+    ],
+    "data": [
+     {
+      "label": "Jumlah laporan",
+      "data": [
+       1,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Oktober",
+     "November",
+     "Desember"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       0,
+       1,
+       0
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       0,
+       0,
+       3
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       0,
+       1,
+       0
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "galatJsAdmin": [],
+ "petaKelurahan": {
+  "awal": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ]
+  ],
+  "plusSelesai": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4678,
+    117.1426,
+    "#22c55e"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ]
+  ],
+  "tanpaPending": [
+   [
+    -0.4678,
+    117.1426,
+    "#22c55e"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ]
+  ],
+  "tanpaDarurat": [],
+  "cariJalanA": [],
+  "setelahReset": [
+   [
+    -0.46,
+    117.13,
+    "#f59e42"
+   ],
+   [
+    -0.4756,
+    117.1363,
+    "#f43f5e"
+   ],
+   [
+    -0.4834,
+    117.13,
+    "#eab308"
+   ],
+   [
+    -0.4912,
+    117.1426,
+    "#06b6d4"
+   ],
+   [
+    -0.499,
+    117.1363,
+    "#6366f1"
+   ]
+  ],
+  "modal": {
+   "judul": "Jalan Cendana Gg. 24",
+   "kelurahan": "Air Putih",
+   "kecamatan": "Samarinda Ulu",
+   "status": "Sudah Disurvei",
+   "statusWarna": "rgb(6, 182, 212)",
+   "jenis": "Darurat",
+   "jenisWarna": "rgb(239, 68, 68)",
+   "detail": "/hantu-banyu/pengaduan/lihat/HB-2026-0025",
+   "gmaps": "https://maps.google.com/maps?q=-0.4912000,117.1426000"
+  }
+ },
+ "autocompletePengaduanKelurahan": {
+  "normal": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "normalArea": {
+   "kunci": "jua",
+   "area": "Air Putih"
+  },
+  "setelahPilih": {
+   "nilai": "Jalan Juanda",
+   "tampil": false,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "ulangSama": {
+   "tampil": true,
+   "isi": [
+    "Jalan Juanda",
+    "Jalan Ir. H. Juanda"
+   ]
+  },
+  "permintaanUntukDuaKaliJua": 1,
+  "balapan": {
+   "tampil": true,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "segeraSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "akhirSetelahPendek": {
+   "tampil": false,
+   "isi": [
+    "Jalan Pahlawan"
+   ]
+  },
+  "kosong": {
+   "tampil": false,
+   "isi": []
+  }
+ },
+ "statistikKelurahan": {
+  "awal": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       1,
+       0,
+       0,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Juli",
+     "Agustus",
+     "September"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       0,
+       0,
+       1
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       0,
+       1,
+       0
+      ]
+     }
+    ]
+   }
+  ],
+  "kpi": [
+   "4\nSelesai",
+   "1\nLaporan Masuk",
+   "2026\nLaporan sedang Diproses"
+  ],
+  "setelahUbah": [
+   {
+    "id": "chartDiproses",
+    "labels": [
+     "Diterima",
+     "Menunggu Survei",
+     "Sudah Disurvei",
+     "Menunggu Jadwal Pengerjaan",
+     "Sedang Dikerjakan"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       0,
+       0,
+       0,
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartJenis",
+    "labels": [
+     "Belum Diklasifikasikan",
+     "Penanganan Darurat",
+     "Penanganan Biasa",
+     "Pemeliharaan Rutin"
+    ],
+    "data": [
+     {
+      "data": [
+       0,
+       1,
+       0,
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "id": "chartMasuk",
+    "labels": [
+     "Oktober",
+     "November",
+     "Desember"
+    ],
+    "data": [
+     {
+      "label": "Belum diproses",
+      "data": [
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "label": "Sedang diproses",
+      "data": [
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "label": "Selesai",
+      "data": [
+       0,
+       0,
+       0
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "galatJsKelurahan": []
+}

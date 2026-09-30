@@ -730,8 +730,44 @@
 
       // Nama jalan autocomplete langsung dari Overpass API OSM
       let jalanTimeout;
+      // Permintaan yang masih berjalan dibatalkan begitu isian berubah, supaya
+      // jawaban lama yang datang belakangan tidak menimpa hasil ketikan terbaru;
+      // jawaban untuk kelurahan + kata kunci yang sama dipakai ulang.
+      let jalanPermintaan = null;
+      const jalanCache = {};
+
+      function tampilkanSaranJalan(data) {
+        const ul = document.getElementById('nama-jalan-autocomplete');
+        ul.innerHTML = '';
+        if (!data.elements || data.elements.length === 0) {
+          ul.classList.add('hidden');
+          return;
+        }
+        // Tampilkan nama jalan unik, filter yang bukan "Gang"
+        const names = [...new Set(
+          data.elements
+          .map(e => e.tags.name)
+          .filter(nama => nama && !/gang/i.test(nama))
+        )];
+        names.forEach(nama => {
+          const li = document.createElement('li');
+          li.textContent = nama;
+          li.className = 'px-3 py-2 cursor-pointer hover:bg-gray-100';
+          li.addEventListener('click', function() {
+            document.getElementById('laporan__nama_jalan').value = nama;
+            ul.classList.add('hidden');
+          });
+          ul.appendChild(li);
+        });
+        ul.classList.toggle('hidden', names.length === 0);
+      }
+
       document.getElementById('laporan__nama_jalan').addEventListener('input', function() {
         clearTimeout(jalanTimeout);
+        if (jalanPermintaan) {
+          jalanPermintaan.abort();
+          jalanPermintaan = null;
+        }
         const query = this.value;
         const kelSelect = document.getElementById('laporan__kelurahan');
         const kelurahanNama = kelSelect.options[kelSelect.selectedIndex]?.text;
@@ -740,6 +776,11 @@
           return;
         }
         jalanTimeout = setTimeout(() => {
+          const kunci = kelurahanNama + '|' + query;
+          if (jalanCache[kunci]) {
+            tampilkanSaranJalan(jalanCache[kunci]);
+            return;
+          }
           // Query Overpass API: cari jalan di kelurahan, LIKE %namajalan%
           const overpassQuery = `
             [out:json][timeout:25];
@@ -749,38 +790,28 @@
             );
             out tags center;
           `;
+          const pengendali = new AbortController();
+          jalanPermintaan = pengendali;
           fetch(@json(config('services.overpass.url')), {
               method: 'POST',
               body: overpassQuery,
               headers: {
                 'Content-Type': 'text/plain'
-              }
+              },
+              signal: pengendali.signal
             })
             .then(res => res.json())
             .then(data => {
-              const ul = document.getElementById('nama-jalan-autocomplete');
-              ul.innerHTML = '';
-              if (!data.elements || data.elements.length === 0) {
-                ul.classList.add('hidden');
-                return;
+              if (jalanPermintaan === pengendali) {
+                jalanPermintaan = null;
               }
-              // Tampilkan nama jalan unik, filter yang bukan "Gang"
-              const names = [...new Set(
-                data.elements
-                .map(e => e.tags.name)
-                .filter(nama => nama && !/gang/i.test(nama))
-              )];
-              names.forEach(nama => {
-                const li = document.createElement('li');
-                li.textContent = nama;
-                li.className = 'px-3 py-2 cursor-pointer hover:bg-gray-100';
-                li.addEventListener('click', function() {
-                  document.getElementById('laporan__nama_jalan').value = nama;
-                  ul.classList.add('hidden');
-                });
-                ul.appendChild(li);
-              });
-              ul.classList.toggle('hidden', names.length === 0);
+              jalanCache[kunci] = data;
+              tampilkanSaranJalan(data);
+            })
+            .catch(err => {
+              if (err.name !== 'AbortError') {
+                throw err;
+              }
             });
         }, 400);
       });
