@@ -260,7 +260,9 @@ class HantuBanyuPengaduanGuestController extends Controller
     // melihat data terhapus pada daftar e-panel, jadi keduanya harus sepakat:
     // bila publik ikut menampilkannya, akan lahir keadaan ganjil di mana warga
     // masih melihat sebuah laporan sementara admin tidak bisa menanganinya.
-    $query = HantuBanyuLaporan::with(['pelapor', 'kecamatan', 'kelurahan'])
+    // Daftar hanya menampilkan nama kelurahan (lewat label_pelapor); pelapor
+    // & kecamatan tidak ditampilkan sehingga tidak perlu dimuat.
+    $query = HantuBanyuLaporan::with(['kelurahan:id,nama'])
       ->when($kelurahanId, fn($q) => $q->where('hantu_banyu_laporan.kelurahan_id', $kelurahanId))
       ->leftJoin('hantu_banyu_laporan_tindak_lanjut as tl', function ($join) use ($latestTindakLanjutIds) {
         $join->on('tl.laporan_id', '=', 'hantu_banyu_laporan.id')

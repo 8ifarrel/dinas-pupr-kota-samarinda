@@ -1,0 +1,92 @@
+{
+    "data-besar": {
+        "peta-sebaran (admin)": {
+            "status": 200,
+            "ms_median": 87.7,
+            "ms_min": 84.4,
+            "puncak_memori_mb": 10.25,
+            "query": 6,
+            "ukuran_kb": 439.3
+        },
+        "daftar-pengaduan (admin)": {
+            "status": 200,
+            "ms_median": 60.2,
+            "ms_min": 54.3,
+            "puncak_memori_mb": 0.89,
+            "query": 5,
+            "ukuran_kb": 146.2
+        },
+        "daftar-pengaduan urut terlama": {
+            "status": 200,
+            "ms_median": 61.3,
+            "ms_min": 57.7,
+            "puncak_memori_mb": 0.62,
+            "query": 5,
+            "ukuran_kb": 147.1
+        },
+        "statistik publik (admin)": {
+            "status": 200,
+            "ms_median": 121,
+            "ms_min": 110.1,
+            "puncak_memori_mb": 9.14,
+            "query": 9,
+            "ukuran_kb": 326.7
+        },
+        "statistik e-panel": {
+            "status": 200,
+            "ms_median": 114.6,
+            "ms_min": 110.7,
+            "puncak_memori_mb": 9.1,
+            "query": 9,
+            "ukuran_kb": 311
+        },
+        "e-panel daftar laporan": {
+            "status": 200,
+            "ms_median": 396.9,
+            "ms_min": 384,
+            "puncak_memori_mb": 29.08,
+            "query": 8,
+            "ukuran_kb": 2980
+        },
+        "excel laporan semua": {
+            "status": 200,
+            "ms_median": 1598.9,
+            "ms_min": 1578.2,
+            "puncak_memori_mb": 37.93,
+            "query": 7,
+            "ukuran_kb": 147.9
+        },
+        "excel laporan tahun 2026": {
+            "status": 200,
+            "ms_median": 45.3,
+            "ms_min": 41.8,
+            "puncak_memori_mb": 18.88,
+            "query": 7,
+            "ukuran_kb": 10.4
+        },
+        "excel pemeriksaan semua": {
+            "status": 200,
+            "ms_median": 345.5,
+            "ms_min": 339.6,
+            "puncak_memori_mb": 21.36,
+            "query": 5,
+            "ukuran_kb": 36.3
+        },
+        "peta-sebaran (kelurahan)": {
+            "status": 200,
+            "ms_median": 32.8,
+            "ms_min": 31,
+            "puncak_memori_mb": 0.97,
+            "query": 6,
+            "ukuran_kb": 122.8
+        },
+        "statistik publik (kelurahan)": {
+            "status": 200,
+            "ms_median": 33.4,
+            "ms_min": 32,
+            "puncak_memori_mb": 1.98,
+            "query": 10,
+            "ukuran_kb": 169
+        }
+    }
+}
