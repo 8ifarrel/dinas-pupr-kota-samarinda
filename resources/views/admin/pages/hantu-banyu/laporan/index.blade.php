@@ -305,22 +305,54 @@
         return isNaN(t.getTime()) ? null : Math.floor(t.getTime() / 1000);
       }
 
-      // Nilai (value) kotak centang yang tercentang untuk sebuah kelas.
-      function nilaiTercentang(kelas) {
-        return Array.from(document.querySelectorAll('.' + kelas + ':checked')).map(function(c) {
+      // Fungsi penyaring dipanggil sekali per baris pada setiap redraw. Isian
+      // penyaring tetap dibaca langsung tiap kali (tanpa querySelectorAll),
+      // tetapi tanggal & daftar centang hanya diolah ulang bila isiannya
+      // berubah - bukan diulang untuk setiap baris.
+      const elTabel = document.getElementById('laporan');
+      const kotakStatus = Array.from(document.querySelectorAll('.filterStatus'));
+      const kotakJenis = Array.from(document.querySelectorAll('.filterJenis'));
+      const tercentang = function(kotak) {
+        return kotak.filter(function(c) {
+          return c.checked;
+        }).map(function(c) {
           return c.value;
         });
+      };
+      let kunciPenyaring = null;
+      let penyaring = null;
+
+      function ambilPenyaring() {
+        const kunci = inpDari.value + '|' + inpSampai.value + '|' + selDibuatOleh.value + '|' +
+          kotakStatus.map(function(c) {
+            return c.checked ? 1 : 0;
+          }).join('') + '|' + kotakJenis.map(function(c) {
+            return c.checked ? 1 : 0;
+          }).join('');
+
+        if (kunci !== kunciPenyaring) {
+          kunciPenyaring = kunci;
+          penyaring = {
+            dari: batasEpoch(inpDari.value, false),
+            sampai: batasEpoch(inpSampai.value, true),
+            tipe: selDibuatOleh.value,
+            status: tercentang(kotakStatus),
+            jenis: tercentang(kotakJenis),
+          };
+        }
+        return penyaring;
       }
 
       $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-        if (settings.nTable !== document.getElementById('laporan')) return true;
+        if (settings.nTable !== elTabel) return true;
 
         const baris = tabel.row(dataIndex).node();
-        const dari = batasEpoch(inpDari.value, false);
-        const sampai = batasEpoch(inpSampai.value, true);
-        const tipe = selDibuatOleh.value;
-        const status = nilaiTercentang('filterStatus');
-        const jenis = nilaiTercentang('filterJenis');
+        const p = ambilPenyaring();
+        const dari = p.dari;
+        const sampai = p.sampai;
+        const tipe = p.tipe;
+        const status = p.status;
+        const jenis = p.jenis;
 
         if (dari !== null || sampai !== null) {
           const selWaktu = baris.cells[4];
