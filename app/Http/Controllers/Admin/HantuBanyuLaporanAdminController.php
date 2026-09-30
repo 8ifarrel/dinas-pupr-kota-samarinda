@@ -50,11 +50,14 @@ class HantuBanyuLaporanAdminController extends Controller
 
   public function index()
   {
+    // Relasi cukup kolom yang tampil di tabel (tanpa teks deskripsi tindak
+    // lanjut dsb). Kolom laporan sengaja tetap utuh: memangkasnya mengubah
+    // urutan baris ber-created_at sama pada ORDER BY di bawah.
     $laporan = HantuBanyuLaporan::with([
-      'pelapor',
-      'kecamatan',
-      'kelurahan',
-      'tindakLanjut',
+      'pelapor:id,nama_lengkap',
+      'kecamatan:id,nama',
+      'kelurahan:id,nama',
+      'tindakLanjut:id,laporan_id,status,jenis',
     ])
       ->orderByDesc('created_at')
       ->get();
