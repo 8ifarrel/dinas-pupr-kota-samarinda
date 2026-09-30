@@ -32,5 +32,19 @@ const BASE = process.env.BASE_URL || 'http://127.0.0.1:8191';
     return { baris: t.rows().count(), lolos: t.rows({ search: 'applied' }).count(), ms_per_redraw: Math.round(kali[1] * 100) / 100 };
   });
   console.log(JSON.stringify(hasil));
+
+  // Waktu render ulang marker peta (dipanggil di setiap ketikan pencarian &
+  // perubahan filter), semua status tercentang agar semua marker digambar.
+  await p.goto(BASE + '/hantu-banyu/peta-sebaran', { waitUntil: 'networkidle2', timeout: 120000 });
+  await p.waitForFunction(() => typeof markerLayer !== 'undefined');
+  const peta = await p.evaluate(() => {
+    const semua = statusList.slice();
+    const ukur = (cari) => { const m = performance.now(); for (let i = 0; i < 5; i++) renderMarkers(semua, cari, currentJenisArr, true); return (performance.now() - m) / 5; };
+    ukur('');
+    const kali = [ukur(''), ukur(''), ukur('')].sort((a, b) => a - b);
+    const cari = [ukur('jalan'), ukur('jalan'), ukur('jalan')].sort((a, b) => a - b);
+    return { marker: markerLayer.getLayers().length, ms_render_semua: Math.round(kali[1] * 10) / 10, ms_render_cari_jalan: Math.round(cari[1] * 10) / 10 };
+  });
+  console.log(JSON.stringify(peta));
   await b.close();
 })();
