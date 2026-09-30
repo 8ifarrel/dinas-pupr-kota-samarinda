@@ -1,0 +1,126 @@
+{
+    "data-besar": {
+        "peta-sebaran (admin)": {
+            "status": 200,
+            "ms_median": 96.4,
+            "ms_min": 92.2,
+            "puncak_memori_mb": 10.27,
+            "query": 6,
+            "ukuran_kb": 439.3
+        },
+        "daftar-pengaduan (admin)": {
+            "status": 200,
+            "ms_median": 60,
+            "ms_min": 55.9,
+            "puncak_memori_mb": 0.89,
+            "query": 5,
+            "ukuran_kb": 146.2
+        },
+        "daftar-pengaduan urut terlama": {
+            "status": 200,
+            "ms_median": 56.6,
+            "ms_min": 54.8,
+            "puncak_memori_mb": 0.63,
+            "query": 5,
+            "ukuran_kb": 147.1
+        },
+        "statistik publik (admin)": {
+            "status": 200,
+            "ms_median": 109.8,
+            "ms_min": 105.3,
+            "puncak_memori_mb": 9.14,
+            "query": 9,
+            "ukuran_kb": 326.7
+        },
+        "statistik e-panel": {
+            "status": 200,
+            "ms_median": 114.3,
+            "ms_min": 113.2,
+            "puncak_memori_mb": 9.09,
+            "query": 9,
+            "ukuran_kb": 311
+        },
+        "e-panel daftar laporan": {
+            "status": 200,
+            "ms_median": 365,
+            "ms_min": 358.3,
+            "puncak_memori_mb": 29.08,
+            "query": 8,
+            "ukuran_kb": 2980
+        },
+        "excel laporan semua": {
+            "status": 200,
+            "ms_median": 1491.6,
+            "ms_min": 1472.2,
+            "puncak_memori_mb": 37.93,
+            "query": 7,
+            "ukuran_kb": 147.9
+        },
+        "excel laporan tahun 2026": {
+            "status": 200,
+            "ms_median": 44.6,
+            "ms_min": 40.7,
+            "puncak_memori_mb": 18.88,
+            "query": 7,
+            "ukuran_kb": 10.4
+        },
+        "excel pemeriksaan semua": {
+            "status": 200,
+            "ms_median": 331.3,
+            "ms_min": 324.9,
+            "puncak_memori_mb": 21.36,
+            "query": 5,
+            "ukuran_kb": 36.3
+        },
+        "peta-sebaran (kelurahan)": {
+            "status": 200,
+            "ms_median": 35.2,
+            "ms_min": 32.5,
+            "puncak_memori_mb": 0.97,
+            "query": 6,
+            "ukuran_kb": 122.8
+        },
+        "statistik publik (kelurahan)": {
+            "status": 200,
+            "ms_median": 30.3,
+            "ms_min": 30.1,
+            "puncak_memori_mb": 1.98,
+            "query": 10,
+            "ukuran_kb": 169
+        }
+    },
+    "pdf": {
+        "pdf laporan semua (36 laporan)": {
+            "status": 200,
+            "ms_median": 5821.3,
+            "ms_min": 1961.3,
+            "puncak_memori_mb": 8.95,
+            "query": 10,
+            "ukuran_kb": 5773.1
+        },
+        "pdf satu laporan": {
+            "status": 200,
+            "ms_median": 1707.7,
+            "ms_min": 1705.1,
+            "puncak_memori_mb": 0.3,
+            "query": 10,
+            "ukuran_kb": 280.1
+        },
+        "pdf pemeriksaan semua": {
+            "status": 200,
+            "ms_median": 1700.2,
+            "ms_min": 1693.1,
+            "puncak_memori_mb": 0.2,
+            "query": 5,
+            "ukuran_kb": 136.8
+        },
+        "pdf bukti pengaduan": {
+            "status": 200,
+            "ms_median": 1781.4,
+            "ms_min": 1696.7,
+            "puncak_memori_mb": 9.11,
+            "query": 9,
+            "ukuran_kb": 255.6
+        }
+    }
+}
