@@ -1,0 +1,1833 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="TOKEN" />
+
+  <title>
+    Pemeriksaan Berkala Saluran | E-Panel Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+  </title>
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon dan Icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="http://localhost/image/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost/image/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost/image/favicon/apple-touch-icon.png">
+<link rel="manifest" href="http://localhost/image/favicon/site.webmanifest">
+<link rel="shortcut icon" href="http://localhost/image/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost/image/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="http://localhost/image/favicon/android-chrome-512x512.png">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
+    </head>
+
+<body>
+  <nav class="fixed top-0 z-40 w-full bg-white border-b border-gray-200">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button">
+
+          <span class="sr-only">
+            Open sidebar
+          </span>
+
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              clip-rule="evenodd" fill-rule="evenodd">
+            </path>
+          </svg>
+        </button>
+
+        <a class="flex ms-2 md:me-24" href="http://localhost/e-panel/dashboard">
+          <img class="h-11 me-3 my-auto" src="/image/logo/dinas-pupr-kota-samarinda.png" alt="Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda" />
+
+          <div class="flex flex-col justify-center">
+            <span class="text-xl sm:text-sm font-semibold whitespace-nowrap">
+              E-Panel
+            </span>
+
+            <span class="hidden sm:block text-xl font-semibold whitespace-nowrap">
+              Dinas PUPR Kota Samarinda
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div>
+            <button class="flex" type="button" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+
+              <span class="sr-only">
+                Open user menu
+              </span>
+
+              <i class="fa-solid fa-circle-user fa-xl"></i>
+            </button>
+          </div>
+
+          <div class="z-40 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+
+              
+                            <p class="text-sm text-gray-900 font-semibold" role="none">
+                Super Admin
+              </p>
+
+              <p class="text-sm text-gray-900" role="none">
+                Super Admin
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                   href="http://localhost/e-panel/kelola-akun-saya/edit/1"
+                   role="menuitem">
+                  Kelola Akun Saya
+                </a>
+              </li>
+              <li>
+                <form method="POST" action="http://localhost/e-panel/logout">
+                  <input type="hidden" name="_token" value="TOKEN" autocomplete="off">                  <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" type="submit">
+                    Log out
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+  <aside
+  class="fixed bg-white top-0 left-0 z-30 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
+  id="logo-sidebar" aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto ">
+
+    <ul class="space-y-2 font-medium">
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Layanan
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-jalan-peduli" data-collapse-toggle="dropdown-jalan-peduli">
+          <i class="fa-solid fa-road"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Jalan Peduli</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-jalan-peduli" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/tindaklanjuti-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Tindaklanjuti
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/laporan-masuk"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Laporan
+              Masuk</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-hantu-banyu" data-collapse-toggle="dropdown-hantu-banyu">
+          <i class="fa-solid fa-water"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Hantu Banyu</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-hantu-banyu" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Daftar
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Pemeriksaan
+              Berkala</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sedot Tinja
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sijakon
+          </span>
+        </a>
+      </li>
+
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Umum
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/slider">
+          <i class="fa-solid fa-panorama"></i>
+
+          <span class="ms-3">
+            Slider
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/berita/kategori">
+          <i class="fa-solid fa-newspaper"></i>
+
+          <span class="ms-3">
+            Berita
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/ppid-pelaksana/kategori">
+          <i class="fa-solid fa-file-powerpoint"></i>
+
+          <span class="ms-3">
+            PPID Pelaksana
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/pengumuman">
+          <i class="fa-solid fa-bullhorn"></i>
+
+          <span class="ms-3">
+            Pengumuman
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/agenda-kegiatan">
+          <i class="fa-solid fa-calendar-days"></i>
+
+          <span class="ms-3">
+            Agenda Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/album-kegiatan">
+          <i class="fa-solid fa-images"></i>
+
+          <span class="ms-3">
+            Album & Foto Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-struktur-organisasi" data-collapse-toggle="dropdown-struktur-organisasi">
+          <i class="fa-solid fa-sitemap"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Struktur Organisasi</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-struktur-organisasi" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/susunan-organisasi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Susunan
+              Organisasi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/organigram"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Organigram</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-profil" data-collapse-toggle="dropdown-profil">
+          <i class="fa-solid fa-building-user"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Profil</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-profil" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/kepala-dinas/edit"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Kepala
+              Dinas</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/visi-dan-misi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi
+              dan Misi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/sejarah-dinas-pupr-kota-samarinda"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sejarah</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/partner">
+          <i class="fa-solid fa-handshake"></i>
+
+          <span class="ms-3">
+            Partner
+          </span>
+        </a>
+      </li>
+
+              <div class="flex items-center mx-2 pt-1.5">
+          <span class="font-medium text-sm text-gray-600 mr-3">
+            Super Admin
+          </span>
+          <hr class="flex-grow h-px bg-gray-600 border-0">
+        </div>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-admin">
+            <i class="fa-solid fa-user-lock"></i>
+            <span class="ms-3">
+              Akun Admin
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-kelurahan">
+            <i class="fa-solid fa-building-user"></i>
+            <span class="ms-3">
+              Akun Kelurahan
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <button type="button"
+            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+            aria-controls="dropdown-api-key" data-collapse-toggle="dropdown-api-key">
+            <i class="fa-solid fa-key"></i>
+            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">API Key</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <ul id="dropdown-api-key" class="hidden py-2 space-y-2">
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/jalan-peduli"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Jalan
+                Peduli</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/hantu-banyu"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
+                Banyu</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/akun-kelurahan"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
+                Kelurahan</a>
+            </li>
+          </ul>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/log">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span class="ms-3">
+              Log
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+            
+            <i class="fa-regular fa-circle-question"></i>
+            <span class="ms-3">
+              Konfigurasi Sistem
+            </span>
+          </a>
+        </li>
+          </ul>
+  </div>
+</aside>
+  <div class="p-8 mt-14 md:ml-64">
+    <div class="mb-5 flex flex-col gap-1">
+  <h1
+    class="relative inline-block font-semibold text-2xl md:text-3xl text-gray-800 
+     after:content-[''] after:inline-block after:h-[3px] after:bg-black after:align-middle
+     after:ml-1 after:sm:min-w-[75px] after:min-w-[60px]">
+    Pemeriksaan Berkala Saluran
+  </h1>
+
+      <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+      Catat hasil patroli/pemeriksaan rutin kondisi ruas saluran drainase dan irigasi.
+    </p>
+  </div>
+
+
+
+    
+      <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
+    <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-gray-200">
+      <div class="flex flex-wrap gap-2">
+        <button type="button" id="btnUnduhExcel"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-excel"></i>
+          <span class="whitespace-nowrap">Unduh Excel</span>
+        </button>
+        <button type="button" id="btnUnduhPdf"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="whitespace-nowrap">Unduh PDF</span>
+        </button>
+      </div>
+
+              <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/tambah"
+          class="inline-flex items-center gap-2 h-10 px-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm font-medium focus:outline-none">
+          <i class="fa-solid fa-plus"></i>
+          <span class="whitespace-nowrap">Tambah Pemeriksaan</span>
+        </a>
+          </div>
+
+    
+    <div class="relative overflow-x-auto text-sm md:text-base">
+      <table id="pemeriksaan-berkala" class="stripe hover row-border table-auto" style="width:100%">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Tanggal</th>
+            <th>Lokasi</th>
+            <th>Ruas Saluran</th>
+            <th>Sedimentasi &amp; Sampah</th>
+            <th>Status Aliran</th>
+            <th>Kelola</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td>1</td>
+              <td data-order="1790697600">
+                30 Sep 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pahlawan</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Primer</div>
+                                  <div class="text-xs text-gray-500">
+                    2.10 m x 1.20 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">9.6 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    8% (Normal)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/1/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-1" data-modal-toggle="deleteModal-1"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-1" data-modal-target="deleteModal-1" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-1">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Pahlawan (Saluran Primer)</strong> tanggal
+                      <strong>30 September 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/1" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-1">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>2</td>
+              <td data-order="1788710400">
+                07 Sep 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Antasari</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Sekunder</div>
+                                  <div class="text-xs text-gray-500">
+                    1.20 m x 0.80 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">17.6 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    22% (Sedang)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Kurang Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/2/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-2" data-modal-toggle="deleteModal-2"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-2" data-modal-target="deleteModal-2" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-2">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Antasari (Saluran Sekunder)</strong> tanggal
+                      <strong>07 September 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/2" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-2">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>3</td>
+              <td data-order="1786723200">
+                15 Agt 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan KH. Wahid Hasyim</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Tersier</div>
+                                  <div class="text-xs text-gray-500">
+                    0.60 m x 0.55 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">25.9 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    47.1% (Tinggi)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                  Tersumbat Sebagian
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/3/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-3" data-modal-toggle="deleteModal-3"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-3" data-modal-target="deleteModal-3" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-3">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan KH. Wahid Hasyim (Saluran Tersier)</strong> tanggal
+                      <strong>15 Agustus 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/3" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-3">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>4</td>
+              <td data-order="1784736000">
+                23 Jul 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Dr. Soetomo</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Primer</div>
+                                  <div class="text-xs text-gray-500">
+                    1.80 m x 1.50 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">12 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    8% (Normal)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Macet Total
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/4/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-4" data-modal-toggle="deleteModal-4"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-4" data-modal-target="deleteModal-4" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-4">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Dr. Soetomo (Saluran Primer)</strong> tanggal
+                      <strong>23 Juli 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/4" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-4">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>5</td>
+              <td data-order="1782748800">
+                30 Jun 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Basuki Rahmat</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Sekunder</div>
+                                  <div class="text-xs text-gray-500">
+                    2.10 m x 1.20 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">26.4 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    22% (Sedang)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/5/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-5" data-modal-toggle="deleteModal-5"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-5" data-modal-target="deleteModal-5" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-5">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Basuki Rahmat (Saluran Sekunder)</strong> tanggal
+                      <strong>30 Juni 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/5" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-5">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>6</td>
+              <td data-order="1780761600">
+                07 Jun 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Ahmad Yani</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Tersier</div>
+                                  <div class="text-xs text-gray-500">
+                    1.20 m x 0.80 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">37.6 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    47% (Tinggi)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Kurang Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/6/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-6" data-modal-toggle="deleteModal-6"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-6" data-modal-target="deleteModal-6" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-6">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Ahmad Yani (Saluran Tersier)</strong> tanggal
+                      <strong>07 Juni 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/6" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-6">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>7</td>
+              <td data-order="1778774400">
+                15 Mei 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Suryanata</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Primer</div>
+                                  <div class="text-xs text-gray-500">
+                    0.60 m x 0.55 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">4.4 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    8% (Normal)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                  Tersumbat Sebagian
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/7/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-7" data-modal-toggle="deleteModal-7"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-7" data-modal-target="deleteModal-7" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-7">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Suryanata (Saluran Primer)</strong> tanggal
+                      <strong>15 Mei 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/7" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-7">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>8</td>
+              <td data-order="1776787200">
+                22 Apr 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Lambung Mangkurat</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Sekunder</div>
+                                  <div class="text-xs text-gray-500">
+                    1.80 m x 1.50 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">33 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    22% (Sedang)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Macet Total
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/8/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-8" data-modal-toggle="deleteModal-8"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-8" data-modal-target="deleteModal-8" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-8">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Lambung Mangkurat (Saluran Sekunder)</strong> tanggal
+                      <strong>22 April 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/8" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-8">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>9</td>
+              <td data-order="1774800000">
+                30 Mar 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Juanda</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Tersier</div>
+                                  <div class="text-xs text-gray-500">
+                    2.10 m x 1.20 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">56.4 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    47% (Tinggi)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/9/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-9" data-modal-toggle="deleteModal-9"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-9" data-modal-target="deleteModal-9" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-9">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Juanda (Saluran Tersier)</strong> tanggal
+                      <strong>30 Maret 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/9" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-9">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>10</td>
+              <td data-order="1772812800">
+                07 Mar 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Siradj Salman</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Primer</div>
+                                  <div class="text-xs text-gray-500">
+                    1.20 m x 0.80 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">6.4 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    8% (Normal)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Kurang Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/10/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-10" data-modal-toggle="deleteModal-10"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-10" data-modal-target="deleteModal-10" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-10">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Siradj Salman (Saluran Primer)</strong> tanggal
+                      <strong>07 Maret 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/10" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-10">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>11</td>
+              <td data-order="1770825600">
+                12 Feb 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Gatot Subroto</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Sekunder</div>
+                                  <div class="text-xs text-gray-500">
+                    0.60 m x 0.55 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">12.1 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    22% (Sedang)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                  Tersumbat Sebagian
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/11/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-11" data-modal-toggle="deleteModal-11"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-11" data-modal-target="deleteModal-11" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-11">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Gatot Subroto (Saluran Sekunder)</strong> tanggal
+                      <strong>12 Februari 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/11" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-11">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>12</td>
+              <td data-order="1768838400">
+                20 Jan 2026
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Agus Salim</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Tersier</div>
+                                  <div class="text-xs text-gray-500">
+                    1.80 m x 1.50 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">70.5 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    47% (Tinggi)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Macet Total
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/12/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-12" data-modal-toggle="deleteModal-12"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-12" data-modal-target="deleteModal-12" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-12">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Agus Salim (Saluran Tersier)</strong> tanggal
+                      <strong>20 Januari 2026</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/12" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-12">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>13</td>
+              <td data-order="1766851200">
+                28 Des 2025
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Cendana</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Primer</div>
+                                  <div class="text-xs text-gray-500">
+                    2.10 m x 1.20 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">9.6 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    8% (Normal)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/13/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-13" data-modal-toggle="deleteModal-13"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-13" data-modal-target="deleteModal-13" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-13">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Cendana (Saluran Primer)</strong> tanggal
+                      <strong>28 Desember 2025</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/13" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-13">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                      <tr>
+              <td>14</td>
+              <td data-order="1764864000">
+                05 Des 2025
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pramuka</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Saluran Sekunder</div>
+                                  <div class="text-xs text-gray-500">
+                    1.20 m x 0.80 m
+                  </div>
+                              </td>
+              <td>
+                                  <div class="text-gray-900">17.6 cm</div>
+                                                  <span class="inline-flex items-center whitespace-nowrap px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    22% (Sedang)
+                  </span>
+                              </td>
+              <td>
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  Kurang Lancar
+                </span>
+              </td>
+              <td>
+                                  <div class="flex gap-2">
+                    <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/14/edit"
+                      title="Edit catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <button data-modal-target="deleteModal-14" data-modal-toggle="deleteModal-14"
+                      title="Hapus catatan"
+                      class="flex justify-center items-center w-10 h-10 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+
+                  <div id="deleteModal-14" data-modal-target="deleteModal-14" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Konfirmasi Penghapusan
+        </h3>
+        <button type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-hide="deleteModal-14">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="p-4 md:p-5 space-y-4">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Apakah Anda yakin ingin menghapus catatan pemeriksaan
+                      <strong>Jalan Pramuka (Saluran Sekunder)</strong> tanggal
+                      <strong>05 Desember 2025</strong>?
+                    </p>
+      </div>
+      <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <form action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/14" method="POST">
+          <input type="hidden" name="_token" value="TOKEN" autocomplete="off">          <input type="hidden" name="_method" value="DELETE">          <button type="submit"
+            class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Hapus</button>
+        </form>
+        <button type="button"
+          class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          data-modal-hide="deleteModal-14">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+                              </td>
+            </tr>
+                  </tbody>
+        <tfoot>
+          <tr>
+            <th>No.</th>
+            <th>Tanggal</th>
+            <th>Lokasi</th>
+            <th>Ruas Saluran</th>
+            <th>Sedimentasi &amp; Sampah</th>
+            <th>Status Aliran</th>
+            <th>Kelola</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  
+    <div id="modalUnduh" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md max-h-full overflow-y-auto">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 class="text-lg font-semibold text-gray-900">
+          <i id="modalIkon" class="fa-solid fa-file-pdf text-red-600 mr-1"></i>
+          <span id="modalJudul">Unduh PDF</span>
+        </h3>
+        <button type="button" data-tutup-modal
+          class="text-gray-400 hover:bg-gray-100 hover:text-gray-900 rounded-lg p-1.5 inline-flex items-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form method="GET" id="formUnduh" data-aksi-pdf="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/unduh-pdf"
+        data-aksi-excel="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/unduh-excel"
+        action="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala/unduh-pdf" class="p-4 space-y-4">
+
+        <div class="space-y-2">
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="semua" class="mt-1" checked>
+            <span class="font-medium">Semua catatan</span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="hari_ini" class="mt-1">
+            <span class="font-medium">Hari ini</span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="rentang" class="mt-1">
+            <span class="font-medium">Rentang tanggal, bulan, &amp; tahun</span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="tahun" class="mt-1">
+            <span class="font-medium">Satu tahun</span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="bulan" class="mt-1">
+            <span class="font-medium">Satu Bulan</span>
+          </label>
+        </div>
+
+        <div id="grpRentang" class="hidden rounded-lg border border-gray-200 p-3 space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Dari tanggal</label>
+            <input type="date" name="dari_tanggal" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Sampai tanggal</label>
+            <input type="date" name="sampai_tanggal" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+          </div>
+        </div>
+
+        <div id="grpTahun" class="hidden rounded-lg border border-gray-200 p-3">
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Tahun</label>
+          <select name="tahun" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+                          <option value="2026">2026</option>
+                          <option value="2025">2025</option>
+                      </select>
+        </div>
+
+        <div id="grpBulan" class="hidden rounded-lg border border-gray-200 p-3">
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bulan &amp; tahun</label>
+          <input type="month" name="periode_bulan" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t">
+          <button type="button" data-tutup-modal
+            class="px-4 py-2 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">Batal</button>
+          <button type="submit"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700">
+            <i class="fa-solid fa-download"></i> Unduh
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+  
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      $('#pemeriksaan-berkala').DataTable({
+        order: [[1, 'desc']],
+        columnDefs: [{
+          orderable: false,
+          targets: [6]
+        }]
+      });
+
+      const modal = document.getElementById('modalUnduh');
+      const form = document.getElementById('formUnduh');
+      const modalIkon = document.getElementById('modalIkon');
+      const modalJudul = document.getElementById('modalJudul');
+      const groups = {
+        rentang: document.getElementById('grpRentang'),
+        tahun: document.getElementById('grpTahun'),
+        bulan: document.getElementById('grpBulan'),
+      };
+
+      function bukaModal(tipe) {
+        const aksiPdf = form.dataset.aksiPdf;
+        const aksiExcel = form.dataset.aksiExcel;
+        if (tipe === 'excel') {
+          form.action = aksiExcel;
+          modalIkon.className = 'fa-solid fa-file-excel text-green-600 mr-1';
+          modalJudul.textContent = 'Unduh Excel';
+        } else {
+          form.action = aksiPdf;
+          modalIkon.className = 'fa-solid fa-file-pdf text-red-600 mr-1';
+          modalJudul.textContent = 'Unduh PDF';
+        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function tutupModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      document.getElementById('btnUnduhPdf').addEventListener('click', () => bukaModal('pdf'));
+      document.getElementById('btnUnduhExcel').addEventListener('click', () => bukaModal('excel'));
+      modal.querySelectorAll('[data-tutup-modal]').forEach(btn => btn.addEventListener('click', tutupModal));
+
+      function syncGroups() {
+        const mode = form.querySelector('input[name="mode"]:checked')?.value || 'semua';
+        Object.entries(groups).forEach(([key, el]) => {
+          const aktif = key === mode;
+          el.classList.toggle('hidden', !aktif);
+          // Nonaktifkan input pada grup tersembunyi agar tidak ikut terkirim.
+          el.querySelectorAll('select, input').forEach(s => {
+            s.disabled = !aktif;
+          });
+        });
+      }
+
+      form.querySelectorAll('input[name="mode"]').forEach(radio => radio.addEventListener('change', syncGroups));
+      syncGroups();
+    });
+  </script>
+</body>
+
+</html>

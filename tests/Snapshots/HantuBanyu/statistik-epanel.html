@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="TOKEN" />
+
+  <title>
+    Statistik Laporan Hantu Banyu | E-Panel Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+  </title>
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon dan Icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="http://localhost/image/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost/image/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost/image/favicon/apple-touch-icon.png">
+<link rel="manifest" href="http://localhost/image/favicon/site.webmanifest">
+<link rel="shortcut icon" href="http://localhost/image/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost/image/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="http://localhost/image/favicon/android-chrome-512x512.png">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
+  </head>
+
+<body>
+  <nav class="fixed top-0 z-40 w-full bg-white border-b border-gray-200">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button">
+
+          <span class="sr-only">
+            Open sidebar
+          </span>
+
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              clip-rule="evenodd" fill-rule="evenodd">
+            </path>
+          </svg>
+        </button>
+
+        <a class="flex ms-2 md:me-24" href="http://localhost/e-panel/dashboard">
+          <img class="h-11 me-3 my-auto" src="/image/logo/dinas-pupr-kota-samarinda.png" alt="Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda" />
+
+          <div class="flex flex-col justify-center">
+            <span class="text-xl sm:text-sm font-semibold whitespace-nowrap">
+              E-Panel
+            </span>
+
+            <span class="hidden sm:block text-xl font-semibold whitespace-nowrap">
+              Dinas PUPR Kota Samarinda
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div>
+            <button class="flex" type="button" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+
+              <span class="sr-only">
+                Open user menu
+              </span>
+
+              <i class="fa-solid fa-circle-user fa-xl"></i>
+            </button>
+          </div>
+
+          <div class="z-40 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+
+              
+                            <p class="text-sm text-gray-900 font-semibold" role="none">
+                Super Admin
+              </p>
+
+              <p class="text-sm text-gray-900" role="none">
+                Super Admin
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                   href="http://localhost/e-panel/kelola-akun-saya/edit/1"
+                   role="menuitem">
+                  Kelola Akun Saya
+                </a>
+              </li>
+              <li>
+                <form method="POST" action="http://localhost/e-panel/logout">
+                  <input type="hidden" name="_token" value="TOKEN" autocomplete="off">                  <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" type="submit">
+                    Log out
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+  <aside
+  class="fixed bg-white top-0 left-0 z-30 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
+  id="logo-sidebar" aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto ">
+
+    <ul class="space-y-2 font-medium">
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Layanan
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-jalan-peduli" data-collapse-toggle="dropdown-jalan-peduli">
+          <i class="fa-solid fa-road"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Jalan Peduli</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-jalan-peduli" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/tindaklanjuti-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Tindaklanjuti
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/laporan-masuk"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Laporan
+              Masuk</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-hantu-banyu" data-collapse-toggle="dropdown-hantu-banyu">
+          <i class="fa-solid fa-water"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Hantu Banyu</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-hantu-banyu" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Daftar
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Pemeriksaan
+              Berkala</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sedot Tinja
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sijakon
+          </span>
+        </a>
+      </li>
+
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Umum
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/slider">
+          <i class="fa-solid fa-panorama"></i>
+
+          <span class="ms-3">
+            Slider
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/berita/kategori">
+          <i class="fa-solid fa-newspaper"></i>
+
+          <span class="ms-3">
+            Berita
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/ppid-pelaksana/kategori">
+          <i class="fa-solid fa-file-powerpoint"></i>
+
+          <span class="ms-3">
+            PPID Pelaksana
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/pengumuman">
+          <i class="fa-solid fa-bullhorn"></i>
+
+          <span class="ms-3">
+            Pengumuman
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/agenda-kegiatan">
+          <i class="fa-solid fa-calendar-days"></i>
+
+          <span class="ms-3">
+            Agenda Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/album-kegiatan">
+          <i class="fa-solid fa-images"></i>
+
+          <span class="ms-3">
+            Album & Foto Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-struktur-organisasi" data-collapse-toggle="dropdown-struktur-organisasi">
+          <i class="fa-solid fa-sitemap"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Struktur Organisasi</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-struktur-organisasi" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/susunan-organisasi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Susunan
+              Organisasi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/organigram"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Organigram</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-profil" data-collapse-toggle="dropdown-profil">
+          <i class="fa-solid fa-building-user"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Profil</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-profil" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/kepala-dinas/edit"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Kepala
+              Dinas</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/visi-dan-misi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi
+              dan Misi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/sejarah-dinas-pupr-kota-samarinda"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sejarah</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/partner">
+          <i class="fa-solid fa-handshake"></i>
+
+          <span class="ms-3">
+            Partner
+          </span>
+        </a>
+      </li>
+
+              <div class="flex items-center mx-2 pt-1.5">
+          <span class="font-medium text-sm text-gray-600 mr-3">
+            Super Admin
+          </span>
+          <hr class="flex-grow h-px bg-gray-600 border-0">
+        </div>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-admin">
+            <i class="fa-solid fa-user-lock"></i>
+            <span class="ms-3">
+              Akun Admin
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-kelurahan">
+            <i class="fa-solid fa-building-user"></i>
+            <span class="ms-3">
+              Akun Kelurahan
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <button type="button"
+            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+            aria-controls="dropdown-api-key" data-collapse-toggle="dropdown-api-key">
+            <i class="fa-solid fa-key"></i>
+            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">API Key</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <ul id="dropdown-api-key" class="hidden py-2 space-y-2">
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/jalan-peduli"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Jalan
+                Peduli</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/hantu-banyu"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
+                Banyu</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/akun-kelurahan"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
+                Kelurahan</a>
+            </li>
+          </ul>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/log">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span class="ms-3">
+              Log
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+            
+            <i class="fa-regular fa-circle-question"></i>
+            <span class="ms-3">
+              Konfigurasi Sistem
+            </span>
+          </a>
+        </li>
+          </ul>
+  </div>
+</aside>
+  <div class="p-8 mt-14 md:ml-64">
+    <div class="mb-5 flex flex-col gap-1">
+  <h1
+    class="relative inline-block font-semibold text-2xl md:text-3xl text-gray-800 
+     after:content-[''] after:inline-block after:h-[3px] after:bg-black after:align-middle
+     after:ml-1 after:sm:min-w-[75px] after:min-w-[60px]">
+    Statistik Laporan Hantu Banyu
+  </h1>
+
+      <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+      Ringkasan kinerja penanganan pengaduan drainase dan irigasi.
+    </p>
+  </div>
+
+
+
+    
+    
+  
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="bg-white rounded-lg shadow-lg border p-5">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-500">Total Laporan</span>
+        <i class="fa-solid fa-file-lines text-blue-500"></i>
+      </div>
+      <div class="text-2xl font-bold text-gray-900 mt-2">36</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg border p-5">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-500">Sedang Diproses</span>
+        <i class="fa-solid fa-spinner text-indigo-500"></i>
+      </div>
+      <div class="text-2xl font-bold text-gray-900 mt-2">22</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg border p-5">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-500">Selesai</span>
+        <i class="fa-solid fa-circle-check text-green-500"></i>
+      </div>
+      <div class="text-2xl font-bold text-gray-900 mt-2">8</div>
+      <div class="text-xs text-gray-400 mt-1">22% dari total</div>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg border p-5">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-500">Belum Diproses</span>
+        <i class="fa-solid fa-clock text-yellow-500"></i>
+      </div>
+      <div class="text-2xl font-bold text-gray-900 mt-2">6</div>
+    </div>
+  </div>
+
+  
+  
+  <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      <div>
+        <h3 class="font-semibold text-gray-900">Laporan Masuk</h3>
+      </div>
+      <div class="flex gap-2">
+        <select id="masukQuarter" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+          <option value="1">Kuartal I (Jan–Mar)</option>
+          <option value="2">Kuartal II (Apr–Jun)</option>
+          <option value="3">Kuartal III (Jul–Sep)</option>
+          <option value="4">Kuartal IV (Okt–Des)</option>
+        </select>
+        <select id="masukYear" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                      <option value="2026">2026</option>
+                      <option value="2025">2025</option>
+                  </select>
+      </div>
+    </div>
+    <div class="relative h-72">
+      <canvas id="chartMasuk"></canvas>
+      <div id="nodataMasuk"
+        class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+        Tidak ada data pada periode ini
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <div class="bg-white rounded-lg shadow-lg border p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div>
+          <h3 class="font-semibold text-gray-900">Laporan sedang Diproses</h3>
+        </div>
+        <div class="flex gap-2">
+          <select id="diprosesMonth" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200"></select>
+          <select id="diprosesYear" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                          <option value="2026">2026</option>
+                          <option value="2025">2025</option>
+                      </select>
+        </div>
+      </div>
+      <div class="relative h-72">
+        <canvas id="chartDiproses"></canvas>
+        <div id="nodataDiproses"
+          class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+          Tidak ada data pada periode ini
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-lg border p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div>
+          <h3 class="font-semibold text-gray-900">Jenis Laporan</h3>
+        </div>
+        <div class="flex gap-2">
+          <select id="jenisMonth" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200"></select>
+          <select id="jenisYear" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                          <option value="2026">2026</option>
+                          <option value="2025">2025</option>
+                      </select>
+        </div>
+      </div>
+      <div class="relative h-72">
+        <canvas id="chartJenis"></canvas>
+        <div id="nodataJenis"
+          class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+          Tidak ada data pada periode ini
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      <div>
+        <h3 class="font-semibold text-gray-900">Sebaran Laporan per Kecamatan</h3>
+      </div>
+      <div class="flex gap-2">
+        <select id="kecMonth" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200"></select>
+        <select id="kecYear" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                      <option value="2026">2026</option>
+                      <option value="2025">2025</option>
+                  </select>
+      </div>
+    </div>
+    <div class="relative" style="height: 288px">
+      <canvas id="chartKecamatan"></canvas>
+      <div id="nodataKec"
+        class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+        Tidak ada data pada periode ini
+      </div>
+    </div>
+  </div>
+
+          
+    <div class="bg-white rounded-lg shadow-lg border p-6 mt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <div>
+          <h3 class="font-semibold text-  gray-900">Sebaran Laporan per Kelurahan</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <select id="kelKecamatan" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                          <option value="Samarinda Ilir">Samarinda Ilir</option>
+                          <option value="Samarinda Ulu">Samarinda Ulu</option>
+                          <option value="Sungai Kunjang">Sungai Kunjang</option>
+                      </select>
+          <select id="kelMonth" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200"></select>
+          <select id="kelYear" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                          <option value="2026">2026</option>
+                          <option value="2025">2025</option>
+                      </select>
+        </div>
+      </div>
+      <div class="relative" id="kelChartWrap" style="height: 288px">
+        <canvas id="chartKelurahan"></canvas>
+        <div id="nodataKel"
+          class="absolute inset-0 hidden items-center justify-center text-gray-400 text-sm bg-white">
+          Tidak ada data pada periode ini
+        </div>
+      </div>
+    </div>
+    </div>
+
+  
+    
+          <div id="statistik-hantu-banyu-data" class="hidden"
+      data-by-ym="{&quot;2026&quot;:{&quot;9&quot;:{&quot;masuk&quot;:4,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:1,&quot;menunggu_survei&quot;:1,&quot;sudah_disurvei&quot;:1,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:0},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ulu&quot;:2,&quot;Samarinda Ilir&quot;:2},&quot;kelurahan&quot;:{&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1,&quot;Sidodadi&quot;:1},&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1,&quot;Pelita&quot;:1}}},&quot;8&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:0,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:1,&quot;sedang_dikerjakan&quot;:1,&quot;selesai&quot;:1},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:0,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Sungai Kunjang&quot;:2,&quot;Samarinda Ulu&quot;:1},&quot;kelurahan&quot;:{&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1,&quot;Karang Asam Ulu&quot;:1},&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1}}},&quot;7&quot;:{&quot;masuk&quot;:4,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:1,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:1,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:1},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ulu&quot;:1,&quot;Samarinda Ilir&quot;:2,&quot;Sungai Kunjang&quot;:1},&quot;kelurahan&quot;:{&quot;Samarinda Ulu&quot;:{&quot;Sidodadi&quot;:1},&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1,&quot;Pelita&quot;:1},&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1}}},&quot;6&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:0,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:1,&quot;sedang_dikerjakan&quot;:1,&quot;selesai&quot;:1},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:0,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Sungai Kunjang&quot;:1,&quot;Samarinda Ulu&quot;:2},&quot;kelurahan&quot;:{&quot;Sungai Kunjang&quot;:{&quot;Karang Asam Ulu&quot;:1},&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1,&quot;Sidodadi&quot;:1}}},&quot;5&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:1,&quot;menunggu_survei&quot;:1,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:0},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:0},&quot;kecamatan&quot;:{&quot;Samarinda Ilir&quot;:2,&quot;Sungai Kunjang&quot;:1},&quot;kelurahan&quot;:{&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1,&quot;Pelita&quot;:1},&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1}}},&quot;4&quot;:{&quot;masuk&quot;:4,&quot;status&quot;:{&quot;pending&quot;:0,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:1,&quot;menunggu_jadwal_pengerjaan&quot;:1,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:2},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:0,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:2},&quot;kecamatan&quot;:{&quot;Sungai Kunjang&quot;:1,&quot;Samarinda Ulu&quot;:2,&quot;Samarinda Ilir&quot;:1},&quot;kelurahan&quot;:{&quot;Sungai Kunjang&quot;:{&quot;Karang Asam Ulu&quot;:1},&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1,&quot;Sidodadi&quot;:1},&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1}}},&quot;3&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:1,&quot;menunggu_survei&quot;:1,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:0},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:0,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ilir&quot;:1,&quot;Sungai Kunjang&quot;:2},&quot;kelurahan&quot;:{&quot;Samarinda Ilir&quot;:{&quot;Pelita&quot;:1},&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1,&quot;Karang Asam Ulu&quot;:1}}},&quot;2&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:0,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:1,&quot;menunggu_jadwal_pengerjaan&quot;:1,&quot;sedang_dikerjakan&quot;:1,&quot;selesai&quot;:0},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:0,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ulu&quot;:2,&quot;Samarinda Ilir&quot;:1},&quot;kelurahan&quot;:{&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1,&quot;Sidodadi&quot;:1},&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1}}},&quot;1&quot;:{&quot;masuk&quot;:4,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:1,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:2},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:2,&quot;biasa&quot;:0,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ilir&quot;:1,&quot;Sungai Kunjang&quot;:2,&quot;Samarinda Ulu&quot;:1},&quot;kelurahan&quot;:{&quot;Samarinda Ilir&quot;:{&quot;Pelita&quot;:1},&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1,&quot;Karang Asam Ulu&quot;:1},&quot;Samarinda Ulu&quot;:{&quot;Air Putih&quot;:1}}}},&quot;2025&quot;:{&quot;12&quot;:{&quot;masuk&quot;:3,&quot;status&quot;:{&quot;pending&quot;:0,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:1,&quot;menunggu_jadwal_pengerjaan&quot;:1,&quot;sedang_dikerjakan&quot;:1,&quot;selesai&quot;:0},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:0,&quot;darurat&quot;:1,&quot;biasa&quot;:1,&quot;rutin&quot;:1},&quot;kecamatan&quot;:{&quot;Samarinda Ulu&quot;:1,&quot;Samarinda Ilir&quot;:2},&quot;kelurahan&quot;:{&quot;Samarinda Ulu&quot;:{&quot;Sidodadi&quot;:1},&quot;Samarinda Ilir&quot;:{&quot;Sidomulyo&quot;:1,&quot;Pelita&quot;:1}}},&quot;11&quot;:{&quot;masuk&quot;:2,&quot;status&quot;:{&quot;pending&quot;:1,&quot;diterima&quot;:0,&quot;menunggu_survei&quot;:0,&quot;sudah_disurvei&quot;:0,&quot;menunggu_jadwal_pengerjaan&quot;:0,&quot;sedang_dikerjakan&quot;:0,&quot;selesai&quot;:1},&quot;jenis&quot;:{&quot;belum_diklasifikasikan&quot;:1,&quot;darurat&quot;:0,&quot;biasa&quot;:1,&quot;rutin&quot;:0},&quot;kecamatan&quot;:{&quot;Sungai Kunjang&quot;:2},&quot;kelurahan&quot;:{&quot;Sungai Kunjang&quot;:{&quot;Loa Bakung&quot;:1,&quot;Karang Asam Ulu&quot;:1}}}}}"
+      data-kecamatan-list="[&quot;Samarinda Ilir&quot;,&quot;Samarinda Ulu&quot;,&quot;Sungai Kunjang&quot;]"
+      data-kelurahan-map="{&quot;Samarinda Ilir&quot;:[&quot;Pelita&quot;,&quot;Sidomulyo&quot;],&quot;Samarinda Ulu&quot;:[&quot;Air Putih&quot;,&quot;Sidodadi&quot;],&quot;Sungai Kunjang&quot;:[&quot;Karang Asam Ulu&quot;,&quot;Loa Bakung&quot;]}"
+      data-now-year="2026"
+      data-now-month="9"
+      data-now-quarter="3"
+    ></div>
+  </body>
+
+</html>

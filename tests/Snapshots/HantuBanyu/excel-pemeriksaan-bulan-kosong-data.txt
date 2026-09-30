@@ -1,0 +1,6 @@
+{
+    "status": 302,
+    "redirect": "http://localhost/asal",
+    "error": "Tidak ada catatan pemeriksaan pada rentang waktu yang dipilih.",
+    "errors": null
+}

@@ -1,0 +1,13 @@
+{
+    "status": 200,
+    "json": {
+        "place_id": 5900,
+        "lat": "-0.4900000",
+        "lon": "117.1300000",
+        "display_name": "Titik uji -0.4900000",
+        "address": {
+            "village": "Air Putih",
+            "city_district": "Samarinda Ulu"
+        }
+    }
+}

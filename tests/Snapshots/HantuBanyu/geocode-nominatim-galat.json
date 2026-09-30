@@ -1,0 +1,7 @@
+{
+    "status": 500,
+    "json": {
+        "error": "Failed to get geocoding data",
+        "status": 500
+    }
+}

@@ -1,0 +1,362 @@
+[
+    {
+        "kode": "HB-2026-0001",
+        "latitude": "-0.4600000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Pahlawan",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0002",
+        "latitude": "-0.4613000",
+        "longitude": "117.1321000",
+        "nama_jalan": "Jalan Juanda",
+        "status_laporan": "diterima",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0003",
+        "latitude": "-0.4626000",
+        "longitude": "117.1342000",
+        "nama_jalan": "Jalan Antasari",
+        "status_laporan": "menunggu_survei",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0004",
+        "latitude": "-0.4639000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Siradj Salman",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0005",
+        "latitude": "-0.4652000",
+        "longitude": "117.1384000",
+        "nama_jalan": "Jalan KH. Wahid Hasyim",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0006",
+        "latitude": "-0.4665000",
+        "longitude": "117.1405000",
+        "nama_jalan": "Jalan Gatot Subroto",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0007",
+        "latitude": "-0.4678000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Dr. Soetomo",
+        "status_laporan": "selesai",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0008",
+        "latitude": "-0.4691000",
+        "longitude": "117.1447000",
+        "nama_jalan": "Jalan Agus Salim",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0009",
+        "latitude": "-0.4704000",
+        "longitude": "117.1468000",
+        "nama_jalan": "Jalan Basuki Rahmat",
+        "status_laporan": "diterima",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0010",
+        "latitude": "-0.4717000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Cendana",
+        "status_laporan": "selesai",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0011",
+        "latitude": "-0.4730000",
+        "longitude": "117.1321000",
+        "nama_jalan": "Jalan Ahmad Yani",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0012",
+        "latitude": "-0.4743000",
+        "longitude": "117.1342000",
+        "nama_jalan": "Jalan Pramuka",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0013",
+        "latitude": "-0.4756000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Suryanata",
+        "status_laporan": "sedang_dikerjakan",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0014",
+        "latitude": "-0.4769000",
+        "longitude": "117.1384000",
+        "nama_jalan": "Jalan Merdeka",
+        "status_laporan": "selesai",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0015",
+        "latitude": "-0.4782000",
+        "longitude": "117.1405000",
+        "nama_jalan": "Jalan Lambung Mangkurat",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0016",
+        "latitude": "-0.4795000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Pahlawan Gg. 15",
+        "status_laporan": "diterima",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0017",
+        "latitude": "-0.4808000",
+        "longitude": "117.1447000",
+        "nama_jalan": "Jalan Juanda Gg. 16",
+        "status_laporan": "menunggu_survei",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0018",
+        "latitude": "-0.4821000",
+        "longitude": "117.1468000",
+        "nama_jalan": "Jalan Antasari Gg. 17",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0019",
+        "latitude": "-0.4834000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Siradj Salman Gg. 18",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0020",
+        "latitude": "-0.4847000",
+        "longitude": "117.1321000",
+        "nama_jalan": "Jalan KH. Wahid Hasyim Gg. 19",
+        "status_laporan": "selesai",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0021",
+        "latitude": "-0.4860000",
+        "longitude": "117.1342000",
+        "nama_jalan": "Jalan Gatot Subroto Gg. 20",
+        "status_laporan": "selesai",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0022",
+        "latitude": "-0.4873000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Dr. Soetomo Gg. 21",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0023",
+        "latitude": "-0.4886000",
+        "longitude": "117.1384000",
+        "nama_jalan": "Jalan Agus Salim Gg. 22",
+        "status_laporan": "diterima",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0024",
+        "latitude": "-0.4899000",
+        "longitude": "117.1405000",
+        "nama_jalan": "Jalan Basuki Rahmat Gg. 23",
+        "status_laporan": "menunggu_survei",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0025",
+        "latitude": "-0.4912000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Cendana Gg. 24",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0026",
+        "latitude": "-0.4925000",
+        "longitude": "117.1447000",
+        "nama_jalan": "Jalan Ahmad Yani Gg. 25",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0027",
+        "latitude": "-0.4938000",
+        "longitude": "117.1468000",
+        "nama_jalan": "Jalan Pramuka Gg. 26",
+        "status_laporan": "sedang_dikerjakan",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0028",
+        "latitude": "-0.4951000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Suryanata Gg. 27",
+        "status_laporan": "selesai",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2026-0029",
+        "latitude": "-0.4964000",
+        "longitude": "117.1321000",
+        "nama_jalan": "Jalan Merdeka Gg. 28",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0030",
+        "latitude": "-0.4977000",
+        "longitude": "117.1342000",
+        "nama_jalan": "Jalan Lambung Mangkurat Gg. 29",
+        "status_laporan": "selesai",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2026-0031",
+        "latitude": "-0.4990000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Pahlawan Gg. 30",
+        "status_laporan": "menunggu_survei",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2025-0032",
+        "latitude": "-0.5003000",
+        "longitude": "117.1384000",
+        "nama_jalan": "Jalan Juanda Gg. 31",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Sidodadi",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2025-0033",
+        "latitude": "-0.5016000",
+        "longitude": "117.1405000",
+        "nama_jalan": "Jalan Antasari Gg. 32",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "rutin",
+        "kelurahan.nama": "Sidomulyo",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2025-0034",
+        "latitude": "-0.5029000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Siradj Salman Gg. 33",
+        "status_laporan": "sedang_dikerjakan",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Pelita",
+        "kecamatan.nama": "Samarinda Ilir"
+    },
+    {
+        "kode": "HB-2025-0035",
+        "latitude": "-0.5042000",
+        "longitude": "117.1447000",
+        "nama_jalan": "Jalan KH. Wahid Hasyim Gg. 34",
+        "status_laporan": "selesai",
+        "jenis_laporan": "biasa",
+        "kelurahan.nama": "Loa Bakung",
+        "kecamatan.nama": "Sungai Kunjang"
+    },
+    {
+        "kode": "HB-2025-0036",
+        "latitude": "-0.5055000",
+        "longitude": "117.1468000",
+        "nama_jalan": "Jalan Gatot Subroto Gg. 35",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Karang Asam Ulu",
+        "kecamatan.nama": "Sungai Kunjang"
+    }
+]

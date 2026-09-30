@@ -1,0 +1,10 @@
+{
+    "status": 302,
+    "redirect": "http://localhost/asal",
+    "error": null,
+    "errors": {
+        "mode": [
+            "The selected mode is invalid."
+        ]
+    }
+}

@@ -1,0 +1,314 @@
+{
+    "status": 200,
+    "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "disposition": "attachment; filename=\"[Hantu Banyu] Pemeriksaan Berkala - 2026-09-30_sd_2026-09-30.xlsx\"",
+    "isi": {
+        "Pemeriksaan Berkala": {
+            "merge": [
+                "A1:N1",
+                "A2:N2"
+            ],
+            "freeze": "A5",
+            "kolom": {
+                "A": {
+                    "w": 3.428,
+                    "auto": false
+                },
+                "B": {
+                    "w": 23.423,
+                    "auto": false
+                },
+                "C": {
+                    "w": 16.425,
+                    "auto": false
+                },
+                "D": {
+                    "w": 11.711,
+                    "auto": false
+                },
+                "E": {
+                    "w": 17.567,
+                    "auto": false
+                },
+                "F": {
+                    "w": 21.138,
+                    "auto": false
+                },
+                "G": {
+                    "w": 30.564,
+                    "auto": false
+                },
+                "H": {
+                    "w": 40,
+                    "auto": false
+                },
+                "I": {
+                    "w": 30.564,
+                    "auto": false
+                },
+                "J": {
+                    "w": 31.707,
+                    "auto": false
+                },
+                "K": {
+                    "w": 21.138,
+                    "auto": false
+                },
+                "L": {
+                    "w": 40,
+                    "auto": false
+                },
+                "M": {
+                    "w": 40,
+                    "auto": false
+                },
+                "N": {
+                    "w": 40,
+                    "auto": false
+                }
+            },
+            "sel": {
+                "A1": {
+                    "v": "Pemeriksaan Berkala Saluran Hantu Banyu — Periode 30 September 2026 - 30 September 2026",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 14,
+                    "wrap": false
+                },
+                "A2": {
+                    "v": "Dicetak pada 30 September 2026 10:00 WITA",
+                    "t": "s",
+                    "b": false,
+                    "i": true,
+                    "sz": 10,
+                    "wrap": false
+                },
+                "A4": {
+                    "v": "No",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A5": {
+                    "v": 1,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B4": {
+                    "v": "Tanggal Pemeriksaan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B5": {
+                    "v": "30 September 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C4": {
+                    "v": "Kecamatan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C5": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D4": {
+                    "v": "Kelurahan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D5": {
+                    "v": "Air Putih",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E4": {
+                    "v": "Nama Jalan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E5": {
+                    "v": "Jalan Pahlawan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F4": {
+                    "v": "Nama Ruas Saluran",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F5": {
+                    "v": "Saluran Primer",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G4": {
+                    "v": "Dimensi Eksisting (L x T)",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G5": {
+                    "v": "2.10 m x 1.20 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H4": {
+                    "v": "Kondisi Fisik Struktur",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H5": {
+                    "v": "Kondisi dinding uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "I4": {
+                    "v": "Sedimentasi & Sampah (cm)",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I5": {
+                    "v": "9.6 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J4": {
+                    "v": "Sedimentasi (%) / Kategori",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J5": {
+                    "v": "8% (Normal)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K4": {
+                    "v": "Status Aliran Air",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K5": {
+                    "v": "Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L4": {
+                    "v": "Tindakan Pemeliharaan yang Dilakukan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L5": {
+                    "v": "Tindakan uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M4": {
+                    "v": "Hambatan / Kendala Lapangan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M5": {
+                    "v": "Hambatan uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N4": {
+                    "v": "Rekomendasi / Tindak Lanjut",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N5": {
+                    "v": "Rekomendasi uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                }
+            }
+        }
+    }
+}

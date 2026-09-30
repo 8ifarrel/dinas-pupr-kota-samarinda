@@ -1,0 +1,38 @@
+{
+    "kiriman": [
+        {
+            "status": 201,
+            "json": {
+                "success": true,
+                "message": "Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut.",
+                "data": {
+                    "nomor_laporan": "HB-2026-0038",
+                    "status": "pending",
+                    "kecamatan": "Samarinda Ulu",
+                    "kelurahan": "Air Putih",
+                    "jumlah_foto": 1,
+                    "detail_url": "http://localhost/api/hantu-banyu/laporan/HB-2026-0038"
+                }
+            }
+        },
+        {
+            "status": 201,
+            "json": {
+                "success": true,
+                "message": "Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut.",
+                "data": {
+                    "nomor_laporan": "HB-2026-0039",
+                    "status": "pending",
+                    "kecamatan": "Samarinda Ulu",
+                    "kelurahan": "Air Putih",
+                    "jumlah_foto": 1,
+                    "detail_url": "http://localhost/api/hantu-banyu/laporan/HB-2026-0039"
+                }
+            }
+        }
+    ],
+    "berkas": [
+        "public/hantu-banyu/HB-2026-0038/foto_laporan/foto1_10000030092026.jpg",
+        "public/hantu-banyu/HB-2026-0039/foto_laporan/foto1_10000030092026.jpg"
+    ]
+}

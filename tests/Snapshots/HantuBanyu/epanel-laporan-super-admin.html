@@ -1,0 +1,2359 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content="TOKEN" />
+
+  <title>
+    Daftar Laporan Hantu Banyu | E-Panel Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+  </title>
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon dan Icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="http://localhost/image/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost/image/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost/image/favicon/apple-touch-icon.png">
+<link rel="manifest" href="http://localhost/image/favicon/site.webmanifest">
+<link rel="shortcut icon" href="http://localhost/image/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost/image/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="http://localhost/image/favicon/android-chrome-512x512.png">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
+    </head>
+
+<body>
+  <nav class="fixed top-0 z-40 w-full bg-white border-b border-gray-200">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button">
+
+          <span class="sr-only">
+            Open sidebar
+          </span>
+
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              clip-rule="evenodd" fill-rule="evenodd">
+            </path>
+          </svg>
+        </button>
+
+        <a class="flex ms-2 md:me-24" href="http://localhost/e-panel/dashboard">
+          <img class="h-11 me-3 my-auto" src="/image/logo/dinas-pupr-kota-samarinda.png" alt="Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda" />
+
+          <div class="flex flex-col justify-center">
+            <span class="text-xl sm:text-sm font-semibold whitespace-nowrap">
+              E-Panel
+            </span>
+
+            <span class="hidden sm:block text-xl font-semibold whitespace-nowrap">
+              Dinas PUPR Kota Samarinda
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div>
+            <button class="flex" type="button" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+
+              <span class="sr-only">
+                Open user menu
+              </span>
+
+              <i class="fa-solid fa-circle-user fa-xl"></i>
+            </button>
+          </div>
+
+          <div class="z-40 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+
+              
+                            <p class="text-sm text-gray-900 font-semibold" role="none">
+                Super Admin
+              </p>
+
+              <p class="text-sm text-gray-900" role="none">
+                Super Admin
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                   href="http://localhost/e-panel/kelola-akun-saya/edit/1"
+                   role="menuitem">
+                  Kelola Akun Saya
+                </a>
+              </li>
+              <li>
+                <form method="POST" action="http://localhost/e-panel/logout">
+                  <input type="hidden" name="_token" value="TOKEN" autocomplete="off">                  <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" type="submit">
+                    Log out
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+  <aside
+  class="fixed bg-white top-0 left-0 z-30 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0"
+  id="logo-sidebar" aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto ">
+
+    <ul class="space-y-2 font-medium">
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Layanan
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-jalan-peduli" data-collapse-toggle="dropdown-jalan-peduli">
+          <i class="fa-solid fa-road"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Jalan Peduli</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-jalan-peduli" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/tindaklanjuti-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Tindaklanjuti
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/jalan-peduli/laporan-masuk"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Laporan
+              Masuk</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-hantu-banyu" data-collapse-toggle="dropdown-hantu-banyu">
+          <i class="fa-solid fa-water"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Hantu Banyu</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-hantu-banyu" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Daftar
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/statistik-laporan"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Statistik
+              Laporan</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/hantu-banyu/pemeriksaan-berkala"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Pemeriksaan
+              Berkala</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sedot Tinja
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+          <i class="fa-regular fa-circle-question"></i>
+          <span class="ms-3">
+            Sijakon
+          </span>
+        </a>
+      </li>
+
+      <div class="flex items-center mx-2 pt-1.5">
+        <span class="font-medium text-sm text-gray-600 mr-3">
+          Umum
+        </span>
+        <hr class="flex-grow h-px bg-gray-600 border-0">
+      </div>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/slider">
+          <i class="fa-solid fa-panorama"></i>
+
+          <span class="ms-3">
+            Slider
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/berita/kategori">
+          <i class="fa-solid fa-newspaper"></i>
+
+          <span class="ms-3">
+            Berita
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/ppid-pelaksana/kategori">
+          <i class="fa-solid fa-file-powerpoint"></i>
+
+          <span class="ms-3">
+            PPID Pelaksana
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/pengumuman">
+          <i class="fa-solid fa-bullhorn"></i>
+
+          <span class="ms-3">
+            Pengumuman
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/agenda-kegiatan">
+          <i class="fa-solid fa-calendar-days"></i>
+
+          <span class="ms-3">
+            Agenda Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/album-kegiatan">
+          <i class="fa-solid fa-images"></i>
+
+          <span class="ms-3">
+            Album & Foto Kegiatan
+          </span>
+        </a>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+          aria-controls="dropdown-struktur-organisasi" data-collapse-toggle="dropdown-struktur-organisasi">
+          <i class="fa-solid fa-sitemap"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Struktur Organisasi</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-struktur-organisasi" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/susunan-organisasi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Susunan
+              Organisasi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/struktur-organisasi/organigram"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Organigram</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <button type="button"
+          class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-profil" data-collapse-toggle="dropdown-profil">
+          <i class="fa-solid fa-building-user"></i>
+          <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Profil</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+        <ul id="dropdown-profil" class="hidden py-2 space-y-2">
+          <li>
+            <a href="http://localhost/e-panel/kepala-dinas/edit"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Kepala
+              Dinas</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/visi-dan-misi"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Visi
+              dan Misi</a>
+          </li>
+          <li>
+            <a href="http://localhost/e-panel/profil/sejarah-dinas-pupr-kota-samarinda"
+              class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sejarah</a>
+          </li>
+        </ul>
+      </li>
+
+      
+      <li>
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+          href="http://localhost/e-panel/partner">
+          <i class="fa-solid fa-handshake"></i>
+
+          <span class="ms-3">
+            Partner
+          </span>
+        </a>
+      </li>
+
+              <div class="flex items-center mx-2 pt-1.5">
+          <span class="font-medium text-sm text-gray-600 mr-3">
+            Super Admin
+          </span>
+          <hr class="flex-grow h-px bg-gray-600 border-0">
+        </div>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-admin">
+            <i class="fa-solid fa-user-lock"></i>
+            <span class="ms-3">
+              Akun Admin
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/akun-kelurahan">
+            <i class="fa-solid fa-building-user"></i>
+            <span class="ms-3">
+              Akun Kelurahan
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <button type="button"
+            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
+            aria-controls="dropdown-api-key" data-collapse-toggle="dropdown-api-key">
+            <i class="fa-solid fa-key"></i>
+            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">API Key</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <ul id="dropdown-api-key" class="hidden py-2 space-y-2">
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/jalan-peduli"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Jalan
+                Peduli</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/hantu-banyu"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Hantu
+                Banyu</a>
+            </li>
+            <li>
+              <a href="http://localhost/e-panel/super-admin/api-key/akun-kelurahan"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Akun
+                Kelurahan</a>
+            </li>
+          </ul>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100"
+            href="http://localhost/e-panel/super-admin/log">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span class="ms-3">
+              Log
+            </span>
+          </a>
+        </li>
+
+        
+        <li>
+          <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100" href="">
+            
+            <i class="fa-regular fa-circle-question"></i>
+            <span class="ms-3">
+              Konfigurasi Sistem
+            </span>
+          </a>
+        </li>
+          </ul>
+  </div>
+</aside>
+  <div class="p-8 mt-14 md:ml-64">
+    <div class="mb-5 flex flex-col gap-1">
+  <h1
+    class="relative inline-block font-semibold text-2xl md:text-3xl text-gray-800 
+     after:content-[''] after:inline-block after:h-[3px] after:bg-black after:align-middle
+     after:ml-1 after:sm:min-w-[75px] after:min-w-[60px]">
+    Daftar Laporan Hantu Banyu
+  </h1>
+
+      <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+      Kelola seluruh laporan pengaduan drainase dan irigasi: lihat detail dan perbarui tindak lanjutnya.
+    </p>
+  </div>
+
+
+
+    
+      <div class="w-full p-4 rounded-lg shadow-xl sm:p-8 mt-5">
+    
+    <div class="flex flex-wrap gap-2 pb-4 mb-4 border-b border-gray-200">
+      <button type="button" id="btnUnduhExcel"
+        class="inline-flex items-center gap-2 h-10 px-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm font-medium focus:outline-none">
+        <i class="fa-solid fa-file-excel"></i>
+        <span class="whitespace-nowrap">Unduh Excel</span>
+      </button>
+      <button type="button" id="btnUnduhPdf"
+        class="inline-flex items-center gap-2 h-10 px-4 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg text-sm font-medium focus:outline-none">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span class="whitespace-nowrap">Unduh PDF Laporan</span>
+      </button>
+    </div>
+
+    
+    <div class="flex flex-wrap items-end gap-3 mb-4">
+      <div>
+        <label for="filterTanggalDari" class="block text-xs font-medium text-gray-600 mb-1">Masuk dari</label>
+        <input type="date" id="filterTanggalDari"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+        <label for="filterTanggalSampai" class="block text-xs font-medium text-gray-600 mb-1">sampai</label>
+        <input type="date" id="filterTanggalSampai"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+      </div>
+      <div>
+        <label for="filterDibuatOleh" class="block text-xs font-medium text-gray-600 mb-1">Dibuat oleh</label>
+        <select id="filterDibuatOleh"
+          class="h-10 border border-gray-300 text-gray-900 text-sm rounded-lg px-3 focus:ring-blue-500 focus:border-blue-500">
+          <option value="">Semua pelapor</option>
+          <option value="kelurahan">Operator Kelurahan</option>
+          <option value="admin">Admin UPTD PSDI</option>
+        </select>
+      </div>
+
+      
+              <div>
+          <span class="block text-xs font-medium text-gray-600 mb-1">Status terkini</span>
+          <div class="relative" data-multifilter>
+            <button type="button" data-multifilter-toggle
+              class="h-10 min-w-[9rem] px-3 inline-flex items-center justify-between gap-2 border border-gray-300 bg-white text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+              <span data-multifilter-teks>Semua</span>
+              <i class="fa-solid fa-chevron-down fa-xs text-gray-400"></i>
+            </button>
+            <div data-multifilter-panel
+              class="hidden absolute left-0 z-30 mt-1 w-56 max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg p-1">
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="pending"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Menunggu Verifikasi</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="diterima"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Diterima</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="menunggu_survei"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Menunggu Survei</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="sudah_disurvei"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Sudah Disurvei</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="menunggu_jadwal_pengerjaan"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Menunggu Jadwal Pengerjaan</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="sedang_dikerjakan"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Sedang Dikerjakan</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="selesai"
+                    class="filterStatus rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Selesai</span>
+                </label>
+                          </div>
+          </div>
+        </div>
+              <div>
+          <span class="block text-xs font-medium text-gray-600 mb-1">Jenis</span>
+          <div class="relative" data-multifilter>
+            <button type="button" data-multifilter-toggle
+              class="h-10 min-w-[9rem] px-3 inline-flex items-center justify-between gap-2 border border-gray-300 bg-white text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+              <span data-multifilter-teks>Semua</span>
+              <i class="fa-solid fa-chevron-down fa-xs text-gray-400"></i>
+            </button>
+            <div data-multifilter-panel
+              class="hidden absolute left-0 z-30 mt-1 w-56 max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg p-1">
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="belum_diklasifikasikan"
+                    class="filterJenis rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Belum Diklasifikasikan</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="darurat"
+                    class="filterJenis rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Penanganan Darurat</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="biasa"
+                    class="filterJenis rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Penanganan Biasa</span>
+                </label>
+                              <label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 text-sm cursor-pointer">
+                  <input type="checkbox" value="rutin"
+                    class="filterJenis rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span>Pemeliharaan Rutin</span>
+                </label>
+                          </div>
+          </div>
+        </div>
+      
+      <button type="button" id="btnResetFilter"
+        class="h-10 px-4 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-200">
+        Reset
+      </button>
+    </div>
+
+    <div class="relative overflow-x-auto text-sm md:text-base">
+      <table id="laporan" class="stripe hover row-border table-auto" style="width:100%">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Pelapor</th>
+            <th>Dibuat Oleh</th>
+            <th>Lokasi</th>
+            <th>Waktu Masuk</th>
+            <th>Status Terkini</th>
+            <th>Jenis</th>
+            <th>Kelola</th>
+          </tr>
+        </thead>
+        <tbody>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0001</td>
+              <td>Pelapor Uji 1</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pahlawan</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1790727300">
+                30 Sep 2026<br>
+                <span class="text-xs text-gray-500">08.15 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0001"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0002</td>
+              <td>Pelapor Uji 2</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Juanda</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1789937580">
+                21 Sep 2026<br>
+                <span class="text-xs text-gray-500">04.53 WITA</span>
+              </td>
+              
+              <td data-status="diterima">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Diterima
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0002"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0003</td>
+              <td>Pelapor Uji 3</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidomulyo
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Antasari</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1789141560">
+                11 Sep 2026<br>
+                <span class="text-xs text-gray-500">23.46 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_survei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
+                    Menunggu Survei
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0003"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0004</td>
+              <td>Pelapor Uji 4</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Siradj Salman</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1788345540">
+                02 Sep 2026<br>
+                <span class="text-xs text-gray-500">18.39 WITA</span>
+              </td>
+              
+              <td data-status="sudah_disurvei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Sudah Disurvei
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0004"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0005</td>
+              <td>Pelapor Uji 5</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan KH. Wahid Hasyim</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1787549520">
+                24 Agt 2026<br>
+                <span class="text-xs text-gray-500">13.32 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_jadwal_pengerjaan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    Menunggu Jadwal Pengerjaan
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0005"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0006</td>
+              <td>Pelapor Uji 6</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Gatot Subroto</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1786839900">
+                16 Agt 2026<br>
+                <span class="text-xs text-gray-500">08.25 WITA</span>
+              </td>
+              
+              <td data-status="sedang_dikerjakan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    Sedang Dikerjakan
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0006"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0007</td>
+              <td>Pelapor Uji 7</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Air Putih
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Dr. Soetomo</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1786043880">
+                07 Agt 2026<br>
+                <span class="text-xs text-gray-500">03.18 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0007"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0008</td>
+              <td>Pelapor Uji 8</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Agus Salim</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1785247860">
+                28 Jul 2026<br>
+                <span class="text-xs text-gray-500">22.11 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0008"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0009</td>
+              <td>Pelapor Uji 9</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Basuki Rahmat</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1784451840">
+                19 Jul 2026<br>
+                <span class="text-xs text-gray-500">17.04 WITA</span>
+              </td>
+              
+              <td data-status="diterima">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Diterima
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0009"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0010</td>
+              <td>Pelapor Uji 10</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Cendana</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1783659420">
+                10 Jul 2026<br>
+                <span class="text-xs text-gray-500">12.57 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0010"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0011</td>
+              <td>Pelapor Uji 11</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Loa Bakung
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Ahmad Yani</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1782949800">
+                02 Jul 2026<br>
+                <span class="text-xs text-gray-500">07.50 WITA</span>
+              </td>
+              
+              <td data-status="sudah_disurvei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Sudah Disurvei
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0011"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0012</td>
+              <td>Pelapor Uji 12</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pramuka</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1782153780">
+                23 Jun 2026<br>
+                <span class="text-xs text-gray-500">02.43 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_jadwal_pengerjaan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    Menunggu Jadwal Pengerjaan
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0012"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0013</td>
+              <td>Pelapor Uji 13</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Suryanata</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1781357760">
+                13 Jun 2026<br>
+                <span class="text-xs text-gray-500">21.36 WITA</span>
+              </td>
+              
+              <td data-status="sedang_dikerjakan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    Sedang Dikerjakan
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0013"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0014</td>
+              <td>Pelapor Uji 14</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Merdeka</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1780561740">
+                04 Jun 2026<br>
+                <span class="text-xs text-gray-500">16.29 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0014"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0015</td>
+              <td>Pelapor Uji 15</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidomulyo
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Lambung Mangkurat</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1779765720">
+                26 Mei 2026<br>
+                <span class="text-xs text-gray-500">11.22 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0015"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0016</td>
+              <td>Pelapor Uji 16</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pahlawan Gg. 15</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1779056100">
+                18 Mei 2026<br>
+                <span class="text-xs text-gray-500">06.15 WITA</span>
+              </td>
+              
+              <td data-status="diterima">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Diterima
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0016"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0017</td>
+              <td>Pelapor Uji 17</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Juanda Gg. 16</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1778260080">
+                09 Mei 2026<br>
+                <span class="text-xs text-gray-500">01.08 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_survei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
+                    Menunggu Survei
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0017"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0018</td>
+              <td>Pelapor Uji 18</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Antasari Gg. 17</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1777464060">
+                29 Apr 2026<br>
+                <span class="text-xs text-gray-500">20.01 WITA</span>
+              </td>
+              
+              <td data-status="sudah_disurvei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Sudah Disurvei
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0018"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0019</td>
+              <td>Pelapor Uji 19</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Air Putih
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Siradj Salman Gg. 18</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1776671640">
+                20 Apr 2026<br>
+                <span class="text-xs text-gray-500">15.54 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_jadwal_pengerjaan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    Menunggu Jadwal Pengerjaan
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0019"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0020</td>
+              <td>Pelapor Uji 20</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan KH. Wahid Hasyim Gg. 19</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1775875620">
+                11 Apr 2026<br>
+                <span class="text-xs text-gray-500">10.47 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0020"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0021</td>
+              <td>Pelapor Uji 21</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Gatot Subroto Gg. 20</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1775166000">
+                03 Apr 2026<br>
+                <span class="text-xs text-gray-500">05.40 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0021"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0022</td>
+              <td>Pelapor Uji 22</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Dr. Soetomo Gg. 21</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1774369980">
+                25 Mar 2026<br>
+                <span class="text-xs text-gray-500">00.33 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0022"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0023</td>
+              <td>Pelapor Uji 23</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Loa Bakung
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Agus Salim Gg. 22</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1773573960">
+                15 Mar 2026<br>
+                <span class="text-xs text-gray-500">19.26 WITA</span>
+              </td>
+              
+              <td data-status="diterima">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    Diterima
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0023"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0024</td>
+              <td>Pelapor Uji 24</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Basuki Rahmat Gg. 23</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1772777940">
+                06 Mar 2026<br>
+                <span class="text-xs text-gray-500">14.19 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_survei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
+                    Menunggu Survei
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0024"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0025</td>
+              <td>Pelapor Uji 25</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Cendana Gg. 24</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1772068320">
+                26 Feb 2026<br>
+                <span class="text-xs text-gray-500">09.12 WITA</span>
+              </td>
+              
+              <td data-status="sudah_disurvei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Sudah Disurvei
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0025"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0026</td>
+              <td>Pelapor Uji 26</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Ahmad Yani Gg. 25</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1771272300">
+                17 Feb 2026<br>
+                <span class="text-xs text-gray-500">04.05 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_jadwal_pengerjaan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    Menunggu Jadwal Pengerjaan
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0026"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0027</td>
+              <td>Pelapor Uji 27</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidomulyo
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pramuka Gg. 26</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1770479880">
+                07 Feb 2026<br>
+                <span class="text-xs text-gray-500">23.58 WITA</span>
+              </td>
+              
+              <td data-status="sedang_dikerjakan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    Sedang Dikerjakan
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0027"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0028</td>
+              <td>Pelapor Uji 28</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Suryanata Gg. 27</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1769683860">
+                29 Jan 2026<br>
+                <span class="text-xs text-gray-500">18.51 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0028"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0029</td>
+              <td>Pelapor Uji 29</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Merdeka Gg. 28</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1768887840">
+                20 Jan 2026<br>
+                <span class="text-xs text-gray-500">13.44 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0029"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0030</td>
+              <td>Pelapor Uji 30</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Lambung Mangkurat Gg. 29</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1768178220">
+                12 Jan 2026<br>
+                <span class="text-xs text-gray-500">08.37 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0030"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2026-0031</td>
+              <td>Pelapor Uji 31</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Air Putih
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Pahlawan Gg. 30</div>
+                <div class="text-xs text-gray-500">
+                  Air Putih, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1767382200">
+                03 Jan 2026<br>
+                <span class="text-xs text-gray-500">03.30 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_survei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-pink-100 text-pink-800">
+                    Menunggu Survei
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2026-0031"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2025-0032</td>
+              <td>Pelapor Uji 32</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Sidodadi
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Juanda Gg. 31</div>
+                <div class="text-xs text-gray-500">
+                  Sidodadi, Samarinda Ulu
+                </div>
+              </td>
+              <td data-order="1766586180">
+                24 Des 2025<br>
+                <span class="text-xs text-gray-500">22.23 WITA</span>
+              </td>
+              
+              <td data-status="sudah_disurvei">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    Sudah Disurvei
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2025-0032"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2025-0033</td>
+              <td>Pelapor Uji 33</td>
+              
+              <td data-tipe="admin">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                  <i
+                    class="fa-solid fa-user-shield fa-xs"></i>
+                  Admin UPTD PSDI
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Antasari Gg. 32</div>
+                <div class="text-xs text-gray-500">
+                  Sidomulyo, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1765790160">
+                15 Des 2025<br>
+                <span class="text-xs text-gray-500">17.16 WITA</span>
+              </td>
+              
+              <td data-status="menunggu_jadwal_pengerjaan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                    Menunggu Jadwal Pengerjaan
+                  </span>
+                              </td>
+              <td data-jenis="rutin">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Pemeliharaan Rutin
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2025-0033"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2025-0034</td>
+              <td>Pelapor Uji 34</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Pelita
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Siradj Salman Gg. 33</div>
+                <div class="text-xs text-gray-500">
+                  Pelita, Samarinda Ilir
+                </div>
+              </td>
+              <td data-order="1764994140">
+                06 Des 2025<br>
+                <span class="text-xs text-gray-500">12.09 WITA</span>
+              </td>
+              
+              <td data-status="sedang_dikerjakan">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                    Sedang Dikerjakan
+                  </span>
+                              </td>
+              <td data-jenis="darurat">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                  Penanganan Darurat
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2025-0034"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2025-0035</td>
+              <td>Pelapor Uji 35</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Loa Bakung
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan KH. Wahid Hasyim Gg. 34</div>
+                <div class="text-xs text-gray-500">
+                  Loa Bakung, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1764284520">
+                28 Nov 2025<br>
+                <span class="text-xs text-gray-500">07.02 WITA</span>
+              </td>
+              
+              <td data-status="selesai">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Selesai
+                  </span>
+                              </td>
+              <td data-jenis="biasa">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-teal-100 text-teal-800">
+                  Penanganan Biasa
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2025-0035"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                                  <tr>
+              <td class="whitespace-nowrap font-medium">HB-2025-0036</td>
+              <td>Pelapor Uji 36</td>
+              
+              <td data-tipe="kelurahan">
+                <span
+                  class="inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                  <i
+                    class="fa-solid fa-building-user fa-xs"></i>
+                  Operator Kelurahan Karang Asam Ulu
+                </span>
+              </td>
+              <td>
+                <div class="font-medium text-gray-900">Jalan Gatot Subroto Gg. 35</div>
+                <div class="text-xs text-gray-500">
+                  Karang Asam Ulu, Sungai Kunjang
+                </div>
+              </td>
+              <td data-order="1763492100">
+                19 Nov 2025<br>
+                <span class="text-xs text-gray-500">02.55 WITA</span>
+              </td>
+              
+              <td data-status="pending">
+                                  <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Menunggu Verifikasi
+                  </span>
+                              </td>
+              <td data-jenis="belum_diklasifikasikan">
+                <span class="inline-flex items-center whitespace-nowrap px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                  Belum Diklasifikasikan
+                </span>
+              </td>
+              <td>
+                <a href="http://localhost/e-panel/hantu-banyu/laporan/HB-2025-0036"
+                  title="Kelola laporan"
+                  class="flex justify-center items-center w-10 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg text-sm p-2.5 focus:outline-none">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+              </td>
+            </tr>
+                  </tbody>
+        <tfoot>
+          <tr>
+            <th>No.</th>
+            <th>Pelapor</th>
+            <th>Dibuat Oleh</th>
+            <th>Lokasi</th>
+            <th>Waktu Masuk</th>
+            <th>Status Terkini</th>
+            <th>Jenis</th>
+            <th>Kelola</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  
+    <div id="modalUnduhPdf" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg max-h-full overflow-y-auto">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 class="text-lg font-semibold text-gray-900">
+          <i id="modalIkon" class="fa-solid fa-file-pdf text-red-600 mr-1"></i>
+          <span id="modalJudul">Unduh PDF Laporan</span>
+        </h3>
+        <button type="button" data-tutup-modal
+          class="text-gray-400 hover:bg-gray-100 hover:text-gray-900 rounded-lg p-1.5 inline-flex items-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form method="GET" id="formUnduh" data-aksi-pdf="http://localhost/e-panel/hantu-banyu/laporan/unduh-pdf"
+        data-aksi-excel="http://localhost/e-panel/hantu-banyu/laporan/unduh-excel"
+        action="http://localhost/e-panel/hantu-banyu/laporan/unduh-pdf" class="p-4 space-y-4">
+        <p class="text-sm text-gray-600">
+          Setiap laporan dicetak pada satu halaman A4 dan digabung menjadi satu berkas PDF. PDF ini menyertakan
+          riwayat tindak lanjut.
+        </p>
+
+        <div class="space-y-2">
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="semua" class="mt-1" checked>
+            <span><span class="font-medium">Semua laporan</span></span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="hari_ini" class="mt-1">
+            <span><span class="font-medium">Hari ini</span></span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="rentang" class="mt-1">
+            <span><span class="font-medium">Rentang tanggal, bulan, &amp; tahun</span></span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="tahun" class="mt-1">
+            <span><span class="font-medium">Satu tahun</span></span>
+          </label>
+          <label class="flex items-start gap-2 text-sm">
+            <input type="radio" name="mode" value="bulan" class="mt-1">
+            <span><span class="font-medium">Satu Bulan</span></span>
+          </label>
+        </div>
+
+        <div id="grp-rentang" class="hidden rounded-lg border border-gray-200 p-3 space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Dari tanggal</label>
+            <input type="date" name="dari_tanggal" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-500 mb-1">Sampai tanggal</label>
+            <input type="date" name="sampai_tanggal" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+          </div>
+        </div>
+
+        <div id="grp-tahun" class="hidden rounded-lg border border-gray-200 p-3">
+          <p class="text-xs font-semibold text-gray-500 mb-1">Tahun</p>
+          <select name="tahun" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+                          <option value="2026">2026</option>
+                          <option value="2025">2025</option>
+                      </select>
+        </div>
+
+        <div id="grp-bulan" class="hidden rounded-lg border border-gray-200 p-3">
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bulan &amp; tahun</label>
+          <input type="month" name="periode_bulan" lang="id" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t">
+          <button type="button" data-tutup-modal
+            class="px-4 py-2 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200">Batal</button>
+          <button type="submit" id="modalTombolUnduh"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700">
+            <i class="fa-solid fa-download"></i> Unduh
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+  
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Kolom: 0 No, 1 Pelapor, 2 Dibuat Oleh, 3 Lokasi, 4 Waktu Masuk,
+      //        5 Status, 6 Jenis, 7 Kelola
+      const tabel = $('#laporan').DataTable({
+        order: [[4, 'desc']],
+        columnDefs: [{
+          orderable: false,
+          targets: [7]
+        }]
+      });
+
+      // --- Penyaring tanggal masuk & asal pembuat laporan ---
+      const inpDari = document.getElementById('filterTanggalDari');
+      const inpSampai = document.getElementById('filterTanggalSampai');
+      const selDibuatOleh = document.getElementById('filterDibuatOleh');
+
+      // Waktu masuk disimpan sebagai detik epoch di data-order milik selnya,
+      // jadi perbandingannya tidak bergantung pada format tampilan.
+      function batasEpoch(nilai, akhirHari) {
+        if (!nilai) return null;
+        const t = new Date(nilai + (akhirHari ? 'T23:59:59' : 'T00:00:00'));
+        return isNaN(t.getTime()) ? null : Math.floor(t.getTime() / 1000);
+      }
+
+      // Nilai (value) kotak centang yang tercentang untuk sebuah kelas.
+      function nilaiTercentang(kelas) {
+        return Array.from(document.querySelectorAll('.' + kelas + ':checked')).map(function(c) {
+          return c.value;
+        });
+      }
+
+      $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        if (settings.nTable !== document.getElementById('laporan')) return true;
+
+        const baris = tabel.row(dataIndex).node();
+        const dari = batasEpoch(inpDari.value, false);
+        const sampai = batasEpoch(inpSampai.value, true);
+        const tipe = selDibuatOleh.value;
+        const status = nilaiTercentang('filterStatus');
+        const jenis = nilaiTercentang('filterJenis');
+
+        if (dari !== null || sampai !== null) {
+          const selWaktu = baris.cells[4];
+          const epoch = parseInt(selWaktu.getAttribute('data-order'), 10);
+          if (!isNaN(epoch)) {
+            if (dari !== null && epoch < dari) return false;
+            if (sampai !== null && epoch > sampai) return false;
+          }
+        }
+
+        if (tipe && baris.cells[2].getAttribute('data-tipe') !== tipe) return false;
+        if (status.length && status.indexOf(baris.cells[5].getAttribute('data-status')) === -1) return false;
+        if (jenis.length && jenis.indexOf(baris.cells[6].getAttribute('data-jenis')) === -1) return false;
+
+        return true;
+      });
+
+      [inpDari, inpSampai, selDibuatOleh].forEach(function(el) {
+        el.addEventListener('change', function() {
+          tabel.draw();
+        });
+      });
+
+      // --- Penyaring multi-pilih (Status terkini & Jenis) ---
+      const multifilters = Array.from(document.querySelectorAll('[data-multifilter]')).map(function(wrap) {
+        const toggle = wrap.querySelector('[data-multifilter-toggle]');
+        const panel = wrap.querySelector('[data-multifilter-panel]');
+        const teks = wrap.querySelector('[data-multifilter-teks]');
+        const kotak = Array.from(wrap.querySelectorAll('input[type="checkbox"]'));
+
+        function perbaruiTeks() {
+          const dipilih = kotak.filter(function(c) {
+            return c.checked;
+          });
+          if (dipilih.length === 0) teks.textContent = 'Semua';
+          else if (dipilih.length === 1) teks.textContent = dipilih[0].closest('label').querySelector('span').textContent.trim();
+          else teks.textContent = dipilih.length + ' dipilih';
+        }
+
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          panel.classList.toggle('hidden');
+        });
+        kotak.forEach(function(c) {
+          c.addEventListener('change', function() {
+            perbaruiTeks();
+            tabel.draw();
+          });
+        });
+
+        return {
+          panel: panel,
+          reset: function() {
+            kotak.forEach(function(c) {
+              c.checked = false;
+            });
+            perbaruiTeks();
+          },
+        };
+      });
+
+      // Tutup panel saat mengeklik di luar tombol/panel-nya.
+      document.addEventListener('click', function(e) {
+        multifilters.forEach(function(mf) {
+          if (!mf.panel.parentElement.contains(e.target)) mf.panel.classList.add('hidden');
+        });
+      });
+
+      document.getElementById('btnResetFilter').addEventListener('click', function() {
+        inpDari.value = '';
+        inpSampai.value = '';
+        selDibuatOleh.value = '';
+        multifilters.forEach(function(mf) {
+          mf.reset();
+        });
+        tabel.draw();
+      });
+
+      // --- Modal Unduh Laporan (PDF / Excel) ---
+      const modal = document.getElementById('modalUnduhPdf');
+      const openBtn = document.getElementById('btnUnduhPdf');
+      const openBtnExcel = document.getElementById('btnUnduhExcel');
+      const formUnduh = document.getElementById('formUnduh');
+      const modalJudul = document.getElementById('modalJudul');
+      const modalIkon = document.getElementById('modalIkon');
+      const modalTombol = document.getElementById('modalTombolUnduh');
+      const groups = {
+        rentang: document.getElementById('grp-rentang'),
+        tahun: document.getElementById('grp-tahun'),
+        bulan: document.getElementById('grp-bulan'),
+      };
+
+      // Satu modal untuk dua format: yang berubah hanya tujuan form,
+      // judul, dan warna tombolnya.
+      function openModal(format) {
+        const excel = format === 'excel';
+
+        formUnduh.action = excel ? formUnduh.dataset.aksiExcel : formUnduh.dataset.aksiPdf;
+        modalJudul.textContent = excel ? 'Unduh Excel Laporan' : 'Unduh PDF Laporan';
+        modalIkon.className = excel ?
+          'fa-solid fa-file-excel text-green-700 mr-1' :
+          'fa-solid fa-file-pdf text-red-600 mr-1';
+        modalTombol.className = excel ?
+          'inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-green-700 text-white hover:bg-green-800' :
+          'inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700';
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      function syncGroups() {
+        const mode = modal.querySelector('input[name="mode"]:checked')?.value || 'semua';
+        Object.entries(groups).forEach(([key, el]) => {
+          const aktif = key === mode;
+          el.classList.toggle('hidden', !aktif);
+          // Nonaktifkan input pada grup tersembunyi agar tidak ikut terkirim.
+          el.querySelectorAll('select, input').forEach(s => {
+            s.disabled = !aktif;
+          });
+        });
+      }
+
+      if (openBtn) openBtn.addEventListener('click', () => openModal('pdf'));
+      if (openBtnExcel) openBtnExcel.addEventListener('click', () => openModal('excel'));
+      modal.querySelectorAll('[data-tutup-modal]').forEach(b => b.addEventListener('click', closeModal));
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+      });
+      modal.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener('change', syncGroups));
+      syncGroups();
+    });
+  </script>
+</body>
+
+</html>

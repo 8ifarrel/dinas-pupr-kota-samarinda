@@ -1,0 +1,19 @@
+{
+    "kiriman": [
+        {
+            "status": 503,
+            "json": {
+                "success": false,
+                "message": "Lokasi tidak dapat diverifikasi saat ini. Silakan coba beberapa saat lagi."
+            }
+        },
+        {
+            "status": 503,
+            "json": {
+                "success": false,
+                "message": "Lokasi tidak dapat diverifikasi saat ini. Silakan coba beberapa saat lagi."
+            }
+        }
+    ],
+    "berkas": []
+}

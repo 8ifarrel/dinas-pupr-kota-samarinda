@@ -1,0 +1,334 @@
+{
+    "status": 200,
+    "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "disposition": "attachment; filename=\"[Hantu Banyu] Rekap Laporan - 2026-09-30_sd_2026-09-30.xlsx\"",
+    "isi": {
+        "Rekap Laporan": {
+            "merge": [
+                "A1:M1",
+                "A2:M2"
+            ],
+            "freeze": "A5",
+            "kolom": {
+                "A": {
+                    "w": 15.282,
+                    "auto": false
+                },
+                "B": {
+                    "w": 21.138,
+                    "auto": false
+                },
+                "C": {
+                    "w": 6.998,
+                    "auto": false
+                },
+                "D": {
+                    "w": 18.71,
+                    "auto": false
+                },
+                "E": {
+                    "w": 16.425,
+                    "auto": false
+                },
+                "F": {
+                    "w": 16.425,
+                    "auto": false
+                },
+                "G": {
+                    "w": 16.425,
+                    "auto": false
+                },
+                "H": {
+                    "w": 11.711,
+                    "auto": false
+                },
+                "I": {
+                    "w": 17.567,
+                    "auto": false
+                },
+                "J": {
+                    "w": 45,
+                    "auto": false
+                },
+                "K": {
+                    "w": 10.569,
+                    "auto": false
+                },
+                "L": {
+                    "w": 11.711,
+                    "auto": false
+                },
+                "M": {
+                    "w": 23.423,
+                    "auto": false
+                },
+                "N": {
+                    "w": 26.993,
+                    "auto": false
+                },
+                "O": {
+                    "w": 45,
+                    "auto": false
+                }
+            },
+            "sel": {
+                "A1": {
+                    "v": "Rekap Laporan Hantu Banyu — Periode 30 September 2026 - 30 September 2026",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 14,
+                    "wrap": false
+                },
+                "A2": {
+                    "v": "Dicetak pada 30 September 2026 10:00 WITA",
+                    "t": "s",
+                    "b": false,
+                    "i": true,
+                    "sz": 10,
+                    "wrap": false
+                },
+                "A4": {
+                    "v": "No. Laporan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A5": {
+                    "v": "HB-2026-0001",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B4": {
+                    "v": "Tanggal Masuk",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B5": {
+                    "v": "30 September 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C4": {
+                    "v": "Jam",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C5": {
+                    "v": "08:15",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D4": {
+                    "v": "Dibuat Oleh",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D5": {
+                    "v": "Admin UPTD PSDI",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E4": {
+                    "v": "Nama Pelapor",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E5": {
+                    "v": "Pelapor Uji 1",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F4": {
+                    "v": "Nomor Telepon",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F5": {
+                    "v": "081203000000",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G4": {
+                    "v": "Kecamatan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G5": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H4": {
+                    "v": "Kelurahan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H5": {
+                    "v": "Air Putih",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I4": {
+                    "v": "Nama Jalan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I5": {
+                    "v": "Jalan Pahlawan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J4": {
+                    "v": "Detail Lokasi",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J5": {
+                    "v": "Depan rumah nomor 3, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "K4": {
+                    "v": "Latitude",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K5": {
+                    "v": -0.46,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L4": {
+                    "v": "Longitude",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L5": {
+                    "v": 117.13,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M4": {
+                    "v": "Status Terkini",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M5": {
+                    "v": "Menunggu Verifikasi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N4": {
+                    "v": "Jenis",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N5": {
+                    "v": "Belum Diklasifikasikan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "O4": {
+                    "v": "Deskripsi Pengaduan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "O5": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-0.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,146 @@
+REKAP LAPORAN HANTU BANYU · Juni 2026                                                      Dicetak 30 September 2026 10:00 WITA
+
+Laporan Nomor HB-2026-0014
+
+Waktu masuk: 04 Juni 2026, 16.29 WITA • Status terkini: Selesai • Jenis: Penanganan Biasa
+
+DATA PELAPOR
+
+Nama Lengkap      : Pelapor Uji 14
+Asal Kelurahan    : Sidodadi
+Nomor Telepon     : 081203102947
+Alamat            : RT 2, Samarinda
+
+LOKASI PENGADUAN  : Samarinda Ulu
+                  : Sidodadi
+Kecamatan         : Jalan Merdeka
+Kelurahan         : Depan rumah nomor 16, dekat masjid.
+Nama Jalan        : -0.4769000, 117.1384000 (maps.google.com/?q=-0.4769000,117.1384000)
+Detail Lokasi
+Koordinat
+
+DESKRIPSI PENGADUAN
+
+Saluran tersumbat sampah dan sedimen di titik ke-13.
+Air meluap ke badan jalan saat hujan deras.
+
+FOTO PENGADUAN
+
+RIWAYAT TINDAK LANJUT                                                                                                      04 Jun 2026, 22.29 WITA
+1. Menunggu Verifikasi                                                                                                     05 Jun 2026, 04.29 WITA
+                                                                                                                           05 Jun 2026, 10.29 WITA
+Catatan tahap pending untuk laporan HB-2026-0014.                                                                          05 Jun 2026, 16.29 WITA
+                                                                                                                           05 Jun 2026, 22.29 WITA
+2. Diterima                                                                                                                06 Jun 2026, 04.29 WITA
+Catatan tahap diterima untuk laporan HB-2026-0014.                                                                         06 Jun 2026, 10.29 WITA
+
+3. Menunggu Survei
+Catatan tahap menunggu_survei untuk laporan HB-2026-0014.
+
+4. Sudah Disurvei
+Catatan tahap sudah_disurvei untuk laporan HB-2026-0014.
+
+5. Menunggu Jadwal Pengerjaan
+Catatan tahap menunggu_jadwal_pengerjaan untuk laporan HB-2026-0014.
+
+6. Sedang Dikerjakan
+Catatan tahap sedang_dikerjakan untuk laporan HB-2026-0014.
+
+7. Selesai
+Catatan tahap selesai untuk laporan HB-2026-0014.
+
+                  UPTD Pemeliharaan Saluran Drainase dan Irigasi — Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+REKAP LAPORAN HANTU BANYU · Juni 2026                                                                  Dicetak 30 September 2026 10:00 WITA
+
+Laporan Nomor HB-2026-0013
+
+Waktu masuk: 13 Juni 2026, 21.36 WITA • Status terkini: Sedang Dikerjakan • Jenis: Penanganan Darurat
+
+DATA PELAPOR
+
+Nama Lengkap      : Pelapor Uji 13
+Asal Kelurahan    : Air Putih
+Nomor Telepon     : 081203095028
+Alamat            : RT 1, Samarinda
+
+LOKASI PENGADUAN  : Samarinda Ulu
+                  : Air Putih
+Kecamatan         : Jalan Suryanata
+Kelurahan         : Depan rumah nomor 15, dekat masjid.
+Nama Jalan        : -0.4756000, 117.1363000 (maps.google.com/?q=-0.4756000,117.1363000)
+Detail Lokasi
+Koordinat
+
+DESKRIPSI PENGADUAN
+
+Saluran tersumbat sampah dan sedimen di titik ke-12.
+Air meluap ke badan jalan saat hujan deras.
+
+FOTO PENGADUAN
+
+RIWAYAT TINDAK LANJUT                                                                                                      14 Jun 2026, 03.36 WITA
+1. Menunggu Verifikasi                                                                                                     14 Jun 2026, 09.36 WITA
+                                                                                                                           14 Jun 2026, 15.36 WITA
+Catatan tahap pending untuk laporan HB-2026-0013.                                                                          14 Jun 2026, 21.36 WITA
+2. Diterima
+Catatan tahap diterima untuk laporan HB-2026-0013.                                                                         15 Jun 2026, 03.36 WITA
+3. Menunggu Survei
+Catatan tahap menunggu_survei untuk laporan HB-2026-0013.                                                                  15 Jun 2026, 09.36 WITA
+4. Sudah Disurvei
+Catatan tahap sudah_disurvei untuk laporan HB-2026-0013.
+
+5. Menunggu Jadwal Pengerjaan
+Catatan tahap menunggu_jadwal_pengerjaan untuk laporan HB-2026-0013.
+
+6. Sedang Dikerjakan
+Catatan tahap sedang_dikerjakan untuk laporan HB-2026-0013.
+
+                  UPTD Pemeliharaan Saluran Drainase dan Irigasi — Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+REKAP LAPORAN HANTU BANYU · Juni 2026                                                    Dicetak 30 September 2026 10:00 WITA
+
+Laporan Nomor HB-2026-0012
+
+Waktu masuk: 23 Juni 2026, 02.43 WITA • Status terkini: Menunggu Jadwal Pengerjaan • Jenis: Pemeliharaan Rutin
+
+DATA PELAPOR
+
+Nama Lengkap      : Pelapor Uji 12
+Asal Kelurahan    : Karang Asam Ulu
+Nomor Telepon     : 081203087109
+Alamat            : RT 12, Samarinda
+
+LOKASI PENGADUAN  : Sungai Kunjang
+                  : Karang Asam Ulu
+Kecamatan         : Jalan Pramuka
+Kelurahan         : Depan rumah nomor 14, dekat masjid.
+Nama Jalan        : -0.4743000, 117.1342000 (maps.google.com/?q=-0.4743000,117.1342000)
+Detail Lokasi
+Koordinat
+
+DESKRIPSI PENGADUAN
+
+Saluran tersumbat sampah dan sedimen di titik ke-11.
+Air meluap ke badan jalan saat hujan deras.
+
+FOTO PENGADUAN
+
+RIWAYAT TINDAK LANJUT                                                                                                      23 Jun 2026, 08.43 WITA
+1. Menunggu Verifikasi                                                                                                     23 Jun 2026, 14.43 WITA
+                                                                                                                           23 Jun 2026, 20.43 WITA
+Catatan tahap pending untuk laporan HB-2026-0012.                                                                          24 Jun 2026, 02.43 WITA
+                                                                                                                           24 Jun 2026, 08.43 WITA
+2. Diterima
+Catatan tahap diterima untuk laporan HB-2026-0012.
+
+3. Menunggu Survei
+Catatan tahap menunggu_survei untuk laporan HB-2026-0012.
+
+4. Sudah Disurvei
+Catatan tahap sudah_disurvei untuk laporan HB-2026-0012.
+
+5. Menunggu Jadwal Pengerjaan
+Catatan tahap menunggu_jadwal_pengerjaan untuk laporan HB-2026-0012.
+
+                  UPTD Pemeliharaan Saluran Drainase dan Irigasi — Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+UPTD Pemeliharaan Saluran Drainase dan Irigasi — Dinas Pekerjaan Umum dan Penataan Ruang Kota Samarinda
+

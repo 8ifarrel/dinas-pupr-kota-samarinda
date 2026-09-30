@@ -1,0 +1,62 @@
+[
+    {
+        "kode": "HB-2026-0001",
+        "latitude": "-0.4600000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Pahlawan",
+        "status_laporan": "pending",
+        "jenis_laporan": "belum_diklasifikasikan",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0007",
+        "latitude": "-0.4678000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Dr. Soetomo",
+        "status_laporan": "selesai",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0013",
+        "latitude": "-0.4756000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Suryanata",
+        "status_laporan": "sedang_dikerjakan",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0019",
+        "latitude": "-0.4834000",
+        "longitude": "117.1300000",
+        "nama_jalan": "Jalan Siradj Salman Gg. 18",
+        "status_laporan": "menunggu_jadwal_pengerjaan",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0025",
+        "latitude": "-0.4912000",
+        "longitude": "117.1426000",
+        "nama_jalan": "Jalan Cendana Gg. 24",
+        "status_laporan": "sudah_disurvei",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    },
+    {
+        "kode": "HB-2026-0031",
+        "latitude": "-0.4990000",
+        "longitude": "117.1363000",
+        "nama_jalan": "Jalan Pahlawan Gg. 30",
+        "status_laporan": "menunggu_survei",
+        "jenis_laporan": "darurat",
+        "kelurahan.nama": "Air Putih",
+        "kecamatan.nama": "Samarinda Ulu"
+    }
+]

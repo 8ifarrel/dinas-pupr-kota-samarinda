@@ -1,0 +1,6 @@
+{
+    "status": 400,
+    "json": {
+        "error": "Missing latitude or longitude parameters"
+    }
+}

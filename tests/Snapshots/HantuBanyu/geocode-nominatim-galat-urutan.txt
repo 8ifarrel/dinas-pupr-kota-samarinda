@@ -1,0 +1,1 @@
+nominatim lat=-0.5000000 lang=-

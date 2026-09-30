@@ -1,0 +1,15 @@
+{
+    "status": 200,
+    "json": {
+        "place_id": 6100,
+        "lat": "-0.5100000",
+        "lon": "117.1300000",
+        "display_name": "Titik uji -0.5100000",
+        "address": {
+            "village": "Air Putih",
+            "city_district": "Samarinda Ulu",
+            "road": "Jalan Merdeka"
+        },
+        "road_perkiraan": true
+    }
+}

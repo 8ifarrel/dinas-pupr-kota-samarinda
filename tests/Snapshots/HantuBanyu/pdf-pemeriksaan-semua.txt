@@ -1,0 +1,50 @@
+Pemeriksaan Berkala Saluran Drainase & Irigasi — Hantu Banyu
+
+Semua Pemeriksaan · Dicetak pada 30 September 2026 10:00 WITA · 14 catatan
+
+No Tanggal   Kecamatan Kelurahan Nama Jalan         Nama Ruas  Dimensi    Kondisi Fisik        Sedimentasi &    Status Aliran Air    Tindakan            Hambatan /    Rekomendasi /
+                                                    Saluran    Eksisting  Struktur             Sampah                                Pemeliharaan        Kendala       Tindak Lanjut
+ 1 05 Des                                                      (L x T)    (Dinding/Lantai)                           Kurang Lancar   yang Dilakukan      Lapangan
+       2025  Samarinda  Sidodadi    Jalan Pramuka   Saluran                                          17.6 cm               Lancar    Tindakan uji ke-13                Rekomendasi
+             Ulu        Air Putih                   Sekunder     1.20 x   Kondisi dinding uji    22% (Sedang)                                            Hambatan uji  uji ke-13
+ 2 28 Des               Karang      Jalan Cendana                0.80 m   ke-13                                         Macet Total  Tindakan uji ke-12  ke-13
+       2025  Samarinda  Asam Ulu                    Saluran                                           9.6 cm     Tersumbat Sebagian                                    Rekomendasi
+             Ulu        Loa Bakung  Jalan Agus      Primer       2.10 x   Kondisi dinding uji     8% (Normal)                        Tindakan uji ke-11  Hambatan uji  uji ke-12
+ 3 20 Jan               Pelita      Salim                        1.20 m   ke-12                                      Kurang Lancar                       ke-12
+       2026  Sungai     Sidomulyo   Jalan Gatot     Saluran                                          70.5 cm               Lancar    Tindakan uji ke-10                Rekomendasi
+             Kunjang    Sidodadi    Subroto         Tersier      1.80 x   Kondisi dinding uji     47% (Tinggi)                                           Hambatan uji  uji ke-11
+ 4 12 Feb                           Jalan Siradj                 1.50 m   ke-11                                         Macet Total  Tindakan uji ke-9   ke-11
+       2026  Sungai     Air Putih   Salman          Saluran                                          12.1 cm                                                           Rekomendasi
+             Kunjang    Karang      Jalan Juanda    Sekunder     0.60 x   Kondisi dinding uji    22% (Sedang)                        Tindakan uji ke-8   Hambatan uji  uji ke-10
+ 5 07 Mar               Asam Ulu                                 0.55 m   ke-10                                                                          ke-10
+       2026  Samarinda  Loa Bakung  Jalan           Saluran                                           6.4 cm                         Tindakan uji ke-7                 Rekomendasi
+             Ilir       Pelita      Lambung         Primer       1.20 x   Kondisi dinding uji     8% (Normal)                                            Hambatan uji  uji ke-9
+ 6 30 Mar               Sidomulyo   Mangkurat                    0.80 m   ke-9                                                                           ke-9
+       2026  Samarinda  Sidodadi    Jalan           Saluran                                          56.4 cm                                                           Rekomendasi
+             Ilir       Air Putih   Suryanata       Tersier      2.10 x   Kondisi dinding uji     47% (Tinggi)                                           Hambatan uji  uji ke-8
+ 7 22 Apr                           Jalan Ahmad                  1.20 m   ke-8                                                                           ke-8
+       2026  Samarinda              Yani            Saluran                                           33 cm                                                            Rekomendasi
+             Ulu                    Jalan Basuki    Sekunder     1.80 x   Kondisi dinding uji    22% (Sedang)                                            Hambatan uji  uji ke-7
+ 8 15 Mei                           Rahmat                       1.50 m   ke-7                                                                           ke-7
+       2026  Samarinda              Jalan Dr.       Saluran                                                                                                            Rekomendasi
+             Ulu                    Soetomo         Primer     0.60 x     Kondisi dinding uji       4.4 cm      Tersumbat Sebagian Tindakan uji ke-6     Hambatan uji  uji ke-6
+ 9 07 Jun                           Jalan KH.                  0.55 m     ke-6                  8% (Normal)                                              ke-6
+       2026  Sungai                 Wahid Hasyim    Saluran                                                     Kurang Lancar        Tindakan uji ke-5                 Rekomendasi
+             Kunjang                Jalan Antasari  Tersier    1.20 x     Kondisi dinding uji      37.6 cm                                               Hambatan uji  uji ke-5
+10 30 Jun                                                      0.80 m     ke-5                  47% (Tinggi)    Lancar               Tindakan uji ke-4   ke-5
+       2026  Sungai                 Jalan           Saluran                                                                                                            Rekomendasi
+             Kunjang                Pahlawan        Sekunder   2.10 x     Kondisi dinding uji      26.4 cm      Macet Total          Tindakan uji ke-3   Hambatan uji  uji ke-4
+11 23 Jul                                                      1.20 m     ke-4                 22% (Sedang)                                              ke-4
+       2026  Samarinda                              Saluran                                                     Tersumbat Sebagian Tindakan uji ke-2                   Rekomendasi
+             Ilir                                   Primer     1.80 x     Kondisi dinding uji       12 cm                                                Hambatan uji  uji ke-3
+12 15 Agt                                                      1.50 m     ke-3                  8% (Normal)     Kurang Lancar        Tindakan uji ke-1   ke-3
+       2026  Samarinda                              Saluran                                                                                                            Rekomendasi
+             Ilir                                   Tersier    0.60 x     Kondisi dinding uji      25.9 cm      Lancar               Tindakan uji ke-0   Hambatan uji  uji ke-2
+13 07 Sep                                                      0.55 m     ke-2                 47.1% (Tinggi)                                            ke-2
+       2026  Samarinda                              Saluran                                                                                                            Rekomendasi
+             Ulu                                    Sekunder   1.20 x     Kondisi dinding uji      17.6 cm                                               Hambatan uji  uji ke-1
+14 30 Sep                                                      0.80 m     ke-1                 22% (Sedang)                                              ke-1
+       2026  Samarinda                              Saluran                                                                                                            Rekomendasi
+             Ulu                                    Primer     2.10 x     Kondisi dinding uji       9.6 cm                                               Hambatan uji  uji ke-0
+                                                               1.20 m     ke-0                  8% (Normal)                                              ke-0
+

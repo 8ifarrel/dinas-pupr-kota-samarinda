@@ -1,0 +1,16 @@
+{
+    "status": 200,
+    "json": {
+        "place_id": 5800,
+        "lat": "-0.4800000",
+        "lon": "117.1300000",
+        "display_name": "Titik uji -0.4800000",
+        "address": {
+            "road": "Jalan Pramuka, Gg. Mawar",
+            "village": "Air Putih",
+            "city_district": "Samarinda Ulu",
+            "road_asli": "Gg. Mawar"
+        },
+        "road_perkiraan": true
+    }
+}

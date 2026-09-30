@@ -1,0 +1,26 @@
+{
+    "kiriman": [
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/buat",
+            "errors": {
+                "koordinat": [
+                    "Titik lokasi berada di luar Kelurahan Air Putih. Anda hanya dapat melaporkan lokasi yang berada di dalam kelurahan Anda."
+                ]
+            },
+            "success": null
+        },
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/buat",
+            "errors": {
+                "koordinat": [
+                    "Titik lokasi berada di luar Kelurahan Air Putih. Anda hanya dapat melaporkan lokasi yang berada di dalam kelurahan Anda."
+                ]
+            },
+            "success": null
+        }
+    ],
+    "laporan_baru": [],
+    "berkas": []
+}

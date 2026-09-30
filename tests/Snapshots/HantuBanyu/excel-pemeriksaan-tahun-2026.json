@@ -1,0 +1,1546 @@
+{
+    "status": 200,
+    "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "disposition": "attachment; filename=\"[Hantu Banyu] Pemeriksaan Berkala - Tahun 2026.xlsx\"",
+    "isi": {
+        "Pemeriksaan Berkala": {
+            "merge": [
+                "A1:N1",
+                "A2:N2"
+            ],
+            "freeze": "A5",
+            "kolom": {
+                "A": {
+                    "w": 3.428,
+                    "auto": false
+                },
+                "B": {
+                    "w": 23.423,
+                    "auto": false
+                },
+                "C": {
+                    "w": 17.567,
+                    "auto": false
+                },
+                "D": {
+                    "w": 18.71,
+                    "auto": false
+                },
+                "E": {
+                    "w": 28.136,
+                    "auto": false
+                },
+                "F": {
+                    "w": 21.138,
+                    "auto": false
+                },
+                "G": {
+                    "w": 30.564,
+                    "auto": false
+                },
+                "H": {
+                    "w": 40,
+                    "auto": false
+                },
+                "I": {
+                    "w": 30.564,
+                    "auto": false
+                },
+                "J": {
+                    "w": 31.707,
+                    "auto": false
+                },
+                "K": {
+                    "w": 22.28,
+                    "auto": false
+                },
+                "L": {
+                    "w": 40,
+                    "auto": false
+                },
+                "M": {
+                    "w": 40,
+                    "auto": false
+                },
+                "N": {
+                    "w": 40,
+                    "auto": false
+                }
+            },
+            "sel": {
+                "A1": {
+                    "v": "Pemeriksaan Berkala Saluran Hantu Banyu — Tahun 2026",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 14,
+                    "wrap": false
+                },
+                "A2": {
+                    "v": "Dicetak pada 30 September 2026 10:00 WITA",
+                    "t": "s",
+                    "b": false,
+                    "i": true,
+                    "sz": 10,
+                    "wrap": false
+                },
+                "A4": {
+                    "v": "No",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A5": {
+                    "v": 1,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A6": {
+                    "v": 2,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A7": {
+                    "v": 3,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A8": {
+                    "v": 4,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A9": {
+                    "v": 5,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A10": {
+                    "v": 6,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A11": {
+                    "v": 7,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A12": {
+                    "v": 8,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A13": {
+                    "v": 9,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A14": {
+                    "v": 10,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A15": {
+                    "v": 11,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A16": {
+                    "v": 12,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B4": {
+                    "v": "Tanggal Pemeriksaan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B5": {
+                    "v": "20 Januari 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B6": {
+                    "v": "12 Februari 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B7": {
+                    "v": "07 Maret 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B8": {
+                    "v": "30 Maret 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B9": {
+                    "v": "22 April 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B10": {
+                    "v": "15 Mei 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B11": {
+                    "v": "07 Juni 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B12": {
+                    "v": "30 Juni 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B13": {
+                    "v": "23 Juli 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B14": {
+                    "v": "15 Agustus 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B15": {
+                    "v": "07 September 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B16": {
+                    "v": "30 September 2026",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C4": {
+                    "v": "Kecamatan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C5": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C6": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C7": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C8": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C9": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C10": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C11": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C12": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C13": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C14": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C15": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C16": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D4": {
+                    "v": "Kelurahan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D5": {
+                    "v": "Karang Asam Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D6": {
+                    "v": "Loa Bakung",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D7": {
+                    "v": "Pelita",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D8": {
+                    "v": "Sidomulyo",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D9": {
+                    "v": "Sidodadi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D10": {
+                    "v": "Air Putih",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D11": {
+                    "v": "Karang Asam Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D12": {
+                    "v": "Loa Bakung",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D13": {
+                    "v": "Pelita",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D14": {
+                    "v": "Sidomulyo",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D15": {
+                    "v": "Sidodadi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D16": {
+                    "v": "Air Putih",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E4": {
+                    "v": "Nama Jalan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E5": {
+                    "v": "Jalan Agus Salim",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E6": {
+                    "v": "Jalan Gatot Subroto",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E7": {
+                    "v": "Jalan Siradj Salman",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E8": {
+                    "v": "Jalan Juanda",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E9": {
+                    "v": "Jalan Lambung Mangkurat",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E10": {
+                    "v": "Jalan Suryanata",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E11": {
+                    "v": "Jalan Ahmad Yani",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E12": {
+                    "v": "Jalan Basuki Rahmat",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E13": {
+                    "v": "Jalan Dr. Soetomo",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E14": {
+                    "v": "Jalan KH. Wahid Hasyim",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E15": {
+                    "v": "Jalan Antasari",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E16": {
+                    "v": "Jalan Pahlawan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F4": {
+                    "v": "Nama Ruas Saluran",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F5": {
+                    "v": "Saluran Tersier",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F6": {
+                    "v": "Saluran Sekunder",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F7": {
+                    "v": "Saluran Primer",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F8": {
+                    "v": "Saluran Tersier",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F9": {
+                    "v": "Saluran Sekunder",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F10": {
+                    "v": "Saluran Primer",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F11": {
+                    "v": "Saluran Tersier",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F12": {
+                    "v": "Saluran Sekunder",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F13": {
+                    "v": "Saluran Primer",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F14": {
+                    "v": "Saluran Tersier",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F15": {
+                    "v": "Saluran Sekunder",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F16": {
+                    "v": "Saluran Primer",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G4": {
+                    "v": "Dimensi Eksisting (L x T)",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G5": {
+                    "v": "1.80 m x 1.50 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G6": {
+                    "v": "0.60 m x 0.55 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G7": {
+                    "v": "1.20 m x 0.80 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G8": {
+                    "v": "2.10 m x 1.20 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G9": {
+                    "v": "1.80 m x 1.50 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G10": {
+                    "v": "0.60 m x 0.55 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G11": {
+                    "v": "1.20 m x 0.80 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G12": {
+                    "v": "2.10 m x 1.20 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G13": {
+                    "v": "1.80 m x 1.50 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G14": {
+                    "v": "0.60 m x 0.55 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G15": {
+                    "v": "1.20 m x 0.80 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G16": {
+                    "v": "2.10 m x 1.20 m",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H4": {
+                    "v": "Kondisi Fisik Struktur",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H5": {
+                    "v": "Kondisi dinding uji ke-11",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H6": {
+                    "v": "Kondisi dinding uji ke-10",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H7": {
+                    "v": "Kondisi dinding uji ke-9",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H8": {
+                    "v": "Kondisi dinding uji ke-8",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H9": {
+                    "v": "Kondisi dinding uji ke-7",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H10": {
+                    "v": "Kondisi dinding uji ke-6",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H11": {
+                    "v": "Kondisi dinding uji ke-5",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H12": {
+                    "v": "Kondisi dinding uji ke-4",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H13": {
+                    "v": "Kondisi dinding uji ke-3",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H14": {
+                    "v": "Kondisi dinding uji ke-2",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H15": {
+                    "v": "Kondisi dinding uji ke-1",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "H16": {
+                    "v": "Kondisi dinding uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "I4": {
+                    "v": "Sedimentasi & Sampah (cm)",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I5": {
+                    "v": "70.5 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I6": {
+                    "v": "12.1 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I7": {
+                    "v": "6.4 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I8": {
+                    "v": "56.4 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I9": {
+                    "v": "33.0 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I10": {
+                    "v": "4.4 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I11": {
+                    "v": "37.6 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I12": {
+                    "v": "26.4 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I13": {
+                    "v": "12.0 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I14": {
+                    "v": "25.9 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I15": {
+                    "v": "17.6 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I16": {
+                    "v": "9.6 cm",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J4": {
+                    "v": "Sedimentasi (%) / Kategori",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J5": {
+                    "v": "47% (Tinggi)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J6": {
+                    "v": "22% (Sedang)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J7": {
+                    "v": "8% (Normal)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J8": {
+                    "v": "47% (Tinggi)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J9": {
+                    "v": "22% (Sedang)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J10": {
+                    "v": "8% (Normal)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J11": {
+                    "v": "47% (Tinggi)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J12": {
+                    "v": "22% (Sedang)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J13": {
+                    "v": "8% (Normal)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J14": {
+                    "v": "47.1% (Tinggi)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J15": {
+                    "v": "22% (Sedang)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J16": {
+                    "v": "8% (Normal)",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K4": {
+                    "v": "Status Aliran Air",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K5": {
+                    "v": "Macet Total",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K6": {
+                    "v": "Tersumbat Sebagian",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K7": {
+                    "v": "Kurang Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K8": {
+                    "v": "Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K9": {
+                    "v": "Macet Total",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K10": {
+                    "v": "Tersumbat Sebagian",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K11": {
+                    "v": "Kurang Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K12": {
+                    "v": "Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K13": {
+                    "v": "Macet Total",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K14": {
+                    "v": "Tersumbat Sebagian",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K15": {
+                    "v": "Kurang Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K16": {
+                    "v": "Lancar",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L4": {
+                    "v": "Tindakan Pemeliharaan yang Dilakukan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L5": {
+                    "v": "Tindakan uji ke-11",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L6": {
+                    "v": "Tindakan uji ke-10",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L7": {
+                    "v": "Tindakan uji ke-9",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L8": {
+                    "v": "Tindakan uji ke-8",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L9": {
+                    "v": "Tindakan uji ke-7",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L10": {
+                    "v": "Tindakan uji ke-6",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L11": {
+                    "v": "Tindakan uji ke-5",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L12": {
+                    "v": "Tindakan uji ke-4",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L13": {
+                    "v": "Tindakan uji ke-3",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L14": {
+                    "v": "Tindakan uji ke-2",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L15": {
+                    "v": "Tindakan uji ke-1",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "L16": {
+                    "v": "Tindakan uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M4": {
+                    "v": "Hambatan / Kendala Lapangan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M5": {
+                    "v": "Hambatan uji ke-11",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M6": {
+                    "v": "Hambatan uji ke-10",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M7": {
+                    "v": "Hambatan uji ke-9",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M8": {
+                    "v": "Hambatan uji ke-8",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M9": {
+                    "v": "Hambatan uji ke-7",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M10": {
+                    "v": "Hambatan uji ke-6",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M11": {
+                    "v": "Hambatan uji ke-5",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M12": {
+                    "v": "Hambatan uji ke-4",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M13": {
+                    "v": "Hambatan uji ke-3",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M14": {
+                    "v": "Hambatan uji ke-2",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M15": {
+                    "v": "Hambatan uji ke-1",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "M16": {
+                    "v": "Hambatan uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N4": {
+                    "v": "Rekomendasi / Tindak Lanjut",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N5": {
+                    "v": "Rekomendasi uji ke-11",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N6": {
+                    "v": "Rekomendasi uji ke-10",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N7": {
+                    "v": "Rekomendasi uji ke-9",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N8": {
+                    "v": "Rekomendasi uji ke-8",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N9": {
+                    "v": "Rekomendasi uji ke-7",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N10": {
+                    "v": "Rekomendasi uji ke-6",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N11": {
+                    "v": "Rekomendasi uji ke-5",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N12": {
+                    "v": "Rekomendasi uji ke-4",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N13": {
+                    "v": "Rekomendasi uji ke-3",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N14": {
+                    "v": "Rekomendasi uji ke-2",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N15": {
+                    "v": "Rekomendasi uji ke-1",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "N16": {
+                    "v": "Rekomendasi uji ke-0",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                }
+            }
+        }
+    }
+}

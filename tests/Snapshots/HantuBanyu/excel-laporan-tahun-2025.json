@@ -1,0 +1,814 @@
+{
+    "status": 200,
+    "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "disposition": "attachment; filename=\"[Hantu Banyu] Rekap Laporan - Tahun 2025.xlsx\"",
+    "isi": {
+        "Rekap Laporan": {
+            "merge": [
+                "A1:M1",
+                "A2:M2"
+            ],
+            "freeze": "A5",
+            "kolom": {
+                "A": {
+                    "w": 15.282,
+                    "auto": false
+                },
+                "B": {
+                    "w": 19.995,
+                    "auto": false
+                },
+                "C": {
+                    "w": 6.998,
+                    "auto": false
+                },
+                "D": {
+                    "w": 41.133,
+                    "auto": false
+                },
+                "E": {
+                    "w": 17.567,
+                    "auto": false
+                },
+                "F": {
+                    "w": 16.425,
+                    "auto": false
+                },
+                "G": {
+                    "w": 17.567,
+                    "auto": false
+                },
+                "H": {
+                    "w": 18.71,
+                    "auto": false
+                },
+                "I": {
+                    "w": 35.277,
+                    "auto": false
+                },
+                "J": {
+                    "w": 45,
+                    "auto": false
+                },
+                "K": {
+                    "w": 10.569,
+                    "auto": false
+                },
+                "L": {
+                    "w": 11.711,
+                    "auto": false
+                },
+                "M": {
+                    "w": 31.707,
+                    "auto": false
+                },
+                "N": {
+                    "w": 26.993,
+                    "auto": false
+                },
+                "O": {
+                    "w": 45,
+                    "auto": false
+                }
+            },
+            "sel": {
+                "A1": {
+                    "v": "Rekap Laporan Hantu Banyu — Tahun 2025",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 14,
+                    "wrap": false
+                },
+                "A2": {
+                    "v": "Dicetak pada 30 September 2026 10:00 WITA",
+                    "t": "s",
+                    "b": false,
+                    "i": true,
+                    "sz": 10,
+                    "wrap": false
+                },
+                "A4": {
+                    "v": "No. Laporan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A5": {
+                    "v": "HB-2025-0036",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A6": {
+                    "v": "HB-2025-0035",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A7": {
+                    "v": "HB-2025-0034",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A8": {
+                    "v": "HB-2025-0033",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "A9": {
+                    "v": "HB-2025-0032",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B4": {
+                    "v": "Tanggal Masuk",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B5": {
+                    "v": "19 November 2025",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B6": {
+                    "v": "28 November 2025",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B7": {
+                    "v": "06 Desember 2025",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B8": {
+                    "v": "15 Desember 2025",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "B9": {
+                    "v": "24 Desember 2025",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C4": {
+                    "v": "Jam",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C5": {
+                    "v": "02:55",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C6": {
+                    "v": "07:02",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C7": {
+                    "v": "12:09",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C8": {
+                    "v": "17:16",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "C9": {
+                    "v": "22:23",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D4": {
+                    "v": "Dibuat Oleh",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D5": {
+                    "v": "Operator Kelurahan Karang Asam Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D6": {
+                    "v": "Operator Kelurahan Loa Bakung",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D7": {
+                    "v": "Operator Kelurahan Pelita",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D8": {
+                    "v": "Admin UPTD PSDI",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "D9": {
+                    "v": "Operator Kelurahan Sidodadi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E4": {
+                    "v": "Nama Pelapor",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E5": {
+                    "v": "Pelapor Uji 36",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E6": {
+                    "v": "Pelapor Uji 35",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E7": {
+                    "v": "Pelapor Uji 34",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E8": {
+                    "v": "Pelapor Uji 33",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "E9": {
+                    "v": "Pelapor Uji 32",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F4": {
+                    "v": "Nomor Telepon",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F5": {
+                    "v": "081203277165",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F6": {
+                    "v": "081203269246",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F7": {
+                    "v": "081203261327",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F8": {
+                    "v": "081203253408",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "F9": {
+                    "v": "081203245489",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G4": {
+                    "v": "Kecamatan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G5": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G6": {
+                    "v": "Sungai Kunjang",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G7": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G8": {
+                    "v": "Samarinda Ilir",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "G9": {
+                    "v": "Samarinda Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H4": {
+                    "v": "Kelurahan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H5": {
+                    "v": "Karang Asam Ulu",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H6": {
+                    "v": "Loa Bakung",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H7": {
+                    "v": "Pelita",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H8": {
+                    "v": "Sidomulyo",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "H9": {
+                    "v": "Sidodadi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I4": {
+                    "v": "Nama Jalan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I5": {
+                    "v": "Jalan Gatot Subroto Gg. 35",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I6": {
+                    "v": "Jalan KH. Wahid Hasyim Gg. 34",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I7": {
+                    "v": "Jalan Siradj Salman Gg. 33",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I8": {
+                    "v": "Jalan Antasari Gg. 32",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "I9": {
+                    "v": "Jalan Juanda Gg. 31",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J4": {
+                    "v": "Detail Lokasi",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "J5": {
+                    "v": "Depan rumah nomor 38, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "J6": {
+                    "v": "Depan rumah nomor 37, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "J7": {
+                    "v": "Depan rumah nomor 36, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "J8": {
+                    "v": "Depan rumah nomor 35, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "J9": {
+                    "v": "Depan rumah nomor 34, dekat masjid.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "K4": {
+                    "v": "Latitude",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K5": {
+                    "v": -0.5055,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K6": {
+                    "v": -0.5042,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K7": {
+                    "v": -0.5029,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K8": {
+                    "v": -0.5016,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "K9": {
+                    "v": -0.5003,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L4": {
+                    "v": "Longitude",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L5": {
+                    "v": 117.1468,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L6": {
+                    "v": 117.1447,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L7": {
+                    "v": 117.1426,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L8": {
+                    "v": 117.1405,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "L9": {
+                    "v": 117.1384,
+                    "t": "n",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M4": {
+                    "v": "Status Terkini",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M5": {
+                    "v": "Menunggu Verifikasi",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M6": {
+                    "v": "Selesai",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M7": {
+                    "v": "Sedang Dikerjakan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M8": {
+                    "v": "Menunggu Jadwal Pengerjaan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "M9": {
+                    "v": "Sudah Disurvei",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N4": {
+                    "v": "Jenis",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N5": {
+                    "v": "Belum Diklasifikasikan",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N6": {
+                    "v": "Penanganan Biasa",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N7": {
+                    "v": "Penanganan Darurat",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N8": {
+                    "v": "Pemeliharaan Rutin",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "N9": {
+                    "v": "Penanganan Biasa",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "O4": {
+                    "v": "Deskripsi Pengaduan",
+                    "t": "s",
+                    "b": true,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": false
+                },
+                "O5": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-35.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "O6": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-34.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "O7": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-33.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "O8": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-32.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                },
+                "O9": {
+                    "v": "Saluran tersumbat sampah dan sedimen di titik ke-31.\nAir meluap ke badan jalan saat hujan deras.",
+                    "t": "s",
+                    "b": false,
+                    "i": false,
+                    "sz": 11,
+                    "wrap": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "kiriman": [
+        {
+            "status": 422,
+            "json": {
+                "success": false,
+                "message": "Titik koordinat berada di luar Kelurahan Air Putih.",
+                "errors": {
+                    "latitude": [
+                        "Koordinat tidak berada di dalam kelurahan yang dilaporkan."
+                    ]
+                }
+            }
+        },
+        {
+            "status": 422,
+            "json": {
+                "success": false,
+                "message": "Titik koordinat berada di luar Kelurahan Air Putih.",
+                "errors": {
+                    "latitude": [
+                        "Koordinat tidak berada di dalam kelurahan yang dilaporkan."
+                    ]
+                }
+            }
+        }
+    ],
+    "berkas": []
+}

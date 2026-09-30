@@ -1,0 +1,26 @@
+{
+    "kiriman": [
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/buat",
+            "errors": {
+                "koordinat": [
+                    "Lokasi tidak dapat diverifikasi saat ini. Coba beberapa saat lagi atau periksa koneksi."
+                ]
+            },
+            "success": null
+        },
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/buat",
+            "errors": {
+                "koordinat": [
+                    "Lokasi tidak dapat diverifikasi saat ini. Coba beberapa saat lagi atau periksa koneksi."
+                ]
+            },
+            "success": null
+        }
+    ],
+    "laporan_baru": [],
+    "berkas": []
+}

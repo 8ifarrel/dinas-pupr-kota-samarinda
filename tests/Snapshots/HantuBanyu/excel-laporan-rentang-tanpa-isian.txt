@@ -1,0 +1,6 @@
+{
+    "status": 302,
+    "redirect": "http://localhost/asal",
+    "error": "Lengkapi tanggal awal dan akhir untuk rentang yang dipilih.",
+    "errors": null
+}

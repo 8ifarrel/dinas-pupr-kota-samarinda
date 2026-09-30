@@ -1,0 +1,16 @@
+{
+    "status": 200,
+    "json": {
+        "place_id": 5700,
+        "lat": "-0.4700000",
+        "lon": "117.1300000",
+        "display_name": "Titik uji -0.4700000",
+        "address": {
+            "village": "Air Putih",
+            "city_district": "Samarinda Ulu",
+            "city": "Samarinda",
+            "road": "Jalan Siradj Salman"
+        },
+        "road_perkiraan": true
+    }
+}

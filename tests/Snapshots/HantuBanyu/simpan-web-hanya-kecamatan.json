@@ -1,0 +1,38 @@
+{
+    "kiriman": [
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/hasil/HB-2026-0038?expires=1790734500&signature=b00a5cd8bec8181367b6a611af5e6a0cae2c330af2c07825e82e8ee991b9070f",
+            "errors": null,
+            "success": "Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut."
+        },
+        {
+            "status": 302,
+            "redirect": "http://localhost/hantu-banyu/pengaduan/hasil/HB-2026-0039?expires=1790734500&signature=6d3c2bd76d5ab8f79482d6b04fd5b5c860a86ed525b5e8de84c1217732662a9b",
+            "errors": null,
+            "success": "Laporan berhasil dikirim. Mohon menunggu proses lebih lanjut."
+        }
+    ],
+    "laporan_baru": [
+        {
+            "kode": "HB-2026-0038",
+            "dibuat_oleh_tipe": "kelurahan",
+            "kecamatan_id": 1,
+            "kelurahan_id": 1,
+            "latitude": "-0.5200000",
+            "longitude": "117.1300000"
+        },
+        {
+            "kode": "HB-2026-0039",
+            "dibuat_oleh_tipe": "kelurahan",
+            "kecamatan_id": 1,
+            "kelurahan_id": 1,
+            "latitude": "-0.5200000",
+            "longitude": "117.1300000"
+        }
+    ],
+    "berkas": [
+        "public/hantu-banyu/HB-2026-0038/foto_laporan/foto1_10000030092026.jpg",
+        "public/hantu-banyu/HB-2026-0039/foto_laporan/foto1_10000030092026.jpg"
+    ]
+}

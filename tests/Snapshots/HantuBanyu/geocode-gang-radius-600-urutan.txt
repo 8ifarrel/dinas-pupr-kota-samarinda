@@ -1,0 +1,3 @@
+nominatim lat=-0.4800000 lang=-
+overpass radius=250 lat=-0.4800000
+overpass radius=600 lat=-0.4800000
