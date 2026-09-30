@@ -25,11 +25,20 @@ class StatistikLaporan
     $JENIS = HantuBanyuLaporanAdminController::JENIS;
     $urutan = array_flip($STATUS);
 
-    $laporans = HantuBanyuLaporan::with(['kecamatan', 'kelurahan'])
+    // Urutan laporan (tanpa ORDER BY) sengaja tidak diubah: urutan kunci
+    // by_ym/kecamatan/kelurahan di JSON chart mengikuti urutan baris ini.
+    $laporans = HantuBanyuLaporan::with(['kecamatan:id,nama', 'kelurahan:id,nama'])
       ->when($kelurahanId, fn($q) => $q->where('kelurahan_id', $kelurahanId))
       ->get(['id', 'kecamatan_id', 'kelurahan_id', 'created_at']);
+
+    // Tindak lanjut hanya untuk laporan di atas (subquery, bukan daftar id
+    // panjang; laporan terhapus tidak ikut), dimuat sebagai baris ringan
+    // tanpa model Eloquent karena hanya dibaca untuk agregasi.
     $tlByLaporan = HantuBanyuLaporanTindakLanjut::query()
-      ->when($kelurahanId, fn($q) => $q->whereIn('laporan_id', $laporans->pluck('id')->all()))
+      ->whereIn('laporan_id', HantuBanyuLaporan::query()
+        ->select('id')
+        ->when($kelurahanId, fn($q) => $q->where('kelurahan_id', $kelurahanId)))
+      ->toBase()
       ->get(['laporan_id', 'status', 'jenis', 'created_at'])
       ->groupBy('laporan_id');
 
