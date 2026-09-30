@@ -142,7 +142,14 @@ class HantuBanyuLaporanAdminController extends Controller
       'periode_bulan' => ['nullable', 'date_format:Y-m'],
     ]);
 
-    $query = $this->queryLaporanLengkap();
+    // Excel tidak memuat foto maupun kelurahan asal pelapor, jadi relasi itu
+    // (yang dibutuhkan PDF) tidak ikut dimuat.
+    $query = HantuBanyuLaporan::with([
+      'pelapor:id,nama_lengkap,nomor_telepon',
+      'kecamatan:id,nama',
+      'kelurahan:id,nama',
+      'tindakLanjut:id,laporan_id,status,jenis',
+    ])->orderBy('created_at', 'asc')->orderBy('id', 'asc');
 
     [$judulRentang, $namaBerkasRentang, $galat] = $this->filterPeriode($data, $query);
 
