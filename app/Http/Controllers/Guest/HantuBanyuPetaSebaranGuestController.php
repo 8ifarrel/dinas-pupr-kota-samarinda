@@ -27,28 +27,29 @@ class HantuBanyuPetaSebaranGuestController extends Controller
     $akunKelurahan = Auth::guard('kelurahan')->user();
     $kelurahanId = $akunKelurahan instanceof UserKelurahan ? (int) $akunKelurahan->kelurahan_id : null;
 
-    // Query laporan dengan status & jenis terbaru
-    $laporan = HantuBanyuLaporan::with([
-        'kecamatan', 'kelurahan', 'tindakLanjut' => function($q) {
-          $q->orderBy('created_at', 'desc');
-        }
-      ])
+    // Query laporan dengan status & jenis terbaru. Seluruh hasil ikut
+    // dikirim sebagai JSON ke peramban, jadi hanya kolom yang dibaca JS peta
+    // yang diambil (bukan seluruh kolom + riwayat tindak lanjut).
+    $laporan = HantuBanyuLaporan::with(['kecamatan:id,nama', 'kelurahan:id,nama'])
       ->when($kelurahanId, fn($q) => $q->where('hantu_banyu_laporan.kelurahan_id', $kelurahanId))
       ->leftJoin('hantu_banyu_laporan_tindak_lanjut as tl', function ($join) use ($latestTindakLanjutIds) {
         $join->on('tl.laporan_id', '=', 'hantu_banyu_laporan.id')
           ->whereIn('tl.id', $latestTindakLanjutIds);
       })
       ->select(
-        'hantu_banyu_laporan.*',
+        'hantu_banyu_laporan.kode',
+        'hantu_banyu_laporan.nama_jalan',
+        'hantu_banyu_laporan.latitude',
+        'hantu_banyu_laporan.longitude',
+        'hantu_banyu_laporan.kecamatan_id',
+        'hantu_banyu_laporan.kelurahan_id',
         'tl.status as status_laporan',
-        'tl.jenis as jenis_laporan',
-        'tl.deskripsi as deskripsi_status'
+        'tl.jenis as jenis_laporan'
       )
       ->get();
 
-    // `id` internal tidak perlu ikut ke payload peta di sisi peramban -
-    // tautan detail memakai `kode`.
-    $laporan->makeHidden('id');
+    // Kunci relasi hanya dibutuhkan untuk eager load, tidak untuk peta.
+    $laporan->makeHidden(['kecamatan_id', 'kelurahan_id']);
 
     // Untuk filter status unik
     $statusList = DB::table('hantu_banyu_laporan_tindak_lanjut')
