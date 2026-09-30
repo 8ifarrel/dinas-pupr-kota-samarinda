@@ -37,10 +37,12 @@
     ];
     $urutStatus = array_flip($daftar_status);
 
+    // Foto tampil setinggi 50-60px; salinan 240px tetap tajam saat dicetak
+    // tanpa menyisipkan foto asli yang berukuran penuh ke PDF.
     $fotoPath = function ($foto) {
         $rel = ltrim(str_replace('storage/', '', (string) $foto), '/');
         $abs = public_path('storage/' . $rel);
-        return is_file($abs) ? $abs : null;
+        return is_file($abs) ? \App\Support\HantuBanyu\FotoPdf::path($abs, 240) : null;
     };
   @endphp
   <style>

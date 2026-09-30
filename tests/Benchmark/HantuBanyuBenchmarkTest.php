@@ -61,7 +61,10 @@ class HantuBanyuBenchmarkTest extends TestCase
   {
     $public = sys_get_temp_dir() . '/hantu-banyu-bench-public';
     File::deleteDirectory($public);
+    File::deleteDirectory($public . '-storage');
+    File::ensureDirectoryExists($public . '-storage');
     $this->app->usePublicPath($public);
+    $this->app->useStoragePath($public . '-storage');
     $akun = HantuBanyuFixture::seed(36, $public);
     $this->actingAs(\App\Models\User::find($akun['admin_id']), 'web');
 
@@ -75,6 +78,7 @@ class HantuBanyuBenchmarkTest extends TestCase
     $this->ukur('pdf bukti pengaduan', $url, 2);
 
     File::deleteDirectory($public);
+    File::deleteDirectory($public . '-storage');
     $this->simpan('pdf');
     $this->assertTrue(true);
   }

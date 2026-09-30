@@ -39,6 +39,9 @@ abstract class HantuBanyuTestCase extends TestCase
       File::deleteDirectory($this->publicRoot);
       File::ensureDirectoryExists($this->publicRoot);
       $this->app->usePublicPath($this->publicRoot);
+      // Cache thumbnail & PDF sementara ikut ke folder sementara, bukan storage asli.
+      File::ensureDirectoryExists($this->publicRoot . '-storage');
+      $this->app->useStoragePath($this->publicRoot . '-storage');
     }
 
     $this->akun = HantuBanyuFixture::seed(36, $this->publicRoot);
@@ -48,6 +51,7 @@ abstract class HantuBanyuTestCase extends TestCase
   {
     if ($this->publicRoot) {
       File::deleteDirectory($this->publicRoot);
+      File::deleteDirectory($this->publicRoot . '-storage');
     }
     Carbon::setTestNow();
 

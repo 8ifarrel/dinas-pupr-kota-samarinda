@@ -277,7 +277,8 @@
       <div class="section-title">FOTO PENGADUAN</div>
       <div class="photo-container">
         @forelse($laporan->foto as $foto)
-          <img src="{{ public_path('storage/' . str_replace('storage/', '', $foto->foto)) }}"
+          {{-- Tampil setinggi 125px: salinan 500px, bukan foto asli berukuran penuh. --}}
+          <img src="{{ \App\Support\HantuBanyu\FotoPdf::path(public_path('storage/' . str_replace('storage/', '', $foto->foto)), 500) }}"
             alt="Foto {{ $loop->iteration }}" class="photo">
         @empty
           <p style="margin-left: 10px;">Tidak ada foto</p>
