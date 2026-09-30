@@ -1,0 +1,36 @@
+{
+    "pdf": {
+        "pdf laporan semua (36 laporan)": {
+            "status": 200,
+            "ms_median": 5762.7,
+            "ms_min": 1978.5,
+            "puncak_memori_mb": 15.24,
+            "query": 10,
+            "ukuran_kb": 5773.1
+        },
+        "pdf satu laporan": {
+            "status": 200,
+            "ms_median": 1701.7,
+            "ms_min": 1684.8,
+            "puncak_memori_mb": 0.3,
+            "query": 10,
+            "ukuran_kb": 280.1
+        },
+        "pdf pemeriksaan semua": {
+            "status": 200,
+            "ms_median": 1697.3,
+            "ms_min": 1668.6,
+            "puncak_memori_mb": 0.27,
+            "query": 5,
+            "ukuran_kb": 136.8
+        },
+        "pdf bukti pengaduan": {
+            "status": 200,
+            "ms_median": 1833.3,
+            "ms_min": 1668.7,
+            "puncak_memori_mb": 9.18,
+            "query": 9,
+            "ukuran_kb": 255.6
+        }
+    }
+}

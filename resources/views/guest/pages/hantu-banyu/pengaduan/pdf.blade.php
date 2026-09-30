@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Laporan Pengaduan Drainase dan Irigasi</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  {{-- Disisipkan inline (salinan persis versi CDN 1.4.4) supaya Browsershot tidak perlu
+       mengunduhnya setiap kali PDF dibuat. --}}
+  <script>{!! file_get_contents(resource_path('vendor/qrcode-generator/qrcode-1.4.4.min.js')) !!}</script>
   <style type="text/css">
     @page {
       size: a4;
