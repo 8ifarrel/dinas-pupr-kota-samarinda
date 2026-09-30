@@ -2,6 +2,7 @@
 
 namespace App\Support\HantuBanyu;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -45,6 +46,25 @@ class VerifikasiKoordinatKelurahan
    * atau null bila gagal.
    */
   private static function reverseGeocode($lat, $lon): ?array
+  {
+    // Titik yang sama sering diverifikasi berulang (mis. form dikirim ulang
+    // setelah ditolak). Hanya jawaban yang berhasil yang disimpan, sehingga
+    // kegagalan geocoder tetap dicoba ulang pada permintaan berikutnya.
+    $kunci = 'hantu-banyu:verifikasi-koordinat:' . sha1($lat . '|' . $lon);
+    $tersimpan = Cache::get($kunci);
+    if (is_array($tersimpan)) {
+      return $tersimpan;
+    }
+
+    $alamat = self::panggilNominatim($lat, $lon);
+    if ($alamat !== null) {
+      Cache::put($kunci, $alamat, now()->addDay());
+    }
+
+    return $alamat;
+  }
+
+  private static function panggilNominatim($lat, $lon): ?array
   {
     try {
       $res = Http::withHeaders([

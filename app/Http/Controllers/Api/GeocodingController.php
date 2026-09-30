@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Support\Geocoding\OverpassJalanTerdekat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class GeocodingController extends Controller
@@ -16,6 +17,15 @@ class GeocodingController extends Controller
 
     if (!$lat || !$lon) {
       return response()->json(['error' => 'Missing latitude or longitude parameters'], 400);
+    }
+
+    // Satu titik bisa memicu Nominatim + hingga 3 query Overpass; titik yang
+    // sama (klik ulang, kirim ulang form) dijawab dari cache. Hanya hasil
+    // yang pasti yang disimpan (lihat bawah), jadi kegagalan tetap dicoba ulang.
+    $kunciCache = 'hantu-banyu:reverse-geocode:' . sha1($lat . '|' . $lon);
+    $tersimpan = Cache::get($kunciCache);
+    if (is_array($tersimpan)) {
+      return response()->json($tersimpan);
     }
 
     try {
@@ -48,6 +58,7 @@ class GeocodingController extends Controller
       $road = $result['address']['road'] ?? null;
       $butuhFallback = !$road || preg_match('/^(gg\.?|gang|blok)\b/i', trim($road));
 
+      $jalanTerdekat = null;
       if ($butuhFallback) {
         $jalanTerdekat = $this->cariJalanTerdekat((float) $lat, (float) $lon);
 
@@ -61,6 +72,12 @@ class GeocodingController extends Controller
           }
           $result['road_perkiraan'] = true;
         }
+      }
+
+      // Fallback yang tidak menemukan jalan tidak disimpan: bisa jadi karena
+      // Overpass sedang menolak/gagal, bukan karena memang tidak ada jalan.
+      if (!$butuhFallback || $jalanTerdekat) {
+        Cache::put($kunciCache, $result, now()->addDay());
       }
 
       return response()->json($result);
